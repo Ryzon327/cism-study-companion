@@ -221,4 +221,126 @@
   }
 
   if ((storage.getProgress().sessionsCompleted || 0) > 0) updateHomeAfterCompletion();
+
+  // Build 3 — Explore content engine
+  const content = window.CISMContent;
+  const domainTabs = document.getElementById("domainTabs");
+  const contentModeTabs = document.getElementById("contentModeTabs");
+  const contentWorkspaceBody = document.getElementById("contentWorkspaceBody");
+  const contentWorkspaceTitle = document.getElementById("contentWorkspaceTitle");
+  let activeDomain = "1";
+  let activeContentMode = "concepts";
+
+  function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, c => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+    }[c]));
+  }
+
+  function initContentEngine() {
+    if (!content || !domainTabs || !contentWorkspaceBody) return;
+
+    domainTabs.innerHTML = Object.entries(content.domains).map(([id, domain]) =>
+      `<button class="domain-tab ${id === activeDomain ? "active" : ""}" data-domain-tab="${id}" type="button">D${id} · ${escapeHTML(domain.shortName)}</button>`
+    ).join("");
+
+    domainTabs.addEventListener("click", e => {
+      const button = e.target.closest("[data-domain-tab]");
+      if (!button) return;
+      activeDomain = button.dataset.domainTab;
+      domainTabs.querySelectorAll(".domain-tab").forEach(x => x.classList.toggle("active", x.dataset.domainTab === activeDomain));
+      renderContentWorkspace();
+    });
+
+    contentModeTabs.addEventListener("click", e => {
+      const button = e.target.closest("[data-content-mode]");
+      if (!button) return;
+      activeContentMode = button.dataset.contentMode;
+      contentModeTabs.querySelectorAll(".content-mode").forEach(x => x.classList.toggle("active", x.dataset.contentMode === activeContentMode));
+      renderContentWorkspace();
+    });
+
+    document.querySelectorAll("[data-explore]").forEach(card => {
+      card.addEventListener("click", () => {
+        const map = { domains: "concepts", maps: "lifecycles", compare: "comparisons", patterns: "patterns" };
+        activeContentMode = map[card.dataset.explore] || "concepts";
+        contentModeTabs.querySelectorAll(".content-mode").forEach(x => x.classList.toggle("active", x.dataset.contentMode === activeContentMode));
+        renderContentWorkspace();
+        document.getElementById("contentWorkspace")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    renderContentWorkspace();
+  }
+
+  function renderContentWorkspace() {
+    const domain = content.domains[activeDomain];
+    contentWorkspaceTitle.textContent = `Domain ${activeDomain} · ${domain.name}`;
+
+    let body = `<div class="domain-story"><strong>Domain story:</strong> ${escapeHTML(domain.story)}</div>`;
+
+    if (activeContentMode === "concepts") {
+      body += `<div class="content-list">${domain.concepts.map(c => `
+        <article class="content-item">
+          <div class="content-item-top">
+            <h4>${escapeHTML(c.title)}</h4>
+            <span class="content-status ${escapeHTML(c.status || "")}">${escapeHTML(c.status || "learn")}</span>
+          </div>
+          <p>${escapeHTML(c.plain)}</p>
+          <div class="exam-note"><strong>CISM lens</strong><p>${escapeHTML(c.exam)}</p></div>
+        </article>
+      `).join("")}</div>`;
+    }
+
+    if (activeContentMode === "comparisons") {
+      body += `<div class="compare-library">${domain.comparisons.map(c => {
+        let middle = "";
+        if (c.left && c.right) {
+          middle = `<div class="compare-pair">
+            <div class="compare-side"><strong>${escapeHTML(c.left[0])}</strong><span>${escapeHTML(c.left[1])}</span></div>
+            <div class="compare-side"><strong>${escapeHTML(c.right[0])}</strong><span>${escapeHTML(c.right[1])}</span></div>
+          </div>`;
+        } else {
+          middle = `<div class="compare-items">${(c.items || []).map(([name, desc]) =>
+            `<div><strong>${escapeHTML(name)}</strong><span>${escapeHTML(desc)}</span></div>`
+          ).join("")}</div>`;
+        }
+        return `<article class="compare-library-card">
+          <header><h4>${escapeHTML(c.title)}</h4></header>
+          ${middle}
+          <div class="memory-line"><strong>Remember:</strong> ${escapeHTML(c.memory)}</div>
+        </article>`;
+      }).join("")}</div>`;
+    }
+
+    if (activeContentMode === "patterns") {
+      body += `<div class="pattern-library">${domain.patterns.map(([signal, action]) =>
+        `<div class="pattern-library-item"><strong>${escapeHTML(signal)}</strong><span>${escapeHTML(action)}</span></div>`
+      ).join("")}</div>`;
+
+      body += `<div class="universal-patterns"><h4>Universal CISM patterns</h4>${content.universalPatterns.map(p =>
+        `<div class="universal-card"><strong>${escapeHTML(p.title)}</strong><span>${escapeHTML(p.rule)} Ask: ${escapeHTML(p.ask)}</span></div>`
+      ).join("")}</div>`;
+    }
+
+    if (activeContentMode === "lifecycles") {
+      body += renderLifecycleSection("Primary lifecycle", domain.lifecycle);
+      if (domain.continuityLifecycle) body += renderLifecycleSection("Continuity / recovery lifecycle", domain.continuityLifecycle);
+    }
+
+    contentWorkspaceBody.innerHTML = body;
+  }
+
+  function renderLifecycleSection(title, steps) {
+    return `<div class="lifecycle-section">
+      <h4>${escapeHTML(title)}</h4>
+      <p>Use the map to determine where a question sits before choosing the next action.</p>
+      <div class="lifecycle-large">${steps.map((step, i) =>
+        `<span class="lifecycle-node">${escapeHTML(step)}</span>${i < steps.length - 1 ? `<span class="lifecycle-arrow">→</span>` : ""}`
+      ).join("")}</div>
+    </div>`;
+  }
+
+  initContentEngine();
+
 })();

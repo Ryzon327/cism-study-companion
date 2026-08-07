@@ -1,13 +1,14 @@
 {
   "domain": 1,
   "name": "Information Security Governance",
-  "status": "planned",
+  "status": "content-engine-ready",
   "clusters": [
     "Business objectives and alignment",
-    "Governance, authority and accountability",
-    "Security strategy",
-    "Business cases and management support",
-    "Policies, standards and governance documents",
+    "Governance vs management",
+    "Roles, authority and accountability",
+    "Information security strategy",
+    "Business case, charter and roadmap",
+    "Governance frameworks and policy hierarchy",
     "Legal, regulatory and contractual requirements"
   ]
 }

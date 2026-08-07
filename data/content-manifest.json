@@ -1,0 +1,18 @@
+{
+  "build": 3,
+  "purpose": "Exam-focused concept, comparison, lifecycle, and pattern catalogue derived from the four supplied CISM domain question sets.",
+  "sourcePolicy": "Original source questions remain separate from the analysis/learning layer. Build 3 does not silently rewrite source rationales.",
+  "domains": {
+    "1": "Information Security Governance",
+    "2": "Information Security Risk Management",
+    "3": "Information Security Program",
+    "4": "Incident Management"
+  },
+  "contentTypes": [
+    "concepts",
+    "comparisons",
+    "question-patterns",
+    "lifecycles",
+    "universal-patterns"
+  ]
+}

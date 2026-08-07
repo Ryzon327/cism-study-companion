@@ -1,5 +1,19 @@
 {
   "domain": 4,
   "name": "Incident Management",
-  "status": "planned"
+  "status": "content-engine-ready",
+  "clusters": [
+    "Incident response plan and roles",
+    "Detection and analysis",
+    "Containment",
+    "Evidence preservation",
+    "Eradication and recovery",
+    "Incident communications",
+    "Post-incident review",
+    "Business impact analysis",
+    "Recovery objectives",
+    "BCP and DRP",
+    "Recovery strategies and sites",
+    "Testing and improvement"
+  ]
 }

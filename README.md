@@ -2,7 +2,7 @@
 
 A calm, browser-based study companion focused on one goal: helping you pass the ISACA CISM exam efficiently.
 
-## Build 2
+## Build 3
 
 This build keeps the approved visual shell and adds the first real study engine:
 
@@ -54,3 +54,16 @@ Your local settings and early study progress are stored in browser storage. Use 
 - attempt history included in backups
 
 The Build 2 lesson is deliberately small. Build 3 will populate the full concept, comparison, pattern, and lifecycle content.
+
+
+## Build 3 additions
+
+- Full four-domain content catalogue
+- Domain concept maps
+- Domain-organized comparison library
+- Universal and domain-specific question patterns
+- Interactive lifecycle maps
+- Functional Explore content workspace
+- Source-analysis manifest
+
+The normal Study flow remains self-contained. Explore is optional reference and deeper review.

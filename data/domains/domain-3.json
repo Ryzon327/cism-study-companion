@@ -1,5 +1,16 @@
 {
   "domain": 3,
   "name": "Information Security Program",
-  "status": "planned"
+  "status": "content-engine-ready",
+  "clusters": [
+    "Strategy to program",
+    "Resources and responsibilities",
+    "Asset ownership",
+    "Criticality, sensitivity and classification",
+    "Policy hierarchy",
+    "Control objectives and control types",
+    "Authentication, authorization and least privilege",
+    "Retention and handling",
+    "Measurement and improvement"
+  ]
 }

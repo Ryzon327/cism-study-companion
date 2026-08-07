@@ -1,5 +1,15 @@
 {
   "domain": 2,
   "name": "Information Security Risk Management",
-  "status": "planned"
+  "status": "content-engine-ready",
+  "clusters": [
+    "Assets and business value",
+    "Threats, vulnerabilities, likelihood and impact",
+    "Risk assessment and evaluation",
+    "Qualitative and quantitative assessment",
+    "Risk appetite and tolerance",
+    "Inherent and residual risk",
+    "Risk response options",
+    "Monitoring, KRIs and reassessment"
+  ]
 }
