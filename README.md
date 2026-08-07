@@ -190,3 +190,16 @@ Build 9 measures transfer. It does not create a separate curriculum and does not
 - Progress shows question-bank depth and scenario-family coverage
 
 Build 10 is designed to make memorizing question wording insufficient.
+
+
+## Build 11 additions
+
+- One-button Today’s Study experience
+- Adaptive daily focus from actual performance evidence
+- Recall → Focused Review → Adaptive Practice → Mixed CISM → Close
+- Memory Rules used as retrieval anchors, not passive flashcards
+- Active Practice and Mixed Practice return results into the daily plan
+- Daily completion saved locally
+- No streaks, overdue backlog, or forced exam cadence
+
+Build 11 connects the existing learning engines into the normal 30–35 minute daily workflow.

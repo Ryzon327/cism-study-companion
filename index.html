@@ -55,36 +55,38 @@
 
       <section class="view active" id="view-study">
         <div class="hero-grid">
-          <article class="today-card">
+          <article class="today-card" id="todayStudyCard">
             <div class="today-card-top">
-              <span class="domain-pill">Foundation</span>
-              <span class="time-chip">~35 min</span>
+              <span class="domain-pill" id="todayDomainPill">Today</span>
+              <span class="time-chip">~30–35 min</span>
             </div>
-            <h2>Think Like CISM</h2>
-            <p class="lead">
-              Start with the management mindset that makes the domains and question patterns easier to recognize.
+            <h2 id="todayStudyTitle">Your study session</h2>
+            <p class="lead" id="todayStudyLead">
+              One calm path through recall, focused review, application, mixed reasoning, and close.
             </p>
 
             <div class="session-route" aria-label="Today's study flow">
               <span>Recall</span><i>→</i>
-              <span>Learn</span><i>→</i>
-              <span>Compare</span><i>→</i>
-              <span>Pattern</span><i>→</i>
-              <span>Practice</span><i>→</i>
-              <span>Repair</span>
+              <span>Review</span><i>→</i>
+              <span>Apply</span><i>→</i>
+              <span>Mixed</span><i>→</i>
+              <span>Close</span>
             </div>
 
             <div class="focus-box">
               <div class="focus-label">Today’s focus</div>
-              <div class="focus-title">Business first. Right role. Right stage.</div>
-              <div class="focus-note">
-                Learn the decision lens before memorizing definitions.
+              <div class="focus-title" id="todayFocusTitle">Loading your focus…</div>
+              <div class="focus-note" id="todayFocusNote">
+                The app chooses a useful focus from your actual study evidence.
               </div>
             </div>
 
-            <button class="primary-button" id="continueStudyButton" type="button">
-              Continue Study
+            <button class="primary-button" id="startDailyStudyButton" type="button">
+              Start Today’s Study
               <span aria-hidden="true">→</span>
+            </button>
+            <button class="secondary-button daily-foundation-button" id="continueStudyButton" type="button">
+              Foundation lesson
             </button>
           </article>
 
@@ -379,6 +381,26 @@
 
 
 
+
+  <div class="daily-overlay hidden" id="dailyOverlay" aria-hidden="true">
+    <div class="daily-shell">
+      <header class="daily-header">
+        <button class="icon-button" id="closeDailyButton" type="button" aria-label="Close today's study">×</button>
+        <div>
+          <div class="eyebrow">TODAY’S STUDY</div>
+          <h2 id="dailyHeaderTitle">One calm session.</h2>
+        </div>
+        <div class="daily-time">~30–35 min</div>
+      </header>
+      <div class="daily-progress"><span id="dailyProgressBar"></span></div>
+      <main class="daily-content" id="dailyContent"></main>
+      <footer class="daily-footer">
+        <span id="dailyFooterNote">Nothing is overdue. Stop when today’s session is complete.</span>
+        <button class="primary-button compact-button" id="dailyNextButton" type="button">Continue →</button>
+      </footer>
+    </div>
+  </div>
+
   <div class="exam-overlay hidden" id="examOverlay" aria-hidden="true">
     <div class="exam-shell">
       <header class="exam-header">
@@ -481,6 +503,7 @@
   <script src="js/active-learning.js"></script>
   <script src="js/mixed-practice.js"></script>
   <script src="js/exam.js"></script>
+  <script src="js/daily-study.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

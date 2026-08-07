@@ -569,6 +569,62 @@
   }
   renderQuestionVariance();
 
+
+  function renderDailyStudyHome() {
+    if (!window.CISMDailyStudy) return;
+    const summary = window.CISMDailyStudy.getSummary();
+    const today = summary.today;
+
+    const domainPill = document.getElementById("todayDomainPill");
+    const title = document.getElementById("todayStudyTitle");
+    const lead = document.getElementById("todayStudyLead");
+    const focusTitle = document.getElementById("todayFocusTitle");
+    const focusNote = document.getElementById("todayFocusNote");
+    const start = document.getElementById("startDailyStudyButton");
+
+    if (domainPill) domainPill.textContent = `D${summary.domain} · ${summary.domainName}`;
+    if (title) title.textContent = today.completed ? "Today’s study is complete" : "Your study session is ready";
+    if (lead) lead.textContent = today.completed
+      ? "You are done for today. Future review will use the evidence you created."
+      : "One calm path through recall, focused review, application, mixed reasoning, and close.";
+    if (focusTitle) focusTitle.textContent = summary.concept;
+    if (focusNote) focusNote.textContent = today.completed
+      ? "Nothing is overdue. Come back when you are ready for the next session."
+      : "Chosen from your current performance evidence. You do not need to hunt for what to study.";
+    if (start) start.innerHTML = today.completed ? `Review Today’s Session <span>→</span>` : `Start Today’s Study <span>→</span>`;
+
+    const attention = document.querySelector(".attention-list");
+    if (attention) {
+      const mastery = storage.getActiveLearning().mastery || {};
+      const weak = Object.entries(mastery)
+        .filter(([,m]) => ["Needs Refresh","Learning"].includes(m.state))
+        .sort((a,b) => (a[1].state==="Needs Refresh"?0:1) - (b[1].state==="Needs Refresh"?0:1))
+        .slice(0,3);
+
+      if (weak.length) {
+        attention.innerHTML = weak.map(([concept,m],i)=>`
+          <div class="attention-item">
+            <div class="attention-icon">${i+1}</div>
+            <div>
+              <strong>${escapeHTML(concept)}</strong>
+              <span>${escapeHTML(m.state)} · the app will fold this into future retrieval and practice.</span>
+            </div>
+          </div>`).join("");
+      }
+    }
+  }
+
+  document.getElementById("startDailyStudyButton")?.addEventListener("click", () => {
+    window.CISMDailyStudy.open();
+  });
+
+  document.addEventListener("cism-daily-updated", renderDailyStudyHome);
+  document.addEventListener("cism-active-learning-updated", renderDailyStudyHome);
+  document.addEventListener("cism-mixed-updated", renderDailyStudyHome);
+  document.addEventListener("cism-exam-updated", renderDailyStudyHome);
+
+  renderDailyStudyHome();
+
   initContentEngine();
 
 })();
