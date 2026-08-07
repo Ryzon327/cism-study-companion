@@ -168,3 +168,12 @@ Build 9 measures transfer. It does not create a separate curriculum and does not
 - Return to Review Center before submission
 - Unmarking or answering removes questions cleanly from the appropriate review queue
 - Reset button handlers and disabled states to eliminate stale-navigation glitches
+
+
+## Build 9.3 additions
+
+- Individual marked-question buttons now enter the marked-review queue
+- Next/Previous after an individual jump stay inside marked questions
+- Individual unanswered-question buttons behave the same way
+- Added an always-visible Return to Review Center action while reviewing
+- Removed the numeric-question fall-through behavior from individual review jumps

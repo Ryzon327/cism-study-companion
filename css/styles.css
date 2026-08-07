@@ -2063,3 +2063,20 @@ select {
   font-size: 11px;
   line-height: 1.5;
 }
+
+
+/* Build 9.3 — Individual Review Jumps Stay in Review Queue */
+.review-center-inline-button {
+  margin-top: 10px;
+  justify-self: start;
+  border: 0;
+  background: transparent;
+  color: var(--accent-strong);
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  padding: 0;
+}
+.review-center-inline-button:hover {
+  text-decoration: underline;
+}

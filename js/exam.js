@@ -172,9 +172,13 @@
 
   function questionJumpButtons(items,type){
     if(!items.length) return `<div class="exam-review-empty">None</div>`;
-    return `<div class="exam-jump-grid">${items.map(({q,i})=>{
+    return `<div class="exam-jump-grid">${items.map(({q,i},queuePos)=>{
       const answered=answers[q.id]!=null;
-      return `<button type="button" class="exam-jump-button ${type} ${answered?"answered":"unanswered"}" data-review-jump-index="${i}">
+      return `<button type="button"
+        class="exam-jump-button ${type} ${answered?"answered":"unanswered"}"
+        data-review-jump-index="${i}"
+        data-review-queue-type="${type}"
+        data-review-queue-pos="${queuePos}">
         <strong>${i+1}</strong>
         <span>${answered?"Answered":"Unanswered"}</span>
       </button>`;
@@ -228,9 +232,26 @@
 
     content.querySelectorAll("[data-review-jump-index]").forEach(btn=>{
       btn.onclick=()=>{
-        pos=Number(btn.dataset.reviewJumpIndex);
-        mode="question";
-        render();
+        const queueType=btn.dataset.reviewQueueType;
+        const selectedPos=Number(btn.dataset.reviewQueuePos);
+
+        if(queueType==="marked"){
+          reviewQueue=flagged.map(x=>x.i);
+          reviewQueueIndex=Math.min(selectedPos,Math.max(0,reviewQueue.length-1));
+          mode="flaggedReview";
+        }else{
+          reviewQueue=unanswered.map(x=>x.i);
+          reviewQueueIndex=Math.min(selectedPos,Math.max(0,reviewQueue.length-1));
+          mode="unansweredReview";
+        }
+
+        if(reviewQueue.length){
+          pos=reviewQueue[reviewQueueIndex];
+          render();
+        }else{
+          mode="reviewCenter";
+          render();
+        }
       };
     });
 
@@ -332,8 +353,14 @@
         <div class="review-queue-note">
           <strong>${mode==="flaggedReview"?"Reviewing marked questions":"Reviewing unanswered questions"}</strong>
           <span>You can answer, change the answer, leave it as-is, or move directly to the next item in this review queue.</span>
+          <button type="button" class="review-center-inline-button" id="returnReviewCenterInline">Return to Review Center</button>
         </div>
       </article>`;
+
+    document.getElementById("returnReviewCenterInline")?.addEventListener("click",()=>{
+      mode="reviewCenter";
+      render();
+    });
 
     content.querySelectorAll("[data-exam-choice]").forEach(b=>{
       b.onclick=()=>{
@@ -382,8 +409,13 @@
     };
 
     next.onclick=()=>{
-      // Clean first, because the user may have answered/unmarked this item.
-      if(!cleanQueue()) return;
+      // Queue is already kept current when an answer is entered or an item is unmarked.
+      // Move only within the active review queue.
+      if(!reviewQueue.length){
+        mode="reviewCenter";
+        render();
+        return;
+      }
 
       if(reviewQueueIndex<reviewQueue.length-1){
         reviewQueueIndex++;
