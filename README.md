@@ -177,3 +177,16 @@ Build 9 measures transfer. It does not create a separate curriculum and does not
 - Individual unanswered-question buttons behave the same way
 - Added an always-visible Return to Review Center action while reviewing
 - Removed the numeric-question fall-through behavior from individual review jumps
+
+
+## Build 10 additions
+
+- 36 scenario/pattern question families across all four domains
+- 72 new scenario variants for recurring CISM mental models
+- Family-diversity-first Practice Exam selection
+- Recently used questions/families are de-prioritized
+- Answer choices are shuffled every exam attempt
+- Exam history stores question and family IDs for future variance
+- Progress shows question-bank depth and scenario-family coverage
+
+Build 10 is designed to make memorizing question wording insufficient.

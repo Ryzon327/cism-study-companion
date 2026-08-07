@@ -557,6 +557,18 @@
 
   renderExamReadiness();
 
+  function renderQuestionVariance() {
+    const root = document.querySelector("#view-progress .progress-grid");
+    if (!root) return;
+    let card = document.getElementById("questionVarianceCard");
+    if (!card) { card=document.createElement("article"); card.className="panel"; card.id="questionVarianceCard"; root.appendChild(card); }
+    const families=window.CISMPatternBank?.families?.length || 0;
+    const scenarios=window.CISMPatternBank?.questions?.length || 0;
+    const total=window.CISMExamBank?.questions?.length || 0;
+    card.innerHTML=`<div class="panel-heading"><div><div class="eyebrow">QUESTION VARIANCE</div><h3>${total} exam questions available</h3></div><span class="status-pill subtle">${families} pattern families</span></div><p class="muted">${scenarios} are scenario variants tied to recurring CISM mental models. Practice Exam favors family diversity and recently unseen wording, then shuffles answer positions.</p>`;
+  }
+  renderQuestionVariance();
+
   initContentEngine();
 
 })();

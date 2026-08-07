@@ -1,5 +1,5 @@
 {
-  "build": "9.3",
+  "build": 10,
   "purpose": "Exam-focused concept, comparison, lifecycle, and pattern catalogue derived from the four supplied CISM domain question sets.",
   "sourcePolicy": "Original source questions remain separate from the analysis/learning layer. Build 3 does not silently rewrite source rationales.",
   "domains": {
@@ -93,5 +93,14 @@
       "individualUnansweredNextUsesUnansweredQueue": true,
       "inlineReturnToReviewCenter": true
     }
+  },
+  "questionVarianceEngine": {
+    "patternFamilies": 36,
+    "scenarioVariants": 72,
+    "recentQuestionDeprioritization": true,
+    "recentFamilyDeprioritization": true,
+    "familyDiversityFirst": true,
+    "answerPositionShuffle": true,
+    "goal": "Measure transfer of CISM mental models rather than memorized wording."
   }
 }

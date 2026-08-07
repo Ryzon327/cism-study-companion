@@ -2080,3 +2080,6 @@ select {
 .review-center-inline-button:hover {
   text-decoration: underline;
 }
+
+/* Build 10 — Scenario & Pattern Question Engine */
+#questionVarianceCard .panel-heading h3{letter-spacing:-.025em}

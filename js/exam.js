@@ -34,20 +34,42 @@
     return a;
   }
 
+  function shuffleAnswers(q){
+    const indexed=q.options.map((text,i)=>({text,original:i}));
+    const mixed=shuffle(indexed);
+    return {...q,options:mixed.map(x=>x.text),correctIndex:mixed.findIndex(x=>x.original===q.correctIndex)};
+  }
+
   function buildSession(){
-    const by={1:[],2:[],3:[],4:[]};
-    bank.questions.forEach(q=>by[q.domain].push(q));
+    const history=storage.getExamReadiness().exams || [];
+    const recentQuestionIds=new Set(history.slice(-3).flatMap(e=>e.questionIds || []));
+    const recentFamilyIds=new Set(history.slice(-2).flatMap(e=>e.familyIds || []));
     const counts={1:7,2:13,3:12,4:8};
-    let out=[];
-    Object.keys(counts).forEach(d=>{
-      out.push(...shuffle(by[d]).slice(0,Math.min(counts[d],by[d].length)));
+    const out=[];
+
+    Object.entries(counts).forEach(([domain,count])=>{
+      const pool=bank.questions.filter(q=>String(q.domain)===domain);
+      const families={};
+      pool.forEach(q=>{ const f=q.familyId||`LEGACY-${q.id}`; (families[f] ||= []).push(q); });
+      const ranked=Object.entries(families).map(([familyId,qs])=>({
+        familyId,qs,
+        score:(recentFamilyIds.has(familyId)?0:6)+qs.filter(q=>!recentQuestionIds.has(q.id)).length+Math.random()*3
+      })).sort((a,b)=>b.score-a.score);
+
+      const chosen=[];
+      for(const fam of ranked){
+        if(chosen.length>=count) break;
+        const qs=[...fam.qs].sort((a,b)=>(recentQuestionIds.has(a.id)?1:0)-(recentQuestionIds.has(b.id)?1:0)||Math.random()-.5);
+        chosen.push(qs[0]);
+      }
+      if(chosen.length<count){
+        const used=new Set(chosen.map(q=>q.id));
+        const rest=pool.filter(q=>!used.has(q.id)).sort((a,b)=>(recentQuestionIds.has(a.id)?1:0)-(recentQuestionIds.has(b.id)?1:0)||Math.random()-.5);
+        chosen.push(...rest.slice(0,count-chosen.length));
+      }
+      out.push(...chosen.slice(0,count));
     });
-    const used=new Set(out.map(q=>q.id));
-    for(const q of shuffle(bank.questions)){
-      if(out.length>=40) break;
-      if(!used.has(q.id)){out.push(q);used.add(q.id);}
-    }
-    return shuffle(out);
+    return shuffle(out.map(shuffleAnswers));
   }
 
   function resetFooterHandlers(){
@@ -479,8 +501,10 @@
       percent:Math.round(correct/session.length*100),
       weightedReadiness:Math.round(weighted),
       domainStats,
-      misses:misses.map(q=>({id:q.id,domain:q.domain,concept:q.concept})),
-      answers
+      misses:misses.map(q=>({id:q.id,domain:q.domain,concept:q.concept,familyId:q.familyId||null})),
+      answers,
+      questionIds:session.map(q=>q.id),
+      familyIds:[...new Set(session.map(q=>q.familyId||`LEGACY-${q.id}`))]
     };
 
     storage.recordExam(result);
