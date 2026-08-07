@@ -101,3 +101,13 @@ The goal is to prove understanding with new wording, not reward memorization of 
 ## Build 6 additions
 
 Expanded adaptive-practice depth across all four domains using the supplied question bank. No new interaction modes; this build focuses on exam-relevant coverage, variation, and repair.
+
+
+## Build 7 additions
+
+- Memory Rules embedded directly in Study
+- Memory Rules repeated in answer feedback
+- Adaptive Memory Rules panel on the Study home screen
+- Learning / Needs Refresh concepts from Active Practice automatically surface their compact anchors back in Study
+
+Memory Rules reinforce explanation and application rather than becoming isolated exam tricks.

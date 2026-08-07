@@ -1407,3 +1407,92 @@ select {
   text-transform: uppercase;
   letter-spacing: .06em;
 }
+
+
+/* Build 7 — Memory Rules in Study */
+.study-memory-rule {
+  margin-top: 20px;
+  padding: 17px 18px;
+  border-radius: 16px;
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 12px;
+  align-items: start;
+  background: color-mix(in srgb, var(--accent-soft) 72%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--border));
+}
+.memory-rule-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  color: var(--accent-strong);
+  font-weight: 900;
+  border: 1px solid var(--border);
+}
+.study-memory-rule span {
+  display: block;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .11em;
+  color: var(--accent-strong);
+  margin-bottom: 5px;
+}
+.study-memory-rule strong {
+  font-size: 15px;
+  line-height: 1.5;
+}
+.feedback-memory {
+  margin-top: 12px;
+  padding: 13px 14px;
+  border-radius: 13px;
+  background: color-mix(in srgb, var(--accent-soft) 70%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
+  display: grid;
+  gap: 4px;
+}
+.feedback-memory strong {
+  color: var(--accent-strong);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.feedback-memory span {
+  font-weight: 800;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.memory-home-panel { margin-top: 22px; }
+.memory-home-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 11px;
+}
+.memory-home-item {
+  padding: 16px;
+  border-radius: 15px;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+}
+.memory-home-item.refresh {
+  border-color: color-mix(in srgb, var(--attention) 40%, var(--border));
+  background: color-mix(in srgb, var(--attention) 5%, var(--surface));
+}
+.memory-home-item span {
+  display: block;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+  margin-bottom: 7px;
+}
+.memory-home-item strong {
+  font-size: 14px;
+  line-height: 1.5;
+}
+@media (max-width: 700px) {
+  .memory-home-grid { grid-template-columns: 1fr; }
+}

@@ -383,7 +383,66 @@
   document.addEventListener("cism-active-learning-updated", () => {
     if (activeContentMode === "active") renderContentWorkspace();
     renderActiveProgress();
+    renderStudyMemoryRules();
   });
+
+
+  function renderStudyMemoryRules() {
+    const grid = document.getElementById("memoryHomeGrid");
+    if (!grid) return;
+
+    const state = storage.getActiveLearning();
+    const mastery = state.mastery || {};
+    const labs = window.CISMActiveLearning || {};
+    const candidates = [];
+
+    Object.entries(labs).forEach(([domain, lab]) => {
+      lab.challenges.forEach(challenge => {
+        const m = mastery[challenge.concept];
+        if (!m || !["Learning", "Needs Refresh"].includes(m.state)) return;
+        candidates.push({
+          domain,
+          concept: challenge.concept,
+          state: m.state,
+          attempts: m.attempts || 0,
+          memory: challenge.memory
+        });
+      });
+    });
+
+    const unique = [];
+    const seen = new Set();
+
+    candidates
+      .sort((a, b) => {
+        const pa = a.state === "Needs Refresh" ? 0 : 1;
+        const pb = b.state === "Needs Refresh" ? 0 : 1;
+        return pa - pb || b.attempts - a.attempts;
+      })
+      .forEach(item => {
+        const key = `${item.domain}:${item.concept}`;
+        if (!seen.has(key)) {
+          seen.add(key);
+          unique.push(item);
+        }
+      });
+
+    const fallback = [
+      { domain: "Core", concept: "Business", memory: "Security enables the business — it does not exist to maximize restriction." },
+      { domain: "Core", concept: "Authority", memory: "Security advises → business authority decides." },
+      { domain: "Core", concept: "Sequence", memory: "FIRST = find the prerequisite for this lifecycle stage." },
+      { domain: "Core", concept: "Management", memory: "Funding / executive support → business case." }
+    ];
+
+    const chosen = unique.length ? unique.slice(0, 4) : fallback;
+
+    grid.innerHTML = chosen.map(item => `
+      <div class="memory-home-item ${item.state === "Needs Refresh" ? "refresh" : ""}">
+        <span>${item.domain === "Core" ? escapeHTML(item.concept) : `D${escapeHTML(item.domain)} · ${escapeHTML(item.concept)}`}</span>
+        <strong>${escapeHTML(item.memory)}</strong>
+      </div>
+    `).join("");
+  }
 
   function renderActiveProgress() {
     const state = storage.getActiveLearning();
@@ -415,6 +474,7 @@
   }
 
   renderActiveProgress();
+  renderStudyMemoryRules();
 
   initContentEngine();
 

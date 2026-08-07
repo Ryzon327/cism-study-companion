@@ -22,6 +22,7 @@
         confidence: true,
         rationale: "Information security advises on risk and impact, but the business decision is made by senior management.",
         pattern: "Security advises → management makes the business decision.",
+        memoryRule: "Security advises → business authority decides.",
         repair: {
           whyAttractive: "Operational security roles often discover and analyze the issue, so they can feel like the decision owner.",
           correction: "CISM separates expertise from authority. Identifying or analyzing a risk does not transfer business accountability to the security manager.",
@@ -39,7 +40,8 @@
         calloutTitle: "Mental model",
         callout: "Business objective → understand risk/requirements → choose the appropriate response → measure whether it works.",
         map: ["Business", "Risk / Requirements", "Decision", "Controls", "Measure"],
-        mapActive: 0
+        mapActive: 0,
+        memoryRule: "Business → risk / requirements → decision → controls → measure."
       },
       {
         type: "compare",
@@ -54,7 +56,8 @@
           ["Internal audit", "Independently assess and provide assurance"]
         ],
         calloutTitle: "Question to ask",
-        callout: "Is the question asking who understands the issue, who recommends the response, who approves it, or who carries it out?"
+        callout: "Is the question asking who understands the issue, who recommends the response, who approves it, or who carries it out?",
+        memoryRule: "Recommend ≠ approve ≠ implement ≠ independently verify."
       },
       {
         type: "pattern",
@@ -69,7 +72,8 @@
           ["Business case", "Define the need before objectives, cost, and cost-effectiveness."]
         ],
         calloutTitle: "Muscle-memory question",
-        callout: "What information or decision must exist before the other answer choices make sense?"
+        callout: "What information or decision must exist before the other answer choices make sense?",
+        memoryRule: "FIRST = find the prerequisite for this lifecycle stage — not a universal keyword answer."
       },
       {
         type: "guided",
@@ -94,6 +98,7 @@
         confidence: true,
         rationale: "The potential effects must be understood first. Management cannot choose a response, exemptions cannot be evaluated sensibly, and costs cannot be estimated until scope is known.",
         pattern: "FIRST + new requirement → establish affected scope before response.",
+        memoryRule: "New requirement + FIRST → scope what is affected before choosing the response.",
         repair: {
           whyAttractive: "Escalating to management sounds appropriately managerial, while cost and exemptions sound business-focused.",
           correction: "Those actions need facts. CISM often places assessment or scoping before decision-making when the decision-makers do not yet have a basis for choosing.",
@@ -118,6 +123,7 @@
         confidence: true,
         rationale: "Management support enables governance, resources, authority, and organizational commitment. The other choices can contribute, but they are insufficient without that support.",
         pattern: "Enterprise program / governance success → management commitment is foundational.",
+        memoryRule: "Enterprise program success → senior management support first.",
         repair: {
           whyAttractive: "Budget and skilled administrators are tangible resources and can feel more directly connected to implementation.",
           correction: "CISM asks for the enterprise-level enabler. Resources and technical skill can be ineffective when leadership has not provided authority, commitment, or organizational support.",
@@ -142,6 +148,7 @@
         confidence: true,
         rationale: "A complete business case gives management the broader decision context, including need, benefits, costs, risk, and business value. Individual inputs such as a risk assessment or metrics are not as persuasive by themselves.",
         pattern: "Need management support for investment → business case.",
+        memoryRule: "Funding / executive support → package the decision in a business case.",
         repair: {
           whyAttractive: "Risk assessments and regulations are legitimate reasons to act and frequently appear in security decisions.",
           correction: "The question is about persuading management to invest. CISM favors the complete business decision package over one supporting input.",
@@ -164,7 +171,8 @@
           "A business case packages security into a management decision."
         ],
         calloutTitle: "Carry this forward",
-        callout: "When two answers both look correct, ask which one fits the role, qualifier, business need, and lifecycle stage better."
+        callout: "When two answers both look correct, ask which one fits the role, qualifier, business need, and lifecycle stage better.",
+        memoryRule: "Role + qualifier + lifecycle + business = CISM judgment."
       }
     ]
   };
@@ -185,6 +193,17 @@
   function renderCallout(step) {
     if (!step.callout) return "";
     return `<div class="study-callout"><strong>${escapeHTML(step.calloutTitle)}</strong><div>${escapeHTML(step.callout)}</div></div>`;
+  }
+
+  function renderMemoryRule(step) {
+    if (!step.memoryRule) return "";
+    return `<div class="study-memory-rule">
+      <div class="memory-rule-icon">↳</div>
+      <div>
+        <span>MEMORY RULE</span>
+        <strong>${escapeHTML(step.memoryRule)}</strong>
+      </div>
+    </div>`;
   }
 
   function renderCompare(step) {
@@ -248,6 +267,7 @@
         <h3>${correct ? "That reasoning fits the CISM lens." : "The selected answer is understandable — but it skips the stronger CISM decision."}</h3>
         <p>${escapeHTML(step.rationale)}</p>
         <div class="feedback-pattern"><strong>Pattern</strong><span>${escapeHTML(step.pattern)}</span></div>
+        ${step.memoryRule ? `<div class="feedback-memory"><strong>Memory rule</strong><span>${escapeHTML(step.memoryRule)}</span></div>` : ""}
         ${!correct && step.repair ? `
           <div class="repair-grid">
             <div><strong>Why the distractor can feel right</strong><p>${escapeHTML(step.repair.whyAttractive)}</p></div>
@@ -301,6 +321,7 @@
         ${renderPatternCards(step)}
         ${renderDecoder(step)}
         ${renderCallout(step)}
+        ${renderMemoryRule(step)}
         ${summary}
         ${renderChoices(step, state?.attempt)}
       </article>
