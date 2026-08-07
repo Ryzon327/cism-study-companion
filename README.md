@@ -2,7 +2,7 @@
 
 A calm, browser-based study companion focused on one goal: helping you pass the ISACA CISM exam efficiently.
 
-## Build 4
+## Build 5
 
 This build keeps the approved visual shell and adds the first real study engine:
 
@@ -82,3 +82,17 @@ The normal Study flow remains self-contained. Explore is optional reference and 
 - Progress view for active retrieval evidence
 
 Build 4 intentionally measures what you can retrieve and apply, not how often you reread content.
+
+
+## Build 5 additions
+
+- Larger active-practice pools
+- Fresh adaptive question mixes each session
+- Domain 1 policy hierarchy and baseline practice
+- Weakness-weighted question selection
+- Recently seen question de-prioritization
+- Needs Refresh mastery state
+- Automatic repair-focus roll-forward
+- Miss clustering by concept at session completion
+
+The goal is to prove understanding with new wording, not reward memorization of a fixed practice set.

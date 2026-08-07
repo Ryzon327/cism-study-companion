@@ -332,9 +332,15 @@
       const lab = window.CISMActiveLearning?.[activeDomain];
       const saved = storage.getActiveLearning();
       const evidence = saved.domainEvidence?.[activeDomain] || { attempts: 0, correct: 0 };
+      const weakConcepts = Object.entries(saved.mastery || {})
+        .filter(([concept, m]) => ["Learning", "Needs Refresh"].includes(m.state))
+        .filter(([concept]) => lab.challenges.some(c => c.concept === concept))
+        .sort((a,b) => (a[1].state === "Needs Refresh" ? -1 : 1))
+        .slice(0, 4);
+
       body += `<div class="active-practice-intro">
         <div>
-          <div class="eyebrow">ACTIVE LEARNING</div>
+          <div class="eyebrow">ADAPTIVE ACTIVE LEARNING</div>
           <h4>${escapeHTML(lab.title)}</h4>
           <p>${escapeHTML(lab.description)}</p>
         </div>
@@ -344,12 +350,18 @@
         </div>
       </div>
       <div class="active-method-grid">
-        <div><strong>Distinguish</strong><span>Separate concepts that look alike.</span></div>
-        <div><strong>Sequence</strong><span>Build the process in the right order.</span></div>
-        <div><strong>Apply</strong><span>Use the concept in a new scenario.</span></div>
-        <div><strong>Pattern</strong><span>Recognize what CISM is actually testing.</span></div>
+        <div><strong>Fresh mix</strong><span>Different questions are selected each session.</span></div>
+        <div><strong>Weakness weighted</strong><span>Missed concepts return more often.</span></div>
+        <div><strong>Repeat protection</strong><span>Recently seen wording is de-prioritized.</span></div>
+        <div><strong>Repair loop</strong><span>Misses feed directly back into relearning.</span></div>
       </div>
-      <button class="primary-button" id="startActivePracticeButton" type="button">Start Active Practice <span>→</span></button>`;
+      ${weakConcepts.length ? `<div class="adaptive-focus">
+        <div class="eyebrow">CURRENT REPAIR FOCUS</div>
+        <div class="adaptive-focus-chips">
+          ${weakConcepts.map(([concept, m]) => `<span class="${m.state === "Needs Refresh" ? "refresh" : ""}">${escapeHTML(concept)} · ${escapeHTML(m.state)}</span>`).join("")}
+        </div>
+      </div>` : ""}
+      <button class="primary-button" id="startActivePracticeButton" type="button">Start Adaptive Practice <span>→</span></button>`;
     }
 
     contentWorkspaceBody.innerHTML = body;

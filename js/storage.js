@@ -59,11 +59,29 @@
     const key = result.concept || result.challengeId;
     const prior = state.mastery[key] || { attempts: 0, correct: 0, lastSeen: null };
     prior.attempts += 1;
-    if (result.correct) prior.correct += 1;
+    if (result.correct) {
+      prior.correct += 1;
+      prior.consecutiveCorrect = (prior.consecutiveCorrect || 0) + 1;
+      prior.consecutiveWrong = 0;
+    } else {
+      prior.consecutiveWrong = (prior.consecutiveWrong || 0) + 1;
+      prior.consecutiveCorrect = 0;
+      prior.lastMissed = new Date().toISOString();
+    }
+
     prior.lastSeen = new Date().toISOString();
-    prior.state = prior.correct >= 3 && prior.attempts >= 3 ? "Strong"
-      : prior.correct >= 1 ? "Usable"
-      : "Learning";
+    const rate = prior.attempts ? prior.correct / prior.attempts : 0;
+
+    if (!result.correct && (prior.state === "Strong" || prior.state === "Usable")) {
+      prior.state = "Needs Refresh";
+    } else if (prior.attempts >= 4 && rate >= 0.80 && (prior.consecutiveCorrect || 0) >= 2) {
+      prior.state = "Strong";
+    } else if (prior.correct >= 2 && rate >= 0.60) {
+      prior.state = "Usable";
+    } else {
+      prior.state = "Learning";
+    }
+
     state.mastery[key] = prior;
 
     const d = String(result.domain);

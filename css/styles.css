@@ -1339,3 +1339,71 @@ select {
   .learning-content { padding: 32px 20px; }
   .learning-header { padding-left: 16px; padding-right: 16px; }
 }
+
+
+/* Build 5 — Adaptive practice & repair */
+.adaptive-focus {
+  margin-top: 14px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  background: var(--surface-soft);
+  border-radius: 15px;
+}
+.adaptive-focus-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 9px;
+}
+.adaptive-focus-chips span {
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-soft);
+  font-size: 11px;
+  font-weight: 700;
+}
+.adaptive-focus-chips span.refresh {
+  border-color: color-mix(in srgb, var(--attention) 45%, var(--border));
+}
+
+.adaptive-completion { text-align: left; }
+.adaptive-completion .completion-score { text-align: center; }
+
+.adaptive-repair-list {
+  display: grid;
+  gap: 10px;
+  margin: 22px 0;
+}
+.adaptive-repair-item {
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--attention) 35%, var(--border));
+  border-radius: 15px;
+  background: color-mix(in srgb, var(--attention) 6%, var(--surface));
+}
+.adaptive-repair-item > div {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.adaptive-repair-item strong { font-size: 14px; }
+.adaptive-repair-item p {
+  margin: 8px 0 4px;
+  color: var(--text-soft);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.adaptive-repair-item small { color: var(--text-soft); }
+.repair-state {
+  padding: 5px 7px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--attention);
+  font-size: 9px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
