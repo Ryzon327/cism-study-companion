@@ -4,6 +4,7 @@
   const ATTEMPTS_KEY = "cism-companion-attempts-v2";
   const ACTIVE_KEY = "cism-companion-active-learning-v4";
   const MIXED_KEY = "cism-companion-mixed-practice-v8";
+  const EXAM_KEY = "cism-companion-exam-readiness-v9";
 
   const defaults = { theme: "light", sessionLength: "normal" };
 
@@ -142,6 +143,19 @@
     return state;
   }
 
+
+  function getExamReadiness() {
+    return safeParse(EXAM_KEY, { exams: [] });
+  }
+
+  function recordExam(result) {
+    const state = getExamReadiness();
+    state.exams.push({ ...result, completedAt: new Date().toISOString() });
+    if (state.exams.length > 20) state.exams = state.exams.slice(-20);
+    localStorage.setItem(EXAM_KEY, JSON.stringify(state));
+    return state;
+  }
+
   function exportData() {
     return {
       app: "CISM Study Companion",
@@ -151,7 +165,8 @@
       progress: getProgress(),
       attempts: getAttempts(),
       activeLearning: getActiveLearning(),
-      mixedPractice: getMixedPractice()
+      mixedPractice: getMixedPractice(),
+      examReadiness: getExamReadiness()
     };
   }
 
@@ -162,7 +177,8 @@
     localStorage.setItem(ATTEMPTS_KEY, JSON.stringify(data.attempts || []));
     localStorage.setItem(ACTIVE_KEY, JSON.stringify(data.activeLearning || { challengeHistory: [], mastery: {}, domainEvidence: {} }));
     localStorage.setItem(MIXED_KEY, JSON.stringify(data.mixedPractice || { sessions: [], attempts: [], mindset: {} }));
+    localStorage.setItem(EXAM_KEY, JSON.stringify(data.examReadiness || { exams: [] }));
   }
 
-  window.CISMStorage = { getPrefs, setPrefs, getProgress, setProgress, getAttempts, addAttempt, getActiveLearning, recordActiveResult, getMixedPractice, recordMixedAttempt, recordMixedSession, exportData, importData };
+  window.CISMStorage = { getPrefs, setPrefs, getProgress, setProgress, getAttempts, addAttempt, getActiveLearning, recordActiveResult, getMixedPractice, recordMixedAttempt, recordMixedSession, getExamReadiness, recordExam, exportData, importData };
 })();

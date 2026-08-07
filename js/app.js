@@ -520,6 +520,43 @@
 
   renderMixedProgress();
 
+
+  document.getElementById("startPracticeExamCard")?.addEventListener("click", () => {
+    window.CISMExamEngine.open();
+  });
+
+  function renderExamReadiness() {
+    const root = document.querySelector("#view-progress .progress-grid");
+    if (!root) return;
+    let card = document.getElementById("examReadinessCard");
+    if (!card) {
+      card = document.createElement("article");
+      card.className = "panel exam-readiness-progress";
+      card.id = "examReadinessCard";
+      root.appendChild(card);
+    }
+    const exams = storage.getExamReadiness().exams || [];
+    if (!exams.length) {
+      card.innerHTML = `<div class="panel-heading"><div><div class="eyebrow">EXAM READINESS</div><h3>No exam evidence yet</h3></div></div>
+        <p class="muted">Complete Practice Exam + Readiness when you want to test without coaching.</p>`;
+      return;
+    }
+    const last = exams[exams.length-1];
+    const recent = exams.slice(-3);
+    const avg = Math.round(recent.reduce((a,e)=>a+(e.weightedReadiness||0),0)/recent.length);
+    card.innerHTML = `<div class="panel-heading"><div><div class="eyebrow">EXAM READINESS</div><h3>${last.weightedReadiness}% weighted readiness</h3></div><span class="status-pill subtle">${exams.length} exam${exams.length===1?"":"s"}</span></div>
+      <p class="muted">Recent ${recent.length}-session average: <strong>${avg}%</strong>. Use repeated evidence, not one lucky score.</p>
+      <div class="mini-progress"><span style="width:${last.weightedReadiness}%"></span></div>`;
+  }
+
+  document.addEventListener("cism-exam-updated", () => {
+    renderExamReadiness();
+    renderActiveProgress();
+    renderStudyMemoryRules();
+  });
+
+  renderExamReadiness();
+
   initContentEngine();
 
 })();

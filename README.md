@@ -135,3 +135,15 @@ Mixed Practice remains a learning mode. Full Practice Exam mode will withhold fe
 - Correct dimensions stay quiet to preserve the calm UI
 
 This is a refinement of Mixed Practice, not a new learning mode.
+
+## Build 9 additions
+
+- Practice Exam mode with coaching fully removed until submission
+- Domain-weighted readiness analysis
+- Per-domain exam evidence
+- Mark-for-review and unanswered-question check
+- Post-exam missed-question explanations and Memory Rules
+- Exam misses automatically feed the existing repair engine
+- Readiness history and recent-session average in Progress
+
+Build 9 measures transfer. It does not create a separate curriculum and does not treat one practice score as a guaranteed ISACA result.

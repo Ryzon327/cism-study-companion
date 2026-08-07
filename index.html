@@ -299,11 +299,11 @@
             <strong>Mixed CISM</strong>
             <p>Work across all four domains without being told the domain. Identify the mindset signal, then answer.</p>
           </button>
-          <article class="panel option-card">
-            <span class="explore-kicker">NEXT</span>
-            <h3>Practice Exam</h3>
-            <p>Exam-like questions first; analysis and repair after submission.</p>
-          </article>
+          <button class="explore-card exam-practice-card" id="startPracticeExamCard" type="button">
+            <span class="explore-kicker">NEW · BUILD 9</span>
+            <strong>Practice Exam + Readiness</strong>
+            <p>No hints. No domain labels. No feedback until submission. Then diagnose exactly what needs repair.</p>
+          </button>
         </div>
       </section>
 
@@ -377,6 +377,27 @@
   </div>
 
 
+
+
+  <div class="exam-overlay hidden" id="examOverlay" aria-hidden="true">
+    <div class="exam-shell">
+      <header class="exam-header">
+        <button class="icon-button" id="closeExamButton" type="button" aria-label="Close practice exam">×</button>
+        <div>
+          <div class="eyebrow">PRACTICE EXAM · READINESS</div>
+          <h2 id="examTitle">Prove what you know without coaching.</h2>
+        </div>
+        <div class="exam-counter" id="examCounter">1 / 40</div>
+      </header>
+      <div class="exam-progress"><span id="examProgressBar"></span></div>
+      <main class="exam-content" id="examContent"></main>
+      <footer class="exam-footer">
+        <button class="secondary-button" id="examPrevButton" type="button">← Previous</button>
+        <button class="secondary-button" id="examReviewButton" type="button">Mark for review</button>
+        <button class="primary-button compact-button" id="examNextButton" type="button">Next →</button>
+      </footer>
+    </div>
+  </div>
 
   <div class="mixed-overlay hidden" id="mixedOverlay" aria-hidden="true">
     <div class="mixed-shell">
@@ -453,10 +474,12 @@
   <script src="data/content.js"></script>
   <script src="data/active-learning.js"></script>
   <script src="data/mixed-practice.js"></script>
+  <script src="data/exam-bank.js"></script>
   <script src="js/study.js"></script>
   <script src="js/quiz.js"></script>
   <script src="js/active-learning.js"></script>
   <script src="js/mixed-practice.js"></script>
+  <script src="js/exam.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
