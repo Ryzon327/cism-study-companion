@@ -2,9 +2,9 @@
 
 A calm, browser-based study companion focused on one goal: helping you pass the ISACA CISM exam efficiently.
 
-## Build 1
+## Build 2
 
-This build establishes the application shell and visual system:
+This build keeps the approved visual shell and adds the first real study engine:
 
 - Study / Explore / Practice / Progress navigation
 - Light mode by default
@@ -40,3 +40,17 @@ Build 1 intentionally does **not** include the complete CISM curriculum or full 
 ## Data
 
 Your local settings and early study progress are stored in browser storage. Use **Settings → Export backup** to save a portable JSON backup.
+
+
+## Build 2 additions
+
+- Question Decoder
+- confidence tracking
+- guided and independent questions
+- immediate reasoning feedback
+- repair flow for missed questions
+- transfer scenarios
+- resumable session position
+- attempt history included in backups
+
+The Build 2 lesson is deliberately small. Build 3 will populate the full concept, comparison, pattern, and lifecycle content.
