@@ -3,7 +3,7 @@
     "1": {
       title: "Governance Adaptive Practice",
       description: "A fresh mix of governance questions each session. Misses are weighted back into future practice and repair.",
-      sessionSize: 8,
+      sessionSize: 10,
       challenges: [
         {
           id: "D1-POLICY-HIERARCHY-1",
@@ -171,6 +171,38 @@
           memory: "Governance = direction + decision + oversight in support of business."
         },
         {
+          id: "D1-BSC-1", type: "distinguish", concept: "Governance measurement",
+          title: "Which tool measures objective achievement?",
+          prompt: "Which tool is MOST effective for evaluating the degree to which information security objectives are being met?",
+          options: ["SWOT analysis", "Waterfall chart", "Gap analysis", "Balanced scorecard"], correctIndex: 3,
+          explanation: "The supplied Domain 1 material identifies the balanced scorecard as the most effective option for evaluating how well information security objectives are being met.",
+          memory: "Objectives being met → balanced scorecard."
+        },
+        {
+          id: "D1-STANDARDS-LINK-1", type: "apply", concept: "Policy hierarchy",
+          title: "What links procedure to policy?",
+          prompt: "Which governance document provides the linkage that keeps procedures aligned with information security policy requirements?",
+          options: ["Standards", "Guidelines", "Security metrics", "Gap analysis"], correctIndex: 0,
+          explanation: "Standards set allowable boundaries for procedures so they comply with policy intent.",
+          memory: "Policy direction → standards boundaries → procedures steps."
+        },
+        {
+          id: "D1-MATURITY-1", type: "pattern", concept: "Security strategy",
+          title: "Evidence of program maturity",
+          prompt: "Which is the BEST evidence of a mature information security program?",
+          options: ["A comprehensive risk assessment", "A physical security architecture", "A controls statement of applicability", "An effective information security strategy"], correctIndex: 3,
+          explanation: "The source bank treats an effective security strategy as the strongest evidence because it defines the program's direction and alignment.",
+          memory: "Mature program → effective strategy, not a single artifact."
+        },
+        {
+          id: "D1-EXEC-COMMIT-1", type: "apply", concept: "Senior management support",
+          title: "How do you gain commitment?",
+          prompt: "What is MOST appropriate for gaining senior-management commitment to the security strategy?",
+          options: ["Workforce security education", "Frequent operational meetings with executives", "A standalone detailed cost-benefit analysis", "A formal presentation linking the program to business goals"], correctIndex: 3,
+          explanation: "The source emphasizes educating senior management on key program aspects and showing how security enables business goals.",
+          memory: "Executive commitment → communicate security in business terms."
+        },
+        {
           id: "D1-SEQUENCE-GOVERNANCE",
           type: "sequence",
           concept: "Governance lifecycle",
@@ -186,7 +218,7 @@
     "2": {
       title: "Risk Adaptive Practice",
       description: "A weighted mix of risk terminology, treatment, ownership, and sequencing.",
-      sessionSize: 8,
+      sessionSize: 10,
       challenges: [
         {
           id: "D2-INHERENT-RESIDUAL-1",
@@ -288,6 +320,54 @@
           memory: "KRI = early warning for risk."
         },
         {
+          id: "D2-CBA-PURPOSE-2", type: "apply", concept: "Cost-benefit treatment",
+          title: "Why perform cost-benefit analysis?",
+          prompt: "A cost-benefit analysis is performed on a proposed control primarily to do what?",
+          options: ["Define budget limits", "Demonstrate due diligence", "Verify it fits the security budget", "Show the control cost is justified by risk reduction"], correctIndex: 3,
+          explanation: "Management uses the analysis to weigh control cost against the reduction in risk.",
+          memory: "Control economics → cost versus risk reduction."
+        },
+        {
+          id: "D2-ACCEPTABLE-2", type: "pattern", concept: "Acceptable risk",
+          title: "What is the risk-management destination?",
+          prompt: "An effective risk management program should reduce risk to:",
+          options: ["Zero", "An acceptable level", "A fixed percentage of revenue", "Zero probability of occurrence"], correctIndex: 1,
+          explanation: "The supplied material explicitly states that risk is reduced to an acceptable level; eliminating all risk is neither realistic nor cost-effective.",
+          memory: "CISM does not chase zero risk → acceptable risk."
+        },
+        {
+          id: "D2-INSIDER-1", type: "apply", concept: "Control selection",
+          title: "Best preventive insider control",
+          prompt: "Which control is MOST effective against insider threats to confidential information?",
+          options: ["Role-based access control", "Audit trail monitoring", "Privacy policy", "Defense in depth"], correctIndex: 0,
+          explanation: "The source selects role-based access control because it is preventive, limits access according to business need, and supports accountability.",
+          memory: "Unnecessary insider access → preventive business-need access."
+        },
+        {
+          id: "D2-EXPOSURE-1", type: "distinguish", concept: "Risk mechanics",
+          title: "What does reduced exposure change?",
+          prompt: "Reducing exposure of a critical asset primarily reduces which element?",
+          options: ["Impact of compromise", "Likelihood of exploitation", "The asset's vulnerability", "Recovery time"], correctIndex: 1,
+          explanation: "Reducing exposure makes exploitation less likely but does not remove the underlying vulnerability.",
+          memory: "Less exposure → lower likelihood, not lower impact."
+        },
+        {
+          id: "D2-TREAT-VULN-1", type: "pattern", concept: "Risk treatment",
+          title: "Significant vulnerabilities found",
+          prompt: "A scan finds significant vulnerabilities. What is the BEST treatment approach?",
+          options: ["Mitigate every significant finding immediately", "Base treatment on threat, impact, and cost", "Always implement compensating controls", "Always seek management approval first"], correctIndex: 1,
+          explanation: "Treatment should consider exposure/threat, potential impact, and the costs of available treatment options.",
+          memory: "Finding ≠ automatic fix → evaluate threat + impact + cost."
+        },
+        {
+          id: "D2-RESOURCES-1", type: "apply", concept: "Risk analysis",
+          title: "What drives mitigation resources?",
+          prompt: "What should primarily determine resources devoted to mitigating exposures?",
+          options: ["Risk analysis results", "Audit findings", "Penetration-test findings", "Available IT budget"], correctIndex: 0,
+          explanation: "The source identifies risk analysis as the most complete basis for allocating mitigation resources.",
+          memory: "Resource allocation follows risk analysis."
+        },
+        {
           id: "D2-SEQUENCE-RISK",
           type: "sequence",
           concept: "Risk lifecycle",
@@ -303,7 +383,7 @@
     "3": {
       title: "Security Program Adaptive Practice",
       description: "A weighted mix of ownership, classification, policy hierarchy, access, and controls.",
-      sessionSize: 8,
+      sessionSize: 10,
       challenges: [
         {
           id: "D3-OWNER-CUSTODIAN-1",
@@ -394,6 +474,54 @@
           memory: "Prevent = stop. Detect = see."
         },
         {
+          id: "D3-CLASS-PREREQ-1", type: "pattern", concept: "Asset classification",
+          title: "Before classification",
+          prompt: "What is the MOST important prerequisite to undertaking asset classification?",
+          options: ["Threat analysis", "Impact assessment", "Controls evaluation", "Penetration testing"], correctIndex: 1,
+          explanation: "Classification reflects asset value and importance, so criticality and sensitivity must first be established through impact assessment.",
+          memory: "Before classifying → understand business impact."
+        },
+        {
+          id: "D3-CLASS-BASIS-1", type: "distinguish", concept: "Asset classification",
+          title: "What primarily drives classification?",
+          prompt: "The classification level of an asset should be PRIMARILY based on:",
+          options: ["Criticality and sensitivity", "Likelihood and impact", "Replacement cost", "Threat vector and exposure"], correctIndex: 0,
+          explanation: "The supplied questions consistently base classification on business criticality, sensitivity, and potential impact.",
+          memory: "Classification → criticality + sensitivity."
+        },
+        {
+          id: "D3-PROTECTION-LEVEL-1", type: "apply", concept: "Asset classification",
+          title: "What best determines protection level?",
+          prompt: "Which factor BEST helps determine the appropriate protection level for an information asset?",
+          options: ["Acquisition cost", "Known vulnerabilities", "Threat exposure", "Criticality of the supported business function"], correctIndex: 3,
+          explanation: "Business-function criticality is the strongest basis because protection should reflect the business consequence of loss or unavailability.",
+          memory: "Protection strength follows business criticality."
+        },
+        {
+          id: "D3-CLASS-BENEFIT-1", type: "apply", concept: "Asset classification",
+          title: "Why classify information?",
+          prompt: "What is the PRIMARY benefit of information asset classification?",
+          options: ["It directly defines business objectives", "It identifies controls commensurate with impact", "It defines all access rights", "It establishes ownership"], correctIndex: 1,
+          explanation: "Classification translates business value and potential impact into the level of protection required.",
+          memory: "Classify so protection matches impact."
+        },
+        {
+          id: "D3-CLASS-METHOD-1", type: "pattern", concept: "Asset classification",
+          title: "Who and what determine classification?",
+          prompt: "What is the BEST method to determine classification of data?",
+          options: ["Data owner assesses impact of compromise", "Security policy alone determines it", "Existing protection level determines it", "Security manager assesses probability of loss"], correctIndex: 0,
+          explanation: "The source says classification is based on potential impact and is determined by the data owner.",
+          memory: "Owner + impact → classification."
+        },
+        {
+          id: "D3-POLICY-STANDARD-1", type: "distinguish", concept: "Policy hierarchy",
+          title: "Direction or boundary?",
+          prompt: "Which statement BEST distinguishes policy from a standard?",
+          options: ["Policy sets mandatory direction; a standard sets mandatory allowable boundaries", "Policy is optional; a standard is mandatory", "Policy is a step-by-step method; a standard is guidance", "They are interchangeable"], correctIndex: 0,
+          explanation: "Policy sets management direction while standards establish boundaries that must be met to satisfy policy intent.",
+          memory: "Policy = direction. Standard = boundary."
+        },
+        {
           id: "D3-SEQUENCE-PROTECTION",
           type: "sequence",
           concept: "Asset protection lifecycle",
@@ -409,7 +537,7 @@
     "4": {
       title: "Incident & Continuity Adaptive Practice",
       description: "A weighted mix of incident sequencing, evidence, BIA, recovery objectives, and continuity.",
-      sessionSize: 8,
+      sessionSize: 10,
       challenges: [
         {
           id: "D4-RTO-RPO-1",
@@ -498,6 +626,62 @@
           correctIndex: 3,
           explanation: "Affected data owners should be notified first so they can determine damage and coordinate corrective action with the response team.",
           memory: "Business-impact decision → notify the affected data owner early."
+        },
+        {
+          id: "D4-SDO-1", type: "distinguish", concept: "Recovery objectives",
+          title: "Which recovery objective is service level?",
+          prompt: "Which objective describes the acceptable level of service during alternate processing until normal operations are restored?",
+          options: ["RTO", "RPO", "SDO", "MTO"], correctIndex: 2,
+          explanation: "The source defines SDO as the acceptable level of service within the RTO during alternate processing.",
+          memory: "SDO = service level while operating in alternate mode."
+        },
+        {
+          id: "D4-MTO-1", type: "distinguish", concept: "Recovery objectives",
+          title: "Which objective is maximum outage?",
+          prompt: "Which term describes the maximum time an enterprise can support processing in alternate mode?",
+          options: ["RPO", "RTO", "SDO", "MTO"], correctIndex: 3,
+          explanation: "The supplied material defines maximum tolerable outage as the maximum period the enterprise can support alternate-mode processing.",
+          memory: "MTO = maximum tolerable outage."
+        },
+        {
+          id: "D4-RTO-PRIMARY-1", type: "pattern", concept: "Recovery objectives",
+          title: "What primarily drives RTO?",
+          prompt: "What is the PRIMARY consideration when defining recovery time objectives for information assets?",
+          options: ["Regulatory requirements", "Business requirements", "Financial purchase value", "IT resource availability"], correctIndex: 1,
+          explanation: "The source states that business criticality should drive RTO decisions.",
+          memory: "Recovery objectives begin with business requirements."
+        },
+        {
+          id: "D4-BCP-FIRST-1", type: "pattern", concept: "BIA",
+          title: "Starting a continuity program",
+          prompt: "What should be determined FIRST when establishing a business continuity program?",
+          options: ["Cost to rebuild facilities", "Incremental daily cost of system unavailability", "Offsite facility location", "Recovery-team composition"], correctIndex: 1,
+          explanation: "The source uses incremental loss over time to establish recovery requirements before selecting facilities or teams.",
+          memory: "Continuity FIRST → quantify business impact over time."
+        },
+        {
+          id: "D4-PRIORITY-BIA-1", type: "apply", concept: "BIA",
+          title: "What drives response priority?",
+          prompt: "Prioritization of incident response activities is driven primarily by which analysis?",
+          options: ["RPO", "Quantitative risk assessment", "BCP", "BIA"], correctIndex: 3,
+          explanation: "Once an incident exists, potential business impact drives response priority, captured by the BIA.",
+          memory: "Incident priority → impact → BIA."
+        },
+        {
+          id: "D4-FORENSIC-HASH-1", type: "pattern", concept: "Evidence integrity",
+          title: "Disk image created — what NEXT?",
+          prompt: "After primary and backup forensic images are created, what should be done NEXT to establish authenticity?",
+          options: ["Encrypt both images", "Create another image with a different tool", "Generate hashes for the images", "Write new response procedures"], correctIndex: 2,
+          explanation: "Hashes demonstrate that the analysis copy is identical to the reference image and should be generated promptly.",
+          memory: "Forensic copy → hash → prove integrity."
+        },
+        {
+          id: "D4-RECIPROCAL-1", type: "apply", concept: "Recovery strategies",
+          title: "Which strategy is most fragile?",
+          prompt: "Which recovery strategy has the GREATEST chance of failure?",
+          options: ["Hot site", "Redundant site", "Reciprocal arrangement", "Cold site"], correctIndex: 2,
+          explanation: "The source identifies reciprocal arrangements as particularly failure-prone because two organizations must maintain compatible capacity and commitments.",
+          memory: "Reciprocal arrangement → high coordination risk."
         },
         {
           id: "D4-SEQUENCE-INCIDENT",

@@ -96,3 +96,8 @@ Build 4 intentionally measures what you can retrieve and apply, not how often yo
 - Miss clustering by concept at session completion
 
 The goal is to prove understanding with new wording, not reward memorization of a fixed practice set.
+
+
+## Build 6 additions
+
+Expanded adaptive-practice depth across all four domains using the supplied question bank. No new interaction modes; this build focuses on exam-relevant coverage, variation, and repair.
