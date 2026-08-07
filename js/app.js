@@ -328,7 +328,34 @@
       if (domain.continuityLifecycle) body += renderLifecycleSection("Continuity / recovery lifecycle", domain.continuityLifecycle);
     }
 
+    if (activeContentMode === "active") {
+      const lab = window.CISMActiveLearning?.[activeDomain];
+      const saved = storage.getActiveLearning();
+      const evidence = saved.domainEvidence?.[activeDomain] || { attempts: 0, correct: 0 };
+      body += `<div class="active-practice-intro">
+        <div>
+          <div class="eyebrow">ACTIVE LEARNING</div>
+          <h4>${escapeHTML(lab.title)}</h4>
+          <p>${escapeHTML(lab.description)}</p>
+        </div>
+        <div class="active-evidence">
+          <strong>${evidence.correct}</strong>
+          <span>correct of ${evidence.attempts} attempts</span>
+        </div>
+      </div>
+      <div class="active-method-grid">
+        <div><strong>Distinguish</strong><span>Separate concepts that look alike.</span></div>
+        <div><strong>Sequence</strong><span>Build the process in the right order.</span></div>
+        <div><strong>Apply</strong><span>Use the concept in a new scenario.</span></div>
+        <div><strong>Pattern</strong><span>Recognize what CISM is actually testing.</span></div>
+      </div>
+      <button class="primary-button" id="startActivePracticeButton" type="button">Start Active Practice <span>→</span></button>`;
+    }
+
     contentWorkspaceBody.innerHTML = body;
+    contentWorkspaceBody.querySelector("#startActivePracticeButton")?.addEventListener("click", () => {
+      window.CISMActiveEngine.open(activeDomain);
+    });
   }
 
   function renderLifecycleSection(title, steps) {
@@ -340,6 +367,42 @@
       ).join("")}</div>
     </div>`;
   }
+
+  document.addEventListener("cism-active-learning-updated", () => {
+    if (activeContentMode === "active") renderContentWorkspace();
+    renderActiveProgress();
+  });
+
+  function renderActiveProgress() {
+    const state = storage.getActiveLearning();
+    const progressRoot = document.querySelector("#view-progress .progress-grid");
+    if (!progressRoot) return;
+
+    let card = document.getElementById("activeLearningProgressCard");
+    if (!card) {
+      card = document.createElement("article");
+      card.className = "panel";
+      card.id = "activeLearningProgressCard";
+      progressRoot.appendChild(card);
+    }
+
+    const rows = ["1","2","3","4"].map(id => {
+      const evidence = state.domainEvidence?.[id] || { attempts: 0, correct: 0 };
+      const pct = evidence.attempts ? Math.round((evidence.correct / evidence.attempts) * 100) : 0;
+      return `<div class="active-progress-row">
+        <div><strong>Domain ${id}</strong><span>${evidence.attempts ? `${evidence.correct}/${evidence.attempts} active checks correct` : "No active checks yet"}</span></div>
+        <div class="mini-progress"><span style="width:${pct}%"></span></div>
+      </div>`;
+    }).join("");
+
+    card.innerHTML = `<div class="panel-heading">
+      <div><div class="eyebrow">ACTIVE RETENTION</div><h3>Proof through retrieval</h3></div>
+    </div>
+    <p class="muted">This tracks interactive evidence — not how many times you reread a page.</p>
+    <div class="active-progress-list">${rows}</div>`;
+  }
+
+  renderActiveProgress();
 
   initContentEngine();
 

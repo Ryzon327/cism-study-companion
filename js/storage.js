@@ -2,6 +2,7 @@
   const PREFS_KEY = "cism-companion-prefs-v2";
   const PROGRESS_KEY = "cism-companion-progress-v2";
   const ATTEMPTS_KEY = "cism-companion-attempts-v2";
+  const ACTIVE_KEY = "cism-companion-active-learning-v4";
 
   const defaults = { theme: "light", sessionLength: "normal" };
 
@@ -42,6 +43,39 @@
     return attempts;
   }
 
+
+  function getActiveLearning() {
+    return safeParse(ACTIVE_KEY, {
+      challengeHistory: [],
+      mastery: {},
+      domainEvidence: {}
+    });
+  }
+
+  function recordActiveResult(result) {
+    const state = getActiveLearning();
+    state.challengeHistory.push({ ...result, timestamp: new Date().toISOString() });
+
+    const key = result.concept || result.challengeId;
+    const prior = state.mastery[key] || { attempts: 0, correct: 0, lastSeen: null };
+    prior.attempts += 1;
+    if (result.correct) prior.correct += 1;
+    prior.lastSeen = new Date().toISOString();
+    prior.state = prior.correct >= 3 && prior.attempts >= 3 ? "Strong"
+      : prior.correct >= 1 ? "Usable"
+      : "Learning";
+    state.mastery[key] = prior;
+
+    const d = String(result.domain);
+    const domain = state.domainEvidence[d] || { attempts: 0, correct: 0 };
+    domain.attempts += 1;
+    if (result.correct) domain.correct += 1;
+    state.domainEvidence[d] = domain;
+
+    localStorage.setItem(ACTIVE_KEY, JSON.stringify(state));
+    return state;
+  }
+
   function exportData() {
     return {
       app: "CISM Study Companion",
@@ -49,7 +83,8 @@
       exportedAt: new Date().toISOString(),
       prefs: getPrefs(),
       progress: getProgress(),
-      attempts: getAttempts()
+      attempts: getAttempts(),
+      activeLearning: getActiveLearning()
     };
   }
 
@@ -58,7 +93,8 @@
     localStorage.setItem(PREFS_KEY, JSON.stringify({ ...defaults, ...(data.prefs || {}) }));
     localStorage.setItem(PROGRESS_KEY, JSON.stringify(data.progress || getProgress()));
     localStorage.setItem(ATTEMPTS_KEY, JSON.stringify(data.attempts || []));
+    localStorage.setItem(ACTIVE_KEY, JSON.stringify(data.activeLearning || { challengeHistory: [], mastery: {}, domainEvidence: {} }));
   }
 
-  window.CISMStorage = { getPrefs, setPrefs, getProgress, setProgress, getAttempts, addAttempt, exportData, importData };
+  window.CISMStorage = { getPrefs, setPrefs, getProgress, setProgress, getAttempts, addAttempt, getActiveLearning, recordActiveResult, exportData, importData };
 })();

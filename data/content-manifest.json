@@ -1,5 +1,5 @@
 {
-  "build": 3,
+  "build": 4,
   "purpose": "Exam-focused concept, comparison, lifecycle, and pattern catalogue derived from the four supplied CISM domain question sets.",
   "sourcePolicy": "Original source questions remain separate from the analysis/learning layer. Build 3 does not silently rewrite source rationales.",
   "domains": {
@@ -13,6 +13,16 @@
     "comparisons",
     "question-patterns",
     "lifecycles",
-    "universal-patterns"
-  ]
+    "universal-patterns",
+    "active-learning-challenges"
+  ],
+  "activeLearning": {
+    "interactionTypes": [
+      "distinguish",
+      "sequence",
+      "apply",
+      "pattern"
+    ],
+    "purpose": "Confirm understanding through retrieval and transfer rather than repeated rereading."
+  }
 }

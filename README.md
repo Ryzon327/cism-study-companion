@@ -2,7 +2,7 @@
 
 A calm, browser-based study companion focused on one goal: helping you pass the ISACA CISM exam efficiently.
 
-## Build 3
+## Build 4
 
 This build keeps the approved visual shell and adds the first real study engine:
 
@@ -67,3 +67,18 @@ The Build 2 lesson is deliberately small. Build 3 will populate the full concept
 - Source-analysis manifest
 
 The normal Study flow remains self-contained. Explore is optional reference and deeper review.
+
+
+## Build 4 additions
+
+- Active Practice for all four domains
+- Distinguish challenges
+- Lifecycle sequencing challenges
+- Scenario application challenges
+- CISM pattern-recognition challenges
+- Immediate reasoning feedback
+- Memory rules
+- Active-retention/mastery evidence saved locally
+- Progress view for active retrieval evidence
+
+Build 4 intentionally measures what you can retrieve and apply, not how often you reread content.
