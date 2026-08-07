@@ -1,0 +1,13 @@
+{
+  "domain": 1,
+  "name": "Information Security Governance",
+  "status": "planned",
+  "clusters": [
+    "Business objectives and alignment",
+    "Governance, authority and accountability",
+    "Security strategy",
+    "Business cases and management support",
+    "Policies, standards and governance documents",
+    "Legal, regulatory and contractual requirements"
+  ]
+}

@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="A calm, browser-based CISM study companion focused on exam readiness." />
+  <title>CISM Study Companion</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">C</div>
+        <div>
+          <div class="brand-title">CISM Companion</div>
+          <div class="brand-subtitle">Exam-focused study</div>
+        </div>
+      </div>
+
+      <nav class="nav-list">
+        <button class="nav-item active" data-view="study">
+          <span class="nav-icon">◉</span><span>Study</span>
+        </button>
+        <button class="nav-item" data-view="explore">
+          <span class="nav-icon">⌘</span><span>Explore</span>
+        </button>
+        <button class="nav-item" data-view="practice">
+          <span class="nav-icon">✓</span><span>Practice</span>
+        </button>
+        <button class="nav-item" data-view="progress">
+          <span class="nav-icon">↗</span><span>Progress</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">
+          <span id="themeIcon">☾</span>
+          <span id="themeLabel">Dark mode</span>
+        </button>
+        <button class="text-button" id="settingsButton" type="button">Settings</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow" id="pageEyebrow">TODAY</div>
+          <h1 id="pageTitle">Your CISM study is ready.</h1>
+        </div>
+        <div class="topbar-actions">
+          <span class="status-pill" id="saveStatus">Saved locally</span>
+        </div>
+      </header>
+
+      <section class="view active" id="view-study">
+        <div class="hero-grid">
+          <article class="today-card">
+            <div class="today-card-top">
+              <span class="domain-pill">Foundation</span>
+              <span class="time-chip">~35 min</span>
+            </div>
+            <h2>Think Like CISM</h2>
+            <p class="lead">
+              Start with the management mindset that makes the domains and question patterns easier to recognize.
+            </p>
+
+            <div class="session-route" aria-label="Today's study flow">
+              <span>Recall</span><i>→</i>
+              <span>Learn</span><i>→</i>
+              <span>Compare</span><i>→</i>
+              <span>Pattern</span><i>→</i>
+              <span>Practice</span><i>→</i>
+              <span>Repair</span>
+            </div>
+
+            <div class="focus-box">
+              <div class="focus-label">Today’s focus</div>
+              <div class="focus-title">Business first. Right role. Right stage.</div>
+              <div class="focus-note">
+                Learn the decision lens before memorizing definitions.
+              </div>
+            </div>
+
+            <button class="primary-button" id="continueStudyButton" type="button">
+              Continue Study
+              <span aria-hidden="true">→</span>
+            </button>
+          </article>
+
+          <div class="right-stack">
+            <article class="panel">
+              <div class="panel-heading">
+                <div>
+                  <div class="eyebrow">JOURNEY</div>
+                  <h3>One clear path</h3>
+                </div>
+                <span class="muted-small">V1</span>
+              </div>
+              <div class="journey">
+                <div class="journey-step active">
+                  <span class="step-dot"></span>
+                  <div><strong>Foundation</strong><small>Think Like CISM</small></div>
+                </div>
+                <div class="journey-step">
+                  <span class="step-dot"></span>
+                  <div><strong>Domain 1</strong><small>Governance</small></div>
+                </div>
+                <div class="journey-step muted">
+                  <span class="step-dot"></span>
+                  <div><strong>Domain 2</strong><small>Risk Management</small></div>
+                </div>
+                <div class="journey-step muted">
+                  <span class="step-dot"></span>
+                  <div><strong>Domain 3</strong><small>Security Program</small></div>
+                </div>
+                <div class="journey-step muted">
+                  <span class="step-dot"></span>
+                  <div><strong>Domain 4</strong><small>Incident Management</small></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel soft">
+              <div class="panel-heading compact">
+                <div>
+                  <div class="eyebrow">CALM STUDY</div>
+                  <h3>Nothing is overdue.</h3>
+                </div>
+              </div>
+              <p class="muted">
+                Your review will be folded into future sessions. No streaks, no giant backlog, no pressure.
+              </p>
+            </article>
+          </div>
+        </div>
+
+        <div class="lower-grid">
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <div class="eyebrow">NEEDS ATTENTION</div>
+                <h3>We’ll surface this automatically</h3>
+              </div>
+            </div>
+            <div class="attention-list">
+              <div class="attention-item">
+                <div class="attention-icon">1</div>
+                <div>
+                  <strong>FIRST / BEST / PRIMARY</strong>
+                  <span>Learn what the qualifier is actually asking.</span>
+                </div>
+              </div>
+              <div class="attention-item">
+                <div class="attention-icon">2</div>
+                <div>
+                  <strong>Authority & ownership</strong>
+                  <span>Separate who recommends, who decides, and who implements.</span>
+                </div>
+              </div>
+              <div class="attention-item">
+                <div class="attention-icon">3</div>
+                <div>
+                  <strong>Lifecycle thinking</strong>
+                  <span>Correct action + wrong stage = wrong answer.</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <div class="eyebrow">LIFECYCLE PREVIEW</div>
+                <h3>See where you are</h3>
+              </div>
+            </div>
+            <div class="mini-map">
+              <div class="mini-node active">Business</div>
+              <div class="mini-arrow">→</div>
+              <div class="mini-node">Governance</div>
+              <div class="mini-arrow">→</div>
+              <div class="mini-node">Risk</div>
+              <div class="mini-arrow">→</div>
+              <div class="mini-node">Program</div>
+              <div class="mini-arrow">→</div>
+              <div class="mini-node">Incident</div>
+            </div>
+            <p class="muted">
+              The full lifecycle maps will become interactive as content is added.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="view-explore">
+        <div class="section-intro">
+          <div>
+            <div class="eyebrow">EXPLORE</div>
+            <h2>Reference without disrupting study.</h2>
+            <p>Use this only when you want to look something up.</p>
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <button class="explore-card" data-explore="domains">
+            <span class="explore-kicker">BY DOMAIN</span>
+            <strong>Domains</strong>
+            <p>See the learning path for Domains 1–4.</p>
+          </button>
+          <button class="explore-card" data-explore="maps">
+            <span class="explore-kicker">VISUAL</span>
+            <strong>Lifecycle Maps</strong>
+            <p>Understand the processes CISM expects you to recognize.</p>
+          </button>
+          <button class="explore-card" data-explore="compare">
+            <span class="explore-kicker">DISTINCTIONS</span>
+            <strong>Know the Difference</strong>
+            <p>Compare concepts by domain without using flashcards.</p>
+          </button>
+          <button class="explore-card" data-explore="patterns">
+            <span class="explore-kicker">EXAM THINKING</span>
+            <strong>Question Patterns</strong>
+            <p>Review universal and domain-specific reasoning signals.</p>
+          </button>
+        </div>
+
+        <article class="panel top-gap">
+          <div class="panel-heading">
+            <div>
+              <div class="eyebrow">DOMAIN 1 PREVIEW</div>
+              <h3>Information Security Governance</h3>
+            </div>
+            <span class="status-pill subtle">Content loading in Build 3</span>
+          </div>
+          <div class="concept-row">
+            <span>Business objectives</span>
+            <span>Authority & accountability</span>
+            <span>Strategy</span>
+            <span>Business case</span>
+            <span>Policy hierarchy</span>
+            <span>Legal / regulatory</span>
+          </div>
+        </article>
+      </section>
+
+      <section class="view" id="view-practice">
+        <div class="section-intro">
+          <div>
+            <div class="eyebrow">PRACTICE</div>
+            <h2>Practice when you want more.</h2>
+            <p>Daily Study will already include the practice you need.</p>
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <article class="panel option-card">
+            <span class="explore-kicker">SOON</span>
+            <h3>By Domain</h3>
+            <p>Practice one domain without changing your learning path.</p>
+          </article>
+          <article class="panel option-card">
+            <span class="explore-kicker">SOON</span>
+            <h3>Weak Areas</h3>
+            <p>Target concepts and patterns currently worth your attention.</p>
+          </article>
+          <article class="panel option-card">
+            <span class="explore-kicker">SOON</span>
+            <h3>Mixed CISM</h3>
+            <p>Work without being told which domain a question belongs to.</p>
+          </article>
+          <article class="panel option-card">
+            <span class="explore-kicker">LATER V1</span>
+            <h3>Practice Exam</h3>
+            <p>Exam-like questions first; analysis and repair after submission.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="view-progress">
+        <div class="section-intro">
+          <div>
+            <div class="eyebrow">PROGRESS</div>
+            <h2>Progress without pressure.</h2>
+            <p>Readiness will be based on knowledge, retention, application, and CISM judgment.</p>
+          </div>
+        </div>
+
+        <div class="progress-grid">
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <div class="eyebrow">JOURNEY</div>
+                <h3>Current position</h3>
+              </div>
+            </div>
+            <div class="progress-list">
+              <div><span>Foundation</span><strong class="good">Learning</strong></div>
+              <div><span>Domain 1</span><strong>Not started</strong></div>
+              <div><span>Domain 2</span><strong>Not started</strong></div>
+              <div><span>Domain 3</span><strong>Not started</strong></div>
+              <div><span>Domain 4</span><strong>Not started</strong></div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <div class="eyebrow">CISM JUDGMENT</div>
+                <h3>Reasoning signals</h3>
+              </div>
+            </div>
+            <div class="judgment-list">
+              <div><span>Business-first reasoning</span><em>New</em></div>
+              <div><span>Role / authority</span><em>New</em></div>
+              <div><span>Lifecycle sequencing</span><em>New</em></div>
+              <div><span>Qualifier reasoning</span><em>New</em></div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="study-overlay hidden" id="studyOverlay" aria-hidden="true">
+    <div class="study-shell">
+      <header class="study-header">
+        <button class="icon-button" id="closeStudyButton" type="button" aria-label="Close study session">×</button>
+        <div class="study-progress-wrap">
+          <div class="study-progress-meta">
+            <span id="studyStepLabel">1 of 7 · Recall</span>
+            <span id="studyTimeLabel">~35 min session</span>
+          </div>
+          <div class="study-progress-bar"><span id="studyProgressBar"></span></div>
+        </div>
+      </header>
+
+      <section class="study-content" id="studyContent"></section>
+
+      <footer class="study-footer">
+        <button class="secondary-button" id="studyBackButton" type="button">Back</button>
+        <button class="primary-button compact-button" id="studyNextButton" type="button">
+          Continue <span>→</span>
+        </button>
+      </footer>
+    </div>
+  </div>
+
+  <dialog class="settings-dialog" id="settingsDialog">
+    <form method="dialog">
+      <div class="dialog-heading">
+        <div>
+          <div class="eyebrow">SETTINGS</div>
+          <h2>Local study settings</h2>
+        </div>
+        <button class="icon-button" value="cancel" aria-label="Close settings">×</button>
+      </div>
+
+      <div class="settings-group">
+        <label for="sessionLength">Default study length</label>
+        <select id="sessionLength">
+          <option value="quick">Quick · ~15 minutes</option>
+          <option value="normal" selected>Normal · ~30–40 minutes</option>
+          <option value="deep">Deep · ~60 minutes</option>
+        </select>
+      </div>
+
+      <div class="settings-group">
+        <span class="label">Study data</span>
+        <div class="settings-actions">
+          <button type="button" class="secondary-button" id="exportButton">Export backup</button>
+          <label class="secondary-button file-label">
+            Import backup
+            <input type="file" id="importInput" accept="application/json" hidden />
+          </label>
+        </div>
+        <p class="muted-small">Your progress stays in this browser. Export gives you a portable JSON backup.</p>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="js/storage.js"></script>
+  <script src="js/study.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

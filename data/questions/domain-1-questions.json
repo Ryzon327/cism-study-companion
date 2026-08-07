@@ -1,0 +1,50 @@
+[
+  {
+    "id": "D1-SAMPLE-001",
+    "domain": 1,
+    "sourceType": "source",
+    "question": "The FIRST action for an information security manager to take when new regulations apply to handling sensitive data is to determine:",
+    "choices": [
+      "processes and activities that may be affected",
+      "how senior management would prefer to respond",
+      "whether the enterprise qualifies for an exemption",
+      "the approximate cost of compliance"
+    ],
+    "correctIndex": 0,
+    "concept": "Regulatory impact assessment",
+    "pattern": "FIRST = identify the prerequisite scope before deciding response",
+    "status": "sample-only"
+  },
+  {
+    "id": "D1-SAMPLE-002",
+    "domain": 1,
+    "sourceType": "source",
+    "question": "An information security manager wants to implement a SIEM system not funded in the current budget. Which choice is MOST likely to persuade management?",
+    "choices": [
+      "A comprehensive risk assessment",
+      "An enterprise-wide impact assessment",
+      "A well-developed business case",
+      "Computing the net present value of future savings"
+    ],
+    "correctIndex": 2,
+    "concept": "Business case",
+    "pattern": "Management support = complete business justification, not one component",
+    "status": "sample-only"
+  },
+  {
+    "id": "D1-SAMPLE-003",
+    "domain": 1,
+    "sourceType": "source",
+    "question": "Which factor is MOST important for successful implementation of an enterprise information security program?",
+    "choices": [
+      "Senior management support",
+      "Budget for security activities",
+      "Regular vulnerability assessments",
+      "Knowledgeable security administrators"
+    ],
+    "correctIndex": 0,
+    "concept": "Senior management support",
+    "pattern": "Governance/program viability requires management commitment",
+    "status": "sample-only"
+  }
+]
