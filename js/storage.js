@@ -3,6 +3,7 @@
   const PROGRESS_KEY = "cism-companion-progress-v2";
   const ATTEMPTS_KEY = "cism-companion-attempts-v2";
   const ACTIVE_KEY = "cism-companion-active-learning-v4";
+  const MIXED_KEY = "cism-companion-mixed-practice-v8";
 
   const defaults = { theme: "light", sessionLength: "normal" };
 
@@ -94,6 +95,53 @@
     return state;
   }
 
+
+  function getMixedPractice() {
+    return safeParse(MIXED_KEY, {
+      sessions: [],
+      attempts: [],
+      mindset: {
+        qualifier: { correct: 0, attempts: 0 },
+        role: { correct: 0, attempts: 0 },
+        lifecycle: { correct: 0, attempts: 0 },
+        decision: { correct: 0, attempts: 0 }
+      }
+    });
+  }
+
+  function recordMixedAttempt(result) {
+    const state = getMixedPractice();
+    state.attempts.push({ ...result, timestamp: new Date().toISOString() });
+
+    ["qualifier", "role", "lifecycle", "decision"].forEach(dim => {
+      if (result.mindset?.[dim] == null) return;
+      const bucket = state.mindset[dim] || { correct: 0, attempts: 0 };
+      bucket.attempts += 1;
+      if (result.mindset[dim]) bucket.correct += 1;
+      state.mindset[dim] = bucket;
+    });
+
+    localStorage.setItem(MIXED_KEY, JSON.stringify(state));
+
+    // Feed the core concept result into the same mastery/repair engine.
+    recordActiveResult({
+      domain: result.domain,
+      challengeId: `mixed:${result.questionId}`,
+      type: "mixed",
+      concept: result.concept,
+      correct: result.correct
+    });
+
+    return state;
+  }
+
+  function recordMixedSession(session) {
+    const state = getMixedPractice();
+    state.sessions.push({ ...session, completedAt: new Date().toISOString() });
+    localStorage.setItem(MIXED_KEY, JSON.stringify(state));
+    return state;
+  }
+
   function exportData() {
     return {
       app: "CISM Study Companion",
@@ -102,7 +150,8 @@
       prefs: getPrefs(),
       progress: getProgress(),
       attempts: getAttempts(),
-      activeLearning: getActiveLearning()
+      activeLearning: getActiveLearning(),
+      mixedPractice: getMixedPractice()
     };
   }
 
@@ -112,7 +161,8 @@
     localStorage.setItem(PROGRESS_KEY, JSON.stringify(data.progress || getProgress()));
     localStorage.setItem(ATTEMPTS_KEY, JSON.stringify(data.attempts || []));
     localStorage.setItem(ACTIVE_KEY, JSON.stringify(data.activeLearning || { challengeHistory: [], mastery: {}, domainEvidence: {} }));
+    localStorage.setItem(MIXED_KEY, JSON.stringify(data.mixedPractice || { sessions: [], attempts: [], mindset: {} }));
   }
 
-  window.CISMStorage = { getPrefs, setPrefs, getProgress, setProgress, getAttempts, addAttempt, getActiveLearning, recordActiveResult, exportData, importData };
+  window.CISMStorage = { getPrefs, setPrefs, getProgress, setProgress, getAttempts, addAttempt, getActiveLearning, recordActiveResult, getMixedPractice, recordMixedAttempt, recordMixedSession, exportData, importData };
 })();

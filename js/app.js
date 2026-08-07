@@ -476,6 +476,50 @@
   renderActiveProgress();
   renderStudyMemoryRules();
 
+
+  document.getElementById("startMixedPracticeCard")?.addEventListener("click", () => {
+    window.CISMMixedEngine.open();
+  });
+
+  document.addEventListener("cism-mixed-updated", () => {
+    renderMixedProgress();
+    renderStudyMemoryRules();
+  });
+
+  function renderMixedProgress() {
+    const state = storage.getMixedPractice();
+    const progressRoot = document.querySelector("#view-progress .progress-grid");
+    if (!progressRoot) return;
+
+    let card = document.getElementById("mixedMindsetProgressCard");
+    if (!card) {
+      card = document.createElement("article");
+      card.className = "panel";
+      card.id = "mixedMindsetProgressCard";
+      progressRoot.appendChild(card);
+    }
+
+    const rows = Object.entries(state.mindset || {}).map(([key, v]) => {
+      const pct = v.attempts ? Math.round((v.correct / v.attempts) * 100) : 0;
+      const label = key === "qualifier" ? "Qualifier recognition"
+        : key === "role" ? "Role / authority"
+        : key === "lifecycle" ? "Lifecycle placement"
+        : "Decision context";
+      return `<div class="active-progress-row">
+        <div><strong>${escapeHTML(label)}</strong><span>${v.attempts ? `${pct}% · ${v.correct}/${v.attempts}` : "No mixed evidence yet"}</span></div>
+        <div class="mini-progress"><span style="width:${pct}%"></span></div>
+      </div>`;
+    }).join("");
+
+    card.innerHTML = `<div class="panel-heading">
+      <div><div class="eyebrow">MIXED CISM JUDGMENT</div><h3>Can you identify the problem?</h3></div>
+    </div>
+    <p class="muted">Mixed Practice measures whether you recognize the qualifier, role, lifecycle stage, and decision context before answering.</p>
+    <div class="active-progress-list">${rows}</div>`;
+  }
+
+  renderMixedProgress();
+
   initContentEngine();
 
 })();

@@ -111,3 +111,16 @@ Expanded adaptive-practice depth across all four domains using the supplied ques
 - Learning / Needs Refresh concepts from Active Practice automatically surface their compact anchors back in Study
 
 Memory Rules reinforce explanation and application rather than becoming isolated exam tricks.
+
+
+## Build 8 additions
+
+- Mixed CISM practice across all four domains
+- Domain hidden until after the answer
+- CISM mindset recognition before each mixed question
+- Qualifier / role / lifecycle / decision-context tracking
+- Question pattern + Memory Rule feedback
+- Mixed misses feed the same adaptive repair engine
+- Progress metrics for CISM judgment
+
+Mixed Practice remains a learning mode. Full Practice Exam mode will withhold feedback until the end.
