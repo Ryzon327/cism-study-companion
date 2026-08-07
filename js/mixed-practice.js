@@ -22,6 +22,122 @@
     }[c]));
   }
 
+
+  const mindsetWhy = {
+    qualifier: {
+      "FIRST": "The question is testing sequence. Several actions may eventually be valid; choose the prerequisite that must happen before the others.",
+      "NEXT": "The question gives you a completed stage and asks what logically follows from that point in the process.",
+      "BEST": "More than one choice may be reasonable. Choose the option that most completely fits the business problem and CISM management perspective.",
+      "MOST": "The question is asking for the strongest priority or most important factor, not merely something that is true.",
+      "PRIMARY": "Look for the fundamental purpose or main driver. Secondary benefits can be true and still be wrong.",
+      "NONE": "There is no explicit sequencing or priority qualifier here, so focus on the core concept, role, and lifecycle context."
+    },
+    role: {
+      "Senior management": "This is an enterprise direction, approval, arbitration, or business-risk decision. Security can advise, but senior management owns the higher-level business authority.",
+      "Security manager": "The question is asking for security analysis, recommendation, coordination, governance execution, or management of the security response—not final ownership of the business asset or enterprise risk.",
+      "Business/data owner": "The decision depends on business value, classification, acceptable use, access need, or impact. The owner is closest to the business consequence and therefore owns that decision.",
+      "Custodian/operations": "The scenario is about implementing, maintaining, or operating protections already required by an owner, policy, or control decision.",
+      "Internal audit": "The question calls for independent assurance or evaluation. Audit should assess rather than own or operate the control.",
+      "Incident response team": "The scenario is inside active incident handling, where the response team executes the established containment, evidence, eradication, and recovery process.",
+      "None/implicit": "No specific actor owns the question. Solve it from the lifecycle and decision context instead of forcing a role onto the scenario."
+    },
+    lifecycle: {
+      "Governance": "The scenario is about direction, authority, alignment, policy, strategy, or senior-level oversight rather than day-to-day control execution.",
+      "Risk assessment/evaluation": "The organization is still trying to understand or evaluate exposure, likelihood, impact, or significance before choosing the response.",
+      "Risk treatment/acceptance": "The risk is already understood and the question is about what to do with it, what remains afterward, or whether the remaining risk is acceptable.",
+      "Security program": "The question is about translating strategy and requirements into ownership, policy, classification, controls, access, operation, or measurement.",
+      "Incident response": "A security event is being actively handled. Sequence matters: analyze, contain, eradicate, recover, and preserve evidence as appropriate.",
+      "Continuity/recovery": "The focus is business disruption, recovery priorities, RTO/RPO, alternate processing, BCP/DRP, or restoring critical operations.",
+      "Post-incident/improvement": "The active incident is over. The focus has moved to root cause, lessons learned, corrective actions, and improving future performance."
+    },
+    decision: {
+      "Business decision": "The answer should reflect organizational objectives, management authority, business value, or enterprise direction rather than a purely technical choice.",
+      "Risk decision": "The decision is about understanding, treating, accepting, transferring, or monitoring risk. Think in terms of business exposure and acceptable risk.",
+      "Program/control decision": "The organization is deciding how security requirements become policies, classifications, access rules, controls, responsibilities, or operating practices.",
+      "Incident decision": "The decision is about the active response to a security event: containment, evidence, communication, eradication, or recovery sequencing.",
+      "Recovery decision": "The decision is driven by business interruption and recovery requirements—what must recover, how quickly, and with how much acceptable data loss or degraded service."
+    }
+  };
+
+  const mindsetMemory = {
+    qualifier: {
+      "FIRST": "FIRST → find the missing prerequisite.",
+      "NEXT": "NEXT → continue from the current lifecycle stage.",
+      "BEST": "BEST → choose the most complete fit.",
+      "MOST": "MOST → identify the strongest priority.",
+      "PRIMARY": "PRIMARY → find the fundamental purpose.",
+      "NONE": "No qualifier → solve the concept, role, and lifecycle."
+    },
+    role: {
+      "Senior management": "Security advises → senior management owns enterprise direction.",
+      "Security manager": "Security manager → assess, advise, coordinate, manage.",
+      "Business/data owner": "Owner decides based on business value and impact.",
+      "Custodian/operations": "Owner decides → custodian implements.",
+      "Internal audit": "Audit verifies independently; it should not own the control.",
+      "Incident response team": "Active incident → response team executes the incident process.",
+      "None/implicit": "No clear role → do not invent one."
+    },
+    lifecycle: {
+      "Governance": "Governance → direction, authority, alignment, oversight.",
+      "Risk assessment/evaluation": "Understand risk before choosing treatment.",
+      "Risk treatment/acceptance": "Treat → residual risk → validate acceptability.",
+      "Security program": "Strategy → policy / ownership → controls → measure.",
+      "Incident response": "Detect → contain → eradicate → recover.",
+      "Continuity/recovery": "BIA / business requirements → recovery objectives → strategy → test.",
+      "Post-incident/improvement": "Recover first → then learn and improve."
+    },
+    decision: {
+      "Business decision": "Business decision → objectives, value, authority.",
+      "Risk decision": "Risk decision → exposure, treatment, acceptable risk.",
+      "Program/control decision": "Program decision → turn requirements into protection.",
+      "Incident decision": "Incident decision → limit impact in the right sequence.",
+      "Recovery decision": "Recovery decision → business impact drives recovery."
+    }
+  };
+
+  function mindsetRepairHTML(q) {
+    const labels = {
+      qualifier: "Qualifier",
+      role: "Role / authority",
+      lifecycle: "Lifecycle",
+      decision: "Decision context"
+    };
+
+    const correctValues = {
+      qualifier: q.qualifier,
+      role: q.role,
+      lifecycle: q.lifecycle,
+      decision: q.decision
+    };
+
+    const missed = Object.keys(labels).filter(key => !state.mindsetResult[key]);
+    if (!missed.length) {
+      return `<div class="mindset-all-good">
+        <span>DECODER</span>
+        <strong>You recognized all four mindset signals.</strong>
+      </div>`;
+    }
+
+    return `<div class="mindset-repair">
+      <div class="eyebrow">MINDSET REPAIR · ONLY WHAT YOU MISSED</div>
+      ${missed.map(key => {
+        const selected = state.mindset[key];
+        const correct = correctValues[key];
+        return `<div class="mindset-repair-item">
+          <div class="mindset-repair-heading">
+            <span>${escapeHTML(labels[key])}</span>
+            <div><em>${escapeHTML(selected)}</em><b>→</b><strong>${escapeHTML(correct)}</strong></div>
+          </div>
+          <p>${escapeHTML(mindsetWhy[key][correct])}</p>
+          <div class="mindset-mini-memory">
+            <span>Memory rule</span>
+            <strong>${escapeHTML(mindsetMemory[key][correct])}</strong>
+          </div>
+        </div>`;
+      }).join("")}
+    </div>`;
+  }
+
   function shuffle(arr) {
     const copy = [...arr];
     for (let i = copy.length - 1; i > 0; i--) {
@@ -197,6 +313,8 @@
               <em class="${state.mindsetResult[k] ? "correct" : "miss"}">${state.mindsetResult[k] ? "recognized" : "missed"}</em>
             </div>`).join("")}
         </div>
+
+        ${mindsetRepairHTML(q)}
 
         <div class="mixed-pattern">
           <span>QUESTION PATTERN</span>

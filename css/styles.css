@@ -1817,3 +1817,108 @@ select {
   .mixed-content { padding: 30px 20px; }
   .mixed-header { padding-left: 16px; padding-right: 16px; }
 }
+
+
+/* Build 8.1 — Calm Mindset Repair Explanations */
+.mindset-repair {
+  margin-top: 16px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  background: var(--surface-soft);
+}
+.mindset-repair > .eyebrow {
+  margin-bottom: 12px;
+}
+.mindset-repair-item {
+  padding: 15px 0;
+  border-top: 1px solid var(--border);
+}
+.mindset-repair-item:first-of-type {
+  border-top: 0;
+  padding-top: 2px;
+}
+.mindset-repair-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.mindset-repair-heading > span {
+  color: var(--text-soft);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+.mindset-repair-heading > div {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.mindset-repair-heading em {
+  font-style: normal;
+  color: var(--attention);
+  font-size: 12px;
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+.mindset-repair-heading b {
+  color: var(--text-soft);
+  font-size: 11px;
+}
+.mindset-repair-heading strong {
+  color: var(--accent-strong);
+  font-size: 12px;
+}
+.mindset-repair-item p {
+  margin: 9px 0 0;
+  color: var(--text-soft);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.mindset-mini-memory {
+  margin-top: 10px;
+  display: grid;
+  gap: 3px;
+  padding-left: 12px;
+  border-left: 2px solid color-mix(in srgb, var(--accent) 50%, var(--border));
+}
+.mindset-mini-memory span {
+  color: var(--text-soft);
+  font-size: 9px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+}
+.mindset-mini-memory strong {
+  font-size: 12px;
+  line-height: 1.45;
+}
+.mindset-all-good {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--good) 7%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--good) 32%, var(--border));
+}
+.mindset-all-good span {
+  display: block;
+  color: var(--good);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  margin-bottom: 4px;
+}
+.mindset-all-good strong {
+  font-size: 13px;
+}
+
+@media (max-width: 620px) {
+  .mindset-repair-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

@@ -124,3 +124,14 @@ Memory Rules reinforce explanation and application rather than becoming isolated
 - Progress metrics for CISM judgment
 
 Mixed Practice remains a learning mode. Full Practice Exam mode will withhold feedback until the end.
+
+
+## Build 8.1 additions
+
+- Brief repair explanations for missed qualifier, role, lifecycle, and decision-context signals
+- Shows your selected mindset → correct mindset
+- Explains why the correct perspective fits
+- Adds a tiny Memory Rule for each missed mindset dimension
+- Correct dimensions stay quiet to preserve the calm UI
+
+This is a refinement of Mixed Practice, not a new learning mode.
