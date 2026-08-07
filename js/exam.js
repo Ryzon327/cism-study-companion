@@ -76,23 +76,75 @@
     renderSubmit();
   }
 
+  function jumpToQuestion(questionIndex){
+    pos=questionIndex;
+    render();
+  }
+
+  function questionJumpButtons(items, type){
+    if(!items.length) return `<div class="exam-review-empty">None</div>`;
+    return `<div class="exam-jump-grid">${items.map(({q,i})=>{
+      const answered=answers[q.id]!=null;
+      return `<button type="button" class="exam-jump-button ${type} ${answered?"answered":"unanswered"}" data-jump-index="${i}">
+        <strong>${i+1}</strong>
+        <span>${answered ? "Answered" : "Unanswered"}</span>
+      </button>`;
+    }).join("")}</div>`;
+  }
+
+  function bindJumpButtons(){
+    content.querySelectorAll("[data-jump-index]").forEach(btn=>{
+      btn.onclick=()=>jumpToQuestion(Number(btn.dataset.jumpIndex));
+    });
+  }
+
   function renderSubmit(){
-    const unanswered=session.filter(q=>answers[q.id]==null).length;
-    const flagged=session.filter(q=>marked[q.id]).length;
+    const indexed=session.map((q,i)=>({q,i}));
+    const unansweredItems=indexed.filter(({q})=>answers[q.id]==null);
+    const flaggedItems=indexed.filter(({q})=>marked[q.id]);
+    const unanswered=unansweredItems.length;
+    const flagged=flaggedItems.length;
+
     content.innerHTML=`
-      <article class="exam-submit-card">
-        <div class="mixed-stage">READY TO SUBMIT?</div>
-        <h2>Coaching begins only after you submit.</h2>
+      <article class="exam-submit-card exam-review-center">
+        <div class="mixed-stage">REVIEW CENTER</div>
+        <h2>Jump directly to anything you want to revisit.</h2>
         <p>You answered <strong>${session.length-unanswered}</strong> of ${session.length}. ${flagged} question${flagged===1?" is":"s are"} marked for review.</p>
-        ${unanswered?`<div class="exam-warning">${unanswered} unanswered question${unanswered===1?"":"s"} remain.</div>`:""}
+
+        <section class="exam-jump-section marked-section">
+          <div class="exam-jump-heading">
+            <div>
+              <span class="eyebrow">MARKED FOR REVIEW</span>
+              <h3>${flagged ? `${flagged} question${flagged===1?"":"s"} to revisit` : "Nothing marked"}</h3>
+            </div>
+            <span class="exam-count-pill">${flagged}</span>
+          </div>
+          ${questionJumpButtons(flaggedItems,"marked")}
+        </section>
+
+        <section class="exam-jump-section unanswered-section">
+          <div class="exam-jump-heading">
+            <div>
+              <span class="eyebrow">UNANSWERED</span>
+              <h3>${unanswered ? `${unanswered} question${unanswered===1?"":"s"} still need an answer` : "All questions answered"}</h3>
+            </div>
+            <span class="exam-count-pill">${unanswered}</span>
+          </div>
+          ${questionJumpButtons(unansweredItems,"unanswered")}
+        </section>
+
+        ${unanswered?`<div class="exam-warning">${unanswered} unanswered question${unanswered===1?"":"s"} remain. You can jump directly to ${unanswered===1?"it":"them"} above.</div>`:""}
+
         <div class="exam-submit-actions">
-          <button class="secondary-button" id="returnExamButton">Return to exam</button>
+          <button class="secondary-button" id="returnExamButton">Return to last question</button>
           <button class="primary-button" id="submitExamButton">Submit practice exam</button>
         </div>
       </article>`;
+
+    bindJumpButtons();
     document.getElementById("returnExamButton").onclick=()=>{pos=session.length-1;render();};
     document.getElementById("submitExamButton").onclick=submit;
-    counter.textContent="Review";
+    counter.textContent="Review Center";
     next.disabled=true; review.disabled=true;
   }
 

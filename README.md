@@ -147,3 +147,12 @@ This is a refinement of Mixed Practice, not a new learning mode.
 - Readiness history and recent-session average in Progress
 
 Build 9 measures transfer. It does not create a separate curriculum and does not treat one practice score as a guaranteed ISACA result.
+
+
+## Build 9.1 additions
+
+- Practice Exam Review Center
+- One-click jump to every question marked for review
+- One-click jump to unanswered questions
+- Answer-status indicators in the Review Center
+- No more clicking backward through the exam to find flagged questions

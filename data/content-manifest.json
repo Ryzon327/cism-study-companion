@@ -1,5 +1,5 @@
 {
-  "build": 9,
+  "build": "9.1",
   "purpose": "Exam-focused concept, comparison, lifecycle, and pattern catalogue derived from the four supplied CISM domain question sets.",
   "sourcePolicy": "Original source questions remain separate from the analysis/learning layer. Build 3 does not silently rewrite source rationales.",
   "domains": {
@@ -79,6 +79,11 @@
       "domain3": 30,
       "domain4": 20
     },
-    "warning": "Internal study readiness signal; not an ISACA scaled-score prediction."
+    "warning": "Internal study readiness signal; not an ISACA scaled-score prediction.",
+    "reviewCenter": {
+      "markedQuestionJump": true,
+      "unansweredQuestionJump": true,
+      "directNavigation": true
+    }
   }
 }

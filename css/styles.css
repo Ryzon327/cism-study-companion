@@ -1944,3 +1944,96 @@ select {
 .exam-review-details{margin:18px 0;border:1px solid var(--border);border-radius:16px;overflow:hidden}.exam-review-details summary{cursor:pointer;padding:15px 17px;font-weight:800;background:var(--surface-soft)}.exam-miss-list{padding:0 17px}.exam-miss-item{padding:18px 0;border-top:1px solid var(--border)}
 .exam-miss-item>span{display:block;color:var(--accent-strong);font-size:10px;font-weight:900;margin-bottom:6px}.exam-miss-item>strong{display:block;line-height:1.45}.exam-miss-item p{color:var(--text-soft);font-size:13px;line-height:1.55}.exam-readiness-progress .mini-progress{margin-top:12px}
 @media(max-width:620px){.exam-overlay{padding:0}.exam-shell{min-height:100vh;max-height:100vh;border-radius:0}.exam-content{padding:30px 20px}.exam-header{padding-left:16px;padding-right:16px}.exam-footer{flex-wrap:wrap}.readiness-hero,.exam-domain-grid{grid-template-columns:1fr}.exam-submit-actions{flex-direction:column}}
+
+
+/* Build 9.1 — Practice Exam Review Center */
+.exam-review-center > p {
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+.exam-jump-section {
+  margin-top: 18px;
+  padding: 17px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface-soft);
+}
+.exam-jump-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 13px;
+}
+.exam-jump-heading h3 {
+  margin: 5px 0 0;
+  font-size: 16px;
+}
+.exam-count-pill {
+  min-width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-soft);
+  font-size: 11px;
+  font-weight: 900;
+}
+.exam-jump-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  gap: 8px;
+}
+.exam-jump-button {
+  display: grid;
+  gap: 3px;
+  text-align: left;
+  padding: 11px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition: transform var(--transition), border var(--transition), background var(--transition);
+}
+.exam-jump-button:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+}
+.exam-jump-button strong {
+  font-size: 16px;
+}
+.exam-jump-button span {
+  font-size: 9px;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.exam-jump-button.marked {
+  border-color: color-mix(in srgb, var(--attention) 38%, var(--border));
+}
+.exam-jump-button.marked::before {
+  content: "REVIEW";
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .07em;
+  color: var(--attention);
+}
+.exam-jump-button.unanswered {
+  border-style: dashed;
+}
+.exam-review-empty {
+  padding: 13px;
+  color: var(--text-soft);
+  text-align: center;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+@media (max-width: 560px) {
+  .exam-jump-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
