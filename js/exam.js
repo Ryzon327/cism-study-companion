@@ -1,6 +1,7 @@
 (function () {
   const bank = window.CISMExamBank;
   const storage = window.CISMStorage;
+
   const overlay = document.getElementById("examOverlay");
   const content = document.getElementById("examContent");
   const counter = document.getElementById("examCounter");
@@ -16,18 +17,32 @@
   let pos = 0;
   let submitted = false;
 
+  // Explicit navigation mode prevents button-state collisions.
+  // modes: question | reviewCenter | flaggedReview | unansweredReview | results
+  let mode = "question";
+  let reviewQueue = [];
+  let reviewQueueIndex = 0;
+
   const esc = v => String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
-  function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+  function shuffle(a){
+    a=[...a];
+    for(let i=a.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [a[i],a[j]]=[a[j],a[i]];
+    }
+    return a;
+  }
 
   function buildSession(){
-    const by = {1:[],2:[],3:[],4:[]};
+    const by={1:[],2:[],3:[],4:[]};
     bank.questions.forEach(q=>by[q.domain].push(q));
-    // 40-question learning simulation using current official weighting proportions.
-    const counts = {1:7,2:13,3:12,4:8};
+    const counts={1:7,2:13,3:12,4:8};
     let out=[];
-    Object.keys(counts).forEach(d=>out.push(...shuffle(by[d]).slice(0, Math.min(counts[d],by[d].length))));
-    // If the current bank is smaller than 40, fill with remaining unique questions.
-    const used = new Set(out.map(q=>q.id));
+    Object.keys(counts).forEach(d=>{
+      out.push(...shuffle(by[d]).slice(0,Math.min(counts[d],by[d].length)));
+    });
+    const used=new Set(out.map(q=>q.id));
     for(const q of shuffle(bank.questions)){
       if(out.length>=40) break;
       if(!used.has(q.id)){out.push(q);used.add(q.id);}
@@ -35,22 +50,60 @@
     return shuffle(out);
   }
 
-  function openExam(){
-    session=buildSession(); answers={}; marked={}; pos=0; submitted=false;
-    overlay.classList.remove("hidden"); overlay.setAttribute("aria-hidden","false");
-    document.body.style.overflow="hidden"; render();
+  function resetFooterHandlers(){
+    prev.onclick=null;
+    next.onclick=null;
+    review.onclick=null;
   }
+
+  function openExam(){
+    session=buildSession();
+    answers={};
+    marked={};
+    pos=0;
+    submitted=false;
+    mode="question";
+    reviewQueue=[];
+    reviewQueueIndex=0;
+    overlay.classList.remove("hidden");
+    overlay.setAttribute("aria-hidden","false");
+    document.body.style.overflow="hidden";
+    render();
+  }
+
   function closeExam(){
-    overlay.classList.add("hidden"); overlay.setAttribute("aria-hidden","true");
+    overlay.classList.add("hidden");
+    overlay.setAttribute("aria-hidden","true");
     document.body.style.overflow="";
     document.dispatchEvent(new CustomEvent("cism-exam-updated"));
   }
 
   function render(){
-    if(submitted) return renderResults();
+    resetFooterHandlers();
+
+    if(submitted || mode==="results"){
+      renderResults();
+      return;
+    }
+
+    if(mode==="reviewCenter"){
+      renderReviewCenter();
+      return;
+    }
+
+    if(mode==="flaggedReview" || mode==="unansweredReview"){
+      renderQueuedQuestion();
+      return;
+    }
+
+    renderNormalQuestion();
+  }
+
+  function renderNormalQuestion(){
     const q=session[pos];
     counter.textContent=`${pos+1} / ${session.length}`;
     progress.style.width=`${((pos+1)/session.length)*100}%`;
+
     content.innerHTML=`
       <article class="exam-question-card">
         <div class="exam-meta">
@@ -65,121 +118,353 @@
         </div>
         <div class="exam-quiet-note">No domain label, hint, Memory Rule, or answer feedback appears during the exam.</div>
       </article>`;
-    content.querySelectorAll("[data-exam-choice]").forEach(b=>b.onclick=()=>{answers[q.id]=Number(b.dataset.examChoice);render();});
+
+    content.querySelectorAll("[data-exam-choice]").forEach(b=>{
+      b.onclick=()=>{
+        answers[q.id]=Number(b.dataset.examChoice);
+        renderNormalQuestion();
+      };
+    });
+
     prev.disabled=pos===0;
+    prev.style.opacity=prev.disabled?".45":"1";
+    prev.textContent="← Previous";
+
+    review.disabled=false;
+    review.style.opacity="1";
     review.textContent=marked[q.id]?"Unmark review":"Mark for review";
-    next.innerHTML=pos===session.length-1?"Review & submit →":"Next →";
+
+    next.disabled=false;
+    next.style.opacity="1";
+    next.innerHTML=pos===session.length-1?"Review before submit →":"Next →";
+
+    prev.onclick=()=>{
+      if(pos>0){pos--;render();}
+    };
+
+    review.onclick=()=>{
+      marked[q.id]=!marked[q.id];
+      renderNormalQuestion();
+    };
+
+    next.onclick=()=>{
+      if(pos<session.length-1){
+        pos++;
+        render();
+      } else {
+        mode="reviewCenter";
+        render();
+      }
+    };
   }
 
-  function goNext(){
-    if(pos<session.length-1){pos++;render();return;}
-    renderSubmit();
+  function getIndexedItems(){
+    return session.map((q,i)=>({q,i}));
   }
 
-  function jumpToQuestion(questionIndex){
-    pos=questionIndex;
-    render();
+  function flaggedItems(){
+    return getIndexedItems().filter(({q})=>marked[q.id]);
   }
 
-  function questionJumpButtons(items, type){
+  function unansweredItems(){
+    return getIndexedItems().filter(({q})=>answers[q.id]==null);
+  }
+
+  function questionJumpButtons(items,type){
     if(!items.length) return `<div class="exam-review-empty">None</div>`;
     return `<div class="exam-jump-grid">${items.map(({q,i})=>{
       const answered=answers[q.id]!=null;
-      return `<button type="button" class="exam-jump-button ${type} ${answered?"answered":"unanswered"}" data-jump-index="${i}">
+      return `<button type="button" class="exam-jump-button ${type} ${answered?"answered":"unanswered"}" data-review-jump-index="${i}">
         <strong>${i+1}</strong>
-        <span>${answered ? "Answered" : "Unanswered"}</span>
+        <span>${answered?"Answered":"Unanswered"}</span>
       </button>`;
     }).join("")}</div>`;
   }
 
-  function bindJumpButtons(){
-    content.querySelectorAll("[data-jump-index]").forEach(btn=>{
-      btn.onclick=()=>jumpToQuestion(Number(btn.dataset.jumpIndex));
-    });
-  }
+  function renderReviewCenter(){
+    const flagged=flaggedItems();
+    const unanswered=unansweredItems();
 
-  function renderSubmit(){
-    const indexed=session.map((q,i)=>({q,i}));
-    const unansweredItems=indexed.filter(({q})=>answers[q.id]==null);
-    const flaggedItems=indexed.filter(({q})=>marked[q.id]);
-    const unanswered=unansweredItems.length;
-    const flagged=flaggedItems.length;
+    counter.textContent="Review Center";
+    progress.style.width="100%";
 
     content.innerHTML=`
       <article class="exam-submit-card exam-review-center">
         <div class="mixed-stage">REVIEW CENTER</div>
-        <h2>Jump directly to anything you want to revisit.</h2>
-        <p>You answered <strong>${session.length-unanswered}</strong> of ${session.length}. ${flagged} question${flagged===1?" is":"s are"} marked for review.</p>
+        <h2>Review what matters before you submit.</h2>
+        <p>You answered <strong>${session.length-unanswered.length}</strong> of ${session.length}. ${flagged.length} question${flagged.length===1?" is":"s are"} marked for review.</p>
 
         <section class="exam-jump-section marked-section">
           <div class="exam-jump-heading">
             <div>
               <span class="eyebrow">MARKED FOR REVIEW</span>
-              <h3>${flagged ? `${flagged} question${flagged===1?"":"s"} to revisit` : "Nothing marked"}</h3>
+              <h3>${flagged.length?`${flagged.length} question${flagged.length===1?"":"s"} to revisit`:"Nothing marked"}</h3>
             </div>
-            <span class="exam-count-pill">${flagged}</span>
+            <span class="exam-count-pill">${flagged.length}</span>
           </div>
-          ${questionJumpButtons(flaggedItems,"marked")}
+          ${questionJumpButtons(flagged,"marked")}
+          ${flagged.length?`<button class="secondary-button exam-review-all-button" id="reviewAllMarkedButton" type="button">Review marked questions in order →</button>`:""}
         </section>
 
         <section class="exam-jump-section unanswered-section">
           <div class="exam-jump-heading">
             <div>
               <span class="eyebrow">UNANSWERED</span>
-              <h3>${unanswered ? `${unanswered} question${unanswered===1?"":"s"} still need an answer` : "All questions answered"}</h3>
+              <h3>${unanswered.length?`${unanswered.length} question${unanswered.length===1?"":"s"} still need an answer`:"All questions answered"}</h3>
             </div>
-            <span class="exam-count-pill">${unanswered}</span>
+            <span class="exam-count-pill">${unanswered.length}</span>
           </div>
-          ${questionJumpButtons(unansweredItems,"unanswered")}
+          ${questionJumpButtons(unanswered,"unanswered")}
+          ${unanswered.length?`<button class="secondary-button exam-review-all-button" id="reviewAllUnansweredButton" type="button">Review unanswered questions in order →</button>`:""}
         </section>
 
-        ${unanswered?`<div class="exam-warning">${unanswered} unanswered question${unanswered===1?"":"s"} remain. You can jump directly to ${unanswered===1?"it":"them"} above.</div>`:""}
+        ${unanswered.length?`<div class="exam-warning">${unanswered.length} unanswered question${unanswered.length===1?"":"s"} remain. You can review them directly before submitting.</div>`:""}
 
         <div class="exam-submit-actions">
-          <button class="secondary-button" id="returnExamButton">Return to last question</button>
-          <button class="primary-button" id="submitExamButton">Submit practice exam</button>
+          <button class="secondary-button" id="returnToExamButton" type="button">Return to exam</button>
+          <button class="primary-button" id="submitExamButton" type="button">Submit practice exam</button>
         </div>
       </article>`;
 
-    bindJumpButtons();
-    document.getElementById("returnExamButton").onclick=()=>{pos=session.length-1;render();};
+    content.querySelectorAll("[data-review-jump-index]").forEach(btn=>{
+      btn.onclick=()=>{
+        pos=Number(btn.dataset.reviewJumpIndex);
+        mode="question";
+        render();
+      };
+    });
+
+    document.getElementById("reviewAllMarkedButton")?.addEventListener("click",()=>{
+      startQueue("flaggedReview", flagged.map(x=>x.i));
+    });
+
+    document.getElementById("reviewAllUnansweredButton")?.addEventListener("click",()=>{
+      startQueue("unansweredReview", unanswered.map(x=>x.i));
+    });
+
+    document.getElementById("returnToExamButton").onclick=()=>{
+      mode="question";
+      render();
+    };
+
     document.getElementById("submitExamButton").onclick=submit;
-    counter.textContent="Review Center";
-    next.disabled=true; review.disabled=true;
+
+    // Footer in review center should not pretend to navigate questions.
+    prev.disabled=false;
+    prev.style.opacity="1";
+    prev.textContent="← Back to last question";
+    prev.onclick=()=>{
+      mode="question";
+      render();
+    };
+
+    review.disabled=true;
+    review.style.opacity=".35";
+    review.textContent="Mark for review";
+
+    next.disabled=true;
+    next.style.opacity=".35";
+    next.textContent="Submit from Review Center";
+  }
+
+  function startQueue(queueMode, indexes){
+    reviewQueue=[...indexes];
+    reviewQueueIndex=0;
+    mode=queueMode;
+    if(reviewQueue.length){
+      pos=reviewQueue[0];
+      render();
+    }else{
+      mode="reviewCenter";
+      render();
+    }
+  }
+
+  function currentQueueLabel(){
+    return mode==="flaggedReview"?"MARKED REVIEW":"UNANSWERED REVIEW";
+  }
+
+  function cleanQueue(){
+    // In flagged review: remove anything the user unmarked.
+    // In unanswered review: remove anything the user has now answered.
+    if(mode==="flaggedReview"){
+      reviewQueue=reviewQueue.filter(i=>marked[session[i].id]);
+    }else if(mode==="unansweredReview"){
+      reviewQueue=reviewQueue.filter(i=>answers[session[i].id]==null);
+    }
+
+    if(!reviewQueue.length){
+      mode="reviewCenter";
+      reviewQueueIndex=0;
+      render();
+      return false;
+    }
+
+    if(reviewQueueIndex>=reviewQueue.length){
+      reviewQueueIndex=reviewQueue.length-1;
+    }
+    pos=reviewQueue[reviewQueueIndex];
+    return true;
+  }
+
+  function renderQueuedQuestion(){
+    if(!cleanQueue()) return;
+
+    const q=session[pos];
+    const total=reviewQueue.length;
+    const shown=reviewQueueIndex+1;
+
+    counter.textContent=`${shown} / ${total} · Review`;
+    progress.style.width=`${(shown/total)*100}%`;
+
+    content.innerHTML=`
+      <article class="exam-question-card review-queue-card">
+        <div class="exam-meta">
+          <span>${currentQueueLabel()} · ORIGINAL QUESTION ${pos+1}</span>
+          ${marked[q.id]?'<span class="review-flag">MARKED FOR REVIEW</span>':''}
+        </div>
+        <h2>${esc(q.stem)}</h2>
+        <div class="exam-options">
+          ${q.options.map((o,i)=>`<button type="button" data-exam-choice="${i}" class="${answers[q.id]===i?"selected":""}">
+            <span>${String.fromCharCode(65+i)}</span><strong>${esc(o)}</strong>
+          </button>`).join("")}
+        </div>
+        <div class="review-queue-note">
+          <strong>${mode==="flaggedReview"?"Reviewing marked questions":"Reviewing unanswered questions"}</strong>
+          <span>You can answer, change the answer, leave it as-is, or move directly to the next item in this review queue.</span>
+        </div>
+      </article>`;
+
+    content.querySelectorAll("[data-exam-choice]").forEach(b=>{
+      b.onclick=()=>{
+        answers[q.id]=Number(b.dataset.examChoice);
+
+        // If answering an unanswered review question removes it from the queue,
+        // keep the UI stable by moving to the next remaining unanswered item.
+        if(mode==="unansweredReview"){
+          const oldIndex=reviewQueueIndex;
+          reviewQueue=reviewQueue.filter(i=>answers[session[i].id]==null);
+          if(!reviewQueue.length){
+            mode="reviewCenter";
+            render();
+            return;
+          }
+          reviewQueueIndex=Math.min(oldIndex,reviewQueue.length-1);
+          pos=reviewQueue[reviewQueueIndex];
+          render();
+          return;
+        }
+        renderQueuedQuestion();
+      };
+    });
+
+    prev.disabled=false;
+    prev.style.opacity="1";
+    prev.textContent=reviewQueueIndex===0?"← Review Center":"← Previous review";
+
+    next.disabled=false;
+    next.style.opacity="1";
+    next.innerHTML=reviewQueueIndex===reviewQueue.length-1?"Back to Review Center →":"Next review →";
+
+    review.disabled=false;
+    review.style.opacity="1";
+    review.textContent=marked[q.id]?"Unmark review":"Mark for review";
+
+    prev.onclick=()=>{
+      if(reviewQueueIndex===0){
+        mode="reviewCenter";
+        render();
+      }else{
+        reviewQueueIndex--;
+        pos=reviewQueue[reviewQueueIndex];
+        render();
+      }
+    };
+
+    next.onclick=()=>{
+      // Clean first, because the user may have answered/unmarked this item.
+      if(!cleanQueue()) return;
+
+      if(reviewQueueIndex<reviewQueue.length-1){
+        reviewQueueIndex++;
+        pos=reviewQueue[reviewQueueIndex];
+        render();
+      }else{
+        mode="reviewCenter";
+        render();
+      }
+    };
+
+    review.onclick=()=>{
+      marked[q.id]=!marked[q.id];
+
+      if(mode==="flaggedReview" && !marked[q.id]){
+        const oldIndex=reviewQueueIndex;
+        reviewQueue=reviewQueue.filter(i=>marked[session[i].id]);
+
+        if(!reviewQueue.length){
+          mode="reviewCenter";
+          render();
+          return;
+        }
+
+        reviewQueueIndex=Math.min(oldIndex,reviewQueue.length-1);
+        pos=reviewQueue[reviewQueueIndex];
+        render();
+        return;
+      }
+
+      renderQueuedQuestion();
+    };
   }
 
   function submit(){
     const domainStats={1:{c:0,t:0},2:{c:0,t:0},3:{c:0,t:0},4:{c:0,t:0}};
     const misses=[];
     let correct=0;
+
     session.forEach(q=>{
       const ok=answers[q.id]===q.correctIndex;
       domainStats[q.domain].t++;
-      if(ok){correct++;domainStats[q.domain].c++;}
-      else misses.push(q);
+      if(ok){
+        correct++;
+        domainStats[q.domain].c++;
+      }else{
+        misses.push(q);
+      }
     });
+
     let weighted=0;
     Object.entries(bank.weights).forEach(([d,w])=>{
       const st=domainStats[d];
       const pct=st.t?st.c/st.t:0;
-      weighted += pct*w;
+      weighted+=pct*w;
     });
+
     const result={
-      score:correct,total:session.length,percent:Math.round(correct/session.length*100),
+      score:correct,
+      total:session.length,
+      percent:Math.round(correct/session.length*100),
       weightedReadiness:Math.round(weighted),
       domainStats,
       misses:misses.map(q=>({id:q.id,domain:q.domain,concept:q.concept})),
       answers
     };
+
     storage.recordExam(result);
-    // Feed misses/correct answers into the same concept mastery engine.
+
     session.forEach(q=>storage.recordActiveResult({
-      domain:q.domain, challengeId:`exam:${q.id}`, type:"exam",
-      concept:q.concept, correct:answers[q.id]===q.correctIndex
+      domain:q.domain,
+      challengeId:`exam:${q.id}`,
+      type:"exam",
+      concept:q.concept,
+      correct:answers[q.id]===q.correctIndex
     }));
+
     submitted=true;
+    mode="results";
     window.__lastExamResult=result;
-    renderResults();
+    render();
   }
 
   function readinessLabel(n){
@@ -195,13 +480,13 @@
     counter.textContent=`${r.score} / ${r.total}`;
     progress.style.width="100%";
     const domainNames={1:"Governance",2:"Risk Management",3:"Security Program",4:"Incident Management"};
-    const weakDomains=Object.entries(r.domainStats).sort((a,b)=>(a[1].c/a[1].t)-(b[1].c/b[1].t));
 
     content.innerHTML=`
       <article class="exam-results">
         <div class="mixed-stage">PRACTICE EXAM COMPLETE</div>
         <h2>${label}</h2>
         <p class="exam-result-desc">${desc}</p>
+
         <div class="readiness-hero">
           <div><strong>${r.percent}%</strong><span>raw practice score</span></div>
           <div><strong>${r.weightedReadiness}%</strong><span>domain-weighted readiness</span></div>
@@ -210,7 +495,12 @@
         <div class="exam-domain-grid">
           ${Object.entries(r.domainStats).map(([d,st])=>{
             const pct=Math.round(st.c/st.t*100);
-            return `<div><span>D${d} · ${domainNames[d]}</span><strong>${pct}%</strong><small>${st.c}/${st.t} correct</small><div class="mini-progress"><span style="width:${pct}%"></span></div></div>`;
+            return `<div>
+              <span>D${d} · ${domainNames[d]}</span>
+              <strong>${pct}%</strong>
+              <small>${st.c}/${st.t} correct</small>
+              <div class="mini-progress"><span style="width:${pct}%"></span></div>
+            </div>`;
           }).join("")}
         </div>
 
@@ -231,7 +521,10 @@
                 <strong>${esc(q.stem)}</strong>
                 <p><b>Best answer:</b> ${esc(q.options[q.correctIndex])}</p>
                 <p>${esc(q.rationale)}</p>
-                <div class="mindset-mini-memory"><span>Memory rule</span><strong>${esc(q.memory)}</strong></div>
+                <div class="mindset-mini-memory">
+                  <span>Memory rule</span>
+                  <strong>${esc(q.memory)}</strong>
+                </div>
               </div>`).join("")}
           </div>
         </details>
@@ -241,14 +534,17 @@
           <div>One score does not declare you exam-ready. Look for repeatable performance across fresh sessions and no major weak domain. This score is a study signal, not an ISACA scaled-score prediction.</div>
         </div>
       </article>`;
-    next.disabled=false; next.textContent="Done"; next.onclick=closeExam;
-    review.disabled=true; prev.disabled=true;
+
+    prev.disabled=true;
+    prev.style.opacity=".35";
+    review.disabled=true;
+    review.style.opacity=".35";
+    next.disabled=false;
+    next.style.opacity="1";
+    next.textContent="Done";
+    next.onclick=closeExam;
   }
 
-  prev.onclick=()=>{if(pos>0){pos--;render();}};
-  next.onclick=goNext;
-  review.onclick=()=>{if(submitted)return;const q=session[pos];marked[q.id]=!marked[q.id];render();};
   close.onclick=closeExam;
-
   window.CISMExamEngine={open:openExam};
 })();

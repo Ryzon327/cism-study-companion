@@ -2037,3 +2037,29 @@ select {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+
+/* Build 9.2 — Stable Review Queue Navigation */
+.exam-review-all-button {
+  margin-top: 12px;
+}
+.review-queue-card .exam-meta {
+  align-items: center;
+}
+.review-queue-note {
+  margin-top: 20px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface-soft);
+  display: grid;
+  gap: 4px;
+}
+.review-queue-note strong {
+  font-size: 12px;
+}
+.review-queue-note span {
+  color: var(--text-soft);
+  font-size: 11px;
+  line-height: 1.5;
+}

@@ -156,3 +156,15 @@ Build 9 measures transfer. It does not create a separate curriculum and does not
 - One-click jump to unanswered questions
 - Answer-status indicators in the Review Center
 - No more clicking backward through the exam to find flagged questions
+
+
+## Build 9.2 additions
+
+- Stable Review Center navigation state machine
+- Review all marked questions sequentially
+- Review all unanswered questions sequentially
+- Next/Previous move within the review queue instead of the full exam
+- Skip a review question without answering it
+- Return to Review Center before submission
+- Unmarking or answering removes questions cleanly from the appropriate review queue
+- Reset button handlers and disabled states to eliminate stale-navigation glitches
