@@ -203,3 +203,14 @@ Build 10 is designed to make memorizing question wording insufficient.
 - No streaks, overdue backlog, or forced exam cadence
 
 Build 11 connects the existing learning engines into the normal 30–35 minute daily workflow.
+
+
+## Build 12 additions
+
+- By Domain Practice is now clickable and functional
+- Weak Areas Practice is now clickable and functional
+- Retention states and evidence-confidence readiness in Progress
+- Mixed-Practice reasoning-trap detection
+- Recommended next-domain focus
+
+Readiness is an internal study signal, not an ISACA scaled-score prediction.

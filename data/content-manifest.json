@@ -1,5 +1,5 @@
 {
-  "build": 11,
+  "build": 12,
   "purpose": "Exam-focused concept, comparison, lifecycle, and pattern catalogue derived from the four supplied CISM domain question sets.",
   "sourcePolicy": "Original source questions remain separate from the analysis/learning layer. Build 3 does not silently rewrite source rationales.",
   "domains": {
@@ -116,5 +116,14 @@
     "adaptiveFocus": true,
     "noBacklogPressure": true,
     "dailyExamRequired": false
+  },
+  "practiceShortcuts": {
+    "byDomain": "enabled",
+    "weakAreas": "enabled"
+  },
+  "retentionReadiness": {
+    "enabled": true,
+    "scorePrediction": false,
+    "evidenceConfidence": true
   }
 }

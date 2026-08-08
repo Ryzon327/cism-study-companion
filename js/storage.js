@@ -6,6 +6,7 @@
   const MIXED_KEY = "cism-companion-mixed-practice-v8";
   const EXAM_KEY = "cism-companion-exam-readiness-v9";
   const DAILY_KEY = "cism-companion-daily-study-v11";
+  const RETENTION_KEY = "cism-companion-retention-v12";
 
   const defaults = { theme: "light", sessionLength: "normal" };
 
@@ -208,6 +209,19 @@
     return state.days[key];
   }
 
+
+  function getRetentionState() {
+    return safeParse(RETENTION_KEY, { snapshots: [] });
+  }
+
+  function recordRetentionSnapshot(snapshot) {
+    const state = getRetentionState();
+    state.snapshots.push({ ...snapshot, timestamp: new Date().toISOString() });
+    if (state.snapshots.length > 60) state.snapshots = state.snapshots.slice(-60);
+    localStorage.setItem(RETENTION_KEY, JSON.stringify(state));
+    return state;
+  }
+
   function exportData() {
     return {
       app: "CISM Study Companion",
@@ -219,7 +233,8 @@
       activeLearning: getActiveLearning(),
       mixedPractice: getMixedPractice(),
       examReadiness: getExamReadiness(),
-      dailyStudy: getDailyStudy()
+      dailyStudy: getDailyStudy(),
+      retentionState: getRetentionState()
     };
   }
 
@@ -232,7 +247,8 @@
     localStorage.setItem(MIXED_KEY, JSON.stringify(data.mixedPractice || { sessions: [], attempts: [], mindset: {} }));
     localStorage.setItem(EXAM_KEY, JSON.stringify(data.examReadiness || { exams: [] }));
     localStorage.setItem(DAILY_KEY, JSON.stringify(data.dailyStudy || { days: {} }));
+    localStorage.setItem(RETENTION_KEY, JSON.stringify(data.retentionState || { snapshots: [] }));
   }
 
-  window.CISMStorage = { getPrefs, setPrefs, getProgress, setProgress, getAttempts, addAttempt, getActiveLearning, recordActiveResult, getMixedPractice, recordMixedAttempt, recordMixedSession, getExamReadiness, recordExam, getDailyStudy, getTodayStudy, setTodayStudy, exportData, importData };
+  window.CISMStorage = { getPrefs, setPrefs, getProgress, setProgress, getAttempts, addAttempt, getActiveLearning, recordActiveResult, getMixedPractice, recordMixedAttempt, recordMixedSession, getExamReadiness, recordExam, getDailyStudy, getTodayStudy, setTodayStudy, getRetentionState, recordRetentionSnapshot, exportData, importData };
 })();

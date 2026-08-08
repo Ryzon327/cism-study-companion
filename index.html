@@ -286,16 +286,16 @@
         </div>
 
         <div class="card-grid">
-          <article class="panel option-card">
+          <button class="explore-card" id="practiceByDomainCard" type="button">
             <span class="explore-kicker">AVAILABLE</span>
-            <h3>By Domain</h3>
-            <p>Use Explore → Active Practice for adaptive domain-specific retrieval and repair.</p>
-          </article>
-          <article class="panel option-card">
+            <strong>By Domain</strong>
+            <p>Choose a domain and launch its adaptive Active Practice directly.</p>
+          </button>
+          <button class="explore-card" id="practiceWeakAreasCard" type="button">
             <span class="explore-kicker">ADAPTIVE</span>
-            <h3>Weak Areas</h3>
-            <p>Your misses already feed back into Active Practice and Study Memory Rules.</p>
-          </article>
+            <strong>Weak Areas</strong>
+            <p>See what currently needs reinforcement and jump directly into repair.</p>
+          </button>
           <button class="explore-card mixed-practice-card" id="startMixedPracticeCard" type="button">
             <span class="explore-kicker">NEW · BUILD 8</span>
             <strong>Mixed CISM</strong>
@@ -381,6 +381,17 @@
 
 
 
+
+
+  <div class="target-overlay hidden" id="targetPracticeOverlay" aria-hidden="true">
+    <div class="target-shell">
+      <header class="target-header">
+        <button class="icon-button" id="closeTargetPracticeButton" type="button">×</button>
+        <div><div class="eyebrow" id="targetPracticeEyebrow">TARGETED PRACTICE</div><h2 id="targetPracticeTitle">Choose where to practice.</h2></div>
+      </header>
+      <main class="target-content" id="targetPracticeContent"></main>
+    </div>
+  </div>
 
   <div class="daily-overlay hidden" id="dailyOverlay" aria-hidden="true">
     <div class="daily-shell">

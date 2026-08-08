@@ -625,6 +625,131 @@
 
   renderDailyStudyHome();
 
+
+  const targetOverlay = document.getElementById("targetPracticeOverlay");
+  const targetContent = document.getElementById("targetPracticeContent");
+  const targetTitle = document.getElementById("targetPracticeTitle");
+  const targetEyebrow = document.getElementById("targetPracticeEyebrow");
+
+  function closeTargetPractice() {
+    targetOverlay.classList.add("hidden");
+    targetOverlay.setAttribute("aria-hidden","true");
+    document.body.style.overflow="";
+  }
+
+  function conceptDomain(concept) {
+    for (const [d,lab] of Object.entries(window.CISMActiveLearning || {})) {
+      if (lab.challenges.some(c => c.concept === concept)) return d;
+    }
+    return null;
+  }
+
+  function renderDomainChooser() {
+    const names={"1":"Information Security Governance","2":"Information Security Risk Management","3":"Information Security Program","4":"Incident Management"};
+    const state=storage.getActiveLearning();
+    targetEyebrow.textContent="PRACTICE · BY DOMAIN";
+    targetTitle.textContent="Choose one domain.";
+    targetContent.innerHTML=`<div class="target-domain-grid">${Object.entries(names).map(([d,n])=>{
+      const e=state.domainEvidence?.[d]||{correct:0,attempts:0};
+      const pct=e.attempts?Math.round(e.correct/e.attempts*100):null;
+      return `<button class="target-domain-card" data-domain="${d}" type="button"><span>DOMAIN ${d}</span><strong>${escapeHTML(n)}</strong><small>${pct==null?"No active-practice evidence yet":`${pct}% · ${e.correct}/${e.attempts} attempts`}</small></button>`;
+    }).join("")}</div>`;
+    targetContent.querySelectorAll("[data-domain]").forEach(b=>b.onclick=()=>{closeTargetPractice();window.CISMActiveEngine.open(b.dataset.domain);});
+  }
+
+  function renderWeakChooser() {
+    const mastery=storage.getActiveLearning().mastery||{};
+    const priority=s=>s==="Needs Refresh"?0:s==="Learning"?1:s==="Usable"?2:3;
+    const rows=Object.entries(mastery).map(([concept,m])=>({
+      concept,domain:conceptDomain(concept),state:m.state||"Learning",
+      attempts:m.attempts||0,correct:m.correct||0,rate:m.attempts?m.correct/m.attempts:0
+    })).filter(x=>x.domain && ["Needs Refresh","Learning","Usable"].includes(x.state))
+      .sort((x,y)=>priority(x.state)-priority(y.state)||x.rate-y.rate||y.attempts-x.attempts).slice(0,12);
+
+    targetEyebrow.textContent="PRACTICE · WEAK AREAS";
+    targetTitle.textContent=rows.length?"Repair what the evidence says matters.":"No weak-area evidence yet.";
+    targetContent.innerHTML=rows.length?`<div class="weak-area-list">${rows.map((r,i)=>`
+      <button class="weak-area-row" data-domain="${r.domain}" type="button">
+        <div class="weak-rank">${i+1}</div><div><span>D${r.domain} · ${escapeHTML(r.state)}</span><strong>${escapeHTML(r.concept)}</strong><small>${r.attempts?`${Math.round(r.rate*100)}% across ${r.attempts} attempts`:"Needs evidence"}</small></div><em>Practice →</em>
+      </button>`).join("")}</div>`:`<div class="target-empty"><strong>Complete some practice first.</strong><p>Once the app has evidence, weak concepts will be ranked here.</p></div>`;
+    targetContent.querySelectorAll("[data-domain]").forEach(b=>b.onclick=()=>{closeTargetPractice();window.CISMActiveEngine.open(b.dataset.domain);});
+  }
+
+  function openTarget(mode){
+    targetOverlay.classList.remove("hidden");
+    targetOverlay.setAttribute("aria-hidden","false");
+    document.body.style.overflow="hidden";
+    mode==="domain"?renderDomainChooser():renderWeakChooser();
+  }
+
+  document.getElementById("practiceByDomainCard")?.addEventListener("click",()=>openTarget("domain"));
+  document.getElementById("practiceWeakAreasCard")?.addEventListener("click",()=>openTarget("weak"));
+  document.getElementById("closeTargetPracticeButton")?.addEventListener("click",closeTargetPractice);
+
+  function retentionStatus(m) {
+    if (!m || !m.attempts) return "No Evidence";
+    const rate=m.correct/m.attempts;
+    const age=m.lastSeen?(Date.now()-new Date(m.lastSeen).getTime())/86400000:999;
+    if (m.state==="Needs Refresh") return "Needs Reinforcement";
+    if (m.attempts>=4 && rate>=.8 && age<=14) return "Stable";
+    if (m.attempts>=2 && rate>=.6) return "Developing";
+    return "Needs Reinforcement";
+  }
+
+  function renderRetentionReadiness() {
+    const root=document.querySelector("#view-progress .progress-grid");
+    if(!root) return;
+    let card=document.getElementById("retentionReadinessCard");
+    if(!card){card=document.createElement("article");card.className="panel retention-readiness-card";card.id="retentionReadinessCard";root.prepend(card);}
+
+    const active=storage.getActiveLearning();
+    const mastery=active.mastery||{};
+    const mixed=storage.getMixedPractice();
+    const exams=storage.getExamReadiness().exams||[];
+    const rows=Object.entries(mastery).map(([c,m])=>({concept:c,status:retentionStatus(m),attempts:m.attempts||0,correct:m.correct||0}));
+    const counts={
+      Stable:rows.filter(x=>x.status==="Stable").length,
+      Developing:rows.filter(x=>x.status==="Developing").length,
+      Needs:rows.filter(x=>x.status==="Needs Reinforcement").length
+    };
+    const latest=exams[exams.length-1]||null;
+    const recent=exams.slice(-3);
+    const avg=recent.length?Math.round(recent.reduce((z,e)=>z+(e.weightedReadiness||0),0)/recent.length):null;
+
+    const domains=["1","2","3","4"].map(d=>{
+      const es=latest?.domainStats?.[d], as=active.domainEvidence?.[d];
+      const ep=es?.t?Math.round(es.c/es.t*100):null, ap=as?.attempts?Math.round(as.correct/as.attempts*100):null;
+      const evidence=(es?.t||0)+(as?.attempts||0);
+      const score=ep!=null&&ap!=null?Math.round(ep*.65+ap*.35):ep!=null?ep:ap;
+      return {d,score,evidence,confidence:evidence>=25?"High":evidence>=10?"Moderate":evidence?"Low":"No evidence"};
+    });
+
+    const mind=Object.entries(mixed.mindset||{}).map(([k,v])=>({k,p:v.attempts?Math.round(v.correct/v.attempts*100):null,a:v.attempts||0}))
+      .filter(x=>x.a>=3&&x.p!=null).sort((x,y)=>x.p-y.p)[0];
+    const labels={qualifier:"Qualifier recognition",role:"Role / authority",lifecycle:"Lifecycle placement",decision:"Decision context"};
+    const weak=domains.filter(x=>x.score!=null).sort((x,y)=>x.score-y.score)[0];
+    let overall=avg==null?"Building":avg>=85&&domains.every(x=>x.score==null||x.score>=75)?"Strong":avg>=75?"Approaching Ready":avg<65?"Developing":"Building";
+
+    card.innerHTML=`<div class="panel-heading"><div><div class="eyebrow">RETENTION & READINESS</div><h3>${escapeHTML(overall)}</h3></div><span class="status-pill subtle">${exams.length} exam${exams.length===1?"":"s"}</span></div>
+      <div class="readiness-summary-grid">
+        <div><span>Stable concepts</span><strong>${counts.Stable}</strong></div>
+        <div><span>Developing</span><strong>${counts.Developing}</strong></div>
+        <div><span>Needs reinforcement</span><strong>${counts.Needs}</strong></div>
+        <div><span>Recent exam avg</span><strong>${avg==null?"—":avg+"%"}</strong></div>
+      </div>
+      <div class="readiness-coach">
+        <div><span>Recurring reasoning trap</span><strong>${mind?escapeHTML((labels[mind.k]||mind.k)+" · "+mind.p+"%"):"Not enough mixed-practice evidence yet"}</strong></div>
+        <div><span>Recommended next focus</span><strong>${weak?"Domain "+weak.d:"Keep building evidence"}</strong></div>
+      </div>
+      <div class="readiness-domain-list">${domains.map(x=>`<div class="readiness-domain-row"><div><strong>D${x.d}</strong><span>${x.score==null?"No evidence yet":x.score+"% readiness signal"}</span></div><div class="readiness-confidence"><span>${escapeHTML(x.confidence)}</span><small>${x.evidence} evidence points</small></div></div>`).join("")}</div>
+      <p class="muted readiness-disclaimer">Internal study signal only — not a prediction of an ISACA scaled score.</p>`;
+
+    storage.recordRetentionSnapshot({overall,recentAverage:avg,counts,domains});
+  }
+
+  ["cism-active-learning-updated","cism-mixed-updated","cism-exam-updated","cism-daily-updated"].forEach(e=>document.addEventListener(e,renderRetentionReadiness));
+  renderRetentionReadiness();
+
   initContentEngine();
 
 })();
