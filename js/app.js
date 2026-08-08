@@ -750,6 +750,62 @@
   ["cism-active-learning-updated","cism-mixed-updated","cism-exam-updated","cism-daily-updated"].forEach(e=>document.addEventListener(e,renderRetentionReadiness));
   renderRetentionReadiness();
 
+
+  function ensureRuntimeToast() {
+    let toast = document.getElementById("runtimeToast");
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.id = "runtimeToast";
+      toast.className = "runtime-toast hidden";
+      toast.setAttribute("role","status");
+      toast.setAttribute("aria-live","polite");
+      document.body.appendChild(toast);
+    }
+    return toast;
+  }
+
+  let runtimeToastTimer = null;
+  function showRuntimeToast(message, tone="info") {
+    const toast = ensureRuntimeToast();
+    toast.textContent = message;
+    toast.dataset.tone = tone;
+    toast.classList.remove("hidden");
+    clearTimeout(runtimeToastTimer);
+    runtimeToastTimer = setTimeout(() => toast.classList.add("hidden"), 5200);
+  }
+
+  window.addEventListener("cism-storage-warning", event => {
+    showRuntimeToast(event.detail?.message || "The latest progress could not be saved.", "warning");
+  });
+
+  window.addEventListener("error", event => {
+    console.error("CISM Study Companion runtime error:", event.error || event.message);
+    showRuntimeToast("Something did not load correctly. Your saved progress has not been intentionally cleared.", "warning");
+  });
+
+  window.addEventListener("unhandledrejection", event => {
+    console.error("CISM Study Companion promise error:", event.reason);
+    showRuntimeToast("A background action did not finish correctly. Your existing saved progress remains intact.", "warning");
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key !== "Escape") return;
+    const closers = [
+      ["examOverlay","closeExamButton"],
+      ["mixedOverlay","closeMixedButton"],
+      ["learningOverlay","closeLearningButton"],
+      ["dailyOverlay","closeDailyButton"],
+      ["targetPracticeOverlay","closeTargetPracticeButton"]
+    ];
+    for (const [overlayId,buttonId] of closers) {
+      const overlay = document.getElementById(overlayId);
+      if (overlay && !overlay.classList.contains("hidden")) {
+        document.getElementById(buttonId)?.click();
+        return;
+      }
+    }
+  });
+
   initContentEngine();
 
 })();

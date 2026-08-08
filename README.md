@@ -214,3 +214,16 @@ Build 11 connects the existing learning engines into the normal 30–35 minute d
 - Recommended next-domain focus
 
 Readiness is an internal study signal, not an ISACA scaled-score prediction.
+
+
+## Build 13 — v1.0 Candidate
+
+- Final reliability and polish pass
+- Validated backup imports with an automatic pre-import recovery copy
+- Bounded browser histories to prevent uncontrolled localStorage growth
+- Graceful storage/runtime warnings without intentionally clearing progress
+- Escape-key overlay closing
+- Keyboard focus visibility and reduced-motion support
+- Core feature development is now locked
+
+Future changes should come from real study use: bugs or genuine CISM coverage gaps, not feature expansion for its own sake.
