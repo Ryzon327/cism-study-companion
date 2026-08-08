@@ -36,6 +36,26 @@
   let currentStep = Math.min(storage.getProgress().currentStep || 0, study.session.steps.length - 1);
   let stepState = {};
 
+  // Confidence controls live inside studyContent, which is re-rendered after
+  // every selection. Listen once on the stable parent so the buttons remain
+  // selectable regardless of how many times the card is rebuilt.
+  studyContent.addEventListener("click", event => {
+    const button = event.target.closest("[data-confidence]");
+    if (!button || !studyContent.contains(button) || button.disabled) return;
+
+    event.preventDefault();
+    const confidence = button.dataset.confidence;
+    if (!["sure","not-sure","guessing"].includes(confidence)) return;
+
+    stepState.attempt = {
+      ...(stepState.attempt || {}),
+      confidence,
+      submitted: false
+    };
+    renderStep();
+  });
+
+
   function applyTheme(theme) {
     html.dataset.theme = theme;
     themeIcon.textContent = theme === "light" ? "☾" : "☀";
@@ -161,10 +181,6 @@
     quiz.bindStep(studyContent, stepState, {
       onSelect(index) {
         stepState.attempt = { ...(stepState.attempt || {}), selectedIndex: index, confidence: stepState.attempt?.confidence || null, submitted: false };
-        renderStep();
-      },
-      onConfidence(confidence) {
-        stepState.attempt = { ...(stepState.attempt || {}), confidence, submitted: false };
         renderStep();
       },
       onSubmit() {

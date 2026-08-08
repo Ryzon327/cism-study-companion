@@ -298,9 +298,24 @@
         <div class="mixed-stage">${correct ? "CORRECT" : "REPAIR THE REASONING"}</div>
         <h2>${correct ? "You solved the management problem." : "The answer matters — but the reasoning pattern matters more."}</h2>
 
+        <div class="mixed-question-reference">
+          <span>QUESTION</span>
+          <strong>${escapeHTML(q.stem)}</strong>
+        </div>
+
+        <div class="mixed-answer-comparison">
+          <div>
+            <span>YOUR ANSWER</span>
+            <strong>${state.selectedIndex == null ? "No answer" : `${String.fromCharCode(65 + state.selectedIndex)}. ${escapeHTML(q.options[state.selectedIndex])}`}</strong>
+          </div>
+          <div>
+            <span>BEST ANSWER</span>
+            <strong>${String.fromCharCode(65 + q.correctIndex)}. ${escapeHTML(q.options[q.correctIndex])}</strong>
+          </div>
+        </div>
+
         <div class="mixed-answer-block ${correct ? "correct" : "miss"}">
-          <strong>Best answer</strong>
-          <span>${String.fromCharCode(65 + q.correctIndex)}. ${escapeHTML(q.options[q.correctIndex])}</span>
+          <strong>Why</strong>
           <p>${escapeHTML(q.rationale)}</p>
         </div>
 

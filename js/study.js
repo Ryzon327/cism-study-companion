@@ -244,18 +244,29 @@
         }).join("")}
       </div>
       ${step.confidence ? renderConfidence(attempt, locked) : ""}
-      ${attempt?.submitted ? renderFeedback(step, attempt) : `<button class="primary-button answer-button" id="submitAnswerButton" type="button" ${attempt?.selectedIndex == null ? "disabled" : ""}>Check answer <span>→</span></button>`}
+      ${!attempt?.submitted && step.confidence && !attempt?.confidence ? `<div class="confidence-helper">Choose how confident you are before checking the answer.</div>` : ""}
+      ${attempt?.submitted ? renderFeedback(step, attempt) : `<button class="primary-button answer-button" id="submitAnswerButton" type="button" ${(attempt?.selectedIndex == null || (step.confidence && !attempt?.confidence)) ? "disabled" : ""}>Check answer <span>→</span></button>`}
     `;
   }
 
   function renderConfidence(attempt, locked) {
     return `
-      <div class="confidence-block">
-        <span>Confidence</span>
-        <div class="confidence-options">
-          ${["sure","not-sure","guessing"].map(v => `<button type="button" data-confidence="${v}" class="${attempt?.confidence === v ? "selected" : ""}" ${locked ? "disabled" : ""}>${v === "sure" ? "Sure" : v === "not-sure" ? "Not sure" : "Guessing"}</button>`).join("")}
+      <fieldset class="confidence-block" ${locked ? "disabled" : ""}>
+        <legend>How confident are you?</legend>
+        <div class="confidence-options" role="radiogroup" aria-label="Answer confidence">
+          ${["sure","not-sure","guessing"].map(v => {
+            const selected = attempt?.confidence === v;
+            const label = v === "sure" ? "Sure" : v === "not-sure" ? "Not sure" : "Guessing";
+            return `<button
+              type="button"
+              data-confidence="${v}"
+              role="radio"
+              aria-checked="${selected ? "true" : "false"}"
+              class="${selected ? "selected" : ""}"
+              ${locked ? "disabled" : ""}>${label}</button>`;
+          }).join("")}
         </div>
-      </div>
+      </fieldset>
     `;
   }
 
