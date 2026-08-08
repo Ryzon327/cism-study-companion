@@ -28,6 +28,7 @@
 
   const titles = {
     study: ["TODAY", "Your CISM study is ready."],
+    tools: ["OPTIONAL", "Explore or practice with a purpose."],
     explore: ["EXPLORE", "Everything has a place."],
     practice: ["PRACTICE", "Practice without losing the flow."],
     progress: ["PROGRESS", "See what matters, not everything."]
@@ -83,6 +84,9 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
   switchView(storage.getProgress().currentView || "study");
+
+  document.getElementById("openExploreHub")?.addEventListener("click", () => switchView("explore"));
+  document.getElementById("openPracticeHub")?.addEventListener("click", () => switchView("practice"));
 
   settingsButton.addEventListener("click", () => settingsDialog.showModal());
   sessionLength.addEventListener("change", () => storage.setPrefs({ sessionLength: sessionLength.value }));
