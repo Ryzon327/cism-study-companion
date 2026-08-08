@@ -233,7 +233,7 @@
     const card = document.querySelector(".focus-title");
     const note = document.querySelector(".focus-note");
     if (card) card.textContent = "Foundation session complete.";
-    if (note) note.textContent = "Your next build will expand this engine into the Domain 1 curriculum.";
+    if (note) note.textContent = "Daily Study will bring this material back when it supports your current focus.";
   }
 
   if ((storage.getProgress().sessionsCompleted || 0) > 0) updateHomeAfterCompletion();

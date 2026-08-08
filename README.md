@@ -227,3 +227,6 @@ Readiness is an internal study signal, not an ISACA scaled-score prediction.
 - Core feature development is now locked
 
 Future changes should come from real study use: bugs or genuine CISM coverage gaps, not feature expansion for its own sake.
+
+## Guided Daily Study
+Daily Study is the primary path: recall, a few exam-useful definitions, lifecycle application, question-decoder training, exam-style application, evidence review, and a calm recommendation for what to do next. Separate practice engines support the guided path rather than requiring the learner to guess what to study.

@@ -207,9 +207,11 @@
       focusConcept: null,
       phases: {
         recall: false,
-        review: false,
-        active: false,
-        mixed: false,
+        learn: false,
+        lifecycle: false,
+        decoder: false,
+        apply: false,
+        repair: false,
         close: false
       },
       completed: false
@@ -252,7 +254,7 @@
   function exportData() {
     return {
       app: "CISM Study Companion",
-      version: 13,
+      version: 14,
       exportedAt: new Date().toISOString(),
       prefs: getPrefs(),
       progress: getProgress(),
