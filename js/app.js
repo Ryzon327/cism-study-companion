@@ -826,6 +826,40 @@
     }
   });
 
+
+  function renderCurriculumJourney() {
+    const state=storage.getCurriculum();
+    const keys=["foundation","1","2","3","4"];
+    const subtitles=["Think Like CISM","Governance","Risk Management","Security Program","Incident Management"];
+    const steps=[...document.querySelectorAll(".journey-step")];
+    steps.forEach((step,i)=>{
+      const key=keys[i],foundation=key==="foundation";
+      const completed=foundation?state.foundationCompleted:state.completedDomains.includes(key);
+      const current=state.phase==="learning"?(foundation?!state.foundationCompleted:(state.foundationCompleted&&state.currentDomain===key)):false;
+      step.classList.toggle("active",current);
+      step.classList.toggle("completed",completed);
+      step.classList.toggle("muted",!current&&!completed);
+      const small=step.querySelector("small");
+      if(small)small.textContent=`${subtitles[i]} · ${completed?"Completed":current?"Current":"Upcoming"}`;
+    });
+    const heading=[...document.querySelectorAll(".panel-heading")].find(x=>x.querySelector(".eyebrow")?.textContent.trim()==="JOURNEY");
+    if(heading){const h=heading.querySelector("h3");if(h)h.textContent=state.phase==="reinforcement"?"All domains complete — adaptive reinforcement":"Your learning journey";}
+  }
+
+  function renderCismBigPicture() {
+    const panel=[...document.querySelectorAll("article.panel")].find(x=>["LIFECYCLE PREVIEW","CISM BIG PICTURE"].includes(x.querySelector(".eyebrow")?.textContent.trim()));
+    if(!panel)return;
+    const eye=panel.querySelector(".eyebrow"),title=panel.querySelector("h3"),note=panel.querySelector("p");
+    if(eye)eye.textContent="CISM BIG PICTURE";
+    if(title)title.textContent="How the domains fit together";
+    if(note)note.textContent="Business needs shape governance. Governance guides risk decisions. Risk priorities shape the security program. Incident management prepares the organization to respond and recover.";
+    panel.querySelectorAll(".mini-node").forEach(x=>x.classList.remove("active"));
+  }
+
+  document.addEventListener("cism-curriculum-updated",()=>{renderCurriculumJourney();renderDailyStudyHome();});
+  renderCurriculumJourney();
+  renderCismBigPicture();
+
   initContentEngine();
 
 })();

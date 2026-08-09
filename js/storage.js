@@ -8,6 +8,7 @@
   const DAILY_KEY = "cism-companion-daily-study-v11";
   const RETENTION_KEY = "cism-companion-retention-v12";
   const RECOVERY_KEY = "cism-companion-pre-import-recovery-v13";
+  const CURRICULUM_KEY = "cism-companion-curriculum-v15";
 
   const defaults = { theme: "light", sessionLength: "normal" };
 
@@ -251,6 +252,71 @@
     return state;
   }
 
+
+  function defaultCurriculum() {
+    return { phase:"learning", foundationCompleted:false, currentDomain:"1", completedDomains:[], introducedConcepts:{}, completedAt:null };
+  }
+
+  function getCurriculum() {
+    const raw = localStorage.getItem(CURRICULUM_KEY);
+    const c = { ...defaultCurriculum(), ...(raw ? safeParse(CURRICULUM_KEY, defaultCurriculum()) : {}) };
+
+    if (!raw) {
+      const priorProgress = safeParse(PROGRESS_KEY, {});
+      if ((priorProgress.sessionsCompleted || 0) > 0) {
+        c.foundationCompleted = true;
+        c.currentDomain = "1";
+      }
+    }
+
+    c.completedDomains = Array.isArray(c.completedDomains) ? c.completedDomains.map(String) : [];
+    c.introducedConcepts = isPlainObject(c.introducedConcepts) ? c.introducedConcepts : {};
+    if (!["learning","reinforcement"].includes(c.phase)) c.phase="learning";
+    if (!["1","2","3","4"].includes(String(c.currentDomain))) c.currentDomain="1";
+    return c;
+  }
+
+  function setCurriculum(patch) {
+    const c=getCurriculum();
+    const next={...c,...patch};
+    if (patch.completedDomains) next.completedDomains=[...new Set(patch.completedDomains.map(String))];
+    if (patch.introducedConcepts) next.introducedConcepts={...c.introducedConcepts,...patch.introducedConcepts};
+    safeWrite(CURRICULUM_KEY,next);
+    return next;
+  }
+
+  function markFoundationComplete() {
+    const next=setCurriculum({foundationCompleted:true,currentDomain:"1"});
+    window.dispatchEvent(new CustomEvent("cism-curriculum-updated",{detail:next}));
+    return next;
+  }
+
+  function markConceptIntroduced(domain,concept) {
+    const c=getCurriculum(), key=String(domain);
+    const introduced={...c.introducedConcepts};
+    const list=Array.isArray(introduced[key])?introduced[key]:[];
+    introduced[key]=[...new Set([...list,concept])];
+    return setCurriculum({introducedConcepts:introduced});
+  }
+
+  function markDomainComplete(domain) {
+    const d=String(domain), c=getCurriculum();
+    const completed=[...new Set([...c.completedDomains,d])];
+    const all=["1","2","3","4"].every(x=>completed.includes(x));
+    const next=setCurriculum({
+      completedDomains:completed,
+      currentDomain:all?"4":String(Math.min(4,Number(d)+1)),
+      phase:all?"reinforcement":"learning",
+      completedAt:all?new Date().toISOString():c.completedAt
+    });
+    window.dispatchEvent(new CustomEvent("cism-curriculum-updated",{detail:next}));
+    return next;
+  }
+
+  function conceptHasBeenIntroduced(domain,concept) {
+    return (getCurriculum().introducedConcepts?.[String(domain)]||[]).includes(concept);
+  }
+
   function exportData() {
     return {
       app: "CISM Study Companion",
@@ -263,7 +329,8 @@
       mixedPractice: getMixedPractice(),
       examReadiness: getExamReadiness(),
       dailyStudy: getDailyStudy(),
-      retentionState: getRetentionState()
+      retentionState: getRetentionState(),
+      curriculum: getCurriculum()
     };
   }
 
@@ -279,6 +346,7 @@
     if (data.examReadiness != null && !isPlainObject(data.examReadiness)) throw new Error("Backup exam-readiness data is invalid.");
     if (data.dailyStudy != null && !isPlainObject(data.dailyStudy)) throw new Error("Backup daily-study data is invalid.");
     if (data.retentionState != null && !isPlainObject(data.retentionState)) throw new Error("Backup retention data is invalid.");
+    if (data.curriculum != null && !isPlainObject(data.curriculum)) throw new Error("Backup curriculum data is invalid.");
     return true;
   }
 
@@ -307,7 +375,8 @@
       [MIXED_KEY, normalizedMixed],
       [EXAM_KEY, { exams: boundedArray(data.examReadiness?.exams, 20) }],
       [DAILY_KEY, isPlainObject(data.dailyStudy) ? data.dailyStudy : { days: {} }],
-      [RETENTION_KEY, { snapshots: boundedArray(data.retentionState?.snapshots, 60) }]
+      [RETENTION_KEY, { snapshots: boundedArray(data.retentionState?.snapshots, 60) }],
+      [CURRICULUM_KEY, isPlainObject(data.curriculum) ? data.curriculum : defaultCurriculum()]
     ];
 
     for (const [key, value] of writes) {
@@ -322,5 +391,5 @@
     return safeParse(RECOVERY_KEY, null);
   }
 
-  window.CISMStorage = { getPrefs, setPrefs, getProgress, setProgress, getAttempts, addAttempt, getActiveLearning, recordActiveResult, getMixedPractice, recordMixedAttempt, recordMixedSession, getExamReadiness, recordExam, getDailyStudy, getTodayStudy, setTodayStudy, getRetentionState, recordRetentionSnapshot, exportData, importData, getRecoveryBackup };
+  window.CISMStorage = { getPrefs, setPrefs, getProgress, setProgress, getAttempts, addAttempt, getActiveLearning, recordActiveResult, getMixedPractice, recordMixedAttempt, recordMixedSession, getExamReadiness, recordExam, getDailyStudy, getTodayStudy, setTodayStudy, getRetentionState, recordRetentionSnapshot, getCurriculum, setCurriculum, markFoundationComplete, markConceptIntroduced, markDomainComplete, conceptHasBeenIntroduced, exportData, importData, getRecoveryBackup };
 })();

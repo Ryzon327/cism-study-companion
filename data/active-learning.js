@@ -376,6 +376,30 @@
           steps: ["Identify assets / context", "Assess likelihood and impact", "Evaluate against criteria", "Select treatment", "Determine residual risk", "Validate acceptability", "Monitor and reassess"],
           explanation: "The question bank repeatedly depends on this ordering.",
           memory: "Understand → evaluate → treat → check what remains → monitor."
+        } ,
+        {
+          id: "D2-QUANT-01", type: "apply", concept: "Quantitative Risk Analysis",
+          title: "Calculate one-event loss",
+          prompt: "An asset is valued at $200,000 and one event is expected to destroy 25% of its value. What is the SLE?",
+          options: ["$12,500", "$50,000", "$150,000", "$200,000"], correctIndex: 1,
+          explanation: "SLE = AV × EF = $200,000 × 0.25 = $50,000.",
+          memory: "AV × EF = SLE."
+        },
+        {
+          id: "D2-QUANT-02", type: "apply", concept: "Quantitative Risk Analysis",
+          title: "Calculate annualized loss",
+          prompt: "A risk has an SLE of $50,000 and occurs once every four years on average. What is the ALE?",
+          options: ["$12,500", "$50,000", "$100,000", "$200,000"], correctIndex: 0,
+          explanation: "ARO = 0.25. ALE = SLE × ARO = $12,500 per year.",
+          memory: "SLE × ARO = ALE."
+        },
+        {
+          id: "D2-QUANT-03", type: "apply", concept: "Quantitative Risk Analysis",
+          title: "Use the number as management input",
+          prompt: "A safeguard costs $40,000 per year and addresses a risk with an ALE of $12,500. What is the BEST interpretation?",
+          options: ["The control must be implemented", "The figures should inform cost-benefit and risk treatment decisions", "The risk must automatically be accepted", "Security should independently approve the expenditure"], correctIndex: 1,
+          explanation: "Quantitative results inform business judgment; they do not automatically dictate treatment or move risk authority to security.",
+          memory: "Risk numbers inform management judgment — they do not replace it."
         }
       ]
     },

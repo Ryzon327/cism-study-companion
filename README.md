@@ -230,3 +230,14 @@ Future changes should come from real study use: bugs or genuine CISM coverage ga
 
 ## Guided Daily Study
 Daily Study is the primary path: recall, a few exam-useful definitions, lifecycle application, question-decoder training, exam-style application, evidence review, and a calm recommendation for what to do next. Separate practice engines support the guided path rather than requiring the learner to guess what to study.
+
+## Build 15 additions
+
+- Foundation → Domain 1 → Domain 2 → Domain 3 → Domain 4 progression
+- One curriculum state now controls Journey and Daily Study
+- Untaught future-domain questions no longer define weakness during first-pass learning
+- Full adaptive domain selection starts after all domains are completed
+- Recall continues across introduced material
+- CISM Big Picture is separated from learner progress
+- Domain 2 adds AV, EF, SLE, ARO, ALE calculation and management application
+- Existing CISM-style wording variance is preserved

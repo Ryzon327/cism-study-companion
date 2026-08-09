@@ -256,6 +256,13 @@
             status: "core",
             plain: "KRIs are predictive signals that risk may be developing or changing.",
             exam: "For ongoing timely senior-management decisions on current risk, KRIs tied to critical business assets are powerful."
+          } ,
+          {
+            id: "D2-QUANT-RISK",
+            title: "Quantitative Risk Analysis",
+            status: "apply",
+            plain: "Quantitative analysis expresses expected loss numerically so management can compare business exposure with treatment cost.",
+            exam: "Know AV, EF, SLE, ARO, and ALE, then use the result as an input to management risk and cost-benefit decisions."
           }
         ],
         comparisons: [
