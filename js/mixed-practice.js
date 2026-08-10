@@ -30,6 +30,9 @@
       "BEST": "More than one choice may be reasonable. Choose the option that most completely fits the business problem and CISM management perspective.",
       "MOST": "The question is asking for the strongest priority or most important factor, not merely something that is true.",
       "PRIMARY": "Look for the fundamental purpose or main driver. Secondary benefits can be true and still be wrong.",
+      "PRIMARILY": "Adverb form of PRIMARY, and it behaves the same way. Ask what the activity mainly exists to accomplish, not everything it happens to help with.",
+      "GREATEST": "Almost always attached to concern, risk, or benefit. Compare magnitude of business exposure — the largest consequence, not the most technically alarming detail.",
+      "MAIN": "Asks for the central point. A distractor here is usually a genuine effect of the right answer rather than the answer itself.",
       "NONE": "There is no explicit sequencing or priority qualifier here, so focus on the core concept, role, and lifecycle context."
     },
     role: {
@@ -66,6 +69,9 @@
       "BEST": "BEST → choose the most complete fit.",
       "MOST": "MOST → identify the strongest priority.",
       "PRIMARY": "PRIMARY → find the fundamental purpose.",
+      "PRIMARILY": "PRIMARILY → what the thing mainly exists to achieve.",
+      "GREATEST": "GREATEST → largest business exposure, not the most technical.",
+      "MAIN": "MAIN → the central point, not a true side effect.",
       "NONE": "No qualifier → solve the concept, role, and lifecycle."
     },
     role: {

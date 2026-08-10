@@ -49,7 +49,7 @@
     ...normalize(q), familyId:q.familyId, pattern:q.pattern, memory:q.memory
   }));
   window.CISMExamBank = {
-    weights: {1:17, 2:33, 3:30, 4:20},
+    weights: {1:17, 2:20, 3:33, 4:30},
     questions: [...legacy, ...scenarioVariants],
     scenarioQuestions: scenarioVariants, legacyQuestions: legacy
   };

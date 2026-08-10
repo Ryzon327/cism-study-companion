@@ -20,7 +20,15 @@
   // With no decoder evidence yet there is no "weakest" dimension to repair, so
   // start with the constraint lesson, which teaches the general habit of reading
   // the whole stem before eliminating answers.
-  function decoderLesson(){const lessons=coach.decoderLessons||[];if(!hasMindsetEvidence()){const intro=lessons.find(x=>x.dimension==="constraint");if(intro)return intro}const weak=weakestMindset();return lessons.find(x=>x.dimension===weak)||lessons[0]}
+  // A dimension may have more than one lesson (qualifier has both the general
+  // decoder and the MOST vs BEST comparison). Rotate across days so the learner
+  // sees each of them rather than only the first match.
+  function decoderLesson(){const lessons=coach.decoderLessons||[];
+    if(!hasMindsetEvidence()){const intro=lessons.find(x=>x.dimension==="constraint");if(intro)return intro}
+    const weak=weakestMindset(),matches=lessons.filter(x=>x.dimension===weak);
+    if(!matches.length)return lessons[0];
+    const seen=Object.values(storage.getDailyStudy().days||{}).filter(d=>d&&d.phases&&d.phases.decoder).length;
+    return matches[seen%matches.length]}
   // PURE. buildPlan() must never write. It is called by getSummary() on every
   // home-screen render and on four different events; when it wrote to the
   // curriculum, merely looking at the home screen marked concepts as taught and

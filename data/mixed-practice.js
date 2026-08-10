@@ -2,7 +2,7 @@
   const MIXED = {
     sessionSize: 12,
     dimensions: {
-      qualifier: ["FIRST", "NEXT", "BEST", "MOST", "PRIMARY", "NONE"],
+      qualifier: ["FIRST", "NEXT", "BEST", "MOST", "PRIMARY", "PRIMARILY", "GREATEST", "MAIN", "NONE"],
       role: ["Senior management", "Security manager", "Business/data owner", "Custodian/operations", "Internal audit", "Incident response team", "None/implicit"],
       lifecycle: ["Governance", "Risk assessment/evaluation", "Risk treatment/acceptance", "Security program", "Incident response", "Continuity/recovery", "Post-incident/improvement"],
       decision: ["Business decision", "Risk decision", "Program/control decision", "Incident decision", "Recovery decision"]

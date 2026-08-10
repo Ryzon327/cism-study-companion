@@ -44,7 +44,7 @@
     const history=storage.getExamReadiness().exams || [];
     const recentQuestionIds=new Set(history.slice(-3).flatMap(e=>e.questionIds || []));
     const recentFamilyIds=new Set(history.slice(-2).flatMap(e=>e.familyIds || []));
-    const counts={1:7,2:13,3:12,4:8};
+    const counts={1:7,2:8,3:13,4:12};
     const out=[];
 
     Object.entries(counts).forEach(([domain,count])=>{
