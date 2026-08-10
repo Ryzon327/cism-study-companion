@@ -36,28 +36,38 @@
 
   function buildAdaptiveSession(domain) {
     const lab = labs[domain];
+    if (!lab || !Array.isArray(lab.challenges) || !lab.challenges.length) return [];
+
     const state = storage.getActiveLearning();
     const history = state.challengeHistory || [];
     const mastery = state.mastery || {};
     const sessionSize = Math.min(lab.sessionSize || 8, lab.challenges.length);
 
-    const recentIds = history.slice(-8).map(x => x.challengeId);
+    const recentIds = new Set(history.slice(-8).map(x => x.challengeId));
+
+    // Index the history once. This was previously a filter() per challenge,
+    // which is O(challenges x history) on every session build.
+    const perChallenge = new Map();
+    for (const entry of history) {
+      const tally = perChallenge.get(entry.challengeId) || { seen: 0, correct: 0 };
+      tally.seen++;
+      if (entry.correct) tally.correct++;
+      perChallenge.set(entry.challengeId, tally);
+    }
 
     const scored = lab.challenges.map(challenge => {
       const m = mastery[challenge.concept] || { attempts: 0, correct: 0, state: "New" };
       const conceptRate = m.attempts ? m.correct / m.attempts : 0;
-      const challengeHistory = history.filter(x => x.challengeId === challenge.id);
-      const challengeRate = challengeHistory.length
-        ? challengeHistory.filter(x => x.correct).length / challengeHistory.length
-        : 0;
+      const challengeHistory = perChallenge.get(challenge.id) || { seen: 0, correct: 0 };
+      const challengeRate = challengeHistory.seen ? challengeHistory.correct / challengeHistory.seen : 0;
 
       let weight = 1;
-      if (!challengeHistory.length) weight += 5;                  // unseen
+      if (!challengeHistory.seen) weight += 5;                    // unseen
       if (m.state === "Learning") weight += 5;
       if (m.state === "Needs Refresh") weight += 6;
       if (m.attempts && conceptRate < 0.7) weight += 5;           // weak concept
-      if (challengeHistory.length && challengeRate < 0.7) weight += 4;
-      if (recentIds.includes(challenge.id)) weight -= 2;          // avoid immediate repeat
+      if (challengeHistory.seen && challengeRate < 0.7) weight += 4;
+      if (recentIds.has(challenge.id)) weight -= 2;               // avoid immediate repeat
       if (challenge.type === "sequence") weight += 1.5;           // ensure process practice
       weight += Math.random() * 2.5;                              // fresh mix
 
@@ -115,10 +125,29 @@
     const lab = labs[domainId];
     const challenge = sessionChallenges[challengeIndex];
 
+    if (!lab || !challenge) {
+      title.textContent = lab ? lab.title : "Adaptive practice";
+      eyebrow.textContent = `DOMAIN ${domainId} · ADAPTIVE PRACTICE`;
+      content.innerHTML = `<article class="active-card">
+        <h2>No practice is available for this domain yet.</h2>
+        <p class="active-prompt">Nothing is wrong with your progress. Choose another domain, or come back after more of this material has been introduced.</p>
+      </article>`;
+      nextButton.disabled = true;
+      nextButton.style.opacity = ".45";
+      nextButton.onclick = null;
+      progressBar.style.width = "0%";
+      return;
+    }
+
     title.textContent = lab.title;
     eyebrow.textContent = `DOMAIN ${domainId} · ADAPTIVE PRACTICE`;
-    scoreEl.textContent = `${score} / ${challengeIndex}`;
-    progressBar.style.width = `${((challengeIndex + 1) / sessionChallenges.length) * 100}%`;
+    // Denominator is the number of questions ANSWERED so far, which only
+    // includes the current one once it has been submitted.
+    const answered = challengeIndex + (currentState.submitted ? 1 : 0);
+    scoreEl.textContent = `${score} / ${answered}`;
+    progressBar.style.width = sessionChallenges.length
+      ? `${((challengeIndex + 1) / sessionChallenges.length) * 100}%`
+      : "0%";
 
     if (challenge.type === "sequence") {
       if (!currentState.sequencePool) {

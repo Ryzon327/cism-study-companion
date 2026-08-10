@@ -74,11 +74,16 @@
 
 
   function getActiveLearning() {
-    return safeParse(ACTIVE_KEY, {
-      challengeHistory: [],
-      mastery: {},
-      domainEvidence: {}
-    });
+    const raw = safeParse(ACTIVE_KEY, {});
+    // Defend each sub-key individually. safeParse only substitutes the whole
+    // fallback when the stored value is missing, so a partially-shaped blob
+    // (older build, hand-edited backup, interrupted write) previously reached
+    // recordActiveResult() with challengeHistory undefined and threw.
+    return {
+      challengeHistory: Array.isArray(raw.challengeHistory) ? raw.challengeHistory : [],
+      mastery: isPlainObject(raw.mastery) ? raw.mastery : {},
+      domainEvidence: isPlainObject(raw.domainEvidence) ? raw.domainEvidence : {}
+    };
   }
 
   function recordActiveResult(result) {
@@ -126,16 +131,18 @@
 
 
   function getMixedPractice() {
-    return safeParse(MIXED_KEY, {
-      sessions: [],
-      attempts: [],
-      mindset: {
-        qualifier: { correct: 0, attempts: 0 },
-        role: { correct: 0, attempts: 0 },
-        lifecycle: { correct: 0, attempts: 0 },
-        decision: { correct: 0, attempts: 0 }
-      }
+    const raw = safeParse(MIXED_KEY, {});
+    const mindset = isPlainObject(raw.mindset) ? raw.mindset : {};
+    // Every dimension must always be present: renderCompletion() and the
+    // progress cards iterate these keys directly.
+    ["qualifier", "role", "lifecycle", "decision"].forEach(dim => {
+      if (!isPlainObject(mindset[dim])) mindset[dim] = { correct: 0, attempts: 0 };
     });
+    return {
+      sessions: Array.isArray(raw.sessions) ? raw.sessions : [],
+      attempts: Array.isArray(raw.attempts) ? raw.attempts : [],
+      mindset
+    };
   }
 
   function recordMixedAttempt(result) {
@@ -175,7 +182,8 @@
 
 
   function getExamReadiness() {
-    return safeParse(EXAM_KEY, { exams: [] });
+    const raw = safeParse(EXAM_KEY, {});
+    return { exams: Array.isArray(raw.exams) ? raw.exams : [] };
   }
 
   function recordExam(result) {
@@ -196,7 +204,8 @@
   }
 
   function getDailyStudy() {
-    return safeParse(DAILY_KEY, { days: {} });
+    const raw = safeParse(DAILY_KEY, {});
+    return { days: isPlainObject(raw.days) ? raw.days : {} };
   }
 
   function getTodayStudy() {
@@ -241,7 +250,8 @@
 
 
   function getRetentionState() {
-    return safeParse(RETENTION_KEY, { snapshots: [] });
+    const raw = safeParse(RETENTION_KEY, {});
+    return { snapshots: Array.isArray(raw.snapshots) ? raw.snapshots : [] };
   }
 
   function recordRetentionSnapshot(snapshot) {
@@ -254,7 +264,11 @@
 
 
   function defaultCurriculum() {
-    return { phase:"learning", foundationCompleted:false, currentDomain:"1", completedDomains:[], introducedConcepts:{}, completedAt:null };
+    // introducedConcepts = surfaced to the learner (eligible for recall/practice).
+    // studiedConcepts    = actually taught in a Daily Study session the learner opened.
+    // Domain completion is measured from studiedConcepts only, so rendering the
+    // home screen can never advance the curriculum.
+    return { phase:"learning", foundationCompleted:false, currentDomain:"1", completedDomains:[], introducedConcepts:{}, studiedConcepts:{}, completedAt:null };
   }
 
   function getCurriculum() {
@@ -271,6 +285,7 @@
 
     c.completedDomains = Array.isArray(c.completedDomains) ? c.completedDomains.map(String) : [];
     c.introducedConcepts = isPlainObject(c.introducedConcepts) ? c.introducedConcepts : {};
+    c.studiedConcepts = isPlainObject(c.studiedConcepts) ? c.studiedConcepts : {};
     if (!["learning","reinforcement"].includes(c.phase)) c.phase="learning";
     if (!["1","2","3","4"].includes(String(c.currentDomain))) c.currentDomain="1";
     return c;
@@ -281,22 +296,38 @@
     const next={...c,...patch};
     if (patch.completedDomains) next.completedDomains=[...new Set(patch.completedDomains.map(String))];
     if (patch.introducedConcepts) next.introducedConcepts={...c.introducedConcepts,...patch.introducedConcepts};
+    if (patch.studiedConcepts) next.studiedConcepts={...c.studiedConcepts,...patch.studiedConcepts};
     safeWrite(CURRICULUM_KEY,next);
     return next;
   }
 
   function markFoundationComplete() {
     const next=setCurriculum({foundationCompleted:true,currentDomain:"1"});
-    window.dispatchEvent(new CustomEvent("cism-curriculum-updated",{detail:next}));
+    // Dispatched on document: app.js listens there, as do all other cism-* events.
+    document.dispatchEvent(new CustomEvent("cism-curriculum-updated",{detail:next}));
     return next;
   }
 
-  function markConceptIntroduced(domain,concept) {
+  function addToConceptMap(mapName,domain,concept) {
     const c=getCurriculum(), key=String(domain);
-    const introduced={...c.introducedConcepts};
-    const list=Array.isArray(introduced[key])?introduced[key]:[];
-    introduced[key]=[...new Set([...list,concept])];
-    return setCurriculum({introducedConcepts:introduced});
+    const map={...c[mapName]};
+    const list=Array.isArray(map[key])?map[key]:[];
+    map[key]=[...new Set([...list,concept])];
+    return setCurriculum({[mapName]:map});
+  }
+
+  function markConceptIntroduced(domain,concept) {
+    return addToConceptMap("introducedConcepts",domain,concept);
+  }
+
+  // Called only when the learner actually opens a Daily Study session.
+  function markConceptStudied(domain,concept) {
+    addToConceptMap("introducedConcepts",domain,concept);
+    return addToConceptMap("studiedConcepts",domain,concept);
+  }
+
+  function conceptHasBeenStudied(domain,concept) {
+    return (getCurriculum().studiedConcepts?.[String(domain)]||[]).includes(concept);
   }
 
   function markDomainComplete(domain) {
@@ -309,12 +340,53 @@
       phase:all?"reinforcement":"learning",
       completedAt:all?new Date().toISOString():c.completedAt
     });
-    window.dispatchEvent(new CustomEvent("cism-curriculum-updated",{detail:next}));
+    document.dispatchEvent(new CustomEvent("cism-curriculum-updated",{detail:next}));
     return next;
   }
 
   function conceptHasBeenIntroduced(domain,concept) {
     return (getCurriculum().introducedConcepts?.[String(domain)]||[]).includes(concept);
+  }
+
+  // ---------------------------------------------------------------
+  // Build 16 migration.
+  //
+  // Before Build 16, simply rendering the home screen called
+  // markConceptIntroduced(), so introducedConcepts could not be trusted as
+  // evidence that a concept was ever taught. studiedConcepts is therefore
+  // seeded from the only trustworthy record we have: daily entries whose
+  // "learn" phase was completed, which is written exclusively by a learner
+  // clicking through Daily Study.
+  //
+  // This is additive. Nothing is deleted, and introducedConcepts is left
+  // exactly as-is so existing recall and practice eligibility are unchanged.
+  // ---------------------------------------------------------------
+  function migrateStudiedConcepts() {
+    const raw = localStorage.getItem(CURRICULUM_KEY);
+    if (!raw) return;                       // fresh install: nothing to migrate
+    const c = getCurriculum();
+    if (isPlainObject(c.studiedConcepts) && Object.keys(c.studiedConcepts).length) return; // already migrated
+
+    const seeded = {};
+    const days = getDailyStudy().days;
+    Object.values(days).forEach(day => {
+      if (!day || !day.phases?.learn) return;
+      const d = String(day.focusDomain || "");
+      if (!d || !day.focusConcept) return;
+      const list = seeded[d] || (seeded[d] = []);
+      if (!list.includes(day.focusConcept)) list.push(day.focusConcept);
+    });
+
+    // A completed domain is prior evidence in its own right; keep it whole so
+    // an existing learner is never pushed backwards through finished material.
+    (c.completedDomains || []).forEach(d => {
+      const introduced = c.introducedConcepts?.[d];
+      if (Array.isArray(introduced) && introduced.length) {
+        seeded[d] = [...new Set([...(seeded[d] || []), ...introduced])];
+      }
+    });
+
+    setCurriculum({ studiedConcepts: seeded });
   }
 
   function exportData() {
@@ -391,5 +463,8 @@
     return safeParse(RECOVERY_KEY, null);
   }
 
-  window.CISMStorage = { getPrefs, setPrefs, getProgress, setProgress, getAttempts, addAttempt, getActiveLearning, recordActiveResult, getMixedPractice, recordMixedAttempt, recordMixedSession, getExamReadiness, recordExam, getDailyStudy, getTodayStudy, setTodayStudy, getRetentionState, recordRetentionSnapshot, getCurriculum, setCurriculum, markFoundationComplete, markConceptIntroduced, markDomainComplete, conceptHasBeenIntroduced, exportData, importData, getRecoveryBackup };
+  try { migrateStudiedConcepts(); }
+  catch (error) { console.warn("CISM Study Companion could not migrate curriculum evidence.", error); }
+
+  window.CISMStorage = { getPrefs, setPrefs, getProgress, setProgress, getAttempts, addAttempt, getActiveLearning, recordActiveResult, getMixedPractice, recordMixedAttempt, recordMixedSession, getExamReadiness, recordExam, getDailyStudy, getTodayStudy, setTodayStudy, getRetentionState, recordRetentionSnapshot, getCurriculum, setCurriculum, markFoundationComplete, markConceptIntroduced, markConceptStudied, markDomainComplete, conceptHasBeenIntroduced, conceptHasBeenStudied, exportData, importData, getRecoveryBackup };
 })();

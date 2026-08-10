@@ -128,10 +128,10 @@
             <span>${escapeHTML(labels[key])}</span>
             <div><em>${escapeHTML(selected)}</em><b>→</b><strong>${escapeHTML(correct)}</strong></div>
           </div>
-          <p>${escapeHTML(mindsetWhy[key][correct])}</p>
+          <p>${escapeHTML(mindsetWhy[key]?.[correct] || "Re-read the stem and identify this signal before choosing an answer.")}</p>
           <div class="mindset-mini-memory">
             <span>Memory rule</span>
-            <strong>${escapeHTML(mindsetMemory[key][correct])}</strong>
+            <strong>${escapeHTML(mindsetMemory[key]?.[correct] || "Name the signal first, then eliminate answers that ignore it.")}</strong>
           </div>
         </div>`;
       }).join("")}
@@ -151,16 +151,19 @@
     const history = storage.getMixedPractice().attempts || [];
     const active = storage.getActiveLearning();
     const mastery = active.mastery || {};
-    const recent = history.slice(-10).map(x => x.questionId);
+    const recent = new Set(history.slice(-10).map(x => x.questionId));
+    // Seen-set built once; this was history.some() per question, i.e.
+    // O(questions x history) on every session build.
+    const seen = new Set(history.map(h => h.questionId));
 
     const ranked = bank.questions.map(q => {
       const m = mastery[q.concept] || { state: "New", attempts: 0, correct: 0 };
       let weight = 1 + Math.random() * 3;
-      if (!history.some(h => h.questionId === q.id)) weight += 6;
+      if (!seen.has(q.id)) weight += 6;
       if (m.state === "Learning") weight += 4;
       if (m.state === "Needs Refresh") weight += 6;
       if (m.attempts && m.correct / m.attempts < .7) weight += 4;
-      if (recent.includes(q.id)) weight -= 3;
+      if (recent.has(q.id)) weight -= 3;
       return { q, weight };
     }).sort((a,b) => b.weight - a.weight);
 
@@ -208,8 +211,20 @@
 
   function render() {
     const q = questions[index];
-    scoreEl.textContent = `${score} / ${index}`;
-    progressBar.style.width = `${((index + 1) / questions.length) * 100}%`;
+    if (!q) {
+      content.innerHTML = `<article class="mixed-card">
+        <h2>No mixed questions are available right now.</h2>
+        <p class="mixed-help">Your progress is unaffected. Try Daily Study or Active Practice instead.</p>
+      </article>`;
+      nextButton.disabled = true;
+      nextButton.style.opacity = ".45";
+      progressBar.style.width = "0%";
+      return;
+    }
+    // Denominator counts questions actually answered, not the index.
+    const answered = index + (state.answerSubmitted ? 1 : 0);
+    scoreEl.textContent = `${score} / ${answered}`;
+    progressBar.style.width = questions.length ? `${((index + 1) / questions.length) * 100}%` : "0%";
 
     if (!state.mindsetSubmitted) {
       content.innerHTML = renderMindset(q);
@@ -415,7 +430,7 @@
 
   function renderCompletion() {
     const mixed = storage.getMixedPractice();
-    const mindset = mixed.mindset;
+    const mindset = mixed.mindset || {};
     const misses = results.filter(r => !r.correct);
     const conceptMisses = [...new Set(misses.map(r => r.concept))];
 

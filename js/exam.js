@@ -479,13 +479,14 @@
 
     session.forEach(q=>{
       const ok=answers[q.id]===q.correctIndex;
-      domainStats[q.domain].t++;
-      if(ok){
-        correct++;
-        domainStats[q.domain].c++;
-      }else{
-        misses.push(q);
+      // A question with an unexpected domain must not abort scoring the exam.
+      const st=domainStats[q.domain];
+      if(st){
+        st.t++;
+        if(ok) st.c++;
       }
+      if(ok) correct++;
+      else misses.push(q);
     });
 
     let weighted=0;
@@ -550,11 +551,11 @@
 
         <div class="exam-domain-grid">
           ${Object.entries(r.domainStats).map(([d,st])=>{
-            const pct=Math.round(st.c/st.t*100);
+            const pct=st.t?Math.round(st.c/st.t*100):0;
             return `<div>
               <span>D${d} · ${domainNames[d]}</span>
-              <strong>${pct}%</strong>
-              <small>${st.c}/${st.t} correct</small>
+              <strong>${st.t?pct+"%":"—"}</strong>
+              <small>${st.t?`${st.c}/${st.t} correct`:"Not covered in this exam"}</small>
               <div class="mini-progress"><span style="width:${pct}%"></span></div>
             </div>`;
           }).join("")}

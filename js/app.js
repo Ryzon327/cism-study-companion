@@ -295,6 +295,10 @@
 
   function renderContentWorkspace() {
     const domain = content.domains[activeDomain];
+    if (!domain) {
+      contentWorkspaceBody.innerHTML = `<div class="domain-story">This domain is not available yet.</div>`;
+      return;
+    }
     contentWorkspaceTitle.textContent = `Domain ${activeDomain} · ${domain.name}`;
 
     let body = `<div class="domain-story"><strong>Domain story:</strong> ${escapeHTML(domain.story)}</div>`;
@@ -350,6 +354,10 @@
 
     if (activeContentMode === "active") {
       const lab = window.CISMActiveLearning?.[activeDomain];
+      if (!lab || !Array.isArray(lab.challenges)) {
+        contentWorkspaceBody.innerHTML = body + `<div class="domain-story">Adaptive practice is not available for this domain yet.</div>`;
+        return;
+      }
       const saved = storage.getActiveLearning();
       const evidence = saved.domainEvidence?.[activeDomain] || { attempts: 0, correct: 0 };
       const weakConcepts = Object.entries(saved.mastery || {})
@@ -716,7 +724,7 @@
     return "Needs Reinforcement";
   }
 
-  function renderRetentionReadiness() {
+  function renderRetentionReadiness(record = false) {
     const root=document.querySelector("#view-progress .progress-grid");
     if(!root) return;
     let card=document.getElementById("retentionReadinessCard");
@@ -764,11 +772,23 @@
       <div class="readiness-domain-list">${domains.map(x=>`<div class="readiness-domain-row"><div><strong>D${x.d}</strong><span>${x.score==null?"No evidence yet":x.score+"% readiness signal"}</span></div><div class="readiness-confidence"><span>${escapeHTML(x.confidence)}</span><small>${x.evidence} evidence points</small></div></div>`).join("")}</div>
       <p class="muted readiness-disclaimer">Internal study signal only — not a prediction of an ISACA scaled score.</p>`;
 
-    storage.recordRetentionSnapshot({overall,recentAverage:avg,counts,domains});
+    // Snapshots are learner history, not a render artifact. This used to run on
+    // every render, so ~60 UI refreshes silently churned the entire bounded
+    // history. Record only when the readiness picture actually changed.
+    if (record) recordReadinessSnapshot({overall,recentAverage:avg,counts,domains});
   }
 
-  ["cism-active-learning-updated","cism-mixed-updated","cism-exam-updated","cism-daily-updated"].forEach(e=>document.addEventListener(e,renderRetentionReadiness));
-  renderRetentionReadiness();
+  let lastReadinessSignature = null;
+  function recordReadinessSnapshot(snapshot) {
+    const signature = JSON.stringify(snapshot);
+    if (signature === lastReadinessSignature) return;
+    lastReadinessSignature = signature;
+    storage.recordRetentionSnapshot(snapshot);
+  }
+
+  ["cism-active-learning-updated","cism-mixed-updated","cism-exam-updated","cism-daily-updated"]
+    .forEach(e => document.addEventListener(e, () => renderRetentionReadiness(true)));
+  renderRetentionReadiness(false);
 
 
   function ensureRuntimeToast() {
