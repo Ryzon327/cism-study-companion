@@ -130,29 +130,39 @@ function parseFile(text, domain) {
     const candidates = stemParts.slice(0, cutoff);
     const stem = [...candidates].reverse().find(x => x.length > 25 && (/\?/.test(x) || x.endsWith(":")))
               || candidates[candidates.length - 1];
+    // The source prints a "Question" (sometimes "Question 12.") header above
+    // each stem. Paragraph joining pulls it into the stem text, so strip any
+    // leading label and renumbering before storing.
+    const cleanStem = s => s
+      .replace(/^\s*(Questions?)\s*(No\.?|#)?\s*\d*\s*[.:)\-]?\s*/i, "")
+      .replace(/^\s*\d{1,4}\s*[.:)]\s+/, "")
+      .replace(/\s{2,}/g, " ")
+      .trim();
+
     const correctIndex = "ABCD".indexOf(answerLetter);
     if (!stem || four.length < 4 || correctIndex < 0) continue;
+    const finalStem = cleanStem(stem);
 
     // Structural gate. A handful of source questions survive extraction in a
     // damaged state (truncated stem, repeated option text). Drop them rather
     // than study from a question that cannot be answered correctly.
-    const texts = four.map(o => o.text);
-    if (stem.length < 25) continue;
+    const texts = four.map(o => o.text.replace(/\s{2,}/g, " ").trim());
+    if (finalStem.length < 25) continue;
     if (texts.some(t => t.length < 3)) continue;
     if (new Set(texts).size !== 4) continue;
-    if (/is the correct answer|^Justification/i.test(stem)) continue;
+    if (/is the correct answer|^Justification/i.test(finalStem)) continue;
 
-    const blob = stem + " " + four.map(o => o.text).join(" ");
+    const blob = finalStem + " " + texts.join(" ");
     out.push({
       id: `LOCAL-D${domain}-${String(out.length + 1).padStart(4, "0")}`,
       familyId: `LOCAL-D${domain}-${String(out.length + 1).padStart(4, "0")}`,
       domain: Number(domain),
       concept: `Domain ${domain} applied reasoning`,
-      qualifier: detectQualifier(stem),
-      role: firstMatch(ROLE_RULES, stem, "None/implicit"),
+      qualifier: detectQualifier(finalStem),
+      role: firstMatch(ROLE_RULES, finalStem, "None/implicit"),
       lifecycle: firstMatch(LIFECYCLE_RULES, blob, "Security program"),
       decision: firstMatch(DECISION_RULES, blob, "Program/control decision"),
-      stem,
+      stem: finalStem,
       options: texts,
       correctIndex,
       rationale: "Review the reasoning in your own source material for this question.",
