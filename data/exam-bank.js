@@ -40,7 +40,7 @@
 
   const normalize = q => ({
     id:q.id, domain:q.domain, concept:q.concept, stem:q.stem, options:q.options,
-    correctIndex:q.correctIndex, rationale:q.rationale,
+    correctIndex:q.correctIndex, rationale:q.rationale, optionRationales:q.optionRationales || null,
     memory:q.memory || q.pattern || "Use the business, role, lifecycle, and qualifier context."
   });
 

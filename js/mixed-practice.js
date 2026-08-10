@@ -338,7 +338,16 @@
         <div class="mixed-answer-block ${correct ? "correct" : "miss"}">
           <strong>Why</strong>
           <p>${escapeHTML(q.rationale)}</p>
+          ${!correct && q.optionRationales && typeof state.selectedIndex === "number" && state.selectedIndex !== q.correctIndex
+            ? `<p class="mixed-why-wrong"><b>You chose ${String.fromCharCode(65 + state.selectedIndex)}.</b> ${escapeHTML(q.optionRationales[state.selectedIndex])}</p>`
+            : ""}
         </div>
+        ${q.optionRationales ? `
+        <details class="mixed-other-answers">
+          <summary>Why the other answers are weaker</summary>
+          ${q.optionRationales.map((t, i) => i === q.correctIndex || i === state.selectedIndex ? "" :
+            `<p><b>${String.fromCharCode(65 + i)}. ${escapeHTML(q.options[i])}</b> — ${escapeHTML(t)}</p>`).join("")}
+        </details>` : ""}
 
         <div class="mindset-reveal">
           <div class="eyebrow">CISM DECODER</div>

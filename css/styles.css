@@ -2597,3 +2597,16 @@ summary:focus-visible {
 }
 .exam-format-note { flex: 1 1 100%; margin: .2rem 0 0; font-size: .82rem; color: var(--muted-text, #6b7280); }
 @media (max-width: 640px) { .exam-format-button { flex: 1 1 100%; } }
+
+/* ---- Build 21: per-option reasoning ---- */
+.exam-miss-chosen { color: var(--muted-text, #6b7280); }
+.exam-miss-why { color: var(--muted-text, #6b7280); font-style: italic; }
+.exam-miss-others, .mixed-other-answers { margin-top: .6rem; }
+.exam-miss-others summary, .mixed-other-answers summary {
+  cursor: pointer; font-size: .86rem; color: var(--muted-text, #6b7280);
+}
+.exam-miss-others p, .mixed-other-answers p {
+  margin: .5rem 0 0; font-size: .88rem; line-height: 1.5;
+  color: var(--muted-text, #6b7280);
+}
+.mixed-why-wrong { margin-top: .6rem; font-size: .9rem; color: var(--muted-text, #6b7280); }

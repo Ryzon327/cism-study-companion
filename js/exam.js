@@ -38,7 +38,13 @@
   function shuffleAnswers(q){
     const indexed=q.options.map((text,i)=>({text,original:i}));
     const mixed=shuffle(indexed);
-    return {...q,options:mixed.map(x=>x.text),correctIndex:mixed.findIndex(x=>x.original===q.correctIndex)};
+    // Per-option explanations are indexed to the ORIGINAL option order, so they
+    // must be permuted with the options or every rationale attaches to the
+    // wrong answer after shuffling.
+    const optionRationales=Array.isArray(q.optionRationales)
+      ? mixed.map(x=>q.optionRationales[x.original])
+      : null;
+    return {...q,options:mixed.map(x=>x.text),correctIndex:mixed.findIndex(x=>x.original===q.correctIndex),optionRationales};
   }
 
   // Exam formats. The real CISM exam is 150 questions in 240 minutes (~96s per
@@ -632,17 +638,26 @@
         <details class="exam-review-details">
           <summary>Review missed questions (${r.misses.length})</summary>
           <div class="exam-miss-list">
-            ${session.filter(q=>answers[q.id]!==q.correctIndex).map(q=>`
+            ${session.filter(q=>answers[q.id]!==q.correctIndex).map(q=>{
+              const chose=answers[q.id];
+              const chosen=typeof chose==="number"?q.options[chose]:null;
+              const whyWrong=q.optionRationales&&typeof chose==="number"?q.optionRationales[chose]:null;
+              return `
               <div class="exam-miss-item">
                 <span>D${q.domain} · ${esc(q.concept)}</span>
                 <strong>${esc(q.stem)}</strong>
+                ${chosen?`<p class="exam-miss-chosen"><b>You chose:</b> ${esc(chosen)}</p>`:`<p class="exam-miss-chosen"><b>Left unanswered.</b></p>`}
+                ${whyWrong?`<p class="exam-miss-why">${esc(whyWrong)}</p>`:""}
                 <p><b>Best answer:</b> ${esc(q.options[q.correctIndex])}</p>
                 <p>${esc(q.rationale)}</p>
+                ${q.optionRationales?`<details class="exam-miss-others"><summary>Why the other answers are weaker</summary>${
+                  q.optionRationales.map((t,i)=>i===q.correctIndex||i===chose?"":`<p><b>${esc(q.options[i])}</b> — ${esc(t)}</p>`).join("")
+                }</details>`:""}
                 <div class="mindset-mini-memory">
                   <span>Memory rule</span>
                   <strong>${esc(q.memory)}</strong>
                 </div>
-              </div>`).join("")}
+              </div>`}).join("")}
           </div>
         </details>
 

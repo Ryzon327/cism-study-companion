@@ -81,8 +81,48 @@ function domainFromName(name) {
   return m ? m[1] : null;
 }
 
-function parseFile(text, domain) {
+// Pull the four per-option justifications that follow the answer marker.
+// Returns [A,B,C,D] text, or null if the block is not cleanly present.
+function parseJustification(tail) {
+  const at = tail.search(/^[ \t]*Justification[ \t]*$/mi);
+  if (at < 0) return null;
+  const lines = tail.slice(at).split("\n").slice(1);
+
+  const parts = [];
+  let expect = 0;              // 0=A 1=B 2=C 3=D
+  let buf = [];
+  const LABEL = /^[ \t]*([A-D])\.[ \t]+(.*)$/;
+
+  for (const raw of lines) {
+    const line = raw.replace(/\f/g, " ");
+    const m = LABEL.exec(line);
+    if (m && m[1] === "ABCD"[expect]) {
+      if (buf.length) { parts.push(buf.join(" ")); buf = []; }
+      buf.push(m[2].trim());
+      expect++;
+      continue;
+    }
+    const s = line.trim();
+    if (!s) { if (parts.length === 3 && buf.length) break; continue; }
+    // A new stem or option list means the justification block has ended.
+    if (expect >= 4 && (/\?$/.test(s) || LABEL.test(line))) break;
+    if (buf.length) buf.push(s);
+  }
+  if (buf.length) parts.push(buf.join(" "));
+
+  if (parts.length !== 4) return null;
+  const cleaned = parts.map(p => p.replace(/\s{2,}/g, " ").trim());
+  if (cleaned.some(p => p.length < 10)) return null;
+  // Reject a block that has swallowed a marker or the next question.
+  if (cleaned.some(p => /is the correct answer|^Justification/i.test(p))) return null;
+  return cleaned;
+}
+
+function parseFile(raw, domain) {
   const out = [];
+  // Strip zero-width joiners up front: they sit between the option letter and
+  // its text and would otherwise defeat every label regex below.
+  const text = raw.replace(/\u200b/g, "");
   const chunks = text.split(/(?=^[ \t]*[A-D][ \t]+is the correct answer\.)/m);
   let carry = "";
   for (const chunk of chunks) {
@@ -91,6 +131,8 @@ function parseFile(text, domain) {
     const answerLetter = am[1];
     const before = carry;
     carry = chunk.slice(chunk.indexOf(am[0]) + am[0].length);
+    // The justification printed after this marker explains THIS question.
+    const justification = parseJustification(carry);
 
     const lines = before.split("\n").map(l => l.replace(/\u200b/g, "").trimEnd());
     // Option lines look like "A. <text>". Some exports render the list as eight
@@ -165,7 +207,10 @@ function parseFile(text, domain) {
       stem: finalStem,
       options: texts,
       correctIndex,
-      rationale: "Review the reasoning in your own source material for this question.",
+      rationale: justification
+        ? justification[correctIndex]
+        : "Review the reasoning in your own source material for this question.",
+      optionRationales: justification || null,
       memory: "Name the qualifier, the role, and the lifecycle stage before eliminating answers.",
       pattern: "Local question set",
     });
