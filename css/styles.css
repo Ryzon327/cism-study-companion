@@ -2553,3 +2553,47 @@ summary:focus-visible {
   font-size: 12px;
   line-height: 1.5;
 }
+
+/* ---- Build 18: exam format choice and countdown ---- */
+.exam-head-meta { display: flex; align-items: center; gap: .75rem; }
+.exam-timer {
+  font-variant-numeric: tabular-nums;
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--muted-text, #6b7280);
+  letter-spacing: .02em;
+  min-width: 4.2ch;
+  text-align: right;
+}
+.exam-timer-low { color: var(--accent-strong, #b45309); }
+
+.exam-format-choice {
+  grid-column: 1 / -1;
+  margin-top: .5rem;
+  padding: 1rem 1.15rem 1.15rem;
+  border: 1px solid var(--card-border, #e5e7eb);
+  border-radius: 14px;
+  background: var(--card-bg, #fff);
+}
+.exam-format-intro { margin: 0 0 .85rem; font-size: .9rem; color: var(--muted-text, #6b7280); }
+.exam-format-buttons { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+.exam-format-button {
+  flex: 1 1 12rem;
+  display: flex; flex-direction: column; gap: .2rem;
+  padding: .8rem .95rem;
+  border: 1px solid var(--card-border, #e5e7eb);
+  border-radius: 12px;
+  background: var(--surface, #f9fafb);
+  text-align: left; cursor: pointer;
+  transition: border-color .15s ease, background .15s ease;
+}
+.exam-format-button:hover { border-color: var(--accent, #2563eb); background: var(--card-bg, #fff); }
+.exam-format-button strong { font-size: .95rem; }
+.exam-format-button span { font-size: .82rem; color: var(--muted-text, #6b7280); }
+.exam-timed-toggle {
+  flex: 1 1 100%;
+  display: flex; align-items: center; gap: .5rem;
+  font-size: .88rem; color: var(--muted-text, #6b7280); cursor: pointer;
+}
+.exam-format-note { flex: 1 1 100%; margin: .2rem 0 0; font-size: .82rem; color: var(--muted-text, #6b7280); }
+@media (max-width: 640px) { .exam-format-button { flex: 1 1 100%; } }

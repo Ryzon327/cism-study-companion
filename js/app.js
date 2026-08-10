@@ -549,9 +549,38 @@
   renderMixedProgress();
 
 
+  const examFormatChoice = document.getElementById("examFormatChoice");
+  const examFormatButtons = document.getElementById("examFormatButtons");
+
+  function renderExamFormats() {
+    if (!examFormatButtons) return;
+    const formats = window.CISMExamEngine.formats();
+    examFormatButtons.innerHTML = formats.map(f => `
+      <button class="exam-format-button" type="button" data-format="${f.key}">
+        <strong>${f.label}</strong>
+        <span>${f.total} questions${f.key === "full" ? ` · ${Math.round(f.minutes / 60)} hours` : ""}</span>
+      </button>`).join("") + `
+      <label class="exam-timed-toggle">
+        <input type="checkbox" id="examTimedToggle" checked />
+        Use a countdown clock
+      </label>` + (formats.some(f => f.key === "full") ? "" : `
+      <p class="exam-format-note">Full-length rehearsal needs a larger question set than is bundled here. See <code>docs/LOCAL-QUESTION-SET.md</code>.</p>`);
+
+    examFormatButtons.querySelectorAll("[data-format]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const timed = document.getElementById("examTimedToggle")?.checked;
+        examFormatChoice.hidden = true;
+        window.CISMExamEngine.open({ format: btn.dataset.format, timed });
+      });
+    });
+  }
+
   document.getElementById("startPracticeExamCard")?.addEventListener("click", () => {
-    window.CISMExamEngine.open();
+    if (!examFormatChoice) { window.CISMExamEngine.open(); return; }
+    examFormatChoice.hidden = !examFormatChoice.hidden;
+    if (!examFormatChoice.hidden) renderExamFormats();
   });
+  renderExamFormats();
 
   function renderExamReadiness() {
     const root = document.querySelector("#view-progress .progress-grid");

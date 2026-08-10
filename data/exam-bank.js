@@ -48,9 +48,16 @@
   const scenarioVariants = (window.CISMPatternBank?.questions || []).map(q=>({
     ...normalize(q), familyId:q.familyId, pattern:q.pattern, memory:q.memory
   }));
+  // Optional local question set (data/local/question-set.js, gitignored).
+  // Present only if the learner has run tools/import-corpus.mjs on material
+  // they own. Absent in the repository and in any shared build.
+  const local = (window.CISMLocalQuestionSet?.questions || []).map(q => ({
+    ...normalize(q), familyId: q.familyId || `LOCAL-${q.id}`, pattern: q.pattern, memory: q.memory
+  }));
+
   window.CISMExamBank = {
     weights: {1:17, 2:20, 3:33, 4:30},
-    questions: [...legacy, ...scenarioVariants],
-    scenarioQuestions: scenarioVariants, legacyQuestions: legacy
+    questions: [...legacy, ...scenarioVariants, ...local],
+    scenarioQuestions: scenarioVariants, legacyQuestions: legacy, localQuestions: local
   };
 })();

@@ -331,6 +331,10 @@
             <strong>Practice Exam + Readiness</strong>
             <p>No hints. No domain labels. No feedback until submission. Scenario variants and answer positions change so pattern recognition matters more than memorized wording.</p>
           </button>
+          <div class="exam-format-choice" id="examFormatChoice" hidden>
+            <p class="exam-format-intro">Choose a format. Both use the same question pool and the same review tools.</p>
+            <div class="exam-format-buttons" id="examFormatButtons"></div>
+          </div>
         </div>
       </section>
 
@@ -445,7 +449,10 @@
           <div class="eyebrow">PRACTICE EXAM · READINESS</div>
           <h2 id="examTitle">Prove what you know without coaching.</h2>
         </div>
-        <div class="exam-counter" id="examCounter">1 / 40</div>
+        <div class="exam-head-meta">
+          <div class="exam-timer" id="examTimer" aria-live="polite"></div>
+          <div class="exam-counter" id="examCounter">1 / 40</div>
+        </div>
       </header>
       <div class="exam-progress"><span id="examProgressBar"></span></div>
       <main class="exam-content" id="examContent"></main>
@@ -529,6 +536,7 @@
   </dialog>
 
   <script src="js/storage.js"></script>
+  <script src="data/local/question-set.js" onerror="this.remove()"></script>
   <script src="data/content.js"></script>
   <script src="data/active-learning.js"></script>
   <script src="data/mixed-practice.js"></script>

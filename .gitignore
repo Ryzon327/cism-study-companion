@@ -4,3 +4,7 @@
 .env.*
 .vscode/
 .idea/
+
+# Local question set (never commit copyrighted question material)
+data/local/
+tools/input/

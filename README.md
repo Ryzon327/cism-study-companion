@@ -17,6 +17,17 @@ This build keeps the approved visual shell and adds the first real study engine:
 - JSON backup export/import
 - Mobile/tablet/desktop layout
 
+## Practice exam formats
+
+Two formats, both using the corrected ISACA domain weighting:
+
+- **Quick** — 40 questions, 64 minutes
+- **Full-length** — 150 questions, 4 hours, matching the real exam's pacing
+
+The countdown is optional on either. Full-length appears only when the question
+pool can fill it; see `docs/LOCAL-QUESTION-SET.md` for loading a larger set of
+your own material locally.
+
 ## Run it
 
 No server is required.

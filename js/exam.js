@@ -10,6 +10,7 @@
   const next = document.getElementById("examNextButton");
   const review = document.getElementById("examReviewButton");
   const close = document.getElementById("closeExamButton");
+  const timerEl = document.getElementById("examTimer");
 
   let session = [];
   let answers = {};
@@ -40,11 +41,23 @@
     return {...q,options:mixed.map(x=>x.text),correctIndex:mixed.findIndex(x=>x.original===q.correctIndex)};
   }
 
+  // Exam formats. The real CISM exam is 150 questions in 240 minutes (~96s per
+  // question). "quick" keeps the existing 40-question format unchanged; "full"
+  // rehearses length, pacing, and endurance at the real ratio.
+  const FORMATS = {
+    quick: { label:"Quick exam", total:40,  minutes:64,  counts:{1:7,2:8,3:13,4:12} },
+    full:  { label:"Full-length exam", total:150, minutes:240, counts:{1:26,2:30,3:49,4:45} }
+  };
+  let format = FORMATS.quick;
+  let timed = false;
+  let deadline = null;
+  let tick = null;
+
   function buildSession(){
     const history=storage.getExamReadiness().exams || [];
     const recentQuestionIds=new Set(history.slice(-3).flatMap(e=>e.questionIds || []));
     const recentFamilyIds=new Set(history.slice(-2).flatMap(e=>e.familyIds || []));
-    const counts={1:7,2:8,3:13,4:12};
+    const counts=format.counts;
     const out=[];
 
     Object.entries(counts).forEach(([domain,count])=>{
@@ -78,7 +91,51 @@
     review.onclick=null;
   }
 
-  function openExam(){
+  // Full-length rehearsal needs enough distinct questions per domain. The stock
+  // bank cannot supply 150, so the format is offered only when it can be filled
+  // honestly (see tools/import-corpus.mjs).
+  function supplyFor(counts){
+    return Object.entries(counts).every(([d,n]) =>
+      bank.questions.filter(q=>String(q.domain)===d).length >= n);
+  }
+  function availableFormats(){
+    return Object.entries(FORMATS)
+      .filter(([k,f]) => k==="quick" || supplyFor(f.counts))
+      .map(([k,f]) => ({key:k, ...f}));
+  }
+
+  function stopTimer(){
+    if(tick){ clearInterval(tick); tick=null; }
+    deadline=null;
+    if(timerEl) timerEl.textContent="";
+  }
+
+  function formatClock(ms){
+    const s=Math.max(0,Math.round(ms/1000));
+    const h=Math.floor(s/3600), m=Math.floor(s%3600/60), sec=s%60;
+    return h>0 ? `${h}:${String(m).padStart(2,"0")}:${String(sec).padStart(2,"0")}`
+               : `${m}:${String(sec).padStart(2,"0")}`;
+  }
+
+  function startTimer(){
+    if(!timed || !timerEl) return;
+    deadline = Date.now() + format.minutes*60*1000;
+    const paint = () => {
+      if(submitted || !deadline){ stopTimer(); return; }
+      const left = deadline - Date.now();
+      timerEl.textContent = formatClock(left);
+      // Calm, not alarming: a quiet cue at ten minutes, no colour-flashing.
+      timerEl.classList.toggle("exam-timer-low", left <= 10*60*1000);
+      if(left <= 0){ stopTimer(); submit(); }
+    };
+    paint();
+    tick = setInterval(paint, 1000);
+  }
+
+  function openExam(options){
+    const key = options && options.format ? options.format : "quick";
+    format = FORMATS[key] && (key==="quick" || supplyFor(FORMATS[key].counts)) ? FORMATS[key] : FORMATS.quick;
+    timed = !!(options && options.timed);
     session=buildSession();
     answers={};
     marked={};
@@ -90,10 +147,12 @@
     overlay.classList.remove("hidden");
     overlay.setAttribute("aria-hidden","false");
     document.body.style.overflow="hidden";
+    startTimer();
     render();
   }
 
   function closeExam(){
+    stopTimer();
     overlay.classList.add("hidden");
     overlay.setAttribute("aria-hidden","true");
     document.body.style.overflow="";
@@ -473,6 +532,7 @@
   }
 
   function submit(){
+    stopTimer();
     const domainStats={1:{c:0,t:0},2:{c:0,t:0},3:{c:0,t:0},4:{c:0,t:0}};
     const misses=[];
     let correct=0;
@@ -603,5 +663,5 @@
   }
 
   close.onclick=closeExam;
-  window.CISMExamEngine={open:openExam};
+  window.CISMExamEngine={open:openExam, formats:availableFormats};
 })();
