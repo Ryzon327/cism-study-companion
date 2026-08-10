@@ -2,11 +2,6 @@
 /*
  * import-corpus.mjs — LOCAL ONLY. Never commit its output.
  *
- * STATUS: INCOMPLETE. Against a 1,123-question source set this currently
- * recovers about 5%. The option-list layout varies across exports and not every
- * variant is handled yet. Run it if you like — anything it does produce is
- * structurally valid and safe to use — but do not assume full coverage.
- *
  * Converts question text files you already own into data/local/question-set.js,
  * which the app loads if present. data/local/ is gitignored, so nothing from a
  * commercial question set enters the repository.
@@ -28,8 +23,8 @@ const INPUT = path.resolve("tools/input");
 const OUT_DIR = path.resolve("data/local");
 const OUT_FILE = path.join(OUT_DIR, "question-set.js");
 
-const ANSWER_RE = /^\s*([A-D])\s+is the correct answer\./m;
-const OPTION_RE = /^\s*([A-H])[.\u200b]*\s+(.+)$/;
+const ANSWER_RE = /^[ \t]*([A-D])[ \t]+is the correct answer\./m;
+const OPTION_RE = /^[ \t]*([A-H])[.\u200b]*[ \t]+(.+)$/;
 
 const QUALIFIERS = ["MOST IMPORTANT","MOST EFFECTIVE","MOST APPROPRIATE","MOST LIKELY",
   "MOST SIGNIFICANT","MOST CRITICAL","MOST USEFUL","GREATEST","PRIMARILY","PRIMARY",
@@ -88,7 +83,7 @@ function domainFromName(name) {
 
 function parseFile(text, domain) {
   const out = [];
-  const chunks = text.split(/(?=^\s*[A-D]\s+is the correct answer\.)/m);
+  const chunks = text.split(/(?=^[ \t]*[A-D][ \t]+is the correct answer\.)/m);
   let carry = "";
   for (const chunk of chunks) {
     const am = chunk.match(ANSWER_RE);
@@ -138,6 +133,15 @@ function parseFile(text, domain) {
     const correctIndex = "ABCD".indexOf(answerLetter);
     if (!stem || four.length < 4 || correctIndex < 0) continue;
 
+    // Structural gate. A handful of source questions survive extraction in a
+    // damaged state (truncated stem, repeated option text). Drop them rather
+    // than study from a question that cannot be answered correctly.
+    const texts = four.map(o => o.text);
+    if (stem.length < 25) continue;
+    if (texts.some(t => t.length < 3)) continue;
+    if (new Set(texts).size !== 4) continue;
+    if (/is the correct answer|^Justification/i.test(stem)) continue;
+
     const blob = stem + " " + four.map(o => o.text).join(" ");
     out.push({
       id: `LOCAL-D${domain}-${String(out.length + 1).padStart(4, "0")}`,
@@ -149,7 +153,7 @@ function parseFile(text, domain) {
       lifecycle: firstMatch(LIFECYCLE_RULES, blob, "Security program"),
       decision: firstMatch(DECISION_RULES, blob, "Program/control decision"),
       stem,
-      options: four.map(o => o.text),
+      options: texts,
       correctIndex,
       rationale: "Review the reasoning in your own source material for this question.",
       memory: "Name the qualifier, the role, and the lifecycle stage before eliminating answers.",

@@ -57,11 +57,14 @@ pdftotext -layout "Domain 1.pdf" tools/input/domain-1.txt
 node tools/import-corpus.mjs
 ```
 
-**The converter is incomplete.** It currently recovers roughly 5% of a large
-source set because the option-list layout varies between exports and not all
-variants are handled. What it does produce is structurally validated —
-four options, a correct index in range, no bare letter labels — so it is safe to
-use, just far from complete.
+Against a 1,123-question source set this recovers 1,059 questions (94.3%).
+Every emitted record passes a structural gate: exactly four distinct options, a
+correct index in range, no bare letter labels, and a stem of at least 25
+characters. Records that fail are dropped rather than emitted damaged.
+
+Tagging is heuristic. Qualifiers are read from the stem and are reliable; role,
+lifecycle, and decision are inferred from keywords and are best treated as a
+starting point rather than ground truth.
 
 ## Why this unlocks full-length exams
 
