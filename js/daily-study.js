@@ -12,7 +12,23 @@
   function mastery(){return storage.getActiveLearning().mastery||{}}
   function conceptDomain(concept){for(const [d,lab] of Object.entries(activeBank||{})) if((lab.challenges||[]).some(c=>c.concept===concept)) return d; return null}
   function focusDomain(){const curriculum=storage.getCurriculum();if(curriculum.phase==="learning")return String(curriculum.currentDomain||"1");const ex=storage.getExamReadiness().exams||[];if(ex.length){const r=Object.entries(ex.at(-1).domainStats||{}).filter(([,s])=>s.t).sort((a,b)=>a[1].c/a[1].t-b[1].c/b[1].t);if(r.length)return r[0][0]}const ms=Object.entries(mastery()).sort((a,b)=>(a[1].attempts?a[1].correct/a[1].attempts:0)-(b[1].attempts?b[1].correct/b[1].attempts:0));for(const [c] of ms){const dd=conceptDomain(c);if(dd)return dd}return "1"}
-  function focusConcept(d){const curriculum=storage.getCurriculum(),concepts=contentBank?.domains?.[d]?.concepts||[];if(curriculum.phase==="learning"){const introduced=new Set(curriculum.introducedConcepts?.[String(d)]||[]);const weak=Object.entries(mastery()).filter(([c])=>conceptDomain(c)===d&&introduced.has(c)).sort((a,b)=>(a[1].attempts?a[1].correct/a[1].attempts:0)-(b[1].attempts?b[1].correct/b[1].attempts:0));if(weak[0])return weak[0][0];const unseen=concepts.find(c=>!introduced.has(c.title));return unseen?.title||concepts[0]?.title||domainNames[d]}const ms=Object.entries(mastery()).filter(([c])=>conceptDomain(c)===d).sort((a,b)=>(a[1].attempts?a[1].correct/a[1].attempts:0)-(b[1].attempts?b[1].correct/b[1].attempts:0));return ms[0]?.[0]||concepts[0]?.title||domainNames[d]}
+  function focusConcept(d){const curriculum=storage.getCurriculum(),concepts=contentBank?.domains?.[d]?.concepts||[];if(curriculum.phase==="learning"){
+    // First-pass learning teaches NEW material in order (handoff sec.5). A concept
+    // already taught only comes back if it is GENUINELY weak - previously any
+    // taught concept with a mastery record outranked unseen material, which
+    // pinned the learner to one concept forever even at 100% correct.
+    const studied=new Set(curriculum.studiedConcepts?.[String(d)]||[]);
+    const introduced=new Set(curriculum.introducedConcepts?.[String(d)]||[]);
+    const titles=new Set(concepts.map(x=>x.title));
+    const isWeak=m=>m.state==="Needs Refresh"||(m.attempts>=2&&m.correct/m.attempts<0.7);
+    const weak=Object.entries(mastery())
+      .filter(([c,m])=>titles.has(c)&&introduced.has(c)&&isWeak(m))
+      .sort((a,b)=>(a[1].attempts?a[1].correct/a[1].attempts:0)-(b[1].attempts?b[1].correct/b[1].attempts:0));
+    if(weak[0])return weak[0][0];
+    // Next untaught concept. studiedConcepts is the honest record of what a
+    // session actually covered, so fall back to it before introducedConcepts.
+    const unseen=concepts.find(c=>!studied.has(c.title))||concepts.find(c=>!introduced.has(c.title));
+    return unseen?.title||concepts[0]?.title||domainNames[d]}const ms=Object.entries(mastery()).filter(([c])=>conceptDomain(c)===d).sort((a,b)=>(a[1].attempts?a[1].correct/a[1].attempts:0)-(b[1].attempts?b[1].correct/b[1].attempts:0));return ms[0]?.[0]||concepts[0]?.title||domainNames[d]}
   function memoryFor(d,c){return activeBank?.[d]?.challenges?.find(x=>x.concept===c)?.memory||contentBank?.domains?.[d]?.comparisons?.[0]?.memory||"Right role + right stage + business context."}
   function buildRecall(d,c){const curriculum=storage.getCurriculum(),out=[{concept:c,memory:memoryFor(d,c)}],allowed=new Set();Object.entries(curriculum.introducedConcepts||{}).forEach(([domain,names])=>(names||[]).forEach(name=>allowed.add(`${domain}:${name}`)));for(const [name,m] of Object.entries(mastery())){if(out.length>=3)break;const dd=conceptDomain(name);if(!dd||name===c)continue;if(curriculum.phase==="learning"&&!allowed.has(`${dd}:${name}`))continue;if(m.state==="Needs Refresh"||m.state==="Learning"||allowed.has(`${dd}:${name}`))out.push({concept:name,memory:memoryFor(dd,name)})}for(const rule of ["FIRST → find the missing prerequisite.","Security advises → business authority decides.","Correct action + wrong lifecycle stage = wrong answer."]){if(out.length>=3)break;out.push({concept:"CISM reasoning",memory:rule})}return out.slice(0,3)}
   function weakestMindset(){const m=storage.getMixedPractice().mindset||{};const dims=["qualifier","role","lifecycle","decision"].map(k=>({k,...(m[k]||{attempts:0,correct:0})}));dims.forEach(x=>x.rate=x.attempts?x.correct/x.attempts:0);return dims.sort((a,b)=>a.rate-b.rate||a.attempts-b.attempts)[0]?.k||"role"}
