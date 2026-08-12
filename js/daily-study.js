@@ -27,7 +27,7 @@
     // Never re-serve yesterday's concept as today's focus while untaught
     // material remains in the domain. Forward progress is the priority during
     // first-pass learning; weak concepts return through recall and repair.
-    const lastFocus=storage.getTodayStudy()?.focusConcept;
+    const lastFocus=previousFocusConcept();
     const untaughtRemains=concepts.some(c=>!studied.has(c.title));
     const weak=Object.entries(mastery())
       .filter(([c,m])=>titles.has(c)&&introduced.has(c)&&isWeak(m)
@@ -42,7 +42,7 @@
   // one concept, because a day of practice rarely changes which concept ranks
   // last. Yesterday's focus is excluded while alternatives exist.
   const titleSet=new Set(concepts.map(x=>x.title));
-  const last=storage.getTodayStudy()?.focusConcept;
+  const last=previousFocusConcept();
   const ranked=Object.entries(mastery())
     .filter(([c])=>titleSet.has(c)||conceptDomain(c)===d)
     .sort((a,b)=>(a[1].attempts?a[1].correct/a[1].attempts:0)-(b[1].attempts?b[1].correct/b[1].attempts:0));
@@ -53,7 +53,9 @@
   const from=choices.length?choices:pool;
   return from[Math.floor(Math.random()*from.length)]||concepts[0]?.title||domainNames[d]}
   function memoryFor(d,c){return activeBank?.[d]?.challenges?.find(x=>x.concept===c)?.memory||contentBank?.domains?.[d]?.comparisons?.[0]?.memory||"Right role + right stage + business context."}
-  function buildRecall(d,c){const curriculum=storage.getCurriculum(),out=[{concept:c,memory:memoryFor(d,c)}],allowed=new Set();Object.entries(curriculum.introducedConcepts||{}).forEach(([domain,names])=>(names||[]).forEach(name=>allowed.add(`${domain}:${name}`)));for(const [name,m] of Object.entries(mastery())){if(out.length>=3)break;const dd=conceptDomain(name);if(!dd||name===c)continue;if(curriculum.phase==="learning"&&!allowed.has(`${dd}:${name}`))continue;if(m.state==="Needs Refresh"||m.state==="Learning"||allowed.has(`${dd}:${name}`))out.push({concept:name,memory:memoryFor(dd,name)})}for(const rule of ["FIRST → find the missing prerequisite.","Security advises → business authority decides.","Correct action + wrong lifecycle stage = wrong answer."]){if(out.length>=3)break;out.push({concept:"CISM reasoning",memory:rule})}return out.slice(0,3)}
+  function buildRecall(d,c){const rotIdx=priorDaysInDomain(d),curriculum=storage.getCurriculum(),out=[{concept:c,memory:memoryFor(d,c)}],allowed=new Set();Object.entries(curriculum.introducedConcepts||{}).forEach(([domain,names])=>(names||[]).forEach(name=>allowed.add(`${domain}:${name}`)));const eligible=Object.entries(mastery());
+  const rotated=eligible.length?[...eligible.slice(rotIdx%eligible.length),...eligible.slice(0,rotIdx%eligible.length)]:eligible;
+  for(const [name,m] of rotated){if(out.length>=3)break;const dd=conceptDomain(name);if(!dd||name===c)continue;if(curriculum.phase==="learning"&&!allowed.has(`${dd}:${name}`))continue;if(m.state==="Needs Refresh"||m.state==="Learning"||allowed.has(`${dd}:${name}`))out.push({concept:name,memory:memoryFor(dd,name)})}for(const rule of ["FIRST → find the missing prerequisite.","Security advises → business authority decides.","Correct action + wrong lifecycle stage = wrong answer."]){if(out.length>=3)break;out.push({concept:"CISM reasoning",memory:rule})}return out.slice(0,3)}
   function weakestMindset(){const m=storage.getMixedPractice().mindset||{};const dims=["qualifier","role","lifecycle","decision"].map(k=>({k,...(m[k]||{attempts:0,correct:0})}));dims.forEach(x=>x.rate=x.attempts?x.correct/x.attempts:0);return dims.sort((a,b)=>a.rate-b.rate||a.attempts-b.attempts)[0]?.k||"role"}
   function hasMindsetEvidence(){const m=storage.getMixedPractice().mindset||{};return ["qualifier","role","lifecycle","decision"].some(k=>(m[k]?.attempts||0)>0)}
   // With no decoder evidence yet there is no "weakest" dimension to repair, so
@@ -68,11 +70,47 @@
     if(!matches.length)return lessons[0];
     const seen=Object.values(storage.getDailyStudy().days||{}).filter(d=>d&&d.phases&&d.phases.decoder).length;
     return matches[seen%matches.length]}
+  // Number of PRIOR days spent in this domain (today excluded). Drives daily
+  // rotation of teaching content so the same two definitions and the same
+  // lifecycle scenarios are not re-served every session of a domain. Excluding
+  // today keeps the rotation stable when a session is closed and reopened.
+  function priorDaysInDomain(d){
+    const days=storage.getDailyStudy().days||{};
+    const todayKey=storage.getTodayStudy()?.date;
+    return Object.entries(days).filter(([k,v])=>k!==todayKey&&v&&String(v.focusDomain)===String(d)&&v.focusConcept).length;
+  }
+  // Pick n items starting at a rotating offset, wrapping. Deterministic per day.
+  function rotatePick(list,idx,n){
+    if(!Array.isArray(list)||list.length<=n)return (list||[]).slice(0,n);
+    const start=(idx*n)%list.length,out=[];
+    for(let i=0;i<n;i++)out.push(list[(start+i)%list.length]);
+    return out;
+  }
+  // Today's focus is reused for the whole day so that closing and reopening
+  // Daily Study resumes the same session instead of starting a new concept and
+  // double-counting curriculum progress.
+  function resolveFocusConcept(curriculum,today,d){
+    const titles=(contentBank?.domains?.[d]?.concepts||[]).map(x=>x.title);
+    if(today?.focusConcept&&String(today.focusDomain)===String(d)&&titles.includes(today.focusConcept))
+      return today.focusConcept;
+    return focusConcept(d);
+  }
+  // The most recent PREVIOUS day's focus. getTodayStudy() resets at midnight, so
+  // reading it alone gives no history and consecutive-day repeats slip through.
+  function previousFocusConcept(){
+    const days=storage.getDailyStudy().days||{};
+    const keys=Object.keys(days).sort();
+    for(let i=keys.length-1;i>=0;i--){
+      const rec=days[keys[i]];
+      if(rec&&rec.focusConcept) return rec.focusConcept;
+    }
+    return null;
+  }
   // PURE. buildPlan() must never write. It is called by getSummary() on every
   // home-screen render and on four different events; when it wrote to the
   // curriculum, merely looking at the home screen marked concepts as taught and
   // domains completed themselves. Session writes now live in open() only.
-  function buildPlan(){const curriculum=storage.getCurriculum(),t=storage.getTodayStudy(),computed=focusDomain(),d=curriculum.phase==="learning"?computed:(t.focusDomain||computed),c=curriculum.phase==="learning"?focusConcept(d):(t.focusConcept||focusConcept(d)),defs=coach.definitions[d]||[],life=(coach.lifecycleExercises[d]||coach.lifecycleExercises["2"]||[]).filter(isLifecycleStageExercise),lesson=decoderLesson();const why=curriculum.phase==="learning"?`Domain ${d} is your current learning stage. Daily Study will teach here and only reinforce material you have already been introduced to.`:`All four domains are complete. Daily Study selected Domain ${d} from your recent learning evidence.`;return{domain:d,concept:c,domainName:domainNames[d],recall:buildRecall(d,c),definitions:defs.slice(0,2),life:life.slice(0,2),lesson,why,curriculum}}
+  function buildPlan(){const curriculum=storage.getCurriculum(),t=storage.getTodayStudy(),computed=focusDomain(),d=curriculum.phase==="learning"?computed:(t.focusDomain||computed),c=resolveFocusConcept(curriculum,t,d),rotIdx=priorDaysInDomain(d),defs=rotatePick(coach.definitions[d]||[],rotIdx,2),life=rotatePick((coach.lifecycleExercises[d]||coach.lifecycleExercises["2"]||[]).filter(isLifecycleStageExercise),rotIdx,2),lesson=decoderLesson();const why=curriculum.phase==="learning"?`Domain ${d} is your current learning stage. Daily Study will teach here and only reinforce material you have already been introduced to.`:`All four domains are complete. Daily Study selected Domain ${d} from your recent learning evidence.`;return{domain:d,concept:c,domainName:domainNames[d],recall:buildRecall(d,c),definitions:defs,life:life,lesson,why,curriculum}}
   // Only stage-format exercises ({stem,answer,why,trap}) can be rendered by
   // renderLifecycle(). Guarding here stops a mis-shaped entry from producing a
   // blank, unanswerable question.

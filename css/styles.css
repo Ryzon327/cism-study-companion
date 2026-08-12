@@ -2610,3 +2610,6 @@ summary:focus-visible {
   color: var(--muted-text, #6b7280);
 }
 .mixed-why-wrong { margin-top: .6rem; font-size: .9rem; color: var(--muted-text, #6b7280); }
+
+/* ---- Build 26: quiet version line in Settings ---- */
+.settings-version { margin: 1rem 0 0; font-size: .78rem; color: var(--muted-text, #9ca3af); text-align: right; }

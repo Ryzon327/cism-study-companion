@@ -89,6 +89,17 @@
   document.getElementById("openPracticeHub")?.addEventListener("click", () => switchView("practice"));
 
   settingsButton.addEventListener("click", () => settingsDialog.showModal());
+  // Version indicator: lets the learner confirm which build is actually
+  // installed (installs have silently no-op'd before). Reads the manifest;
+  // on file:// where fetch may be blocked, it stays a quiet dash.
+  (function showVersion(){
+    const el=document.getElementById("appVersion");
+    if(!el||typeof fetch!=="function")return;
+    fetch("data/content-manifest.json").then(r=>r.json())
+      .then(m=>{ if(m&&m.build){ el.textContent=String(m.build); console.info("CISM Study Companion build",m.build); } })
+      .catch(()=>{});
+  })();
+
   sessionLength.addEventListener("change", () => storage.setPrefs({ sessionLength: sessionLength.value }));
 
   exportButton.addEventListener("click", () => {
