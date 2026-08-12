@@ -72,7 +72,47 @@
   function renderLifecycle(){const q=plan.life[local.lifeIndex]||plan.life[0],stages=contentBank?.domains?.[plan.domain]?.lifecycle||[];if(!q||!stages.length){goNext("lifecycle");return}body.innerHTML=`<article class="daily-phase">${phaseHeader("3 · LIFECYCLE APPLICATION","Locate yourself in the process.","Do not recite the order. Use what has already happened in the scenario to identify the stage.","~5 min")}<div class="daily-lifecycle-map">${stages.map(s=>`<span class="${local.lifeChecked&&s===q.answer?"current":""}">${esc(s)}</span>`).join("")}</div><div class="daily-exercise-card"><span>WHERE ARE WE?</span><h3>${esc(q.stem)}</h3><div class="daily-choice-list">${stages.map(s=>`<button class="daily-choice ${local.lifeSelected===s?"selected":""} ${local.lifeChecked&&s===q.answer?"correct":""} ${local.lifeChecked&&local.lifeSelected===s&&s!==q.answer?"wrong":""}" data-life="${esc(s)}">${esc(s)}</button>`).join("")}</div>${local.lifeChecked?`<div class="daily-explanation"><strong>${local.lifeSelected===q.answer?"Yes — and here is why.":`Best stage: ${esc(q.answer)}`}</strong><p>${esc(q.why)}</p><p><b>Why the tempting jump fails:</b> ${esc(q.trap)}</p></div>`:""}</div></article>`;body.querySelectorAll("[data-life]").forEach(b=>b.onclick=()=>{if(!local.lifeChecked){local.lifeSelected=b.dataset.life;renderLifecycle()}});nextButton.textContent=local.lifeChecked?(local.lifeIndex<plan.life.length-1?"Next scenario →":"Continue →"):"Check reasoning";nextButton.disabled=!local.lifeSelected&&!local.lifeChecked;nextButton.onclick=()=>{if(!local.lifeChecked){local.lifeChecked=true;renderLifecycle();return}if(local.lifeIndex<plan.life.length-1){local.lifeIndex++;local.lifeSelected=null;local.lifeChecked=false;renderLifecycle()}else goNext("lifecycle")}}
   function renderDecoder(){const l=plan.lesson;body.innerHTML=`<article class="daily-phase">${phaseHeader("4 · CISM QUESTION DECODER",l.title,"We teach the signal before expecting you to recognize it under exam wording.","~5 min")}<div class="daily-decoder-rule">${esc(l.rule)}</div><div class="daily-exercise-card"><span>RECOGNITION CHECK</span><h3>${esc(l.question)}</h3><div class="daily-choice-list">${l.options.map((o,i)=>`<button class="daily-choice ${local.decoderSelected===i?"selected":""} ${local.decoderChecked&&i===l.correctIndex?"correct":""} ${local.decoderChecked&&local.decoderSelected===i&&i!==l.correctIndex?"wrong":""}" data-dec="${i}">${String.fromCharCode(65+i)}. ${esc(o)}</button>`).join("")}</div>${local.decoderChecked?`<div class="daily-explanation"><strong>${local.decoderSelected===l.correctIndex?"Correct — now make the reason automatic.":"This is the distinction to keep."}</strong><p>${esc(l.why)}</p></div>`:""}</div></article>`;body.querySelectorAll("[data-dec]").forEach(b=>b.onclick=()=>{if(!local.decoderChecked){local.decoderSelected=+b.dataset.dec;renderDecoder()}});nextButton.disabled=local.decoderSelected==null&&!local.decoderChecked;nextButton.textContent=local.decoderChecked?"Use it on exam wording →":"Check reasoning";nextButton.onclick=()=>{if(!local.decoderChecked){local.decoderChecked=true;renderDecoder()}else goNext("decoder")}}
   function conceptMatches(a,b){const x=String(a||"").toLowerCase(),y=String(b||"").toLowerCase();return x===y||x.includes(y)||y.includes(x)}
-  function applicationQuestions(){const d=String(plan.domain),all=(mixedBank.questions||[]).filter(q=>String(q.domain)===d),curriculum=storage.getCurriculum();if(curriculum.phase==="learning"){const introduced=curriculum.introducedConcepts?.[d]||[];const eligible=all.filter(q=>conceptMatches(q.concept,plan.concept)||introduced.some(c=>conceptMatches(q.concept,c)));const target=eligible.filter(q=>conceptMatches(q.concept,plan.concept));const rest=eligible.filter(q=>!target.includes(q));return [...target,...rest].slice(0,3)}const target=all.filter(q=>conceptMatches(q.concept,plan.concept)),rest=all.filter(q=>!target.includes(q));return [...target,...rest].slice(0,3)}
+  function applicationQuestions(){
+    const d=String(plan.domain),curriculum=storage.getCurriculum();
+    // Pool = bundled curriculum-tagged questions plus any locally imported
+    // questions for this domain. Previously only the small bundled bank was
+    // used, so a domain could offer the same handful of questions forever.
+    const localQs=(window.CISMLocalQuestionSet?.questions||[]).filter(q=>String(q.domain)===d);
+    const all=[...(mixedBank.questions||[]).filter(q=>String(q.domain)===d),...localQs];
+    // Questions answered in recent daily sessions, so they are not re-served.
+    const recent=new Set((storage.getMixedPractice().attempts||[])
+      .filter(a=>typeof a.questionId==="string"&&a.questionId.startsWith("daily:"))
+      .slice(-40).map(a=>a.questionId.slice(6)));
+    const fresh=x=>!recent.has(x.id);
+    let tiers;
+    if(curriculum.phase==="learning"){
+      const introduced=curriculum.introducedConcepts?.[d]||[];
+      const onConcept=all.filter(q=>conceptMatches(q.concept,plan.concept));
+      const onTaught=all.filter(q=>!onConcept.includes(q)&&introduced.some(c=>conceptMatches(q.concept,c)));
+      // Same-domain filler keeps the session complete when curriculum-tagged
+      // questions run out. Curriculum-aligned questions always come first.
+      const filler=all.filter(q=>!onConcept.includes(q)&&!onTaught.includes(q));
+      tiers=[onConcept,onTaught,filler];
+    } else {
+      const onConcept=all.filter(q=>conceptMatches(q.concept,plan.concept));
+      tiers=[onConcept,all.filter(q=>!onConcept.includes(q))];
+    }
+    const picked=[];
+    for(const tier of tiers){
+      if(picked.length>=3) break;
+      // Unseen first, then anything, shuffled so the same three never recur.
+      for(const group of [tier.filter(fresh),tier.filter(x=>!fresh(x))]){
+        const pool=shuffle(group.slice());
+        for(const q of pool){
+          if(picked.length>=3) break;
+          if(!picked.some(x=>x.id===q.id)) picked.push(q);
+        }
+      }
+    }
+    return picked;
+  }
+  function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a}
+
   // Resolved once per session. It was previously recomputed on every render, and
   // because it depends on introducedConcepts (which grows during a session) the
   // list could reorder underneath local.applyIndex and swap the question the
