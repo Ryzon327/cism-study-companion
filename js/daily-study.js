@@ -20,15 +20,38 @@
     const studied=new Set(curriculum.studiedConcepts?.[String(d)]||[]);
     const introduced=new Set(curriculum.introducedConcepts?.[String(d)]||[]);
     const titles=new Set(concepts.map(x=>x.title));
-    const isWeak=m=>m.state==="Needs Refresh"||(m.attempts>=2&&m.correct/m.attempts<0.7);
+    // "Needs Refresh" flips on a SINGLE miss, so it cannot gate focus selection
+    // on its own: a learner answering ~80% correct would re-flag the concept
+    // most days and never advance. Require sustained evidence instead.
+    const isWeak=m=>m.attempts>=4&&m.correct/m.attempts<0.6;
+    // Never re-serve yesterday's concept as today's focus while untaught
+    // material remains in the domain. Forward progress is the priority during
+    // first-pass learning; weak concepts return through recall and repair.
+    const lastFocus=storage.getTodayStudy()?.focusConcept;
+    const untaughtRemains=concepts.some(c=>!studied.has(c.title));
     const weak=Object.entries(mastery())
-      .filter(([c,m])=>titles.has(c)&&introduced.has(c)&&isWeak(m))
+      .filter(([c,m])=>titles.has(c)&&introduced.has(c)&&isWeak(m)
+        &&!(untaughtRemains&&c===lastFocus))
       .sort((a,b)=>(a[1].attempts?a[1].correct/a[1].attempts:0)-(b[1].attempts?b[1].correct/b[1].attempts:0));
     if(weak[0])return weak[0][0];
     // Next untaught concept. studiedConcepts is the honest record of what a
     // session actually covered, so fall back to it before introducedConcepts.
     const unseen=concepts.find(c=>!studied.has(c.title))||concepts.find(c=>!introduced.has(c.title));
-    return unseen?.title||concepts[0]?.title||domainNames[d]}const ms=Object.entries(mastery()).filter(([c])=>conceptDomain(c)===d).sort((a,b)=>(a[1].attempts?a[1].correct/a[1].attempts:0)-(b[1].attempts?b[1].correct/b[1].attempts:0));return ms[0]?.[0]||concepts[0]?.title||domainNames[d]}
+    return unseen?.title||concepts[0]?.title||domainNames[d]}// Reinforcement: rotate across the weakest concepts instead of returning the
+  // single lowest every day. Always picking the minimum pinned the learner to
+  // one concept, because a day of practice rarely changes which concept ranks
+  // last. Yesterday's focus is excluded while alternatives exist.
+  const titleSet=new Set(concepts.map(x=>x.title));
+  const last=storage.getTodayStudy()?.focusConcept;
+  const ranked=Object.entries(mastery())
+    .filter(([c])=>titleSet.has(c)||conceptDomain(c)===d)
+    .sort((a,b)=>(a[1].attempts?a[1].correct/a[1].attempts:0)-(b[1].attempts?b[1].correct/b[1].attempts:0));
+  const untouched=concepts.filter(x=>!ranked.some(([c])=>c===x.title)).map(x=>x.title);
+  // Concepts with no evidence at all are the most useful thing to revisit.
+  const pool=[...untouched,...ranked.slice(0,4).map(([c])=>c)];
+  const choices=pool.filter(c=>c!==last);
+  const from=choices.length?choices:pool;
+  return from[Math.floor(Math.random()*from.length)]||concepts[0]?.title||domainNames[d]}
   function memoryFor(d,c){return activeBank?.[d]?.challenges?.find(x=>x.concept===c)?.memory||contentBank?.domains?.[d]?.comparisons?.[0]?.memory||"Right role + right stage + business context."}
   function buildRecall(d,c){const curriculum=storage.getCurriculum(),out=[{concept:c,memory:memoryFor(d,c)}],allowed=new Set();Object.entries(curriculum.introducedConcepts||{}).forEach(([domain,names])=>(names||[]).forEach(name=>allowed.add(`${domain}:${name}`)));for(const [name,m] of Object.entries(mastery())){if(out.length>=3)break;const dd=conceptDomain(name);if(!dd||name===c)continue;if(curriculum.phase==="learning"&&!allowed.has(`${dd}:${name}`))continue;if(m.state==="Needs Refresh"||m.state==="Learning"||allowed.has(`${dd}:${name}`))out.push({concept:name,memory:memoryFor(dd,name)})}for(const rule of ["FIRST → find the missing prerequisite.","Security advises → business authority decides.","Correct action + wrong lifecycle stage = wrong answer."]){if(out.length>=3)break;out.push({concept:"CISM reasoning",memory:rule})}return out.slice(0,3)}
   function weakestMindset(){const m=storage.getMixedPractice().mindset||{};const dims=["qualifier","role","lifecycle","decision"].map(k=>({k,...(m[k]||{attempts:0,correct:0})}));dims.forEach(x=>x.rate=x.attempts?x.correct/x.attempts:0);return dims.sort((a,b)=>a.rate-b.rate||a.attempts-b.attempts)[0]?.k||"role"}
@@ -59,6 +82,18 @@
   function updateProgress(){const t=storage.getTodayStudy(),n=phases.filter(p=>t.phases?.[p]).length;progressBar.style.width=`${n/phases.length*100}%`}
   function phaseHeader(k,t,n,time){return `<div class="daily-phase-top"><div><div class="mixed-stage">${esc(k)}</div><h2>${esc(t)}</h2><p>${esc(n)}</p></div><span>${esc(time)}</span></div>`}
   function open(){plan=buildPlan();
+    // Advance the curriculum here rather than relying on the learner reaching
+    // the session's final screen. Previously advanceDomainIfReady() ran only in
+    // renderClose(), so an abandoned session could leave a fully-taught domain
+    // current and re-serve already-mastered concepts indefinitely.
+    if(plan.curriculum.phase==="learning"){
+      const titles=(contentBank?.domains?.[plan.domain]?.concepts||[]).map(x=>x.title);
+      const studied=plan.curriculum.studiedConcepts?.[String(plan.domain)]||[];
+      if(titles.length&&titles.every(t=>studied.includes(t))){
+        storage.markDomainComplete(plan.domain);
+        plan=buildPlan();
+      }
+    }
     // The learner has actually started a session: this is the only place the
     // curriculum is allowed to record that a concept was taught.
     storage.markConceptStudied(plan.domain,plan.concept);
