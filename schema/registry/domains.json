@@ -1,0 +1,53 @@
+[
+  {
+    "id": "domain.d1",
+    "display_name": "Governance",
+    "exam_domain": true,
+    "exam_weight": 17,
+    "content_status": "CANONICAL",
+    "verification_status": "architecturally_approved",
+    "source": "source.architecture.phase2-review-2026-08-18",
+    "version": 1
+  },
+  {
+    "id": "domain.d2",
+    "display_name": "Risk Management",
+    "exam_domain": true,
+    "exam_weight": 20,
+    "content_status": "CANONICAL",
+    "verification_status": "architecturally_approved",
+    "source": "source.architecture.phase2-review-2026-08-18",
+    "version": 1
+  },
+  {
+    "id": "domain.d3",
+    "display_name": "Security Program",
+    "exam_domain": true,
+    "exam_weight": 33,
+    "content_status": "CANONICAL",
+    "verification_status": "architecturally_approved",
+    "source": "source.architecture.phase2-review-2026-08-18",
+    "version": 1
+  },
+  {
+    "id": "domain.d4",
+    "display_name": "Incident Management",
+    "exam_domain": true,
+    "exam_weight": 30,
+    "content_status": "CANONICAL",
+    "verification_status": "architecturally_approved",
+    "source": "source.architecture.phase2-review-2026-08-18",
+    "version": 1
+  },
+  {
+    "id": "domain.foundation",
+    "display_name": "Foundation",
+    "exam_domain": false,
+    "exam_weight": null,
+    "content_status": "CANONICAL",
+    "verification_status": "architecturally_approved",
+    "note": "Instructional preparation, not a fifth CISM exam domain. Must be excluded from exam-domain weighting, four-domain completion calculations, exam-domain analytics, and adaptive domain selection among Domains 1-4. See docs/data-model/ID-CONVENTIONS.md.",
+    "source": "source.architecture.phase3-review-2026-08-18",
+    "version": 1
+  }
+]

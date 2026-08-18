@@ -1,0 +1,29 @@
+[
+  {
+    "id": "question.d1.9002",
+    "domain": "domain.d1",
+    "concepts": ["concept.d1.business-objectives"],
+    "patterns": [],
+    "qualifier": null,
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.business",
+    "prompt": "Fixture: a CANONICAL question referencing a CANDIDATE-status concept in its scoring-relevant concepts field.",
+    "options": [
+      { "key": "a", "text": "Option A", "correct": true, "rationale": "n/a" },
+      { "key": "b", "text": "Option B", "correct": false, "rationale": "n/a" },
+      { "key": "c", "text": "Option C", "correct": false, "rationale": "n/a" },
+      { "key": "d", "text": "Option D", "correct": false, "rationale": "n/a" }
+    ],
+    "explanation": "n/a",
+    "evidence_dimensions": ["evidence.knowledge"],
+    "content_status": "CANONICAL",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.architecture.phase3-review-2026-08-18",
+    "note": "Deliberately invalid fixture for negative-path testing. concept.d1.business-objectives is intentionally CANDIDATE status in schema/example/concepts.example.json; a CANONICAL question must not reference it."
+  }
+]

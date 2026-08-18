@@ -1,0 +1,24 @@
+[
+  { "id": "evidence.knowledge", "display_name": "Knowledge", "description": "Does the learner know the underlying fact or concept?", "contributes_to_mastery": true, "content_status": "CANONICAL", "verification_status": "architecturally_approved", "source": "source.architecture.phase2-review-2026-08-18", "version": 1 },
+  { "id": "evidence.role", "display_name": "Role", "description": "Can the learner identify the correct role in a scenario?", "contributes_to_mastery": true, "content_status": "CANONICAL", "verification_status": "architecturally_approved", "source": "source.architecture.phase2-review-2026-08-18", "version": 1 },
+  { "id": "evidence.authority", "display_name": "Authority", "description": "Can the learner distinguish who is involved from who actually has decision authority?", "contributes_to_mastery": true, "content_status": "CANONICAL", "verification_status": "architecturally_approved", "source": "source.architecture.phase2-review-2026-08-18", "version": 1 },
+  { "id": "evidence.qualifier", "display_name": "Qualifier", "description": "Can the learner correctly read and apply the stem's qualifier?", "contributes_to_mastery": true, "content_status": "CANONICAL", "verification_status": "architecturally_approved", "source": "source.architecture.phase2-review-2026-08-18", "version": 1 },
+  { "id": "evidence.lifecycle", "display_name": "Lifecycle", "description": "Can the learner correctly locate the scenario's lifecycle stage?", "contributes_to_mastery": true, "content_status": "CANONICAL", "verification_status": "architecturally_approved", "source": "source.architecture.phase2-review-2026-08-18", "version": 1 },
+  { "id": "evidence.sequence", "display_name": "Sequence", "description": "Can the learner correctly order two adjacent lifecycle actions?", "contributes_to_mastery": true, "content_status": "CANONICAL", "verification_status": "architecturally_approved", "source": "source.architecture.phase2-review-2026-08-18", "version": 1 },
+  { "id": "evidence.decision", "display_name": "Decision type", "description": "Can the learner correctly classify what kind of decision is being made?", "contributes_to_mastery": true, "content_status": "CANONICAL", "verification_status": "architecturally_approved", "source": "source.architecture.phase2-review-2026-08-18", "version": 1 },
+  { "id": "evidence.vocabulary", "display_name": "Vocabulary", "description": "Can the learner distinguish similar-sounding terms?", "contributes_to_mastery": true, "content_status": "CANONICAL", "verification_status": "architecturally_approved", "source": "source.architecture.phase2-review-2026-08-18", "version": 1 },
+  { "id": "evidence.business-context", "display_name": "Business context", "description": "Does the learner correctly apply the stated business objective/consequence?", "contributes_to_mastery": true, "content_status": "CANONICAL", "verification_status": "architecturally_approved", "source": "source.architecture.phase2-review-2026-08-18", "version": 1 },
+  { "id": "evidence.technical-vs-management", "display_name": "Technical vs. management reasoning", "description": "Can the learner distinguish a technical answer from what a management-level question actually asks?", "contributes_to_mastery": true, "content_status": "CANONICAL", "verification_status": "architecturally_approved", "source": "source.architecture.phase2-review-2026-08-18", "version": 1 },
+  { "id": "evidence.pattern-recognition", "display_name": "Pattern recognition", "description": "Can the learner recognize which reusable CISM reasoning pattern applies?", "contributes_to_mastery": true, "content_status": "CANONICAL", "verification_status": "architecturally_approved", "note": "Proposed addition beyond the Phase 2 Mixed Practice dimension list, approved during Phase 3 review.", "source": "source.architecture.phase3-review-2026-08-18", "version": 1 },
+  {
+    "id": "evidence.confidence",
+    "display_name": "Confidence",
+    "description": "Self-reported calibration signal: how confident was the learner in their answer? Produces states such as correct+high, correct+low, incorrect+high, incorrect+low confidence.",
+    "contributes_to_mastery": false,
+    "content_status": "CANONICAL",
+    "verification_status": "architecturally_approved",
+    "note": "IMPORTANT: confidence is a calibration signal, not mastery itself. contributes_to_mastery is deliberately false - self-reported confidence must NOT directly increase knowledge mastery merely because confidence is high. It may inform explanation depth, repair selection, review priority, and calibration analytics, but it is not a knowledge-mastery input. See docs/data-model/EVIDENCE-VOCABULARY.md.",
+    "source": "source.architecture.phase3-review-2026-08-18",
+    "version": 1
+  }
+]

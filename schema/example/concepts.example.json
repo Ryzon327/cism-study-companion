@@ -1,0 +1,74 @@
+[
+  {
+    "id": "concept.d1.policy-hierarchy",
+    "display_name": "Policy hierarchy",
+    "home_domain": "domain.d1",
+    "plain": "The relationship between policy, standards, procedures, and guidelines, and how each supports enterprise governance direction.",
+    "related_patterns": ["pattern.p02"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "source": "source.architecture.phase3-review-2026-08-18",
+    "version": 1,
+    "note": "ILLUSTRATIVE / TEST-ONLY - not approved production curriculum. Demonstrates BUG-001 resolution structurally: distinct from concept.d3.policy-hierarchy despite identical display text, because identity is the domain-scoped id, not the display string. This is a proof that the ID scheme prevents the collision, NOT a content decision that the rebuilt curriculum should contain two distinct 'Policy hierarchy' concepts - that taxonomy decision belongs to the content migration/reconstruction phase. See schema/example/README.md."
+  },
+  {
+    "id": "concept.d3.policy-hierarchy",
+    "display_name": "Policy hierarchy",
+    "home_domain": "domain.d3",
+    "plain": "How policy durability interacts with technology and operational change when translating governance direction into a running security program.",
+    "related_patterns": ["pattern.p07"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "source": "source.architecture.phase3-review-2026-08-18",
+    "version": 1,
+    "note": "ILLUSTRATIVE / TEST-ONLY - not approved production curriculum. Demonstrates BUG-001 resolution structurally: distinct from concept.d1.policy-hierarchy despite identical display text, because identity is the domain-scoped id, not the display string. This is a proof that the ID scheme prevents the collision, NOT a content decision that the rebuilt curriculum should contain two distinct 'Policy hierarchy' concepts - that taxonomy decision belongs to the content migration/reconstruction phase. See schema/example/README.md."
+  },
+  {
+    "id": "concept.d1.business-alignment",
+    "display_name": "Business alignment",
+    "home_domain": "domain.d1",
+    "plain": "Information security strategy and governance exist to support organizational objectives, not technology for its own sake.",
+    "related_patterns": ["pattern.p01"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "source": "source.architecture.phase2-review-2026-08-18",
+    "version": 1,
+    "note": "ILLUSTRATIVE / TEST-ONLY - not approved production curriculum. See schema/example/README.md."
+  },
+  {
+    "id": "concept.d2.residual-risk",
+    "display_name": "Residual risk",
+    "home_domain": "domain.d2",
+    "plain": "The risk remaining after controls or treatment have been applied.",
+    "related_patterns": ["pattern.p13"],
+    "content_status": "CANONICAL",
+    "verification_status": "architecturally_approved",
+    "source": "source.architecture.phase2-review-2026-08-18",
+    "version": 1,
+    "note": "Kept CANONICAL deliberately (unlike the other schema/example/ concepts) because tests/data-model/status-governance.test.mjs requires at least one real CANONICAL example to positively prove a correctly-tagged canonical question passes validation. Its definition is genuine approved Phase 2 terminology (docs/learning/CONFUSING-CONCEPTS.md), not fabricated illustrative content - see schema/example/README.md for the general rule this is the one deliberate exception to."
+  },
+  {
+    "id": "concept.d4.containment-vs-eradication-vs-recovery",
+    "display_name": "Containment vs. eradication vs. recovery",
+    "home_domain": "domain.d4",
+    "plain": "Containment limits spread/damage without necessarily removing the cause; eradication removes the root cause; recovery restores normal business operation.",
+    "related_patterns": ["pattern.p04", "pattern.p05"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "source": "source.architecture.phase2-review-2026-08-18",
+    "version": 1,
+    "note": "ILLUSTRATIVE / TEST-ONLY - not approved production curriculum. See schema/example/README.md."
+  },
+  {
+    "id": "concept.d1.business-objectives",
+    "display_name": "Business objectives",
+    "home_domain": "domain.d1",
+    "plain": "Placeholder canonical-model entity, deliberately left at CANDIDATE status.",
+    "related_patterns": [],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "source": "source.prototype.build-26",
+    "version": 1,
+    "note": "Illustrative only. Represents the class of concept named in BUG-002 (an exam-bank concept string with no prior canonical home). Its home_domain here is a provisional guess, not a migration decision - it stays CANDIDATE until a content owner explicitly reviews and promotes it. Included in this example set specifically so the status-governance validation tests (docs/data-model/VALIDATION-INVARIANTS.md) have a real CANDIDATE entity to reject a CANONICAL question against."
+  }
+]

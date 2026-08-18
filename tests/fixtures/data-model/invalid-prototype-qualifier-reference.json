@@ -1,0 +1,29 @@
+[
+  {
+    "id": "question.d1.9003",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.residual-risk"],
+    "patterns": [],
+    "qualifier": "qualifier.primarily",
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.business",
+    "prompt": "Fixture: a CANONICAL question referencing a PROTOTYPE_REFERENCE-status qualifier.",
+    "options": [
+      { "key": "a", "text": "Option A", "correct": true, "rationale": "n/a" },
+      { "key": "b", "text": "Option B", "correct": false, "rationale": "n/a" },
+      { "key": "c", "text": "Option C", "correct": false, "rationale": "n/a" },
+      { "key": "d", "text": "Option D", "correct": false, "rationale": "n/a" }
+    ],
+    "explanation": "n/a",
+    "evidence_dimensions": ["evidence.knowledge"],
+    "content_status": "CANONICAL",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.architecture.phase3-review-2026-08-18",
+    "note": "Deliberately invalid fixture for negative-path testing. qualifier.primarily is PROTOTYPE_REFERENCE status in schema/registry/qualifiers.json; a CANONICAL question must not use it, and must never use qualifier.none (which does not exist in the registry at all - absence of a qualifier is represented as qualifier: null)."
+  }
+]

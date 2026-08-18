@@ -1,0 +1,23 @@
+[
+  {
+    "id": "lesson.d2.quantitative-risk",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.residual-risk"],
+    "patterns": ["pattern.p08"],
+    "prerequisites": [],
+    "objective": "Use SLE and ALE to support a cost-benefit treatment decision, not just compute a number.",
+    "context": "AV x EF = SLE (expected loss from one event); SLE x ARO = ALE (expected loss per year).",
+    "cism_perspective": "The calculation exists to support a business decision - does a control costing less than the ALE it prevents make business sense - not as arithmetic for its own sake.",
+    "recognition_clues": ["Stem gives asset value, exposure factor, and/or frequency and asks for a dollar figure or a treatment decision informed by one"],
+    "scenario": "An asset worth $200,000 has a 25% exposure factor for a given threat, expected twice per year. SLE = $50,000; ALE = $100,000. A control costing $40,000/year that reduces ARO to near zero is easily justified against that ALE.",
+    "traps": ["Computing SLE/ALE correctly but not connecting the figure to a treat/accept decision"],
+    "memory_rules": ["AV x EF = SLE.", "SLE x ARO = ALE."],
+    "retrieval_refs": ["question.d2.0001"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.supplemental.quantitative-risk-teaching",
+    "note": "ILLUSTRATIVE / TEST-ONLY - not approved production curriculum. Seeded to prove the Lesson schema end to end; not the full Domain 2 curriculum. Referencing the CANONICAL concept.d2.residual-risk and question.d2.0001 is fine here since a CANDIDATE entity may reference CANONICAL content - see schema/example/README.md."
+  }
+]
