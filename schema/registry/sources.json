@@ -1,0 +1,30 @@
+[
+  {
+    "id": "source.architecture.phase2-review-2026-08-18",
+    "type": "approved_requirement",
+    "reference": "Phase 2 Learning Architecture review session, 2026-08-18",
+    "note": "Curriculum structure, patterns, roles, qualifiers, lifecycles, lesson/explanation standard, Daily Study model, repair model, and UI/UX requirement approved during Phase 2.",
+    "verification_status": "architecturally_approved"
+  },
+  {
+    "id": "source.architecture.phase3-review-2026-08-18",
+    "type": "approved_requirement",
+    "reference": "Phase 3 Canonical Data Model design and amendment review session, 2026-08-18",
+    "note": "Entity model, ID conventions, schema shapes, and the qualifier.none / Domain 1-3 lifecycle amendments approved during Phase 3.",
+    "verification_status": "architecturally_approved"
+  },
+  {
+    "id": "source.prototype.build-26",
+    "type": "prototype_reference",
+    "reference": "CISM Study Companion prototype, Build 26 (commit c716cd8)",
+    "note": "Historical prototype behavior and content used as a reference point only. Not authoritative. See docs/engineering/BASELINE.md.",
+    "verification_status": "prototype_derived"
+  },
+  {
+    "id": "source.supplemental.quantitative-risk-teaching",
+    "type": "supplemental_teaching",
+    "reference": "Domain 2 quantitative risk formulas (AV, EF, SLE, ARO, ALE)",
+    "note": "Supplemental foundational teaching layered onto learner-supplied material, per docs/learning/DOMAIN-2-BLUEPRINT.md.",
+    "verification_status": "architecturally_approved"
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "id": "decision.business",
+    "display_name": "Business decision",
+    "description": "Reflects organizational objectives, management authority, business value, or enterprise direction rather than a purely technical choice.",
+    "content_status": "CANONICAL",
+    "verification_status": "architecturally_approved",
+    "source": "source.architecture.phase2-review-2026-08-18",
+    "version": 1
+  },
+  {
+    "id": "decision.risk",
+    "display_name": "Risk decision",
+    "description": "Understanding, treating, accepting, transferring, or monitoring risk - business exposure and acceptable risk.",
+    "content_status": "CANONICAL",
+    "verification_status": "architecturally_approved",
+    "source": "source.architecture.phase2-review-2026-08-18",
+    "version": 1
+  },
+  {
+    "id": "decision.program-control",
+    "display_name": "Program/control decision",
+    "description": "How security requirements become policies, classifications, access rules, controls, responsibilities, or operating practices.",
+    "content_status": "CANONICAL",
+    "verification_status": "architecturally_approved",
+    "source": "source.architecture.phase2-review-2026-08-18",
+    "version": 1
+  },
+  {
+    "id": "decision.incident",
+    "display_name": "Incident decision",
+    "description": "The active response to a security event: containment, evidence, communication, eradication, or recovery sequencing.",
+    "content_status": "CANONICAL",
+    "verification_status": "architecturally_approved",
+    "source": "source.architecture.phase2-review-2026-08-18",
+    "version": 1
+  },
+  {
+    "id": "decision.recovery",
+    "display_name": "Recovery decision",
+    "description": "Driven by business interruption and recovery requirements - what must recover, how quickly, and with how much acceptable loss.",
+    "content_status": "CANONICAL",
+    "verification_status": "architecturally_approved",
+    "source": "source.architecture.phase2-review-2026-08-18",
+    "version": 1
+  }
+]

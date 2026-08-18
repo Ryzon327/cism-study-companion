@@ -1,0 +1,29 @@
+[
+  {
+    "id": "question.d2.9001",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.does-not-exist"],
+    "patterns": [],
+    "qualifier": null,
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.risk",
+    "prompt": "Fixture: a question referencing a concept id that has no matching entry in the concept registry.",
+    "options": [
+      { "key": "a", "text": "Option A", "correct": true, "rationale": "n/a" },
+      { "key": "b", "text": "Option B", "correct": false, "rationale": "n/a" },
+      { "key": "c", "text": "Option C", "correct": false, "rationale": "n/a" },
+      { "key": "d", "text": "Option D", "correct": false, "rationale": "n/a" }
+    ],
+    "explanation": "n/a",
+    "evidence_dimensions": ["evidence.knowledge"],
+    "content_status": "CANONICAL",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.architecture.phase3-review-2026-08-18",
+    "note": "Deliberately invalid fixture for negative-path testing. Must never be added to schema/example/. concept.d2.does-not-exist does not and must not exist in schema/example/concepts.example.json."
+  }
+]

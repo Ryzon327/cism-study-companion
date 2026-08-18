@@ -1,0 +1,101 @@
+[
+  {
+    "id": "qualifier.first",
+    "display_name": "FIRST",
+    "reasoning_intent": "Prerequisite test - the earliest correct action given what has and hasn't happened yet.",
+    "lifecycle_effect": "Locate the current lifecycle stage and identify what precedes the other offered actions.",
+    "common_traps": ["A generically good-practice action that is correct in general but not the prerequisite for the others."],
+    "examples": ["New regulation applies to sensitive data handling: FIRST action is determining affected processes, not selecting controls."],
+    "content_status": "CANONICAL",
+    "verification_status": "architecturally_approved",
+    "source": "source.architecture.phase2-review-2026-08-18",
+    "version": 1
+  },
+  {
+    "id": "qualifier.next",
+    "display_name": "NEXT",
+    "reasoning_intent": "Immediate-next-action test based on the current state described in the stem.",
+    "lifecycle_effect": "Requires precisely locating 'where we are right now' before evaluating any answer choice.",
+    "common_traps": ["Skipping ahead to a later step, or falling back to a step already completed."],
+    "examples": ["Risk has been analyzed and evaluated: NEXT action is selecting a treatment option, not re-analyzing."],
+    "content_status": "CANONICAL",
+    "verification_status": "architecturally_approved",
+    "source": "source.architecture.phase2-review-2026-08-18",
+    "version": 1
+  },
+  {
+    "id": "qualifier.best",
+    "display_name": "BEST",
+    "reasoning_intent": "Completeness/fit test - the option that most completely addresses the business problem exactly as stated.",
+    "lifecycle_effect": "Not primarily a lifecycle signal - tests whether the answer accounts for everything the stem specified.",
+    "common_traps": ["A partial or narrower answer that solves only part of the stated problem."],
+    "examples": ["Best distinction between policy and standard captures the full relationship, not a partial simplification."],
+    "content_status": "CANONICAL",
+    "verification_status": "architecturally_approved",
+    "source": "source.architecture.phase2-review-2026-08-18",
+    "version": 1
+  },
+  {
+    "id": "qualifier.most",
+    "display_name": "MOST / MOST IMPORTANT",
+    "reasoning_intent": "Ranking/priority test - the option carrying the greatest weight or business consequence among several true statements.",
+    "lifecycle_effect": "Not primarily a lifecycle signal - a magnitude/priority signal. Contrasts with BEST: MOST ranks, BEST fits.",
+    "common_traps": ["Choosing a true and relevant option that is not the governing priority."],
+    "examples": ["Senior management support outranks budget or vulnerability assessments for successful program implementation."],
+    "content_status": "CANONICAL",
+    "verification_status": "architecturally_approved",
+    "source": "source.architecture.phase2-review-2026-08-18",
+    "version": 1
+  },
+  {
+    "id": "qualifier.primary",
+    "display_name": "PRIMARY",
+    "reasoning_intent": "Identify the fundamental purpose, driver, or responsibility - not a supporting activity or secondary benefit.",
+    "lifecycle_effect": "Not a lifecycle signal - a purpose signal, distinguishing the reason for something from what it involves.",
+    "common_traps": ["A true supporting activity offered as if it were the fundamental reason."],
+    "examples": ["Primary purpose of risk analysis is assessing exposure and planning remediation, not justifying every expenditure."],
+    "content_status": "CANONICAL",
+    "verification_status": "architecturally_approved",
+    "source": "source.architecture.phase2-review-2026-08-18",
+    "version": 1
+  },
+  {
+    "id": "qualifier.primarily",
+    "display_name": "PRIMARILY",
+    "reasoning_intent": "Adverb form of PRIMARY; same reasoning shape.",
+    "lifecycle_effect": "Not a lifecycle signal.",
+    "common_traps": [],
+    "examples": [],
+    "content_status": "PROTOTYPE_REFERENCE",
+    "verification_status": "prototype_derived",
+    "note": "Carried from the current prototype's decoder model for continuity. NOT part of the canonical five-qualifier set. Must not be used on a CANONICAL question.",
+    "source": "source.prototype.build-26",
+    "version": 1
+  },
+  {
+    "id": "qualifier.greatest",
+    "display_name": "GREATEST",
+    "reasoning_intent": "Almost always attached to concern, risk, or benefit; compares magnitude of business exposure, similar to MOST.",
+    "lifecycle_effect": "Not a lifecycle signal.",
+    "common_traps": [],
+    "examples": [],
+    "content_status": "PROTOTYPE_REFERENCE",
+    "verification_status": "prototype_derived",
+    "note": "Carried from the current prototype's decoder model for continuity. NOT part of the canonical five-qualifier set. Must not be used on a CANONICAL question.",
+    "source": "source.prototype.build-26",
+    "version": 1
+  },
+  {
+    "id": "qualifier.main",
+    "display_name": "MAIN",
+    "reasoning_intent": "Similar to PRIMARY - asks for the central point rather than a true side effect.",
+    "lifecycle_effect": "Not a lifecycle signal.",
+    "common_traps": [],
+    "examples": [],
+    "content_status": "PROTOTYPE_REFERENCE",
+    "verification_status": "prototype_derived",
+    "note": "Carried from the current prototype's decoder model for continuity. NOT part of the canonical five-qualifier set. Must not be used on a CANONICAL question.",
+    "source": "source.prototype.build-26",
+    "version": 1
+  }
+]

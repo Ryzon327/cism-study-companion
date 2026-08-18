@@ -1,0 +1,20 @@
+[
+  {
+    "id": "lifecycle.risk",
+    "display_name": "Domain 2 Risk Lifecycle",
+    "domain": "domain.d2",
+    "content_status": "CANONICAL",
+    "verification_status": "architecturally_approved",
+    "source": "source.architecture.phase2-review-2026-08-18",
+    "version": 1
+  },
+  {
+    "id": "lifecycle.incident",
+    "display_name": "Domain 4 Incident Lifecycle",
+    "domain": "domain.d4",
+    "content_status": "CANONICAL",
+    "verification_status": "architecturally_approved",
+    "source": "source.architecture.phase2-review-2026-08-18",
+    "version": 1
+  }
+]
