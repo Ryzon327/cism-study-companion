@@ -1,0 +1,12 @@
+{
+  "name": "cism-study-companion",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test tests/",
+    "test:data-integrity": "node --test tests/data-integrity/"
+  }
+}
