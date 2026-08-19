@@ -136,6 +136,46 @@ test.describe("Production Daily Study (Foundation + early Domain 1 candidate con
     await expect(page.getByText(/Quick recall from Domain 1/)).toBeVisible();
   });
 
+  test("Apply shows a different Domain 1 variant on each of three consecutive sessions without a page reload, then allows a repeat on the fourth (Phase 6C rotation)", async ({ page }) => {
+    await switchToProductionContent(page);
+
+    async function runOneSessionAndReadApplyPrompt(): Promise<string> {
+      await page.getByRole("button", { name: /Start Today's Study/ }).click();
+      // Recall varies too; just get past it with whatever's shown — this test
+      // only cares which Apply variant was shown.
+      await page.getByRole("group", { name: "Recall answer options" }).getByRole("button").first().click();
+      await page.getByRole("button", { name: /Continue to today's lesson/ }).click();
+      await page.getByRole("button", { name: "Apply it →" }).click();
+
+      const prompt = (await page.locator(".question-stem").textContent())?.trim() ?? "";
+
+      // Any option is fine — this test only cares which question was shown.
+      await page.getByRole("group", { name: "Answer options" }).getByRole("button").first().click();
+      await page.getByRole("radio", { name: "Not sure" }).click();
+      await page.getByRole("button", { name: "Check answer" }).click();
+      await page.getByRole("button", { name: "Continue →" }).click();
+
+      // A correct guess skips Repair and lands on Completion directly; an
+      // incorrect guess routes through Repair first — handle both.
+      if (await page.getByRole("heading", { name: "Let's correct that reasoning." }).isVisible().catch(() => false)) {
+        await page.getByRole("group", { name: "Repair answer options" }).getByRole("button").first().click();
+        await page.getByRole("button", { name: "Continue →" }).click();
+      }
+
+      await expect(page.getByRole("heading", { name: /Today's study is complete/ })).toBeVisible();
+      await page.getByRole("button", { name: "Done" }).click();
+      await expect(page.getByRole("button", { name: /Start Today's Study/ })).toBeVisible();
+      return prompt;
+    }
+
+    const prompts = [await runOneSessionAndReadApplyPrompt(), await runOneSessionAndReadApplyPrompt(), await runOneSessionAndReadApplyPrompt()];
+    expect(new Set(prompts).size).toBe(3);
+
+    // Pool exhausted (3 variants, 3 shown) — the 4th session is allowed to repeat.
+    const fourth = await runOneSessionAndReadApplyPrompt();
+    expect(prompts).toContain(fourth);
+  });
+
   test("no localStorage is read or written during a full production session", async ({ page }) => {
     await switchToProductionContent(page);
     await page.getByRole("button", { name: /Start Today's Study/ }).click();

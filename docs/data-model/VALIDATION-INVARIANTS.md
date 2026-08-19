@@ -45,6 +45,26 @@ this check — a `CANONICAL` pattern is allowed to note a `PROTOTYPE_REFERENCE`
 qualifier as a related concept for context, but a `CANONICAL` question is
 never allowed to actually *use* that qualifier to test the learner.
 
+## Phase 6C additions — QuestionFamily / variant repetition model
+
+These extend `tests/content-production/`, not this file's own suite (which
+covers `schema/example/` only) — see
+[`REPETITION-AND-RECALL-MODEL.md`](REPETITION-AND-RECALL-MODEL.md) and
+[`SCHEMA-QUESTION-FAMILY.md`](SCHEMA-QUESTION-FAMILY.md).
+
+| Invariant | Test file |
+|---|---|
+| Family IDs unique, format `family.<domain>.<slug>` | `family-integrity.test.mjs` |
+| Every family field reference resolves | `family-integrity.test.mjs` |
+| `Question.family`, when set, resolves to a real family | `family-integrity.test.mjs` |
+| A variant's `concepts`/`patterns`/`evidence_dimensions` are a subset of its family's declared set | `family-integrity.test.mjs` |
+| A `CANONICAL` family meets its `minimum_variant_count`; a `CANDIDATE` family is reported, not blocked, below it | `family-integrity.test.mjs` |
+| No two variants in one family share an identical stem or identical option-text set (blocking) | `variation-quality.test.mjs` |
+| Prompt-similarity above threshold is a **warning**, not a blocking failure — human review remains authoritative for genuine diversity | `variation-quality.test.mjs` |
+| Every `variation_tags` value is a member of the fixed variation-strategy vocabulary | `variation-quality.test.mjs` |
+| Selection algorithm: unseen-preferred, least-recently-seen fallback, deterministic tie-break, exact repeat allowed only when the pool is exhausted | `tests/frontend/unit/selection-engine.test.ts` (pure-function tests, constructed fake histories) |
+| Confidence never independently increments a mastery signal | `tests/frontend/unit/selection-engine.test.ts` |
+
 ## Todo tests intentionally not affected by this suite
 
 BUG-001, BUG-002, and BUG-003 remain `todo` in

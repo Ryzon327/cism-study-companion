@@ -29,7 +29,7 @@ stays at exactly these five values unless a future phase justifies more.
 | Lifecycle | `schema/registry/lifecycles.json` (exactly 2, fixed — see amendment below) |
 | LifecycleStage | `schema/registry/lifecycle-stages.json` |
 | Question | `schema/example/questions.example.json` |
-| QuestionFamily | not yet seeded — no example needed multiple wording variants of one question in this phase |
+| QuestionFamily | `content/production/families.json` (Phase 6C — see [`SCHEMA-QUESTION-FAMILY.md`](SCHEMA-QUESTION-FAMILY.md)) |
 | Lesson | `schema/example/lessons.example.json` |
 
 ## Support entities (infrastructure, not curriculum content)

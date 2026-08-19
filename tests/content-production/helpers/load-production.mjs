@@ -29,8 +29,21 @@ export const REGISTRY_COLLECTIONS = {
 export const PRODUCTION_COLLECTIONS = {
   concepts: { file: "content/production/concepts.json", pattern: /^concept\.(d[1-4]|foundation)\.[a-z0-9-]+$/ },
   questions: { file: "content/production/questions.json", pattern: /^question\.(d[1-4]|foundation)\.\d{4}$/ },
-  lessons: { file: "content/production/lessons.json", pattern: /^lesson\.(d[1-4]|foundation)\.[a-z0-9-]+$/ }
+  lessons: { file: "content/production/lessons.json", pattern: /^lesson\.(d[1-4]|foundation)\.[a-z0-9-]+$/ },
+  families: { file: "content/production/families.json", pattern: /^family\.(d[1-4]|foundation)\.[a-z0-9-]+$/ }
 };
+
+// The fixed variation-strategy vocabulary from docs/data-model/SCHEMA-QUESTION-FAMILY.md.
+export const VARIATION_STRATEGY_VOCABULARY = [
+  "qualifier",
+  "business-setting",
+  "role-mix",
+  "asset-or-process-context",
+  "distractor-temptation",
+  "lifecycle-framing",
+  "wording-structure",
+  "decision-consequence"
+];
 
 function readJson(relPath) {
   return JSON.parse(fs.readFileSync(path.join(ROOT, relPath), "utf8"));

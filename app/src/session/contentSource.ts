@@ -23,7 +23,14 @@ export interface DailyStudyContentSource {
   getRecall(): RecallCheckFixture;
   getLesson(): LessonFixture;
   getApplyQuestion(): { question: QuestionFixture; meta?: string };
-  buildFeedback(selectedKey: AnswerOptionFixture["key"]): FeedbackFixture & { repairTargetId?: string };
+  // Takes the question that was actually shown, not just the selected key —
+  // once Apply can rotate through multiple family variants (Phase 6C),
+  // feedback must be built against the exact variant the learner answered,
+  // never re-derived from a fixed pointer. DailyStudySession passes back
+  // the same QuestionFixture it received from getApplyQuestion(); it does
+  // not interpret it, only carries it forward — the same way it already
+  // carries selectedKey forward.
+  buildFeedback(question: QuestionFixture, selectedKey: AnswerOptionFixture["key"]): FeedbackFixture & { repairTargetId?: string };
   getRepairCheck(repairTargetId?: string): RepairCheckFixture;
   getCompletion(): { summary: CompletionSummaryFixture; domainPosition: string };
 }

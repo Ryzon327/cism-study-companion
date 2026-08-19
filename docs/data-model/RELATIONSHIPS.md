@@ -18,6 +18,14 @@ Cardinality shown as (owning field) → (target).
 | Question | `evidence_dimensions` | EvidenceDimension | many↔many |
 | Question.options[].`repair_target` | — | RepairTarget | per-option, optional |
 | Question | `family` | QuestionFamily | many→one, optional |
+| QuestionFamily | `domain` | Domain | many→one, required |
+| QuestionFamily | `concepts` | Concept | many↔many, ≥1 required |
+| QuestionFamily | `patterns` | Pattern | many↔many, optional |
+| QuestionFamily | `evidence_dimensions` | EvidenceDimension | many↔many, ≥1 required |
+| QuestionFamily | `role_target` | Role | many→one, optional — may name a recurring distractor, not necessarily the correct answer (see SCHEMA-QUESTION-FAMILY.md) |
+| QuestionFamily | `qualifier_target` | Qualifier | many→one, optional |
+| QuestionFamily | `lifecycle` + `stage_target` | Lifecycle + LifecycleStage | many→one each, domain-gated same as Question |
+| QuestionFamily | `decision_type` | DecisionType | many→one, optional |
 | Question | `source` | Source | many→one, required for CANONICAL |
 | Lesson | `domain`, `concepts`, `patterns`, `prerequisites` | Domain, Concept, Pattern, (Lesson\|Concept) | as named |
 | Lesson | `retrieval_refs` | Question | many↔many |
@@ -25,6 +33,17 @@ Cardinality shown as (owning field) → (target).
 | Role | `characteristic_domains` | Domain | many↔many, **weighting only, never exclusivity** |
 | LifecycleStage | `lifecycle`, `position`, `preceding`/`following` | Lifecycle, integer, LifecycleStage | ordered, one lifecycle |
 | RepairTarget | `related_evidence_dimension` | EvidenceDimension | many→one |
+
+## Family-membership invariant (Phase 6C)
+
+**When `Question.family` is set, the variant's own `concepts` /
+`patterns` / `evidence_dimensions` must each be a subset of the family's
+declared set.** A variant can't silently test something its family doesn't
+claim to measure — enforced by
+[`tests/content-production/family-integrity.test.mjs`](../../tests/content-production/family-integrity.test.mjs).
+This is the mechanism that makes "which family tests this target" (see
+[`REPETITION-AND-RECALL-MODEL.md`](REPETITION-AND-RECALL-MODEL.md)) a
+reliable query instead of a hopeful convention.
 
 ## Two fields per-question that carry more nuance than a single value would
 
