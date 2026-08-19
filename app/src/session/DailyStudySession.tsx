@@ -6,48 +6,55 @@ import { QuestionApplyScreen } from "../screens/QuestionApplyScreen";
 import { FeedbackScreen } from "../screens/FeedbackScreen";
 import { RepairScreen } from "../screens/RepairScreen";
 import { CompletionScreen } from "../screens/CompletionScreen";
-import { buildFeedback } from "../data/fixtures";
 import type { AnswerOptionFixture } from "../types/content";
+import type { DailyStudyContentSource } from "./contentSource";
 
 type Phase = "recall" | "learn" | "apply" | "feedback" | "repair" | "completion";
 
 interface DailyStudySessionProps {
+  contentSource: DailyStudyContentSource;
   onDone: () => void;
 }
 
 /**
- * The controlled, in-memory Daily Study experience prototype:
- * Recall → Learn → Apply → Feedback → (Repair if incorrect) → Completion.
+ * The controlled, in-memory Daily Study experience: Recall → Learn →
+ * Apply → Feedback → (Repair if incorrect) → Completion.
  *
- * All state is local useState, reset fresh on every mount (i.e. every time
- * the learner starts a new session from Home) — no persistence, no
- * localStorage, no evidence storage. This is a click-through experience
- * demonstration, not the production Daily Study engine.
+ * This component is pure session orchestration — it never names a
+ * specific lesson or question. Everything it renders comes from the
+ * injected `contentSource`, which may be the Phase 5B prototype fixtures
+ * or the production content-loader layer (app/src/content/); the phase
+ * state machine and screen sequence are identical either way. All state
+ * is local useState, reset fresh on every mount — no persistence.
  */
-export function DailyStudySession({ onDone }: DailyStudySessionProps): JSX.Element | null {
+export function DailyStudySession({ contentSource, onDone }: DailyStudySessionProps): JSX.Element | null {
   const [phase, setPhase] = useState<Phase>("recall");
   const [selectedKey, setSelectedKey] = useState<AnswerOptionFixture["key"] | null>(null);
 
   switch (phase) {
     case "recall":
-      return <RecallScreen onContinue={() => setPhase("learn")} />;
+      return <RecallScreen recallCheck={contentSource.getRecall()} onContinue={() => setPhase("learn")} />;
 
     case "learn":
-      return <DailyStudyLearnScreen onApply={() => setPhase("apply")} />;
+      return <DailyStudyLearnScreen lesson={contentSource.getLesson()} onApply={() => setPhase("apply")} />;
 
-    case "apply":
+    case "apply": {
+      const { question, meta } = contentSource.getApplyQuestion();
       return (
         <QuestionApplyScreen
+          question={question}
+          meta={meta}
           onSubmit={(key: AnswerOptionFixture["key"]) => {
             setSelectedKey(key);
             setPhase("feedback");
           }}
         />
       );
+    }
 
     case "feedback": {
       if (!selectedKey) return null;
-      const feedback = buildFeedback(selectedKey);
+      const feedback = contentSource.buildFeedback(selectedKey);
       return (
         <FeedbackScreen
           feedback={feedback}
@@ -57,17 +64,21 @@ export function DailyStudySession({ onDone }: DailyStudySessionProps): JSX.Eleme
     }
 
     case "repair": {
-      const feedback = selectedKey ? buildFeedback(selectedKey) : undefined;
+      const feedback = selectedKey ? contentSource.buildFeedback(selectedKey) : undefined;
+      const repairCheck = contentSource.getRepairCheck(feedback?.repairTargetId);
       return (
         <RepairScreen
+          repairCheck={repairCheck}
           mistakeContext={feedback?.whySelectedWasWeaker}
           onContinue={() => setPhase("completion")}
         />
       );
     }
 
-    case "completion":
-      return <CompletionScreen onDone={onDone} />;
+    case "completion": {
+      const { summary, domainPosition } = contentSource.getCompletion();
+      return <CompletionScreen summary={summary} domainPosition={domainPosition} onDone={onDone} />;
+    }
 
     default:
       return null;

@@ -1,7 +1,7 @@
 import type { ComponentChildren, JSX } from "preact";
 import { TopBar } from "./TopBar";
 import { BottomTabBar } from "./BottomTabBar";
-import { PrototypeSwitcher, type PrototypeStateItem } from "./PrototypeSwitcher";
+import { PrototypeSwitcher, type PrototypeStateItem, type ContentSourceMode } from "./PrototypeSwitcher";
 import type { ProductNavItem } from "./ProductNav";
 import "./AppShell.css";
 
@@ -14,6 +14,8 @@ interface AppShellProps {
   prototypeItems: PrototypeStateItem[];
   activePrototypeId: string;
   onSelectPrototype: (id: string) => void;
+  contentSourceMode: ContentSourceMode;
+  onSelectContentSourceMode: (mode: ContentSourceMode) => void;
   children: ComponentChildren;
 }
 
@@ -26,6 +28,8 @@ export function AppShell({
   prototypeItems,
   activePrototypeId,
   onSelectPrototype,
+  contentSourceMode,
+  onSelectContentSourceMode,
   children
 }: AppShellProps): JSX.Element {
   return (
@@ -45,7 +49,13 @@ export function AppShell({
       {mode === "full" && (
         <BottomTabBar items={productNavItems} activeId={activeProductId} onSelect={onSelectProduct} />
       )}
-      <PrototypeSwitcher items={prototypeItems} activeId={activePrototypeId} onSelect={onSelectPrototype} />
+      <PrototypeSwitcher
+        items={prototypeItems}
+        activeId={activePrototypeId}
+        onSelect={onSelectPrototype}
+        contentSourceMode={contentSourceMode}
+        onSelectContentSourceMode={onSelectContentSourceMode}
+      />
     </div>
   );
 }

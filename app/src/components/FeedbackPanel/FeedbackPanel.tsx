@@ -52,11 +52,13 @@ export function FeedbackPanel({ feedback }: { feedback: FeedbackFixture }): JSX.
         </details>
       )}
 
-      <div class="feedback-chips" aria-label="Reasoning dimensions for this question">
-        <QualifierMark label={feedback.qualifier.label} />
-        <RoleTag label={feedback.role.label} />
-      </div>
-      <LifecycleTrack stages={feedback.lifecycle} />
+      {(feedback.qualifier || feedback.role) && (
+        <div class="feedback-chips" aria-label="Reasoning dimensions for this question">
+          {feedback.qualifier && <QualifierMark label={feedback.qualifier.label} />}
+          {feedback.role && <RoleTag label={feedback.role.label} />}
+        </div>
+      )}
+      {feedback.lifecycle.length > 0 && <LifecycleTrack stages={feedback.lifecycle} />}
 
       <MemoryRule>{feedback.memoryRule}</MemoryRule>
     </section>

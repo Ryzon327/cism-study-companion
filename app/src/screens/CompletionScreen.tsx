@@ -1,13 +1,20 @@
 import type { JSX } from "preact";
 import { Button } from "../components/Button/Button";
-import { completionSummary, todayFocus } from "../data/fixtures";
+import { completionSummary as defaultSummary, todayFocus } from "../data/fixtures";
+import type { CompletionSummaryFixture } from "../types/content";
 import "./CompletionScreen.css";
 
 interface CompletionScreenProps {
+  summary?: CompletionSummaryFixture;
+  domainPosition?: string;
   onDone?: () => void;
 }
 
-export function CompletionScreen({ onDone }: CompletionScreenProps = {}): JSX.Element {
+export function CompletionScreen({
+  summary = defaultSummary,
+  domainPosition = todayFocus.domainPosition,
+  onDone
+}: CompletionScreenProps = {}): JSX.Element {
   return (
     <div class="screen completion-screen">
       <div class="completion-check" aria-hidden="true">
@@ -15,19 +22,19 @@ export function CompletionScreen({ onDone }: CompletionScreenProps = {}): JSX.El
           <path d="M5 12.5 10 17.5 19 7" />
         </svg>
       </div>
-      <h1 class="completion-headline">{completionSummary.headline}</h1>
-      <p class="completion-detail">{completionSummary.detail}</p>
+      <h1 class="completion-headline">{summary.headline}</h1>
+      <p class="completion-detail">{summary.detail}</p>
 
       <ul class="completion-covered" aria-label="What today's session covered">
-        {completionSummary.coveredItems.map((item) => (
+        {summary.coveredItems.map((item) => (
           <li key={item}>{item}</li>
         ))}
       </ul>
 
-      <p class="completion-journey">{todayFocus.domainPosition}</p>
+      {domainPosition && <p class="completion-journey">{domainPosition}</p>}
 
       <button type="button" class="completion-optional">
-        {completionSummary.optionalLabel}
+        {summary.optionalLabel}
       </button>
 
       <div class="completion-actions">

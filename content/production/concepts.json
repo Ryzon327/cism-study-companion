@@ -1,0 +1,26 @@
+[
+  {
+    "id": "concept.foundation.qualifier-recognition",
+    "display_name": "Reading the qualifier",
+    "home_domain": "domain.foundation",
+    "plain": "The qualifier word in a CISM stem (FIRST, NEXT, BEST, MOST, PRIMARY) determines what kind of answer the question wants, before any content knowledge is applied.",
+    "related_patterns": [],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "source": "source.architecture.phase6-review-2026-08-19",
+    "version": 1,
+    "note": "PHASE 6B CANDIDATE — authored by Claude Code per approved Phase 6A/6B architecture, grounded in docs/learning/QUALIFIER-DECODER.md and docs/learning/FOUNDATION-BLUEPRINT.md. Not yet human-reviewed or promoted. Pending explicit promotion decision per docs/learning/README.md#content-status-terminology."
+  },
+  {
+    "id": "concept.d1.authority-accountability",
+    "display_name": "Authority follows accountability",
+    "home_domain": "domain.d1",
+    "plain": "Decision authority in a CISM governance scenario belongs to whoever is accountable for the outcome, not to whoever has the most relevant expertise or first identified the issue.",
+    "related_patterns": ["pattern.p02", "pattern.p03"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "source": "source.architecture.phase6-review-2026-08-19",
+    "version": 1,
+    "note": "PHASE 6B CANDIDATE — authored by Claude Code per approved Phase 6A/6B architecture, grounded in docs/learning/PATTERN-LIBRARY.md (P02, P03), docs/learning/ROLE-AUTHORITY-MATRIX.md, and docs/learning/DOMAIN-1-BLUEPRINT.md. Distinct from the illustrative concept.d1.policy-hierarchy / concept.d1.business-alignment entities in schema/example/ (test-only, not referenced here). Not yet human-reviewed or promoted."
+  }
+]

@@ -3,7 +3,9 @@ import { render, screen, fireEvent, within } from "@testing-library/preact";
 import { App } from "../../../app/src/App";
 
 function openPrototypeSwitcher() {
-  fireEvent.click(screen.getByText(/Prototype/));
+  const trigger = document.querySelector(".prototype-switcher-trigger");
+  if (!trigger) throw new Error("prototype-switcher-trigger not found");
+  fireEvent.click(trigger);
 }
 
 function assertSessionNavReceded() {

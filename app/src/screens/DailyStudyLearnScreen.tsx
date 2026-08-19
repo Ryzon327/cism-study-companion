@@ -4,14 +4,16 @@ import { PatternCallout } from "../components/PatternCallout/PatternCallout";
 import { Scenario } from "../components/Scenario/Scenario";
 import { MemoryRule } from "../components/MemoryRule/MemoryRule";
 import { Button } from "../components/Button/Button";
-import { lesson } from "../data/fixtures";
+import type { LessonFixture } from "../types/content";
+import { lesson as defaultLesson } from "../data/fixtures";
 import "./DailyStudyLearnScreen.css";
 
 interface DailyStudyLearnScreenProps {
+  lesson?: LessonFixture;
   onApply?: () => void;
 }
 
-export function DailyStudyLearnScreen({ onApply }: DailyStudyLearnScreenProps = {}): JSX.Element {
+export function DailyStudyLearnScreen({ lesson = defaultLesson, onApply }: DailyStudyLearnScreenProps = {}): JSX.Element {
   return (
     <div class="screen daily-study-screen">
       <div class="daily-study-header">
@@ -24,7 +26,7 @@ export function DailyStudyLearnScreen({ onApply }: DailyStudyLearnScreenProps = 
         <p class="lesson-why">{lesson.whyItMatters}</p>
         <p class="lesson-body">{lesson.context}</p>
 
-        <PatternCallout pattern={lesson.pattern} />
+        {lesson.pattern && <PatternCallout pattern={lesson.pattern} />}
 
         <Scenario>{lesson.scenario}</Scenario>
 
@@ -32,7 +34,7 @@ export function DailyStudyLearnScreen({ onApply }: DailyStudyLearnScreenProps = 
       </article>
 
       <div class="daily-study-actions">
-        <Button onClick={onApply}>Apply it →</Button>
+        <Button onClick={onApply}>Apply it &rarr;</Button>
       </div>
     </div>
   );

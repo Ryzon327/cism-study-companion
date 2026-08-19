@@ -3,20 +3,23 @@ import { useState } from "preact/hooks";
 import { ProgressLine } from "../components/ProgressLine/ProgressLine";
 import { AnswerOption } from "../components/AnswerOption/AnswerOption";
 import { Button } from "../components/Button/Button";
-import { recallCheck } from "../data/fixtures";
+import type { AnswerOptionFixture, RecallCheckFixture } from "../types/content";
 import "./RecallScreen.css";
 
 interface RecallScreenProps {
+  recallCheck: RecallCheckFixture;
   onContinue: () => void;
 }
 
 /**
- * Brief cumulative-recall check drawn from an already-completed domain,
- * shown before new learning — see fixtures.ts's recallCheck. Deliberately
- * short: one question, immediate reinforcement, continue.
+ * Brief cumulative-recall check drawn from an already-taught lesson,
+ * shown before new learning. `recallCheck` is resolved by the active
+ * content source (Phase 5B prototype fixtures or the production content
+ * loader) — this component never knows which. Deliberately short: one
+ * question, immediate reinforcement, continue.
  */
-export function RecallScreen({ onContinue }: RecallScreenProps): JSX.Element {
-  const [selected, setSelected] = useState<(typeof recallCheck.options)[number]["key"] | null>(null);
+export function RecallScreen({ recallCheck, onContinue }: RecallScreenProps): JSX.Element {
+  const [selected, setSelected] = useState<AnswerOptionFixture["key"] | null>(null);
   const submitted = selected !== null;
   const selectedOption = recallCheck.options.find((o) => o.key === selected);
   const correctOption = recallCheck.options.find((o) => o.correct);
