@@ -1,0 +1,28 @@
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--target-min);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: var(--font-size-meta);
+  font-weight: 600;
+}
+
+.theme-toggle:hover {
+  background: var(--interactive-hover);
+  color: var(--text-primary);
+}
+
+.theme-toggle-label {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .theme-toggle-label {
+    display: inline;
+  }
+}

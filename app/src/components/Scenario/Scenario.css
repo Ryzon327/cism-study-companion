@@ -1,0 +1,23 @@
+.scenario {
+  margin: 0;
+  padding: var(--space-1) 0 var(--space-1) var(--space-4);
+  border-left: 2px solid var(--border-strong);
+}
+
+.scenario-eyebrow {
+  font-size: var(--font-size-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--space-1);
+  font-style: normal;
+}
+
+.scenario p:not(.scenario-eyebrow) {
+  color: var(--text-secondary);
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: var(--line-height-reading);
+  font-style: italic;
+}

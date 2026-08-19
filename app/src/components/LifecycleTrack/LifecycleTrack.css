@@ -1,0 +1,24 @@
+.lifecycle-track {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lifecycle-chip {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: var(--font-size-meta);
+  font-weight: 600;
+}
+
+.lifecycle-chip-current {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--tag-bg);
+}

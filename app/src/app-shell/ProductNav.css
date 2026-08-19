@@ -1,0 +1,50 @@
+.product-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.product-nav-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target-min);
+  padding: var(--space-2) 0;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.product-nav-item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6px;
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: transparent;
+}
+
+.product-nav-item:hover {
+  color: var(--text-primary);
+}
+
+.product-nav-item-active {
+  color: var(--text-primary);
+}
+
+.product-nav-item-active::after {
+  background: var(--accent);
+}
+
+@media (max-width: 767px) {
+  .product-nav {
+    display: none;
+  }
+}

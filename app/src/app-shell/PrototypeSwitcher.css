@@ -1,0 +1,94 @@
+/*
+ * Deliberately "tooling," not product UI: monospace, dashed border, fixed
+ * to the corner — so it reads as a QA instrument rather than a learner
+ * navigation destination.
+ */
+.prototype-switcher {
+  position: fixed;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 30;
+}
+
+@media (max-width: 767px) {
+  .prototype-switcher {
+    bottom: calc(var(--target-min) + var(--space-6));
+  }
+}
+
+.prototype-switcher-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  border: 1px dashed var(--border-strong);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+
+.prototype-switcher-trigger::-webkit-details-marker {
+  display: none;
+}
+
+.prototype-switcher-trigger:hover {
+  color: var(--text-secondary);
+  border-color: var(--text-muted);
+}
+
+.prototype-switcher-panel {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + var(--space-2));
+  width: 15rem;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: var(--space-3);
+  border-radius: var(--radius);
+  border: 1px dashed var(--border-strong);
+  background: var(--surface-raised);
+  box-shadow: var(--shadow-raised);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.prototype-switcher-heading {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: var(--space-1) var(--space-2) var(--space-2);
+}
+
+.prototype-switcher-item {
+  text-align: left;
+  min-height: 36px;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+}
+
+.prototype-switcher-trigger::marker {
+  content: "";
+}
+
+.prototype-switcher-item:hover {
+  background: var(--interactive-hover);
+  color: var(--text-primary);
+}
+
+.prototype-switcher-item-active {
+  color: var(--accent);
+  font-weight: 700;
+}

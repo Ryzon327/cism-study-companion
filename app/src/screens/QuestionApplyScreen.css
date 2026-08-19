@@ -1,0 +1,10 @@
+@import "../styles/session-header.css";
+
+.apply-screen {
+  max-width: var(--content-width-reading);
+  margin: 0 auto;
+}
+
+.apply-actions {
+  margin-top: var(--space-5);
+}

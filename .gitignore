@@ -8,3 +8,9 @@
 # Local question set (never commit copyrighted question material)
 data/local/
 tools/input/
+
+# Frontend build/tooling output (Phase 5B — app/)
+node_modules/
+dist/
+test-results/
+playwright-report/

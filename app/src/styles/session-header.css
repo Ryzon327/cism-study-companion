@@ -1,0 +1,10 @@
+/*
+ * Shared by every immersive Daily Study / Practice Exam phase screen. The
+ * phase name itself lives in the receded TopBar (see App.tsx's session
+ * mode), so this stays a compact progress indicator only — no repeated
+ * heading — to keep chrome out of the way of the study material.
+ */
+.daily-study-header {
+  margin-bottom: var(--space-7);
+  max-width: 16rem;
+}
