@@ -18,7 +18,8 @@ explanation            string — why the correct answer is correct
 recognition_clue       string, optional
 memory_rule            string, optional
 evidence_dimensions    EvidenceDimension id[], ≥1 required for CANONICAL questions
-family                 QuestionFamily id, optional
+family                 QuestionFamily id, optional — see SCHEMA-QUESTION-FAMILY.md; a Question becomes a "variant" the moment this is set
+variation_tags          string[], optional — which of the family's variation_strategy dimensions this variant instantiates (Phase 6C)
 content_status          CANONICAL | CANDIDATE | PROTOTYPE_REFERENCE
 verification_status     see PROVENANCE-MODEL.md
 active                  boolean

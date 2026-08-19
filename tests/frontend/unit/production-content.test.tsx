@@ -1,9 +1,27 @@
-import { describe, it, expect } from "vitest";
-import { resolveLesson, resolveQuestion, resolveFeedback, recallPoolFor, requireProductionLesson, requireProductionQuestion } from "../../../app/src/content/resolve";
+import { describe, it, expect, beforeEach } from "vitest";
+import {
+  resolveLesson,
+  resolveQuestion,
+  resolveFeedback,
+  recallFamilyIdsFor,
+  anchorFamilyIdFor,
+  familyVariantsFor,
+  selectFamilyVariant,
+  requireProductionLesson,
+  requireProductionQuestion
+} from "../../../app/src/content/resolve";
+import { emptyHistory, recordExposure } from "../../../app/src/content/selection";
 import { productionContentSource } from "../../../app/src/content/productionContentSource";
+import { resetExposureHistoryForTests } from "../../../app/src/content/exposureStore";
 
 const TODAYS_LESSON_ID = "lesson.d1.authority-follows-accountability";
 const PREREQ_LESSON_ID = "lesson.foundation.ask-qualifier";
+const D1_FAMILY_ID = "family.d1.authority-accountability-decision";
+const FOUNDATION_FAMILY_ID = "family.foundation.qualifier-recognition";
+
+beforeEach(() => {
+  resetExposureHistoryForTests();
+});
 
 describe("production content resolver", () => {
   it("resolves the Domain 1 lesson with real registry-backed display values, not raw ids", () => {
@@ -54,17 +72,77 @@ describe("production content resolver", () => {
     expect(authorityRepair.prompt).not.toBe(undefined);
     expect(authorityRepair.confirmation).not.toBe(roleRepair.confirmation);
   });
+});
 
-  it("recall-eligibility: today's lesson's recall pool comes only from its prerequisite, never its own question", () => {
-    const pool = recallPoolFor(TODAYS_LESSON_ID);
-    expect(pool.length).toBeGreaterThan(0);
-    const todaysLesson = requireProductionLesson(TODAYS_LESSON_ID);
-    for (const q of pool) {
-      expect(todaysLesson.retrieval_refs).not.toContain(q.id);
+describe("QuestionFamily resolution (Phase 6C)", () => {
+  it("familyVariantsFor returns exactly the 3 authored variants per family", () => {
+    expect(familyVariantsFor(D1_FAMILY_ID).map((q) => q.id).sort()).toEqual([
+      "question.d1.0002",
+      "question.d1.0003",
+      "question.d1.0004"
+    ]);
+    expect(familyVariantsFor(FOUNDATION_FAMILY_ID).map((q) => q.id).sort()).toEqual([
+      "question.foundation.0001",
+      "question.foundation.0002",
+      "question.foundation.0003"
+    ]);
+  });
+
+  it("anchorFamilyIdFor resolves today's lesson to its authority-accountability family", () => {
+    expect(anchorFamilyIdFor(TODAYS_LESSON_ID)).toBe(D1_FAMILY_ID);
+  });
+
+  it("recall-eligibility: today's lesson's recall-eligible family is exactly its prerequisite's family, never its own", () => {
+    const familyIds = recallFamilyIdsFor(TODAYS_LESSON_ID);
+    expect(familyIds).toEqual([FOUNDATION_FAMILY_ID]);
+    expect(familyIds).not.toContain(D1_FAMILY_ID);
+  });
+
+  it("selectFamilyVariant rotates through unseen variants before repeating, given a shared history", () => {
+    let history = emptyHistory();
+    const seen: string[] = [];
+    for (let i = 0; i < 3; i++) {
+      const q = selectFamilyVariant(D1_FAMILY_ID, history, 1000 + i);
+      expect(seen).not.toContain(q.id);
+      seen.push(q.id);
+      history = recordExposure(history, q.id, 1000 + i);
     }
-    // and it must come from the prerequisite lesson specifically
-    const prereqLesson = requireProductionLesson(PREREQ_LESSON_ID);
-    expect(pool.map((q) => q.id)).toEqual(prereqLesson.retrieval_refs);
+    expect(seen.sort()).toEqual(["question.d1.0002", "question.d1.0003", "question.d1.0004"]);
+  });
+});
+
+describe("productionContentSource — variant rotation across repeated sessions (invariant 32 + the founder's repeated-question finding)", () => {
+  it("Apply shows a different Domain 1 variant on each of three consecutive sessions, then may repeat on the fourth", () => {
+    const seen: string[] = [];
+    for (let i = 0; i < 3; i++) {
+      const { question } = productionContentSource.getApplyQuestion();
+      expect(seen).not.toContain(question.id);
+      seen.push(question.id);
+    }
+    expect(seen.sort()).toEqual(["question.d1.0002", "question.d1.0003", "question.d1.0004"]);
+
+    // Pool exhausted — the 4th session is allowed to repeat (never "never repeat").
+    const fourth = productionContentSource.getApplyQuestion();
+    expect(seen).toContain(fourth.question.id);
+  });
+
+  it("Recall shows a different Foundation variant on each of three consecutive sessions", () => {
+    const seen: string[] = [];
+    for (let i = 0; i < 3; i++) {
+      const recall = productionContentSource.getRecall();
+      // RecallCheckFixture doesn't carry an id, so identify the variant by its unique prompt text instead.
+      expect(seen).not.toContain(recall.prompt);
+      seen.push(recall.prompt);
+    }
+    expect(seen).toHaveLength(3);
+  });
+
+  it("feedback always matches the variant actually shown by getApplyQuestion, even after rotation", () => {
+    const { question } = productionContentSource.getApplyQuestion();
+    const correctKey = question.options.find((o) => o.correct)!.key;
+    const feedback = productionContentSource.buildFeedback(question, correctKey);
+    expect(feedback.question.id).toBe(question.id);
+    expect(feedback.correct).toBe(true);
   });
 });
 
@@ -76,15 +154,22 @@ describe("productionContentSource — invariant 32 (a production session can com
     const correctKey = question.options.find((o) => o.correct)!.key;
     const wrongKey = question.options.find((o) => !o.correct)!.key;
 
-    const correctFeedback = productionContentSource.buildFeedback(correctKey);
+    const correctFeedback = productionContentSource.buildFeedback(question, correctKey);
     expect(correctFeedback.correct).toBe(true);
 
-    const wrongFeedback = productionContentSource.buildFeedback(wrongKey);
+    const wrongFeedback = productionContentSource.buildFeedback(question, wrongKey);
     expect(wrongFeedback.correct).toBe(false);
     expect(() => productionContentSource.getRepairCheck(wrongFeedback.repairTargetId)).not.toThrow();
 
     const { summary, domainPosition } = productionContentSource.getCompletion();
     expect(summary.coveredItems.length).toBeGreaterThan(0);
     expect(domainPosition.length).toBeGreaterThan(0);
+  });
+});
+
+describe("no future-domain leakage / taught-before-tested still holds with families", () => {
+  it("requireProductionLesson resolves both slice lessons without error", () => {
+    expect(() => requireProductionLesson(TODAYS_LESSON_ID)).not.toThrow();
+    expect(() => requireProductionLesson(PREREQ_LESSON_ID)).not.toThrow();
   });
 });

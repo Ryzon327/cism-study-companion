@@ -23,6 +23,7 @@ import patterns from "../../../schema/registry/patterns.json";
 import productionConcepts from "../../../content/production/concepts.json";
 import productionLessons from "../../../content/production/lessons.json";
 import productionQuestions from "../../../content/production/questions.json";
+import productionFamilies from "../../../content/production/families.json";
 
 export interface RegistryEntity {
   id: string;
@@ -49,6 +50,8 @@ export interface ProductionQuestion {
   lifecycle: string | null;
   stage: string | null;
   decision_type: string | null;
+  family?: string | null;
+  variation_tags?: string[];
   prompt: string;
   options: ProductionOption[];
   explanation: string;
@@ -59,6 +62,32 @@ export interface ProductionQuestion {
   verification_status: string;
   active: boolean;
   version: number;
+  source: string;
+  note?: string;
+}
+
+export interface ProductionFamily {
+  id: string;
+  display_name: string;
+  domain: string;
+  concepts: string[];
+  patterns: string[];
+  evidence_dimensions: string[];
+  role_target: string | null;
+  qualifier_target: string | null;
+  lifecycle: string | null;
+  stage_target: string | null;
+  decision_type: string | null;
+  teaching_objective: string;
+  invariant_reasoning: string;
+  variation_strategy: string[];
+  difficulty_band: string;
+  minimum_variant_count: number;
+  content_status: string;
+  verification_status: string;
+  active: boolean;
+  version: number;
+  replaced_by: string | null;
   source: string;
   note?: string;
 }
@@ -115,7 +144,8 @@ export const registry = {
 export const production = {
   concepts: byId(productionConcepts as ProductionConcept[]),
   lessons: byId(productionLessons as ProductionLesson[]),
-  questions: byId(productionQuestions as ProductionQuestion[])
+  questions: byId(productionQuestions as ProductionQuestion[]),
+  families: byId(productionFamilies as ProductionFamily[])
 };
 
 export function requireDisplayName(map: Map<string, RegistryEntity>, id: string): string {

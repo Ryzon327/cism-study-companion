@@ -25,6 +25,15 @@ evidence analysis ask "was this the same question the learner actually
 saw" if that ever matters, without requiring it to matter yet — the field
 exists now so it isn't a breaking schema addition later.
 
+**Worked example (Phase 6C):** migrating `question.foundation.0001` and
+`question.d1.0002` into their new `QuestionFamily` — populating `family`
+and `variation_tags` — bumped both from `version: 1` to `version: 2`. The
+question's `id` and wording were unchanged; gaining family membership is
+exactly the kind of meaningful-but-non-identity-changing edit this field
+exists to record, per [`ID-CONVENTIONS.md`](ID-CONVENTIONS.md)'s permanence
+rule (family reassignment is a content edit, never a reason to mint a new
+ID).
+
 ## 3. Retirement via `active` + `replaced_by`, never deletion or ID reuse
 
 ```

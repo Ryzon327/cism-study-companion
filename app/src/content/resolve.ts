@@ -7,6 +7,7 @@
  * this file is UI; it produces plain data.
  */
 import { registry, production, requireDisplayName, type ProductionQuestion, type ProductionLesson } from "./registry";
+import { selectVariant, type ExposureHistory } from "./selection";
 import type {
   LessonFixture,
   QuestionFixture,
@@ -125,26 +126,70 @@ export function requireProductionQuestion(questionId: string): ProductionQuestio
 }
 
 /**
+ * All active variants belonging to one family — the pool
+ * selectFamilyVariant() chooses from. A family with no variants is a
+ * content-authoring gap, not a runtime state to silently tolerate.
+ */
+export function familyVariantsFor(familyId: string): ProductionQuestion[] {
+  return [...production.questions.values()].filter((q) => q.family === familyId && q.active);
+}
+
+/**
+ * The exact-repeat policy (docs/data-model/REPETITION-AND-RECALL-MODEL.md)
+ * applied to one family: unseen-preferred, least-recently-seen fallback,
+ * deterministic tie-break. Pure selection logic lives in selection.ts;
+ * this just supplies the candidate pool.
+ */
+export function selectFamilyVariant(familyId: string, history: ExposureHistory, now: number): ProductionQuestion {
+  const candidates = familyVariantsFor(familyId);
+  if (candidates.length === 0) {
+    throw new Error(`No variants found for family ${familyId} — a family with zero variants is an authoring gap.`);
+  }
+  const chosenId = selectVariant(
+    candidates.map((q) => q.id),
+    history,
+    now
+  );
+  return requireProductionQuestion(chosenId);
+}
+
+/**
  * Recall-eligibility, enforced structurally: the pool a session can draw
  * Recall material from is exactly the retrieval_refs of lessons reachable
  * through `prerequisites` — never the lesson being taught today, and
- * never anything not a prerequisite of it. See
+ * never anything not a prerequisite of it — expanded to each of those
+ * questions' full QuestionFamily (Phase 6C) when one is set, so Recall can
+ * rotate through variants rather than always showing the exact same
+ * question. A retrieval_ref question with no family falls back to just
+ * itself (Phase 6B-compatible behavior). See
  * docs/learning/CURRICULUM-BLUEPRINT.md's untaught-material rule and
  * docs/learning/DAILY-STUDY-MODEL.md's Recall section.
  */
 export function recallPoolFor(todaysLessonId: string): ProductionQuestion[] {
   const todaysLesson = requireProductionLesson(todaysLessonId);
-  const seen = new Set<string>();
+  const seenLessons = new Set<string>();
+  const poolIds = new Set<string>();
   const pool: ProductionQuestion[] = [];
 
+  function addQuestion(q: ProductionQuestion) {
+    if (poolIds.has(q.id)) return;
+    poolIds.add(q.id);
+    pool.push(q);
+  }
+
   function visit(lessonId: string) {
-    if (seen.has(lessonId)) return;
-    seen.add(lessonId);
+    if (seenLessons.has(lessonId)) return;
+    seenLessons.add(lessonId);
     const lesson = production.lessons.get(lessonId);
     if (!lesson) return;
     for (const refId of lesson.retrieval_refs) {
       const q = production.questions.get(refId);
-      if (q) pool.push(q);
+      if (!q) continue;
+      if (q.family) {
+        for (const variant of familyVariantsFor(q.family)) addQuestion(variant);
+      } else {
+        addQuestion(q);
+      }
     }
     for (const prereqId of lesson.prerequisites) {
       if (production.lessons.has(prereqId)) visit(prereqId);
@@ -156,4 +201,36 @@ export function recallPoolFor(todaysLessonId: string): ProductionQuestion[] {
   }
 
   return pool;
+}
+
+/**
+ * Stage 2 of the target -> family -> variant pipeline: which distinct
+ * families are recall-eligible for today's lesson. Phase 6C's two-family
+ * slice always resolves to exactly one (trivial "stage 1" target
+ * selection) — the function is written generally so it stays correct once
+ * more targets/families exist, per
+ * docs/data-model/REPETITION-AND-RECALL-MODEL.md.
+ */
+export function recallFamilyIdsFor(todaysLessonId: string): string[] {
+  const pool = recallPoolFor(todaysLessonId);
+  const ids: string[] = [];
+  for (const q of pool) {
+    if (q.family && !ids.includes(q.family)) ids.push(q.family);
+  }
+  return ids;
+}
+
+/**
+ * Today's lesson's own "anchor" family — the family (if any) its
+ * retrieval_refs[0] question belongs to. Used to let the Apply step
+ * rotate through the same family's variants across repeated sessions,
+ * rather than always showing exactly the lesson's originally-paired
+ * question. Returns undefined when the anchor question has no family
+ * (Phase 6B-compatible fallback).
+ */
+export function anchorFamilyIdFor(lessonId: string): string | undefined {
+  const lesson = requireProductionLesson(lessonId);
+  const anchorId = lesson.retrieval_refs[0];
+  if (!anchorId) return undefined;
+  return production.questions.get(anchorId)?.family ?? undefined;
 }

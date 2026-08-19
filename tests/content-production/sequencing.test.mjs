@@ -70,21 +70,46 @@ test("taught-before-tested: every lesson's retrieval question only tests concept
   assert.equal(violations.length, 0, violations.join("\n"));
 });
 
+const familiesById = new Map(data.families.map((f) => [f.id, f]));
+
+function familyVariantsFor(familyId) {
+  return data.questions.filter((q) => q.family === familyId && q.active).map((q) => q.id);
+}
+
 // Mirrors app/src/content/resolve.ts's recallPoolFor(): the eligible
 // recall pool for a lesson is exactly the retrieval_refs reachable through
 // its prerequisites — never the lesson's own retrieval_refs, and never
-// anything not a prerequisite.
+// anything not a prerequisite — expanded (Phase 6C) to every active variant
+// of a retrieval_ref question's QuestionFamily, when it has one, so this
+// mirror stays in sync with the real family-aware recall pool rather than
+// testing a stale pre-Phase-6C model. A retrieval_ref question with no
+// family falls back to just itself (Phase 6B-compatible behavior).
 function recallPoolFor(lessonId) {
   const lesson = lessonsById.get(lessonId);
   if (!lesson) return [];
   const seen = new Set();
+  const poolIds = new Set();
   const pool = [];
+
+  function addQuestion(id) {
+    if (poolIds.has(id)) return;
+    poolIds.add(id);
+    pool.push(id);
+  }
+
   function visit(id) {
     if (seen.has(id)) return;
     seen.add(id);
     const l = lessonsById.get(id);
     if (!l) return;
-    for (const ref of l.retrieval_refs) pool.push(ref);
+    for (const ref of l.retrieval_refs) {
+      const q = questionsById.get(ref);
+      if (q?.family && familiesById.has(q.family)) {
+        for (const variantId of familyVariantsFor(q.family)) addQuestion(variantId);
+      } else {
+        addQuestion(ref);
+      }
+    }
     for (const prereq of l.prerequisites) if (lessonsById.has(prereq)) visit(prereq);
   }
   for (const prereq of lesson.prerequisites) if (lessonsById.has(prereq)) visit(prereq);
