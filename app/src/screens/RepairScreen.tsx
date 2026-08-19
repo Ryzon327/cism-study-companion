@@ -3,21 +3,24 @@ import { useState } from "preact/hooks";
 import { ProgressLine } from "../components/ProgressLine/ProgressLine";
 import { AnswerOption } from "../components/AnswerOption/AnswerOption";
 import { Button } from "../components/Button/Button";
-import { repairCheck } from "../data/fixtures";
+import type { AnswerOptionFixture, RepairCheckFixture } from "../types/content";
 import "./RepairScreen.css";
 
 interface RepairScreenProps {
+  repairCheck: RepairCheckFixture;
   mistakeContext?: string;
   onContinue: () => void;
 }
 
 /**
- * One controlled prototype repair example — not a general repair engine.
- * Names the specific reasoning slip, offers a short corrective
- * micro-question, then continues. See fixtures.ts's repairCheck.
+ * One controlled, targeted repair interaction — not a general repair
+ * engine. Names the specific reasoning slip via `mistakeContext`, offers
+ * a short corrective micro-question, then continues. `repairCheck` is
+ * selected by the active content source based on which repair_target the
+ * learner's wrong answer actually triggered.
  */
-export function RepairScreen({ mistakeContext, onContinue }: RepairScreenProps): JSX.Element {
-  const [selected, setSelected] = useState<(typeof repairCheck.options)[number]["key"] | null>(null);
+export function RepairScreen({ repairCheck, mistakeContext, onContinue }: RepairScreenProps): JSX.Element {
+  const [selected, setSelected] = useState<AnswerOptionFixture["key"] | null>(null);
   const submitted = selected !== null;
 
   return (

@@ -4,15 +4,21 @@ import { ProgressLine } from "../components/ProgressLine/ProgressLine";
 import { Question } from "../components/Question/Question";
 import { ConfidenceControl, type Confidence } from "../components/ConfidenceControl/ConfidenceControl";
 import { Button } from "../components/Button/Button";
-import { applyQuestion } from "../data/fixtures";
-import type { AnswerOptionFixture } from "../types/content";
+import { applyQuestion as defaultQuestion } from "../data/fixtures";
+import type { AnswerOptionFixture, QuestionFixture } from "../types/content";
 import "./QuestionApplyScreen.css";
 
 interface QuestionApplyScreenProps {
+  question?: QuestionFixture;
+  meta?: string;
   onSubmit?: (selectedKey: AnswerOptionFixture["key"], confidence: Confidence) => void;
 }
 
-export function QuestionApplyScreen({ onSubmit }: QuestionApplyScreenProps = {}): JSX.Element {
+export function QuestionApplyScreen({
+  question = defaultQuestion,
+  meta = "Question 1 of 1 · Domain 2",
+  onSubmit
+}: QuestionApplyScreenProps = {}): JSX.Element {
   const [selected, setSelected] = useState<AnswerOptionFixture["key"] | null>(null);
   const [confidence, setConfidence] = useState<Confidence | null>(null);
 
@@ -23,11 +29,11 @@ export function QuestionApplyScreen({ onSubmit }: QuestionApplyScreenProps = {})
       </div>
 
       <Question
-        question={applyQuestion}
+        question={question}
         selectedKey={selected}
         submitted={false}
         onSelect={setSelected}
-        meta="Question 1 of 1 · Domain 2"
+        meta={meta}
       />
 
       <ConfidenceControl value={confidence} onChange={setConfidence} />

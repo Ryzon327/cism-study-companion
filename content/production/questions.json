@@ -1,0 +1,60 @@
+[
+  {
+    "id": "question.foundation.0001",
+    "domain": "domain.foundation",
+    "concepts": ["concept.foundation.qualifier-recognition"],
+    "patterns": [],
+    "qualifier": "qualifier.next",
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": null,
+    "prompt": "A risk has already been analyzed and evaluated against the organization's criteria. The stem then asks what should happen NEXT. What does the qualifier NEXT require you to identify?",
+    "options": [
+      { "key": "a", "text": "The immediate next action given where the process currently stands", "correct": true, "rationale": "NEXT asks for the immediate next action based on the current state described in the stem — not the ultimate goal, not a prerequisite already behind you, and not simply \"a good idea in general.\"" },
+      { "key": "b", "text": "The single most important action overall, regardless of sequence", "correct": false, "rationale": "This describes MOST / MOST IMPORTANT, a ranking test — not NEXT, which is a sequencing test based on current state.", "repair_target": "repair.qualifier-error" },
+      { "key": "c", "text": "The first action that must happen before anything else in the process", "correct": false, "rationale": "This describes FIRST, a prerequisite test — but the stem already states earlier steps (analysis, evaluation) are complete, so an earlier-stage answer cannot be NEXT.", "repair_target": "repair.qualifier-error" },
+      { "key": "d", "text": "A generally good risk-management practice, even if it doesn't match where the stem says the process currently stands", "correct": false, "rationale": "A generically good practice that ignores where the process currently stands is exactly the common trap NEXT is designed to catch — correctness is judged against the stated current state, not the action's general merit.", "repair_target": "repair.qualifier-error" }
+    ],
+    "explanation": "NEXT questions are answered by precisely locating where the process currently stands, per the stem, and identifying the very next step from there — not the ultimate goal, not an earlier prerequisite, and not merely \"a good practice\" disconnected from that position.",
+    "recognition_clue": "The stem states what has already happened (analyzed, evaluated) before asking NEXT — that stated position is the anchor for the correct answer.",
+    "memory_rule": "NEXT = immediate next step from where the stem says you already are.",
+    "evidence_dimensions": ["evidence.qualifier"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.architecture.phase6-review-2026-08-19",
+    "note": "PHASE 6B CANDIDATE — authored by Claude Code, retrieval question for lesson.foundation.ask-qualifier and the Daily Study recall pool for lesson.d1.authority-follows-accountability. Deliberately reuses the risk-flavored scenario shape from docs/learning/QUALIFIER-DECODER.md's own NEXT example without requiring canonical risk-lifecycle knowledge (Foundation has no lifecycle) — the question tests qualifier reasoning only, per evidence_dimensions. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d1.0002",
+    "domain": "domain.d1",
+    "concepts": ["concept.d1.authority-accountability"],
+    "patterns": ["pattern.p02", "pattern.p03"],
+    "qualifier": "qualifier.most",
+    "roles_mentioned": ["role.security-manager", "role.business-process-owner", "role.internal-audit"],
+    "primary_role": "role.business-process-owner",
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.business",
+    "prompt": "During a security assessment, the security manager determines that a business unit's use of a third-party service introduces a significant compliance exposure. The security manager documents the finding and recommends discontinuing use of the service until compensating controls are in place. Who is MOST appropriate to decide whether the business may continue using the service in the meantime?",
+    "options": [
+      { "key": "a", "text": "The accountable business/process owner for that business unit", "correct": true, "rationale": "The business/process owner is accountable for the business process and the consequences of decisions affecting it, including whether to accept continued exposure while compensating controls are implemented — the security manager identified and recommended, but does not hold that business decision authority." },
+      { "key": "b", "text": "The security manager, since they identified and best understand the exposure", "correct": false, "rationale": "Identifying and analyzing an issue is the security manager's role; deciding whether the business accepts the associated risk belongs to the accountable business authority, not the person who raised it.", "repair_target": "repair.authority-error" },
+      { "key": "c", "text": "Internal Audit, to independently verify the finding before any decision is made", "correct": false, "rationale": "Internal Audit provides independent assurance on whether controls are working as intended; it does not hold decision authority over whether to accept an identified business risk.", "repair_target": "repair.role-error" },
+      { "key": "d", "text": "Whichever executive is senior enough to override the business unit", "correct": false, "rationale": "Authority is scoped to accountability for the specific decision, not to seniority alone — a generic \"most senior person\" answer skips the actual accountable role.", "repair_target": "repair.authority-error" }
+    ],
+    "explanation": "The security manager's role here is assessment and recommendation; deciding whether the business accepts continued exposure belongs to the business/process owner accountable for that unit's outcomes — not the identifier, not an independent assurance function, and not a generic senior-authority answer.",
+    "recognition_clue": "The security manager \"documents\" and \"recommends\" — language that signals an advisory role, not decision authority.",
+    "memory_rule": "Security identifies and recommends; the accountable business owner decides.",
+    "evidence_dimensions": ["evidence.authority", "evidence.role"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.architecture.phase6-review-2026-08-19",
+    "note": "PHASE 6B CANDIDATE — authored by Claude Code, retrieval/apply question for lesson.d1.authority-follows-accountability. Deliberately numbered .0002 (not .0001) to avoid any collision with the illustrative question.d1.0001 in schema/example/questions.example.json, which tests a different concept (policy hierarchy) and remains test-only. Three wrong options carry three different repair targets (authority-error x2, role-error x1) per docs/data-model/REPAIR-VOCABULARY.md's per-option diagnosis requirement. Not yet human-reviewed or promoted."
+  }
+]

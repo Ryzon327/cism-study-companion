@@ -8,6 +8,7 @@
   "scripts": {
     "test": "node --test tests/",
     "test:data-integrity": "node --test tests/data-integrity/",
+    "test:content-production": "node --test tests/content-production/",
     "dev": "vite",
     "build": "npm run typecheck && vite build",
     "typecheck": "tsc --noEmit",

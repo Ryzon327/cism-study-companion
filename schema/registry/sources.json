@@ -21,6 +21,13 @@
     "verification_status": "prototype_derived"
   },
   {
+    "id": "source.architecture.phase6-review-2026-08-19",
+    "type": "approved_requirement",
+    "reference": "Phase 6A Architectural Discovery + Phase 6B Production Content Infrastructure review and approval, 2026-08-19",
+    "note": "Covers Claude Code's authorization to author CANDIDATE-status Foundation and early-Domain-1 production content (content/production/) per the approved production-content architecture. Does not itself approve or verify any specific entity's wording — each entity's own note field carries that distinction, and content_status: CANDIDATE means none of it may drive learner assessment until an explicit promotion decision.",
+    "verification_status": "architecturally_approved"
+  },
+  {
     "id": "source.supplemental.quantitative-risk-teaching",
     "type": "supplemental_teaching",
     "reference": "Domain 2 quantitative risk formulas (AV, EF, SLE, ARO, ALE)",

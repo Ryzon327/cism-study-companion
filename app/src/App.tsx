@@ -2,7 +2,7 @@ import type { JSX } from "preact";
 import { useState } from "preact/hooks";
 import { AppShell } from "./app-shell/AppShell";
 import type { ProductNavItem } from "./app-shell/ProductNav";
-import type { PrototypeStateItem } from "./app-shell/PrototypeSwitcher";
+import type { PrototypeStateItem, ContentSourceMode } from "./app-shell/PrototypeSwitcher";
 import { ThemeProvider } from "./state/ThemeContext";
 import { HomeScreen } from "./screens/HomeScreen";
 import { DailyStudyLearnScreen } from "./screens/DailyStudyLearnScreen";
@@ -12,6 +12,9 @@ import { CompletionScreen } from "./screens/CompletionScreen";
 import { PracticeExamScreen } from "./screens/PracticeExamScreen";
 import { ReviewCenterScreen } from "./screens/ReviewCenterScreen";
 import { DailyStudySession } from "./session/DailyStudySession";
+import type { DailyStudyContentSource } from "./session/contentSource";
+import { prototypeContentSource } from "./data/prototypeContentSource";
+import { productionContentSource } from "./content/productionContentSource";
 import { feedbackCorrect, feedbackIncorrect } from "./data/fixtures";
 
 // The learner's real navigation: three destinations, matching the intended
@@ -79,12 +82,16 @@ function sectionForScreen(id: string): string {
   return "daily-study";
 }
 
-function renderScreen(id: string, onNavigate: (id: string) => void): JSX.Element {
+function renderScreen(
+  id: string,
+  onNavigate: (id: string) => void,
+  contentSource: DailyStudyContentSource
+): JSX.Element {
   switch (id) {
     case "home":
       return <HomeScreen onNavigate={onNavigate} />;
     case "daily-study-session":
-      return <DailyStudySession onDone={() => onNavigate("home")} />;
+      return <DailyStudySession contentSource={contentSource} onDone={() => onNavigate("home")} />;
     case "daily-study-learn":
       return <DailyStudyLearnScreen />;
     case "question-apply":
@@ -106,8 +113,10 @@ function renderScreen(id: string, onNavigate: (id: string) => void): JSX.Element
 
 export function App(): JSX.Element {
   const [activeId, setActiveId] = useState("home");
+  const [contentSourceMode, setContentSourceMode] = useState<ContentSourceMode>("prototype");
 
   const mode = SESSION_SCREENS.has(activeId) ? "session" : "full";
+  const contentSource = contentSourceMode === "production" ? productionContentSource : prototypeContentSource;
 
   function handleSelectProduct(sectionId: string) {
     setActiveId(PRODUCT_ENTRY_SCREEN[sectionId] ?? "home");
@@ -124,8 +133,10 @@ export function App(): JSX.Element {
         prototypeItems={PROTOTYPE_ITEMS}
         activePrototypeId={activeId}
         onSelectPrototype={setActiveId}
+        contentSourceMode={contentSourceMode}
+        onSelectContentSourceMode={setContentSourceMode}
       >
-        {renderScreen(activeId, setActiveId)}
+        {renderScreen(activeId, setActiveId, contentSource)}
       </AppShell>
     </ThemeProvider>
   );

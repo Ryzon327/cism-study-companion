@@ -29,7 +29,7 @@ export interface LessonFixture {
   conceptTitle: string;
   whyItMatters: string;
   context: string;
-  pattern: PatternFixture;
+  pattern?: PatternFixture;
   scenario: string;
   memoryRule: string;
 }
@@ -67,9 +67,9 @@ export interface FeedbackFixture {
   correct: boolean;
   why: string;
   whySelectedWasWeaker?: string;
-  pattern: PatternFixture;
-  qualifier: QualifierFixture;
-  role: RoleTagFixture;
+  pattern?: PatternFixture;
+  qualifier?: QualifierFixture;
+  role?: RoleTagFixture;
   lifecycle: LifecycleStageFixture[];
   memoryRule: string;
 }
@@ -78,4 +78,24 @@ export interface ExamQuestionState {
   index: number;
   answered: boolean;
   marked: boolean;
+}
+
+export interface RecallCheckFixture {
+  domainLabel: string;
+  prompt: string;
+  options: AnswerOptionFixture[];
+  reinforcement: string;
+}
+
+export interface RepairCheckFixture {
+  prompt: string;
+  options: AnswerOptionFixture[];
+  confirmation: string;
+}
+
+export interface CompletionSummaryFixture {
+  headline: string;
+  detail: string;
+  optionalLabel: string;
+  coveredItems: string[];
 }

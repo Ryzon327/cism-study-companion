@@ -1,0 +1,56 @@
+[
+  {
+    "id": "lesson.foundation.ask-qualifier",
+    "domain": "domain.foundation",
+    "concepts": ["concept.foundation.qualifier-recognition"],
+    "patterns": [],
+    "prerequisites": [],
+    "objective": "Identify a CISM stem's qualifier before doing anything else, because it decides what kind of answer the question wants.",
+    "context": "Every CISM scenario question uses one of a small set of qualifier words — FIRST, NEXT, BEST, MOST, PRIMARY — and each one asks for a genuinely different kind of answer: a prerequisite, an immediate next step, the most complete fit, the highest priority, or the fundamental purpose. Missing the qualifier is one of the most common ways a technically correct-sounding answer choice turns out to be the wrong one.",
+    "cism_perspective": "CISM does not ask \"what is technically true\" — it asks a specific question shape, and the qualifier names that shape. Two answer choices can both be true statements; only one answers the actual qualifier being asked.",
+    "recognition_clues": [
+      "The qualifier word sits close to the question mark, not buried in the scenario body.",
+      "Multiple answer choices all sound reasonable — that is a signal to re-read the qualifier, not to guess."
+    ],
+    "scenario": "A stem describes a risk that has already been analyzed and evaluated, then asks: \"What should happen NEXT?\" Several answer choices describe generally good risk-management activities. Only one of them is the immediate next step from where the stem says the process already stands.",
+    "traps": [
+      "Picking the answer that would eventually be correct, instead of the one that answers this specific qualifier.",
+      "Treating MOST and BEST as interchangeable — MOST ranks among true statements; BEST tests completeness of fit."
+    ],
+    "memory_rules": ["Read the qualifier before you read the options."],
+    "retrieval_refs": ["question.foundation.0001"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.architecture.phase6-review-2026-08-19",
+    "note": "PHASE 6B CANDIDATE — authored by Claude Code per approved Phase 6A/6B architecture, grounded in docs/learning/QUALIFIER-DECODER.md and docs/learning/FOUNDATION-BLUEPRINT.md (reasoning step 1, ASK). Deliberately teaches only qualifier recognition, not the full eight-step process, per the progressive-teaching instruction. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d1.authority-follows-accountability",
+    "domain": "domain.d1",
+    "concepts": ["concept.d1.authority-accountability"],
+    "patterns": ["pattern.p02", "pattern.p03"],
+    "prerequisites": ["lesson.foundation.ask-qualifier"],
+    "objective": "Recognize that in a CISM governance scenario, the person who identifies or recommends an issue is not automatically the person with authority to decide it.",
+    "context": "A security manager routinely assesses risk, recommends action, and coordinates a response — but recommending is not the same as deciding. Authority to approve, accept, or direct sits with whoever is accountable for the outcome: the Board or senior management for enterprise-level decisions, or a specific accountable owner for a scoped one. The security function's expertise earns it a seat in the conversation, not the final vote.",
+    "cism_perspective": "CISM questions frequently offer the security manager as a tempting answer for \"who decides\" or \"who approves,\" because the security manager is the character with the most visible expertise in the scenario. The correct governance answer follows accountability, not expertise — the exam is explicitly testing whether the learner mistakes one for the other.",
+    "recognition_clues": [
+      "The stem describes a security manager identifying, analyzing, or recommending something, then asks who approves or accepts it.",
+      "The scenario is a business-risk or governance-level decision, not a technical implementation detail."
+    ],
+    "scenario": "A security manager identifies a compliance gap and recommends a remediation approach. The stem asks who should approve accepting the business risk of not remediating immediately. The security manager analyzed and recommended; the accountable business or risk authority — not the security manager — approves.",
+    "traps": [
+      "Choosing the security manager because they are the most knowledgeable person in the scenario.",
+      "Assuming \"senior management\" is always the answer, rather than the specific role accountable for that particular decision."
+    ],
+    "memory_rules": ["Security identifies, analyzes, advises, and recommends; the accountable authority decides."],
+    "retrieval_refs": ["question.d1.0002"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.architecture.phase6-review-2026-08-19",
+    "note": "PHASE 6B CANDIDATE — authored by Claude Code per approved Phase 6A/6B architecture, grounded in docs/learning/PATTERN-LIBRARY.md (P02 — whose worked example this scenario directly follows — and P03), docs/learning/ROLE-AUTHORITY-MATRIX.md, and docs/learning/DOMAIN-1-BLUEPRINT.md. prerequisites intentionally names the Foundation lesson so Daily Study's taught-before-tested and recall-eligibility checks have a real two-lesson chain to enforce against. Not yet human-reviewed or promoted."
+  }
+]
