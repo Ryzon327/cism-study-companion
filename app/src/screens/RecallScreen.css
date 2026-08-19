@@ -1,0 +1,53 @@
+@import "../styles/session-header.css";
+
+.recall-screen {
+  max-width: var(--content-width-reading);
+  margin: 0 auto;
+}
+
+.recall-eyebrow {
+  font-size: var(--font-size-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--space-2);
+}
+
+.recall-domain {
+  font-size: var(--font-size-meta);
+  color: var(--text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.recall-prompt {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-h1);
+  line-height: var(--line-height-tight);
+  color: var(--text-primary);
+  margin-bottom: var(--space-6);
+}
+
+.recall-options {
+  display: grid;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.recall-reinforcement {
+  color: var(--text-secondary);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-reading);
+  padding: var(--space-1) 0 var(--space-1) var(--space-4);
+  border-left: 2px solid var(--accent);
+  margin-bottom: var(--space-7);
+}
+
+.recall-correction {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.recall-actions {
+  display: flex;
+}

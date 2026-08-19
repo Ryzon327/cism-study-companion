@@ -1,0 +1,182 @@
+/*
+ * Semantic design tokens — implements docs/design-system/DESIGN-TOKENS.md,
+ * TYPOGRAPHY.md, SPACING-AND-LAYOUT.md, and MOTION-STANDARD.md.
+ *
+ * Rule: no component file may use a raw hex/rgb color, a raw pixel spacing
+ * value, or a magic radius/shadow — everything routes through a token here.
+ * Light values live on :root; dark values are redefined once for OS
+ * preference and once for the explicit [data-theme="dark"] override, so a
+ * manual toggle always wins over prefers-color-scheme.
+ */
+
+:root {
+  /* ---- Background / surface hierarchy (3 levels only) ---- */
+  --background: #faf9f7;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-subtle: #f3f1ee;
+
+  /* ---- Text hierarchy ---- */
+  --text-primary: #1a1a18;
+  --text-secondary: #5c5850;
+  --text-muted: #6b665c;
+  --text-inverse: #ffffff;
+
+  /* ---- Borders ---- */
+  --border: #e4e0d8;
+  --border-strong: #c9c3b6;
+
+  /* ---- Accent ---- */
+  --accent: #3d5a4c;
+  --accent-hover: #32493d;
+  --accent-contrast: #ffffff;
+
+  /* ---- Semantic states (muted — never a full-panel wash) ---- */
+  --success: #3d6b4f;
+  --warning: #8a6a1f;
+  --danger: #a4443a;
+  --info: #3d5a7a;
+
+  /* ---- Interaction ---- */
+  --focus-ring: #3d5a4c;
+  --interactive-hover: rgb(0 0 0 / 0.04);
+  --interactive-active: rgb(0 0 0 / 0.08);
+  --interactive-disabled: rgb(0 0 0 / 0.32);
+
+  /* ---- Tag family (pattern/role/qualifier/lifecycle share one set) ---- */
+  --tag-bg: var(--surface-subtle);
+  --tag-border: var(--border);
+  --tag-text: var(--text-secondary);
+
+  /* ---- Elevation (two levels only) ---- */
+  --shadow-raised: 0 8px 24px rgb(0 0 0 / 0.10), 0 1px 2px rgb(0 0 0 / 0.06);
+
+  /* ---- Radii (one moderate radius, used everywhere) ---- */
+  --radius: 10px;
+  --radius-sm: 6px;
+  --radius-pill: 999px;
+
+  /* ---- Spacing scale (8px grid, 4px fine control) ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  /* ---- Content widths ---- */
+  --content-width-reading: 42rem;   /* ~65-75ch reading measure */
+  --content-width-wide: 56rem;
+  --content-width-workspace: 76rem; /* full desktop composition, e.g. Home */
+  --content-width-narrow: 26rem;    /* Completion, dialogs */
+  --topbar-height: 64px;
+
+  /* ---- Typography ----
+   * Sans for interface chrome and scanning UI; serif reserved for editorial
+   * moments (headlines, wordmark) to read as a considered study workspace
+   * rather than admin-dashboard chrome. Both are system stacks — no font
+   * files, no network dependency. */
+  --font-sans: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, system-ui, sans-serif;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", ui-serif, serif;
+  --font-size-hero: 2.75rem;
+  --font-size-display: 2.25rem;
+  --font-size-h1: 1.75rem;
+  --font-size-h2: 1.375rem;
+  --font-size-h3: 1.125rem;
+  --font-size-h4: 1rem;
+  --font-size-body: 1rem;
+  --font-size-body-reading: 1.0625rem;
+  --font-size-meta: 0.8125rem;
+  --font-size-eyebrow: 0.75rem;
+  --line-height-reading: 1.6;
+  --line-height-ui: 1.35;
+  --line-height-tight: 1.1;
+  --letter-spacing-eyebrow: 0.08em;
+
+  /* ---- Tonal wash (hero/emphasis backgrounds — never a full color block) ---- */
+  --surface-wash: color-mix(in srgb, var(--accent) 5%, var(--background));
+
+  /* ---- Motion (two durations only) ---- */
+  --motion-fast: 150ms;
+  --motion-base: 250ms;
+  --motion-ease: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ---- Minimum interactive target ---- */
+  --target-min: 44px;
+}
+
+/* Dark mode via OS preference — wins unless an explicit choice overrides it */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background: #17171a;
+    --surface: #1f1f23;
+    --surface-raised: #26262b;
+    --surface-subtle: #232327;
+
+    --text-primary: #f2f1ee;
+    --text-secondary: #b9b6ae;
+    --text-muted: #9a968e;
+    --text-inverse: #17171a;
+
+    --border: #34333a;
+    --border-strong: #46454d;
+
+    --accent: #7fae95;
+    --accent-hover: #96c1a9;
+    --accent-contrast: #0f1512;
+
+    --success: #6fa987;
+    --warning: #c9a24a;
+    --danger: #d97f74;
+    --info: #7fa0c9;
+
+    --focus-ring: #7fae95;
+    --interactive-hover: rgb(255 255 255 / 0.06);
+    --interactive-active: rgb(255 255 255 / 0.10);
+    --interactive-disabled: rgb(255 255 255 / 0.28);
+
+    --shadow-raised: 0 8px 24px rgb(0 0 0 / 0.45), 0 1px 2px rgb(0 0 0 / 0.3);
+  }
+}
+
+/* Explicit manual dark-mode choice — wins in both directions */
+:root[data-theme="dark"] {
+  --background: #17171a;
+  --surface: #1f1f23;
+  --surface-raised: #26262b;
+  --surface-subtle: #232327;
+
+  --text-primary: #f2f1ee;
+  --text-secondary: #b9b6ae;
+  --text-muted: #9a968e;
+  --text-inverse: #17171a;
+
+  --border: #34333a;
+  --border-strong: #46454d;
+
+  --accent: #7fae95;
+  --accent-hover: #96c1a9;
+  --accent-contrast: #0f1512;
+
+  --success: #6fa987;
+  --warning: #c9a24a;
+  --danger: #d97f74;
+  --info: #7fa0c9;
+
+  --focus-ring: #7fae95;
+  --interactive-hover: rgb(255 255 255 / 0.06);
+  --interactive-active: rgb(255 255 255 / 0.10);
+  --interactive-disabled: rgb(255 255 255 / 0.28);
+
+  --shadow-raised: 0 8px 24px rgb(0 0 0 / 0.45), 0 1px 2px rgb(0 0 0 / 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fast: 0ms;
+    --motion-base: 0ms;
+  }
+}

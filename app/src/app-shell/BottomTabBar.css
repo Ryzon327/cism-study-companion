@@ -1,0 +1,44 @@
+.bottom-tab-bar {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .bottom-tab-bar {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    z-index: 20;
+  }
+
+  .bottom-tab-bar-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+
+  .bottom-tab-bar-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-height: var(--target-min);
+    padding: var(--space-2) var(--space-1);
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.6875rem;
+    font-weight: 600;
+  }
+
+  .bottom-tab-bar-item-active {
+    color: var(--accent);
+  }
+}

@@ -1,0 +1,67 @@
+.topbar {
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.topbar-inner {
+  max-width: var(--content-width-workspace);
+  margin: 0 auto;
+  min-height: var(--topbar-height);
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: 0 var(--space-6);
+}
+
+.topbar-product-nav {
+  flex: 1;
+}
+
+.topbar-session {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.topbar-exit {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--target-min);
+  padding: var(--space-2) var(--space-2);
+  margin-left: calc(-1 * var(--space-2));
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: var(--font-size-meta);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+}
+
+.topbar-exit:hover {
+  color: var(--text-primary);
+  background: var(--interactive-hover);
+}
+
+.topbar-session-label {
+  font-size: var(--font-size-meta);
+  font-weight: 700;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.topbar-controls {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+@media (max-width: 767px) {
+  .topbar-inner {
+    padding: 0 var(--space-4);
+    gap: var(--space-3);
+  }
+}

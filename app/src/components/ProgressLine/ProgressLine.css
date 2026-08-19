@@ -1,0 +1,14 @@
+.progress-line {
+  height: 2px;
+  width: 100%;
+  background: var(--border);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.progress-line-fill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width var(--motion-base) var(--motion-ease);
+}

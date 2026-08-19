@@ -1,0 +1,36 @@
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--text-primary);
+}
+
+.wordmark-glyph {
+  flex: none;
+  color: var(--accent);
+}
+
+.wordmark-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.wordmark-kicker {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  color: var(--accent);
+}
+
+.wordmark-name {
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  color: var(--text-primary);
+}
+
+@media (max-width: 479px) {
+  .wordmark-text {
+    display: none;
+  }
+}

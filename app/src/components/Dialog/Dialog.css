@@ -1,0 +1,29 @@
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 0.32);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  z-index: 100;
+}
+
+.dialog-panel {
+  width: 100%;
+  max-width: 26rem;
+  background: var(--surface-raised);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-raised);
+  padding: var(--space-6);
+}
+
+.dialog-title {
+  font-size: var(--font-size-h3);
+  margin-bottom: var(--space-4);
+}
+
+.dialog-body {
+  color: var(--text-secondary);
+  line-height: var(--line-height-reading);
+}

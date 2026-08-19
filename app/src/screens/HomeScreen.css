@@ -1,0 +1,198 @@
+.home-screen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9);
+}
+
+/* ---- Hero: two-column composition so the wide desktop viewport is used
+   intentionally instead of leaving the right half empty. Reading text
+   itself never stretches full-width. ---- */
+.home-hero {
+  display: grid;
+  grid-template-columns: minmax(0, var(--content-width-reading)) minmax(14rem, 20rem);
+  gap: var(--space-8);
+  align-items: start;
+  padding-bottom: var(--space-8);
+  border-bottom: 1px solid var(--border);
+}
+
+.home-hero-eyebrow {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--text-secondary);
+  font-size: 1.0625rem;
+  margin-bottom: var(--space-4);
+}
+
+.home-domain-pill {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--tag-bg);
+  color: var(--accent);
+  font-size: var(--font-size-eyebrow);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: var(--space-4);
+}
+
+.home-hero-title {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-hero);
+  line-height: var(--line-height-tight);
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.home-hero-reason {
+  color: var(--text-secondary);
+  font-size: var(--font-size-body-reading);
+  line-height: var(--line-height-reading);
+  max-width: 34rem;
+  margin-bottom: var(--space-6);
+}
+
+.home-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.home-hero-meta {
+  color: var(--text-muted);
+  font-size: var(--font-size-meta);
+}
+
+.home-hero-snapshot {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-6);
+  border-radius: var(--radius);
+  background: var(--surface-wash);
+}
+
+.home-hero-snapshot-numeral {
+  font-family: var(--font-serif);
+  font-size: 3.5rem;
+  line-height: 1;
+  color: var(--accent);
+  margin-bottom: var(--space-2);
+}
+
+.home-hero-snapshot-position {
+  font-size: var(--font-size-meta);
+  font-weight: 700;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.home-hero-snapshot-rule {
+  display: block;
+  width: 2rem;
+  height: 2px;
+  background: var(--border-strong);
+  margin: var(--space-4) 0;
+}
+
+.home-hero-snapshot-detail {
+  color: var(--text-muted);
+  font-size: var(--font-size-meta);
+  line-height: var(--line-height-reading);
+}
+
+/* ---- Journey ---- */
+.home-section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.home-section-title {
+  font-size: var(--font-size-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.home-journey-sub {
+  font-size: var(--font-size-meta);
+  color: var(--text-muted);
+}
+
+/* ---- Explore & Practice: a real, intentional secondary destination —
+   not footer text — but visually lighter than the hero. ---- */
+.home-secondary {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+  padding-top: var(--space-7);
+  border-top: 1px solid var(--border);
+}
+
+.home-secondary-title {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-h3);
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.home-secondary-text {
+  color: var(--text-secondary);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-reading);
+  max-width: 34rem;
+}
+
+.home-secondary-link {
+  flex: none;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-size: var(--font-size-meta);
+  font-weight: 600;
+  padding: var(--space-3) var(--space-5);
+  min-height: var(--target-min);
+}
+
+.home-secondary-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+@media (max-width: 899px) {
+  .home-hero {
+    grid-template-columns: 1fr;
+  }
+  .home-hero-snapshot {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-5);
+    padding: var(--space-4) var(--space-5);
+  }
+  .home-hero-snapshot-rule {
+    display: none;
+  }
+}
+
+@media (max-width: 639px) {
+  .home-hero-title {
+    font-size: var(--font-size-display);
+  }
+  .home-hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+  .home-hero-snapshot {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+}

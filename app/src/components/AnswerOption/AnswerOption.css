@@ -1,0 +1,80 @@
+.answer-option {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  width: 100%;
+  min-height: var(--target-min);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  text-align: left;
+  transition: border-color var(--motion-fast) var(--motion-ease),
+              background-color var(--motion-fast) var(--motion-ease),
+              box-shadow var(--motion-fast) var(--motion-ease);
+}
+
+.answer-option:hover:not(:disabled) {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-raised);
+}
+
+.answer-option:disabled {
+  cursor: default;
+}
+
+.answer-option-letter {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-meta);
+  font-weight: 700;
+  background: var(--surface-subtle);
+  color: var(--text-secondary);
+  margin-top: 1px;
+}
+
+.answer-option-text {
+  flex: 1;
+  color: var(--text-primary);
+  font-size: var(--font-size-body-reading);
+  line-height: var(--line-height-reading);
+  padding-top: 4px;
+}
+
+.answer-option-selected {
+  border-color: var(--text-primary);
+  background: var(--surface-subtle);
+}
+
+.answer-option-selected .answer-option-letter {
+  background: var(--text-primary);
+  color: var(--text-inverse);
+}
+
+.answer-option-correct {
+  border-color: var(--success);
+  background: color-mix(in srgb, var(--success) 8%, var(--surface));
+}
+
+.answer-option-wrong {
+  border-color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 6%, var(--surface));
+}
+
+.answer-option-icon {
+  flex: none;
+  font-weight: 700;
+}
+
+.answer-option-icon-correct {
+  color: var(--success);
+}
+
+.answer-option-icon-wrong {
+  color: var(--danger);
+}

@@ -1,0 +1,54 @@
+@import "../styles/session-header.css";
+
+.daily-study-screen {
+  max-width: var(--content-width-reading);
+  margin: 0 auto;
+}
+
+.lesson {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.lesson-domain {
+  font-size: var(--font-size-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.lesson-title {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-display);
+  line-height: var(--line-height-tight);
+  color: var(--text-primary);
+  margin-top: calc(-1 * var(--space-3));
+}
+
+.lesson-why {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--text-secondary);
+  font-size: 1.1875rem;
+  line-height: var(--line-height-reading);
+  margin-top: calc(-1 * var(--space-3));
+}
+
+.lesson-body {
+  font-size: var(--font-size-body-reading);
+  line-height: var(--line-height-reading);
+  color: var(--text-primary);
+}
+
+.daily-study-actions {
+  margin-top: var(--space-7);
+}
+
+@media (max-width: 639px) {
+  .daily-study-actions {
+    position: sticky;
+    bottom: var(--space-4);
+  }
+}

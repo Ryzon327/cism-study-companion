@@ -1,0 +1,10 @@
+.qualifier-mark {
+  display: inline-block;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--tag-bg);
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  font-size: var(--font-size-meta);
+}

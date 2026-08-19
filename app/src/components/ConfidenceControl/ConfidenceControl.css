@@ -1,0 +1,42 @@
+.confidence-control {
+  border: none;
+  padding: var(--space-5) 0 0;
+  margin: var(--space-6) 0 0;
+  border-top: 1px solid var(--border);
+}
+
+.confidence-control legend {
+  font-size: var(--font-size-meta);
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: var(--space-2);
+  padding: 0;
+}
+
+.confidence-options {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.confidence-option {
+  min-height: 36px;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--font-size-meta);
+  font-weight: 500;
+}
+
+.confidence-option:hover {
+  background: var(--interactive-hover);
+  color: var(--text-secondary);
+}
+
+.confidence-option-selected {
+  border-color: var(--accent);
+  background: var(--tag-bg);
+  color: var(--accent);
+  font-weight: 600;
+}

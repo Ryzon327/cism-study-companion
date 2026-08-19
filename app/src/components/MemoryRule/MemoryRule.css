@@ -1,0 +1,29 @@
+.memory-rule {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+  padding: var(--space-1) 0 var(--space-1) var(--space-4);
+  border-left: 2px solid var(--accent);
+}
+
+.memory-rule-icon {
+  color: var(--accent);
+  font-size: 1.1rem;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.memory-rule-eyebrow {
+  font-size: var(--font-size-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--space-1);
+}
+
+.memory-rule-text {
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: var(--line-height-reading);
+}
