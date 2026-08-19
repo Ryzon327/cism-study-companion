@@ -91,9 +91,13 @@ test.describe("prototype loads and navigates", () => {
   test("theme toggle switches data-theme without an error", async ({ page }) => {
     await page.goto("/");
     const html = page.locator("html");
+    // ThemeContext writes data-theme from a passive useEffect, not
+    // synchronously on render — reading the attribute immediately after
+    // goto()/click() races that effect. Wait for it to actually appear,
+    // then wait for it to actually change, rather than reading once.
+    await expect(html).toHaveAttribute("data-theme", /^(light|dark)$/);
     const before = await html.getAttribute("data-theme");
     await page.getByRole("button", { name: /Switch to dark mode|Switch to light mode/ }).click();
-    const after = await html.getAttribute("data-theme");
-    expect(after).not.toBe(before);
+    await expect(html).not.toHaveAttribute("data-theme", before ?? "");
   });
 });
