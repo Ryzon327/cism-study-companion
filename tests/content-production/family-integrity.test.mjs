@@ -92,15 +92,32 @@ test("a variant's evidence_dimensions are a subset of its family's declared evid
   assert.equal(bad.length, 0, bad.join("\n"));
 });
 
-test("Phase 6C's two families each have exactly their expected 3 active variants", () => {
+test("every family has exactly its expected active variant count (Phase 6C + Phase 7B-1)", () => {
   const byFamily = new Map();
   for (const q of data.questions) {
     if (!q.family || !q.active) continue;
     if (!byFamily.has(q.family)) byFamily.set(q.family, []);
     byFamily.get(q.family).push(q.id);
   }
-  assert.equal(byFamily.get("family.foundation.qualifier-recognition")?.length, 3);
-  assert.equal(byFamily.get("family.d1.authority-accountability-decision")?.length, 3);
+  const expected = {
+    "family.foundation.qualifier-recognition": 3,
+    "family.d1.authority-accountability-decision": 3,
+    "family.d1.governance-vs-management": 3,
+    "family.d1.governance-layer-authority": 4,
+    "family.d1.data-ownership-accountability": 4
+  };
+  const bad = [];
+  for (const [familyId, count] of Object.entries(expected)) {
+    const actual = byFamily.get(familyId)?.length ?? 0;
+    if (actual !== count) bad.push(`${familyId}: expected ${count}, got ${actual}`);
+  }
+  assert.equal(bad.length, 0, bad.join("\n"));
+
+  // Also confirm no family in the loaded content is missing from this
+  // expectation table (a new family authored without updating this test
+  // would otherwise pass silently with zero variant-count coverage).
+  const untracked = [...byFamily.keys()].filter((id) => !(id in expected));
+  assert.equal(untracked.length, 0, `families with no expected-count coverage in this test: ${untracked.join(", ")}`);
 });
 
 // The reinforcement-ready floor is a REPORTED marker for CANDIDATE
@@ -139,4 +156,138 @@ test("reinforcement-ready floor: a CANDIDATE family below its floor is reported 
 test("no production family is CANONICAL yet — promotion remains a separate, explicit later decision", () => {
   const promoted = data.families.filter((f) => f.content_status === "CANONICAL").map((f) => f.id);
   assert.equal(promoted.length, 0, `unexpectedly CANONICAL: ${promoted.join(", ")}`);
+});
+
+// --- Phase 7B-1: U2 compatibility, prerequisite graph, recall expansion ---
+
+test("U2 (lesson.d1.authority-follows-accountability) approved content remains compatible: family and all 3 variants unchanged", () => {
+  const lesson = data.lessons.find((l) => l.id === "lesson.d1.authority-follows-accountability");
+  assert.ok(lesson, "lesson.d1.authority-follows-accountability must still exist");
+  assert.deepEqual(lesson.retrieval_refs, ["question.d1.0002"], "U2's retrieval_refs must be unchanged");
+  assert.equal(lesson.objective.includes("identifies or recommends"), true, "U2's objective wording must be unchanged");
+
+  const variantIds = data.questions
+    .filter((q) => q.family === "family.d1.authority-accountability-decision" && q.active)
+    .map((q) => q.id)
+    .sort();
+  assert.deepEqual(variantIds, ["question.d1.0002", "question.d1.0003", "question.d1.0004"]);
+});
+
+const lessonsById = new Map(data.lessons.map((l) => [l.id, l]));
+const questionsById = new Map(data.questions.map((q) => [q.id, q]));
+function familyVariantsFor(familyId) {
+  return data.questions.filter((q) => q.family === familyId && q.active).map((q) => q.id);
+}
+const familyOfLesson = new Map(
+  data.lessons.map((l) => [l.id, data.questions.find((q) => q.id === l.retrieval_refs[0])?.family])
+);
+
+function ancestorFamilies(lessonId, seen = new Set()) {
+  if (seen.has(lessonId)) return new Set();
+  seen.add(lessonId);
+  const lesson = lessonsById.get(lessonId);
+  if (!lesson) return new Set();
+  const families = new Set();
+  for (const prereqId of lesson.prerequisites) {
+    if (!lessonsById.has(prereqId)) continue;
+    const f = familyOfLesson.get(prereqId);
+    if (f) families.add(f);
+    for (const anc of ancestorFamilies(prereqId, seen)) families.add(anc);
+  }
+  return families;
+}
+
+test("Phase 7B-1 U1 -> U2 -> U3 -> U4 prerequisite chain is exactly as specified", () => {
+  assert.deepEqual(lessonsById.get("lesson.d1.governance-vs-management").prerequisites, ["lesson.foundation.ask-qualifier"]);
+  // lesson.d1.governance-vs-management (U1) is listed FIRST so recall
+  // resolves to U1's family, per the approved "U2: recall U1" progression —
+  // see the "recall selects the family the approved progression specifies"
+  // test below.
+  assert.deepEqual(lessonsById.get("lesson.d1.authority-follows-accountability").prerequisites, [
+    "lesson.d1.governance-vs-management",
+    "lesson.foundation.ask-qualifier"
+  ]);
+  assert.deepEqual(lessonsById.get("lesson.d1.governance-layer-authority").prerequisites, ["lesson.d1.authority-follows-accountability"]);
+  assert.deepEqual(lessonsById.get("lesson.d1.data-ownership-accountability").prerequisites, ["lesson.d1.governance-layer-authority"]);
+});
+
+test("recall expansion resolves correctly: each unit's cumulative-recall-eligible families grow through the chain", () => {
+  const u1Families = ancestorFamilies("lesson.d1.governance-vs-management");
+  const u2Families = ancestorFamilies("lesson.d1.authority-follows-accountability");
+  const u3Families = ancestorFamilies("lesson.d1.governance-layer-authority");
+  const u4Families = ancestorFamilies("lesson.d1.data-ownership-accountability");
+
+  // U1 has only Foundation as a prerequisite, which has no family-bearing
+  // retrieval question of its own family (Foundation's own family is
+  // reached the same way) — assert U1 reaches at least the Foundation family.
+  assert.ok(u1Families.has("family.foundation.qualifier-recognition"));
+
+  // U2 additively gained lesson.d1.governance-vs-management as a
+  // prerequisite in Phase 7B-1 — its recall pool must now also reach U1's
+  // family, not just Foundation's.
+  assert.ok(u2Families.has("family.foundation.qualifier-recognition"));
+  assert.ok(u2Families.has("family.d1.governance-vs-management"));
+
+  // U3: recall U2, and U1 surfaces through cumulative prerequisite
+  // traversal (via U2's own prerequisite chain) — per the approved
+  // Phase 7A/7B-1 recall progression.
+  assert.ok(u3Families.has("family.d1.authority-accountability-decision"));
+  assert.ok(u3Families.has("family.d1.governance-vs-management"));
+  assert.ok(u3Families.has("family.foundation.qualifier-recognition"));
+
+  // U4: recall U3, cumulative through the whole chain.
+  assert.ok(u4Families.has("family.d1.governance-layer-authority"));
+  assert.ok(u4Families.has("family.d1.authority-accountability-decision"));
+  assert.ok(u4Families.has("family.d1.governance-vs-management"));
+  assert.ok(u4Families.has("family.foundation.qualifier-recognition"));
+
+  // Growth is strictly cumulative — each unit reaches at least as many
+  // families as the one before it in the chain.
+  assert.ok(u2Families.size >= u1Families.size);
+  assert.ok(u3Families.size >= u2Families.size);
+  assert.ok(u4Families.size >= u3Families.size);
+});
+
+// Mirrors app/src/content/resolve.ts's recallFamilyIdsFor() ordering
+// exactly: Daily Study's Recall phase always shows the FIRST family in this
+// list (getRecall() uses familyIds[0]), so which family is first is not
+// cosmetic — it is which family the learner actually sees. Prerequisite
+// array ORDER, not just set membership, therefore matters and is tested
+// directly here.
+function orderedRecallFamilyIds(lessonId) {
+  const lesson = lessonsById.get(lessonId);
+  const seen = new Set();
+  const poolIds = new Set();
+  const familyOrder = [];
+
+  function addQuestion(q) {
+    if (poolIds.has(q.id)) return;
+    poolIds.add(q.id);
+    if (q.family && !familyOrder.includes(q.family)) familyOrder.push(q.family);
+  }
+
+  function visit(id) {
+    if (seen.has(id)) return;
+    seen.add(id);
+    const l = lessonsById.get(id);
+    if (!l) return;
+    for (const refId of l.retrieval_refs) {
+      const q = questionsById.get(refId);
+      if (!q) continue;
+      if (q.family && familyById.has(q.family)) {
+        for (const variantId of familyVariantsFor(q.family)) addQuestion(questionsById.get(variantId));
+      } else {
+        addQuestion(q);
+      }
+    }
+    for (const prereqId of l.prerequisites) if (lessonsById.has(prereqId)) visit(prereqId);
+  }
+  for (const prereqId of lesson.prerequisites) if (lessonsById.has(prereqId)) visit(prereqId);
+  return familyOrder;
+}
+
+test("recall selects the family the approved progression specifies: U2 recalls U1 (not Foundation) first, U3 recalls U2 first, U4 recalls U3 first", () => {
+  assert.equal(orderedRecallFamilyIds("lesson.d1.authority-follows-accountability")[0], "family.d1.governance-vs-management");
+  assert.equal(orderedRecallFamilyIds("lesson.d1.governance-layer-authority")[0], "family.d1.authority-accountability-decision");
+  assert.equal(orderedRecallFamilyIds("lesson.d1.data-ownership-accountability")[0], "family.d1.governance-layer-authority");
 });

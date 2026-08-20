@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import {
   resolveLesson,
   resolveQuestion,
@@ -11,13 +11,24 @@ import {
   requireProductionQuestion
 } from "../../../app/src/content/resolve";
 import { emptyHistory, recordExposure } from "../../../app/src/content/selection";
-import { productionContentSource } from "../../../app/src/content/productionContentSource";
+import {
+  productionContentSource,
+  setTodaysLessonIdForReview,
+  getTodaysLessonIdForReview
+} from "../../../app/src/content/productionContentSource";
 import { resetExposureHistoryForTests } from "../../../app/src/content/exposureStore";
 
 const TODAYS_LESSON_ID = "lesson.d1.authority-follows-accountability";
 const PREREQ_LESSON_ID = "lesson.foundation.ask-qualifier";
 const D1_FAMILY_ID = "family.d1.authority-accountability-decision";
 const FOUNDATION_FAMILY_ID = "family.foundation.qualifier-recognition";
+// Phase 7B-1
+const U1_LESSON_ID = "lesson.d1.governance-vs-management";
+const U3_LESSON_ID = "lesson.d1.governance-layer-authority";
+const U4_LESSON_ID = "lesson.d1.data-ownership-accountability";
+const U1_FAMILY_ID = "family.d1.governance-vs-management";
+const U3_FAMILY_ID = "family.d1.governance-layer-authority";
+const U4_FAMILY_ID = "family.d1.data-ownership-accountability";
 
 beforeEach(() => {
   resetExposureHistoryForTests();
@@ -92,10 +103,14 @@ describe("QuestionFamily resolution (Phase 6C)", () => {
     expect(anchorFamilyIdFor(TODAYS_LESSON_ID)).toBe(D1_FAMILY_ID);
   });
 
-  it("recall-eligibility: today's lesson's recall-eligible family is exactly its prerequisite's family, never its own", () => {
+  it("recall-eligibility: today's lesson's (U2) recall-eligible families are exactly its two prerequisites' families (U1 and Foundation), never its own", () => {
     const familyIds = recallFamilyIdsFor(TODAYS_LESSON_ID);
-    expect(familyIds).toEqual([FOUNDATION_FAMILY_ID]);
+    expect(familyIds.sort()).toEqual([FOUNDATION_FAMILY_ID, U1_FAMILY_ID].sort());
     expect(familyIds).not.toContain(D1_FAMILY_ID);
+  });
+
+  it("Recall selects U1's family first for U2, per the approved 'U2: recall U1' progression — not Foundation's", () => {
+    expect(recallFamilyIdsFor(TODAYS_LESSON_ID)[0]).toBe(U1_FAMILY_ID);
   });
 
   it("selectFamilyVariant rotates through unseen variants before repeating, given a shared history", () => {
@@ -108,6 +123,55 @@ describe("QuestionFamily resolution (Phase 6C)", () => {
       history = recordExposure(history, q.id, 1000 + i);
     }
     expect(seen.sort()).toEqual(["question.d1.0002", "question.d1.0003", "question.d1.0004"]);
+  });
+});
+
+describe("Phase 7B-1 — Domain 1 governance/authority slice (U1 -> U2 -> U3 -> U4)", () => {
+  it("resolves all four lessons in the sequence without error", () => {
+    expect(() => resolveLesson(U1_LESSON_ID)).not.toThrow();
+    expect(() => resolveLesson(TODAYS_LESSON_ID)).not.toThrow();
+    expect(() => resolveLesson(U3_LESSON_ID)).not.toThrow();
+    expect(() => resolveLesson(U4_LESSON_ID)).not.toThrow();
+  });
+
+  it("each new family has its approved variant count: U1=3, U3=4, U4=4", () => {
+    expect(familyVariantsFor(U1_FAMILY_ID)).toHaveLength(3);
+    expect(familyVariantsFor(U3_FAMILY_ID)).toHaveLength(4);
+    expect(familyVariantsFor(U4_FAMILY_ID)).toHaveLength(4);
+  });
+
+  it("each lesson's anchor family is its own unit's family, not an earlier or later one", () => {
+    expect(anchorFamilyIdFor(U1_LESSON_ID)).toBe(U1_FAMILY_ID);
+    expect(anchorFamilyIdFor(TODAYS_LESSON_ID)).toBe(D1_FAMILY_ID);
+    expect(anchorFamilyIdFor(U3_LESSON_ID)).toBe(U3_FAMILY_ID);
+    expect(anchorFamilyIdFor(U4_LESSON_ID)).toBe(U4_FAMILY_ID);
+  });
+
+  it("cumulative recall grows through the chain: U3 reaches U2 and (via traversal) U1; U4 reaches U3 and everything before it", () => {
+    const u3Recall = recallFamilyIdsFor(U3_LESSON_ID);
+    expect(u3Recall[0]).toBe(D1_FAMILY_ID);
+    expect(u3Recall).toContain(U1_FAMILY_ID);
+    expect(u3Recall).toContain(FOUNDATION_FAMILY_ID);
+    expect(u3Recall).not.toContain(U3_FAMILY_ID);
+
+    const u4Recall = recallFamilyIdsFor(U4_LESSON_ID);
+    expect(u4Recall[0]).toBe(U3_FAMILY_ID);
+    expect(u4Recall).toContain(D1_FAMILY_ID);
+    expect(u4Recall).toContain(U1_FAMILY_ID);
+    expect(u4Recall).toContain(FOUNDATION_FAMILY_ID);
+    expect(u4Recall).not.toContain(U4_FAMILY_ID);
+  });
+
+  it("Apply rotates through all 4 unseen U3 variants before repeating (deliberately above the 3-variant floor)", () => {
+    const seen = new Set<string>();
+    let history = emptyHistory();
+    for (let i = 0; i < 4; i++) {
+      const q = selectFamilyVariant(U3_FAMILY_ID, history, 2000 + i);
+      expect(seen.has(q.id)).toBe(false);
+      seen.add(q.id);
+      history = recordExposure(history, q.id, 2000 + i);
+    }
+    expect(seen.size).toBe(4);
   });
 });
 
@@ -171,5 +235,30 @@ describe("no future-domain leakage / taught-before-tested still holds with famil
   it("requireProductionLesson resolves both slice lessons without error", () => {
     expect(() => requireProductionLesson(TODAYS_LESSON_ID)).not.toThrow();
     expect(() => requireProductionLesson(PREREQ_LESSON_ID)).not.toThrow();
+  });
+});
+
+describe("Phase 7B-1 QA review tooling — setTodaysLessonIdForReview", () => {
+  const originalLessonId = getTodaysLessonIdForReview();
+
+  afterEach(() => {
+    setTodaysLessonIdForReview(originalLessonId);
+  });
+
+  it("defaults to lesson.d1.authority-follows-accountability (U2) — unchanged real-session behavior", () => {
+    expect(originalLessonId).toBe(TODAYS_LESSON_ID);
+  });
+
+  it("lets a QA reviewer preview each of U1/U2/U3/U4 as today's lesson, reflected immediately in getLesson/getApplyQuestion", () => {
+    setTodaysLessonIdForReview(U1_LESSON_ID);
+    expect(getTodaysLessonIdForReview()).toBe(U1_LESSON_ID);
+    expect(productionContentSource.getLesson().conceptTitle).toBeTruthy();
+    expect(productionContentSource.getApplyQuestion().question.id).toMatch(/^question\.d1\.000[5-7]$/);
+
+    setTodaysLessonIdForReview(U3_LESSON_ID);
+    expect(productionContentSource.getApplyQuestion().question.id).toMatch(/^question\.d1\.00(08|09|10|11)$/);
+
+    setTodaysLessonIdForReview(U4_LESSON_ID);
+    expect(productionContentSource.getApplyQuestion().question.id).toMatch(/^question\.d1\.00(12|13|14|15)$/);
   });
 });

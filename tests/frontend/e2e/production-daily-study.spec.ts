@@ -23,11 +23,11 @@ test.describe("Production Daily Study (Foundation + early Domain 1 candidate con
     await switchToProductionContent(page);
 
     await page.getByRole("button", { name: /Start Today's Study/ }).click();
-    await expect(page.getByText("Foundation")).toBeVisible();
-    await expect(page.getByRole("heading", { name: /qualifier NEXT require you to identify/ })).toBeVisible();
+    await expect(page.locator(".recall-domain")).toHaveText("Governance");
+    await expect(page.getByRole("heading", { name: /information security GOVERNANCE activity, rather than a management activity/ })).toBeVisible();
     await expect(page.getByRole("navigation", { name: "Main" })).toHaveCount(0);
 
-    await page.getByRole("button", { name: "The immediate next action given where the process currently stands" }).click();
+    await page.getByRole("button", { name: "The Board formally approves the enterprise's acceptable level of risk exposure for operating in the new market" }).click();
     await page.getByRole("button", { name: /Continue to today's lesson/ }).click();
 
     await expect(page.getByRole("heading", { name: "Authority follows accountability", level: 1 })).toBeVisible();
@@ -59,7 +59,7 @@ test.describe("Production Daily Study (Foundation + early Domain 1 candidate con
   test("incorrect path: feedback names the actual selected option and Repair targets the specific reasoning error", async ({ page }) => {
     await switchToProductionContent(page);
     await page.getByRole("button", { name: /Start Today's Study/ }).click();
-    await page.getByRole("button", { name: "The immediate next action given where the process currently stands" }).click();
+    await page.getByRole("button", { name: "The Board formally approves the enterprise's acceptable level of risk exposure for operating in the new market" }).click();
     await page.getByRole("button", { name: /Continue to today's lesson/ }).click();
     await page.getByRole("button", { name: "Apply it →" }).click();
 
@@ -87,7 +87,7 @@ test.describe("Production Daily Study (Foundation + early Domain 1 candidate con
   test("a wrong answer that triggers a different repair target shows different repair content", async ({ page }) => {
     await switchToProductionContent(page);
     await page.getByRole("button", { name: /Start Today's Study/ }).click();
-    await page.getByRole("button", { name: "The immediate next action given where the process currently stands" }).click();
+    await page.getByRole("button", { name: "The Board formally approves the enterprise's acceptable level of risk exposure for operating in the new market" }).click();
     await page.getByRole("button", { name: /Continue to today's lesson/ }).click();
     await page.getByRole("button", { name: "Apply it →" }).click();
 
@@ -103,11 +103,11 @@ test.describe("Production Daily Study (Foundation + early Domain 1 candidate con
   test("production Recall and Repair screens have no automatically-detectable accessibility violations (@a11y)", async ({ page }) => {
     await switchToProductionContent(page);
     await page.getByRole("button", { name: /Start Today's Study/ }).click();
-    await expect(page.getByRole("heading", { name: /qualifier NEXT require you to identify/ })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /information security GOVERNANCE activity, rather than a management activity/ })).toBeVisible();
     let results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag22aa"]).analyze();
     expect(results.violations, JSON.stringify(results.violations, null, 2)).toEqual([]);
 
-    await page.getByRole("button", { name: "The immediate next action given where the process currently stands" }).click();
+    await page.getByRole("button", { name: "The Board formally approves the enterprise's acceptable level of risk exposure for operating in the new market" }).click();
     await page.getByRole("button", { name: /Continue to today's lesson/ }).click();
     await page.getByRole("button", { name: "Apply it →" }).click();
     await page.getByRole("button", { name: "Whichever executive is senior enough to override the business unit" }).click();
@@ -179,7 +179,7 @@ test.describe("Production Daily Study (Foundation + early Domain 1 candidate con
   test("no localStorage is read or written during a full production session", async ({ page }) => {
     await switchToProductionContent(page);
     await page.getByRole("button", { name: /Start Today's Study/ }).click();
-    await page.getByRole("button", { name: "The immediate next action given where the process currently stands" }).click();
+    await page.getByRole("button", { name: "The Board formally approves the enterprise's acceptable level of risk exposure for operating in the new market" }).click();
     await page.getByRole("button", { name: /Continue to today's lesson/ }).click();
     await page.getByRole("button", { name: "Apply it →" }).click();
     await page.getByRole("button", { name: "The accountable business/process owner for that business unit" }).click();

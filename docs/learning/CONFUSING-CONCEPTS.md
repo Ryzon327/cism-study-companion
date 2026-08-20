@@ -75,6 +75,32 @@ is the step-by-step method. A guideline is recommended, non-mandatory
 practice. Policy is the least likely of the four to change simply because
 technology changes. **[CANDIDATE]**
 
+### Security Steering Committee vs. Board / Senior Management
+Both are governance-layer bodies, and both are frequently "involved" in the
+same decision — which is exactly why they're confused. The steering
+committee reviews, prioritizes, and advocates: a cross-functional forum
+that reconciles competing input and forwards a recommendation. The Board or
+senior management funds, approves, and accepts risk: the body actually
+accountable for the enterprise-level outcome. A stem describing the
+committee "endorsing" or "forwarding" a proposal is a hand-off signal — the
+decision is happening at the next level up, not at the committee. See
+[Role & Authority Matrix](ROLE-AUTHORITY-MATRIX.md) and
+[Domain 1 Blueprint](DOMAIN-1-BLUEPRINT.md). **[CANDIDATE]** — approved
+Phase 7A/7B-1, evidenced by the supplied Domain 1 source material's
+Organizational Structures, Roles, and Responsibilities sub-area.
+
+### Business Case vs. Strategy vs. Roadmap
+A strategy is the durable, high-level plan to achieve business objectives.
+A business case is the specific rationale and cost-benefit justification
+used to secure funding for an investment that advances the strategy. A
+roadmap is the tactical, resourced, timelined detail of how an approved
+initiative will actually be executed — developed *after* the strategy and
+business case exist, not before. Confusing any two of these three — for
+example, treating roadmap-level detail as if it were the strategy itself —
+is a common Domain 1 distractor pattern. **[CANDIDATE]** — approved
+Phase 7A as a future Domain 1 distinction (not yet taught; reserved for the
+Phase 7B slice that implements D1-U5/U6).
+
 ### Preventive vs. Detective vs. Corrective vs. Compensating Controls
 Preventive controls stop an event before it happens. Detective controls
 identify that an event occurred (or is occurring). Corrective controls

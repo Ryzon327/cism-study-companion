@@ -33,5 +33,12 @@
     "reference": "Domain 2 quantitative risk formulas (AV, EF, SLE, ARO, ALE)",
     "note": "Supplemental foundational teaching layered onto learner-supplied material, per docs/learning/DOMAIN-2-BLUEPRINT.md.",
     "verification_status": "architecturally_approved"
+  },
+  {
+    "id": "source.learner-supplied.domain-1-question-bank",
+    "type": "learner_supplied_source",
+    "reference": "tools/input/domain-1.txt — supplied CISM Domain 1 (Information Security Governance) question/source material, 201 questions across six task/knowledge sub-areas (Organizational Culture; Legal, Regulatory, and Contractual Requirements; Organizational Structures, Roles, and Responsibilities; Information Security Strategy Development; Information Governance Frameworks and Standards; Strategic Planning).",
+    "note": "Used as curriculum evidence per the Phase 7A architecture report and Phase 7B-1 approval: reveals tested concepts, reasoning patterns, vocabulary, traps, and role relationships for Domain 1 governance/authority content (U1, U3, U4). Production lessons/questions built from this source are original scenarios testing the generalized reasoning target the source questions evidence — not reproductions or paraphrases of any specific source question. content_status: CANDIDATE on every entity citing this source means none of it may drive learner assessment until an explicit promotion decision; per docs/data-model/PROVENANCE-MODEL.md, entities remain verification_status: unverified rather than source_verified, since no formal source-audit/promotion process has been run yet.",
+    "verification_status": "unverified"
   }
 ]

@@ -31,7 +31,7 @@
     "domain": "domain.d1",
     "concepts": ["concept.d1.authority-accountability"],
     "patterns": ["pattern.p02", "pattern.p03"],
-    "prerequisites": ["lesson.foundation.ask-qualifier"],
+    "prerequisites": ["lesson.d1.governance-vs-management", "lesson.foundation.ask-qualifier"],
     "objective": "Recognize that in a CISM governance scenario, the person who identifies or recommends an issue is not automatically the person with authority to decide it.",
     "context": "A security manager routinely assesses risk, recommends action, and coordinates a response — but recommending is not the same as deciding. Authority to approve, accept, or direct sits with whoever is accountable for the outcome: the Board or senior management for enterprise-level decisions, or a specific accountable owner for a scoped one. The security function's expertise earns it a seat in the conversation, not the final vote.",
     "cism_perspective": "CISM questions frequently offer the security manager as a tempting answer for \"who decides\" or \"who approves,\" because the security manager is the character with the most visible expertise in the scenario. The correct governance answer follows accountability, not expertise — the exam is explicitly testing whether the learner mistakes one for the other.",
@@ -49,8 +49,89 @@
     "content_status": "CANDIDATE",
     "verification_status": "unverified",
     "active": true,
-    "version": 1,
+    "version": 2,
     "source": "source.architecture.phase6-review-2026-08-19",
-    "note": "PHASE 6B CANDIDATE — authored by Claude Code per approved Phase 6A/6B architecture, grounded in docs/learning/PATTERN-LIBRARY.md (P02 — whose worked example this scenario directly follows — and P03), docs/learning/ROLE-AUTHORITY-MATRIX.md, and docs/learning/DOMAIN-1-BLUEPRINT.md. prerequisites intentionally names the Foundation lesson so Daily Study's taught-before-tested and recall-eligibility checks have a real two-lesson chain to enforce against. Not yet human-reviewed or promoted."
+    "note": "PHASE 6B/7B-1 CANDIDATE — authored by Claude Code per approved Phase 6A/6B architecture, grounded in docs/learning/PATTERN-LIBRARY.md (P02 — whose worked example this scenario directly follows — and P03), docs/learning/ROLE-AUTHORITY-MATRIX.md, and docs/learning/DOMAIN-1-BLUEPRINT.md. Integrated into the Phase 7B-1 Domain 1 sequence (U1 -> U2 -> U3 -> U4): prerequisites additively extended to include lesson.d1.governance-vs-management (U1) alongside the original Foundation prerequisite, listed FIRST so Recall (which surfaces the first recall-eligible family) resolves to U1's family per the approved 'U2: recall U1' progression; Foundation's family remains reachable through U1's own prerequisite chain, satisfying the same cumulative-recall requirement. version bumped from 1 to 2. Objective, context, scenario, traps, memory rule, retrieval_refs, family, and all six existing question variants are unchanged from Phase 6B/6C — this is additive integration, not a rewrite, per the explicit Phase 7B-1 instruction to preserve approved content. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d1.governance-vs-management",
+    "domain": "domain.d1",
+    "concepts": ["concept.d1.governance-vs-management"],
+    "patterns": ["pattern.p01"],
+    "prerequisites": ["lesson.foundation.ask-qualifier"],
+    "objective": "Distinguish governance (direction, accountability, oversight) from management (execution within that direction), and state what information security governance actually exists to do.",
+    "context": "Every enterprise activity can be described as either setting direction or carrying it out. Governance is the former: the Board and senior management deciding what the enterprise should achieve, how much risk it will accept, and holding the effort accountable over time. Management is the latter: executing within the direction governance has already set — configuring controls, assessing risk technically, assigning staff, choosing vendors.",
+    "cism_perspective": "CISM stems frequently describe both a governance-level decision and a management-level activity in the same scenario, then ask which one is governance. The test isn't which activity sounds more important — many management activities sound highly technical and significant. The test is which activity sets direction and accepts accountability versus which one executes within direction already set.",
+    "recognition_clues": [
+      "The stem describes someone approving, accepting, or directing at an enterprise level — that's governance.",
+      "The stem describes someone configuring, assessing, assigning, or selecting within an already-approved scope — that's management."
+    ],
+    "scenario": "A Board approves the enterprise's acceptable level of risk exposure for a new venture; the security team then configures technical controls to operate within that approved exposure. The Board's approval is governance; the team's configuration work is management.",
+    "traps": [
+      "Assuming the more technically detailed or effortful-sounding activity must be the important one, and therefore governance.",
+      "Treating a published policy as governance itself, rather than recognizing governance as the ongoing act of directing and holding accountable."
+    ],
+    "memory_rules": ["Governance sets the boundary; management works within it."],
+    "retrieval_refs": ["question.d1.0005"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-1-question-bank",
+    "note": "PHASE 7B-1 CANDIDATE — authored by Claude Code per approved Phase 7A architecture and Phase 7B-1 scope (D1-U1). Grounded in docs/learning/CONFUSING-CONCEPTS.md's Governance vs. Management pair, docs/learning/PATTERN-LIBRARY.md (P01), and the supplied Domain 1 source material's governance-definition questions. This is the new first Domain 1 lesson in the Phase 7B-1 sequence (U1 -> U2 -> U3 -> U4) — lesson.d1.authority-follows-accountability (U2) now names this lesson as an additional prerequisite so recall can reach back to it. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d1.governance-layer-authority",
+    "domain": "domain.d1",
+    "concepts": ["concept.d1.governance-layer-authority"],
+    "patterns": ["pattern.p02", "pattern.p03"],
+    "prerequisites": ["lesson.d1.authority-follows-accountability"],
+    "objective": "Reason correctly about who — Board/Senior Management, the Security Steering Committee, or the CISO — actually holds authority for a specific governance-layer decision, based on the verb the scenario asks about.",
+    "context": "Multiple governance-layer parties are often involved in the same decision: the CISO builds a case, the steering committee reviews and endorses it, and the Board approves funding. Each party performs a genuinely different verb, and being involved in a decision is not the same as holding authority over it.",
+    "cism_perspective": "CISM stems name two or three of these bodies in the same scenario specifically to test whether the learner can match the requested verb — fund, prioritize, accept, approve, advocate, develop, recommend — to the body that actually performs it, rather than picking whichever party feels most senior or most involved.",
+    "recognition_clues": [
+      "A steering committee that reviews, endorses, or prioritizes is functioning correctly — that is not a signal it holds final authority.",
+      "The Board or senior management is the body that funds, approves, or accepts risk at the enterprise level; the CISO develops, assesses, and recommends."
+    ],
+    "scenario": "A CISO builds a business case; the steering committee reviews and endorses it; the Board makes the final funding decision. Each step is a distinct, legitimate function — not a chain of equally-authoritative approvals.",
+    "traps": [
+      "Choosing the steering committee because it already reviewed and supported the proposal.",
+      "Choosing the CISO because they built the case and understand it best."
+    ],
+    "memory_rules": ["The CISO develops, the committee advocates, the Board decides."],
+    "retrieval_refs": ["question.d1.0008"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-1-question-bank",
+    "note": "PHASE 7B-1 CANDIDATE — authored by Claude Code per approved Phase 7A architecture and Phase 7B-1 scope (D1-U3). Grounded in docs/learning/ROLE-AUTHORITY-MATRIX.md and evidenced by the supplied Domain 1 source material's Organizational Structures, Roles, and Responsibilities sub-area — the largest single category in the source bank. Builds on lesson.d1.authority-follows-accountability (U2) as its prerequisite. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d1.data-ownership-accountability",
+    "domain": "domain.d1",
+    "concepts": ["concept.d1.data-ownership"],
+    "patterns": ["pattern.p02", "pattern.p03"],
+    "prerequisites": ["lesson.d1.governance-layer-authority"],
+    "objective": "Recognize that the business-side data/information owner — not IT, security, or a vendor/custodian — classifies information, defines protection requirements, and approves access, because they are accountable for that information's business value and impact.",
+    "context": "Information constantly passes through technical hands — IT stores it, security protects it, vendors host it — but none of those roles are accountable for what the information means to the business. That accountability sits with the business owner, and it is what actually determines classification, access, and protection requirements.",
+    "cism_perspective": "CISM stems routinely offer IT, security, or a vendor as the answer to a data-ownership question, because they are the most visibly close to the data technically. The correct answer follows business accountability for the data's value and impact, not technical proximity to where the data lives.",
+    "recognition_clues": [
+      "The stem describes someone storing, hosting, administering, or technically protecting data — that's custodial, not ownership.",
+      "The question asks who classifies, approves access, or sets protection requirements — that follows business accountability."
+    ],
+    "scenario": "An enterprise outsources database hosting to a cloud provider. The provider operates the infrastructure; the enterprise's own data owner still classifies the data and specifies what protection the provider must deliver — outsourcing changes who operates it, not who is accountable for it.",
+    "traps": [
+      "Assuming whoever technically stores or administers the data owns it.",
+      "Assuming accountability transfers to a third party once hosting is outsourced."
+    ],
+    "memory_rules": ["Outsourcing changes who operates it, never who's accountable for it."],
+    "retrieval_refs": ["question.d1.0012"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-1-question-bank",
+    "note": "PHASE 7B-1 CANDIDATE — authored by Claude Code per approved Phase 7A architecture and Phase 7B-1 scope (D1-U4). Grounded in docs/learning/ROLE-AUTHORITY-MATRIX.md's Data Owner row and evidenced by the supplied Domain 1 source material's dense data-ownership question cluster. Builds on lesson.d1.governance-layer-authority (U3) as its prerequisite — the final lesson in the Phase 7B-1 slice (U1 -> U2 -> U3 -> U4). Not yet human-reviewed or promoted."
   }
 ]
