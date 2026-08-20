@@ -133,5 +133,86 @@
     "version": 1,
     "source": "source.learner-supplied.domain-1-question-bank",
     "note": "PHASE 7B-1 CANDIDATE — authored by Claude Code per approved Phase 7A architecture and Phase 7B-1 scope (D1-U4). Grounded in docs/learning/ROLE-AUTHORITY-MATRIX.md's Data Owner row and evidenced by the supplied Domain 1 source material's dense data-ownership question cluster. Builds on lesson.d1.governance-layer-authority (U3) as its prerequisite — the final lesson in the Phase 7B-1 slice (U1 -> U2 -> U3 -> U4). Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d1.security-strategy-alignment",
+    "domain": "domain.d1",
+    "concepts": ["concept.d1.security-strategy-alignment"],
+    "patterns": ["pattern.p01"],
+    "prerequisites": ["lesson.d1.data-ownership-accountability"],
+    "objective": "Recognize that an information security strategy must be driven by and aligned with business objectives, priorities, and risk appetite — not by which security posture is technically strongest — and distinguish strategic direction from implementation detail.",
+    "context": "A security strategy is the plan for how security supports what the enterprise is actually trying to achieve. When an enterprise's business direction changes - a new market, a new product line, a shift in risk appetite - the security strategy must reflect that change, not a fixed idea of what good security looks like in isolation.",
+    "cism_perspective": "CISM stems often offer the most comprehensive or technically strongest security posture as a tempting answer, even when it doesn't match the business direction the stem actually describes. The correct answer traces back to the stated business objective or context, not to which option sounds most secure.",
+    "recognition_clues": [
+      "The stem describes a business change (expansion, new objective, shift in priorities) before asking about strategy.",
+      "An answer choice describes a maximally strong security posture without connecting it to what the stem says the business needs."
+    ],
+    "scenario": "An enterprise decides to expand into a market with a different risk profile. The security strategy must be reassessed against the new business context - not simply strengthened uniformly, and not left unchanged because more security is always assumed to be better.",
+    "traps": [
+      "Choosing the technically strongest or most comprehensive security option regardless of business fit.",
+      "Treating strategy and implementation detail as the same reasoning level - jumping to specific technical steps when the stem is asking about strategic direction."
+    ],
+    "memory_rules": ["Strategy follows business direction; it doesn't invent its own."],
+    "retrieval_refs": ["question.d1.0016"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-1-question-bank",
+    "note": "PHASE 7B-2 CANDIDATE — authored by Claude Code per approved Phase 7A architecture and Phase 7B-2 scope (D1-U5). Grounded in docs/learning/PATTERN-LIBRARY.md (P01) and evidenced by the supplied Domain 1 source material's Information Security Strategy Development sub-area. First lesson in the Phase 7B-2 sequence (U5 -> U6 -> U7), building on lesson.d1.data-ownership-accountability (U4). Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d1.business-justification-roadmap",
+    "domain": "domain.d1",
+    "concepts": ["concept.d1.business-justification-roadmap"],
+    "patterns": ["pattern.p01", "pattern.p08"],
+    "prerequisites": ["lesson.d1.security-strategy-alignment"],
+    "objective": "Distinguish strategy, business case, and roadmap by purpose, and recognize that a security initiative is justified by connecting it to business value, risk, cost, and priorities - not merely because it improves security.",
+    "context": "Strategy, business case, and roadmap answer three different questions. Strategy: where and why is security going, in support of the business? Business case: why does this specific initiative deserve investment right now? Roadmap: how is that direction sequenced into practical steps over time? Confusing any two of these is a common reasoning trap.",
+    "cism_perspective": "CISM stems often describe a security initiative that is clearly good for security and ask what's needed to gain approval, or ask which document or artifact matches a described activity. The correct answer connects the initiative to business value, risk, or cost - a plain assertion that something improves security is not, by itself, a business justification.",
+    "recognition_clues": [
+      "The stem asks what's needed to persuade management, secure funding, or gain approval - that's business-case reasoning.",
+      "The stem describes sequencing an already-approved direction into phases or a timeline - that's roadmap reasoning, not strategy or business case."
+    ],
+    "scenario": "A security manager wants funding for a new access-management platform. Simply stating it will improve security is not enough - the business case must connect the investment to business value, risk reduction, or cost, in a way senior management can evaluate.",
+    "traps": [
+      "Assuming 'it improves security' is sufficient justification on its own.",
+      "Treating a roadmap's tactical sequencing as if it were the strategy or the business case itself."
+    ],
+    "memory_rules": ["'It improves security' is not a business case - connect it to value, risk, or cost."],
+    "retrieval_refs": ["question.d1.0019"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-1-question-bank",
+    "note": "PHASE 7B-2 CANDIDATE — authored by Claude Code per approved Phase 7A architecture and Phase 7B-2 scope (D1-U6). Grounded in docs/learning/CONFUSING-CONCEPTS.md's Business Case vs. Strategy vs. Roadmap pair, approved Phase 7A and activated as a teaching distinction here for the first time, and evidenced by the supplied Domain 1 source material's Strategic Planning sub-area. Builds on lesson.d1.security-strategy-alignment (U5) as its prerequisite. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d1.governance-effectiveness",
+    "domain": "domain.d1",
+    "concepts": ["concept.d1.governance-effectiveness"],
+    "patterns": ["pattern.p07", "pattern.p14"],
+    "prerequisites": ["lesson.d1.business-justification-roadmap"],
+    "objective": "Recognize that frameworks, standards, and GRC mechanisms create structure and consistency but do not by themselves prove governance is effective - effectiveness requires measuring whether security activity produces the intended business/risk outcome, not merely how much activity occurred.",
+    "context": "A framework and a standard both exist to create consistency and structure for a security program - they are a means, not the goal itself. GRC integrates governance, risk, and compliance activities across the enterprise to reduce duplication and improve efficiency. None of these, on their own, tell leadership whether the security program is actually achieving its intended outcome - that requires measurement focused on results, not activity counts.",
+    "cism_perspective": "CISM stems often describe an enterprise that has adopted a framework, published standards, or reports a high volume of security activity, then ask whether this demonstrates effectiveness. The correct answer recognizes that structure and activity are necessary but not sufficient - effectiveness is demonstrated by outcome-focused measurement, not by the existence or volume of the machinery itself.",
+    "recognition_clues": [
+      "The stem describes adopting a framework, publishing standards, or a high count of security activities, then asks about effectiveness - that's an implementation-does-not-prove-effectiveness signal.",
+      "An answer choice reports how much was done rather than what outcome resulted - that's an activity-count trap, not a measurement of effectiveness."
+    ],
+    "scenario": "An enterprise adopts a recognized security framework and reports that it completed all planned control assessments this year. Leadership asks whether the security program is effective. Completing the assessments shows the program is operating - it does not, by itself, show that the intended risk or business outcomes were achieved.",
+    "traps": [
+      "Treating framework adoption or standard publication as proof the program works.",
+      "Measuring effectiveness by counting activities completed rather than the outcomes those activities were meant to produce."
+    ],
+    "memory_rules": ["Activity shows the program is running; outcomes show it's working."],
+    "retrieval_refs": ["question.d1.0022"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-1-question-bank",
+    "note": "PHASE 7B-2 CANDIDATE — authored by Claude Code per approved Phase 7A architecture and Phase 7B-2 scope (D1-U7), kept as one combined unit per the explicit Phase 7B-2 instruction not to split it preemptively. Grounded in docs/learning/PATTERN-LIBRARY.md (P07, P14) and evidenced by the supplied Domain 1 source material's Information Governance Frameworks and Standards sub-area. Deliberately not a framework-cataloging lesson. Builds on lesson.d1.business-justification-roadmap (U6) as its prerequisite - the final lesson in the Phase 7B-2 slice (U5 -> U6 -> U7). Not yet human-reviewed or promoted."
   }
 ]

@@ -4,6 +4,7 @@ import { ProgressLine } from "../components/ProgressLine/ProgressLine";
 import { AnswerOption } from "../components/AnswerOption/AnswerOption";
 import { Button } from "../components/Button/Button";
 import type { AnswerOptionFixture, RepairCheckFixture } from "../types/content";
+import { displayLetterForPosition } from "../content/answerOrder";
 import "./RepairScreen.css";
 
 interface RepairScreenProps {
@@ -37,10 +38,11 @@ export function RepairScreen({ repairCheck, mistakeContext, onContinue }: Repair
       <p class="repair-prompt">{repairCheck.prompt}</p>
 
       <div class="repair-options" role="group" aria-label="Repair answer options">
-        {repairCheck.options.map((option) => (
+        {repairCheck.options.map((option, index) => (
           <AnswerOption
             key={option.key}
             option={option}
+            displayLetter={displayLetterForPosition(index)}
             selected={selected === option.key}
             submitted={submitted}
             onSelect={() => setSelected(option.key)}
