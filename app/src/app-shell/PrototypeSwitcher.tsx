@@ -15,6 +15,9 @@ interface PrototypeSwitcherProps {
   onSelect: (id: string) => void;
   contentSourceMode: ContentSourceMode;
   onSelectContentSourceMode: (mode: ContentSourceMode) => void;
+  reviewLessons?: PrototypeStateItem[];
+  activeReviewLessonId?: string;
+  onSelectReviewLesson?: (id: string) => void;
 }
 
 /**
@@ -34,7 +37,10 @@ export function PrototypeSwitcher({
   activeId,
   onSelect,
   contentSourceMode,
-  onSelectContentSourceMode
+  onSelectContentSourceMode,
+  reviewLessons,
+  activeReviewLessonId,
+  onSelectReviewLesson
 }: PrototypeSwitcherProps): JSX.Element {
   const detailsRef = useRef<HTMLDetailsElement>(null);
 
@@ -65,6 +71,25 @@ export function PrototypeSwitcher({
             Production (candidate)
           </button>
         </div>
+
+        {contentSourceMode === "production" && reviewLessons && reviewLessons.length > 0 && (
+          <>
+            <p class="prototype-switcher-heading prototype-switcher-heading-divided">Today's lesson (QA — review only)</p>
+            <div role="group" aria-label="Preview a production lesson as today's lesson">
+              {reviewLessons.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  class={`prototype-switcher-item ${activeReviewLessonId === item.id ? "prototype-switcher-item-active" : ""}`}
+                  aria-current={activeReviewLessonId === item.id ? "true" : undefined}
+                  onClick={() => onSelectReviewLesson?.(item.id)}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
 
         <p class="prototype-switcher-heading prototype-switcher-heading-divided">Visual prototype gate states</p>
         <div role="group" aria-label="Jump to a visual prototype gate state">

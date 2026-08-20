@@ -14,7 +14,7 @@ import { ReviewCenterScreen } from "./screens/ReviewCenterScreen";
 import { DailyStudySession } from "./session/DailyStudySession";
 import type { DailyStudyContentSource } from "./session/contentSource";
 import { prototypeContentSource } from "./data/prototypeContentSource";
-import { productionContentSource } from "./content/productionContentSource";
+import { productionContentSource, setTodaysLessonIdForReview, getTodaysLessonIdForReview } from "./content/productionContentSource";
 import { feedbackCorrect, feedbackIncorrect } from "./data/fixtures";
 
 // The learner's real navigation: three destinations, matching the intended
@@ -50,6 +50,19 @@ const PROTOTYPE_ITEMS: PrototypeStateItem[] = [
   { id: "daily-study-completion", label: "Daily Study Completion" },
   { id: "practice-exam", label: "Practice Exam" },
   { id: "review-center", label: "Review Center" }
+];
+
+// Dev-only QA affordance (Phase 7B-1): lets a human reviewer preview any of
+// the Domain 1 governance/authority sequence's four lessons as "today's
+// lesson," one at a time, in the running production Daily Study session —
+// see PrototypeSwitcher's "Today's lesson (QA)" panel. Never learner-facing
+// navigation; scoped to exactly this slice's lessons, not every production
+// lesson, to keep the panel legible.
+const REVIEW_LESSON_ITEMS: PrototypeStateItem[] = [
+  { id: "lesson.d1.governance-vs-management", label: "D1-U1 — Governance vs. Management" },
+  { id: "lesson.d1.authority-follows-accountability", label: "D1-U2 — Authority Follows Accountability" },
+  { id: "lesson.d1.governance-layer-authority", label: "D1-U3 — Governance Layer Authority" },
+  { id: "lesson.d1.data-ownership-accountability", label: "D1-U4 — Data Ownership" }
 ];
 
 const SESSION_SCREENS = new Set([
@@ -114,12 +127,18 @@ function renderScreen(
 export function App(): JSX.Element {
   const [activeId, setActiveId] = useState("home");
   const [contentSourceMode, setContentSourceMode] = useState<ContentSourceMode>("prototype");
+  const [reviewLessonId, setReviewLessonId] = useState(getTodaysLessonIdForReview());
 
   const mode = SESSION_SCREENS.has(activeId) ? "session" : "full";
   const contentSource = contentSourceMode === "production" ? productionContentSource : prototypeContentSource;
 
   function handleSelectProduct(sectionId: string) {
     setActiveId(PRODUCT_ENTRY_SCREEN[sectionId] ?? "home");
+  }
+
+  function handleSelectReviewLesson(lessonId: string) {
+    setTodaysLessonIdForReview(lessonId);
+    setReviewLessonId(lessonId);
   }
 
   return (
@@ -135,6 +154,9 @@ export function App(): JSX.Element {
         onSelectPrototype={setActiveId}
         contentSourceMode={contentSourceMode}
         onSelectContentSourceMode={setContentSourceMode}
+        reviewLessons={REVIEW_LESSON_ITEMS}
+        activeReviewLessonId={reviewLessonId}
+        onSelectReviewLesson={handleSelectReviewLesson}
       >
         {renderScreen(activeId, setActiveId, contentSource)}
       </AppShell>

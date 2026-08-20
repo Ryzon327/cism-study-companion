@@ -16,6 +16,9 @@ interface AppShellProps {
   onSelectPrototype: (id: string) => void;
   contentSourceMode: ContentSourceMode;
   onSelectContentSourceMode: (mode: ContentSourceMode) => void;
+  reviewLessons?: PrototypeStateItem[];
+  activeReviewLessonId?: string;
+  onSelectReviewLesson?: (id: string) => void;
   children: ComponentChildren;
 }
 
@@ -30,6 +33,9 @@ export function AppShell({
   onSelectPrototype,
   contentSourceMode,
   onSelectContentSourceMode,
+  reviewLessons,
+  activeReviewLessonId,
+  onSelectReviewLesson,
   children
 }: AppShellProps): JSX.Element {
   return (
@@ -55,6 +61,9 @@ export function AppShell({
         onSelect={onSelectPrototype}
         contentSourceMode={contentSourceMode}
         onSelectContentSourceMode={onSelectContentSourceMode}
+        reviewLessons={reviewLessons}
+        activeReviewLessonId={activeReviewLessonId}
+        onSelectReviewLesson={onSelectReviewLesson}
       />
     </div>
   );

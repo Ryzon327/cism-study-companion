@@ -30,7 +30,32 @@ import { getExposureHistory, recordExposure } from "./exposureStore";
 // recallFamilyIdsFor() walks to find taught-before material — changing
 // this pointer to a lesson with different prerequisites automatically
 // changes what Recall is allowed to draw from, with no other code change.
-const TODAYS_LESSON_ID = "lesson.d1.authority-follows-accountability";
+//
+// Mutable (not a const) so the dev-only PrototypeSwitcher QA panel can let
+// a human reviewer preview any production lesson as "today's lesson" —
+// see setTodaysLessonIdForReview() below. This is still not a scheduler:
+// there is no calendar, no persistence, and the default below is what any
+// real learner session uses; only the QA panel can change it, and only for
+// the current in-memory session.
+const DEFAULT_TODAYS_LESSON_ID = "lesson.d1.authority-follows-accountability";
+let todaysLessonId = DEFAULT_TODAYS_LESSON_ID;
+
+/**
+ * QA-only. Lets the dev-only PrototypeSwitcher panel (never learner-facing
+ * navigation) preview any production lesson's full Recall -> Learn ->
+ * Apply -> Feedback -> Repair -> Completion flow as "today's lesson," so a
+ * human reviewer can walk a teaching sequence (e.g. the Phase 7B-1 D1-U1 ->
+ * U2 -> U3 -> U4 slice) one lesson at a time without a real scheduler or
+ * persistence. See docs/data-model/PHASE-6C-GATE-RECORD.md and the
+ * Phase 7B-1 implementation report for how this is used in manual review.
+ */
+export function setTodaysLessonIdForReview(lessonId: string): void {
+  todaysLessonId = lessonId;
+}
+
+export function getTodaysLessonIdForReview(): string {
+  return todaysLessonId;
+}
 
 // Small, targeted corrective content per diagnosed reasoning failure —
 // not a re-teach of the lesson. Lives here (not content/production/)
@@ -67,11 +92,11 @@ const FALLBACK_REPAIR: RepairCheckFixture = {
 
 export const productionContentSource: DailyStudyContentSource = {
   getRecall() {
-    const familyIds = recallFamilyIdsFor(TODAYS_LESSON_ID);
+    const familyIds = recallFamilyIdsFor(todaysLessonId);
     const familyId = familyIds[0];
     if (!familyId) {
       throw new Error(
-        `No recall-eligible family for ${TODAYS_LESSON_ID} — its lesson has no taught prerequisite whose retrieval question belongs to a family.`
+        `No recall-eligible family for ${todaysLessonId} — its lesson has no taught prerequisite whose retrieval question belongs to a family.`
       );
     }
     const recallQuestion = selectFamilyVariant(familyId, getExposureHistory(), Date.now());
@@ -87,12 +112,12 @@ export const productionContentSource: DailyStudyContentSource = {
   },
 
   getLesson() {
-    return resolveLesson(TODAYS_LESSON_ID);
+    return resolveLesson(todaysLessonId);
   },
 
   getApplyQuestion() {
-    const lesson = requireProductionLesson(TODAYS_LESSON_ID);
-    const familyId = anchorFamilyIdFor(TODAYS_LESSON_ID);
+    const lesson = requireProductionLesson(todaysLessonId);
+    const familyId = anchorFamilyIdFor(todaysLessonId);
 
     const question = familyId
       ? selectFamilyVariant(familyId, getExposureHistory(), Date.now())
@@ -117,8 +142,8 @@ export const productionContentSource: DailyStudyContentSource = {
   },
 
   getCompletion() {
-    const lesson = requireProductionLesson(TODAYS_LESSON_ID);
-    const familyIds = recallFamilyIdsFor(TODAYS_LESSON_ID);
+    const lesson = requireProductionLesson(todaysLessonId);
+    const familyIds = recallFamilyIdsFor(todaysLessonId);
     const recalledFamily = familyIds[0] ? production.families.get(familyIds[0]) : undefined;
     const concept = production.concepts.get(lesson.concepts[0] ?? "");
     const domain = registry.domains.get(lesson.domain);

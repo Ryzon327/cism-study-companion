@@ -48,7 +48,15 @@ Domain 1 leans most heavily on **Board / Senior Management**, **Security
 Steering Committee**, and **Information Security Manager / CISO** from the
 [Role & Authority Matrix](ROLE-AUTHORITY-MATRIX.md) — the governance layer
 of the organization, contrasted with the execution layer that Domain 3
-covers.
+covers. **Data Owner** and **Business / Process Owner** are also
+characteristic Domain 1 roles: Domain 1's information-asset-accountability
+reasoning (who classifies data, defines its protection requirements, and
+approves access) is a distinct, heavily-tested reasoning target from the
+governance-layer triad above, evidenced by the supplied Domain 1 source
+material's dense data-ownership question cluster. This is an elaboration
+of the existing canonical role model — approved during the Phase 7A/7B-1
+review — not the creation of any new role; all five roles are already
+canonical rows in the Role & Authority Matrix.
 
 ## Lesson design notes
 
