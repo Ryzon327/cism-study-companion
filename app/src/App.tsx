@@ -62,7 +62,10 @@ const REVIEW_LESSON_ITEMS: PrototypeStateItem[] = [
   { id: "lesson.d1.governance-vs-management", label: "D1-U1 — Governance vs. Management" },
   { id: "lesson.d1.authority-follows-accountability", label: "D1-U2 — Authority Follows Accountability" },
   { id: "lesson.d1.governance-layer-authority", label: "D1-U3 — Governance Layer Authority" },
-  { id: "lesson.d1.data-ownership-accountability", label: "D1-U4 — Data Ownership" }
+  { id: "lesson.d1.data-ownership-accountability", label: "D1-U4 — Data Ownership" },
+  { id: "lesson.d1.security-strategy-alignment", label: "D1-U5 — Security Strategy & Alignment" },
+  { id: "lesson.d1.business-justification-roadmap", label: "D1-U6 — Business Justification & Roadmaps" },
+  { id: "lesson.d1.governance-effectiveness", label: "D1-U7 — Frameworks, GRC & Effectiveness" }
 ];
 
 const SESSION_SCREENS = new Set([

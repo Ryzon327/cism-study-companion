@@ -24,6 +24,7 @@ import {
   requireProductionQuestion
 } from "./resolve";
 import { getExposureHistory, recordExposure } from "./exposureStore";
+import { orderOptionsForDisplay } from "./answerOrder";
 
 // The single candidate lesson this phase's Daily Study teaches. Its
 // `prerequisites` field (see content/production/lessons.json) is what
@@ -100,13 +101,20 @@ export const productionContentSource: DailyStudyContentSource = {
       );
     }
     const recallQuestion = selectFamilyVariant(familyId, getExposureHistory(), Date.now());
+    // Read the exposure count BEFORE recording this exposure — it seeds
+    // this exposure's answer-order permutation (see answerOrder.ts). Reuses
+    // the same per-question counter exposureStore already tracks for
+    // variant rotation; a separate, unrelated concern from which variant
+    // was selected above.
+    const priorExposures = getExposureHistory().get(recallQuestion.id)?.count ?? 0;
     recordExposure(recallQuestion.id);
 
+    const orderedOptions = orderOptionsForDisplay(recallQuestion.options, recallQuestion.id, priorExposures);
     const correctOption = recallQuestion.options.find((o) => o.correct);
     return {
       domainLabel: requireDisplayName(registry.domains, recallQuestion.domain),
       prompt: recallQuestion.prompt,
-      options: recallQuestion.options.map((o) => ({ key: o.key, text: o.text, correct: o.correct, rationale: o.rationale })),
+      options: orderedOptions.map((o) => ({ key: o.key, text: o.text, correct: o.correct, rationale: o.rationale })),
       reinforcement: correctOption?.rationale ?? recallQuestion.explanation
     };
   },
@@ -123,17 +131,21 @@ export const productionContentSource: DailyStudyContentSource = {
       ? selectFamilyVariant(familyId, getExposureHistory(), Date.now())
       : requireProductionQuestion(lesson.retrieval_refs[0] ?? "");
 
+    const priorExposures = getExposureHistory().get(question.id)?.count ?? 0;
     recordExposure(question.id);
-    return { question: resolveQuestion(question), meta: questionMeta(question, 1, 1) };
+    return { question: resolveQuestion(question, priorExposures), meta: questionMeta(question, 1, 1) };
   },
 
   buildFeedback(question: QuestionFixture, selectedKey: AnswerOptionFixture["key"]) {
-    // `question` is the exact variant DailyStudySession received from
-    // getApplyQuestion() and is carrying forward — re-resolve the raw
-    // entity by its id rather than re-deriving "today's" question, so
-    // feedback always matches whichever variant was actually shown.
+    // `question` is the exact resolved fixture DailyStudySession received
+    // from getApplyQuestion() and has been carrying forward — including
+    // its display order for this attempt. Reuse it verbatim (attempt
+    // stability: Feedback/Repair must show options in the identical
+    // position the learner just chose from), and separately fetch the raw
+    // entity for correctness/rationale/repair-target lookups by semantic
+    // key, which resolve correctly regardless of display order.
     const raw = requireProductionQuestion(question.id);
-    return resolveFeedback(raw, selectedKey);
+    return resolveFeedback(raw, question, selectedKey);
   },
 
   getRepairCheck(repairTargetId?: string) {

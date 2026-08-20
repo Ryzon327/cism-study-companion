@@ -8,6 +8,7 @@
  */
 import { registry, production, requireDisplayName, type ProductionQuestion, type ProductionLesson } from "./registry";
 import { selectVariant, type ExposureHistory } from "./selection";
+import { orderOptionsForDisplay } from "./answerOrder";
 import type {
   LessonFixture,
   QuestionFixture,
@@ -60,8 +61,21 @@ export function resolveLesson(lessonId: string): LessonFixture {
   };
 }
 
-export function resolveQuestion(question: ProductionQuestion): QuestionFixture {
-  const options: AnswerOptionFixture[] = question.options.map((opt) => ({
+/**
+ * `exposureCount` is how many times this exact question was already shown
+ * before this exposure (0 the first time) — it seeds a deterministic
+ * per-exposure display order (see answerOrder.ts) so the correct answer's
+ * on-screen position varies across repeated exposures instead of always
+ * sitting wherever it happens to be in the authored array. Semantic option
+ * identity (`key`, `correct`, rationale, repair target) is never affected
+ * by this reordering — only array/display position moves. Callers resolve
+ * a question ONCE per exposure and carry the result forward for the rest
+ * of that attempt (see productionContentSource.ts), so this reordering
+ * never changes mid-attempt.
+ */
+export function resolveQuestion(question: ProductionQuestion, exposureCount = 0): QuestionFixture {
+  const ordered = orderOptionsForDisplay(question.options, question.id, exposureCount);
+  const options: AnswerOptionFixture[] = ordered.map((opt) => ({
     key: opt.key,
     text: opt.text,
     correct: opt.correct,
@@ -87,28 +101,37 @@ export function questionMeta(question: ProductionQuestion, index: number, total:
  * can select option-specific repair content, per the "repair should target
  * the reasoning failure" requirement — the Phase 5B fixture path has no
  * equivalent because it only ever demonstrated one fixed wrong answer.
+ *
+ * `resolvedQuestion` must be the EXACT already-resolved (and therefore
+ * already display-ordered) QuestionFixture the learner was shown during
+ * Apply — reused here verbatim, not re-derived — so Feedback/Repair show
+ * the answer options in the identical position the learner just chose
+ * from (attempt stability). Correctness/rationale/repair-target lookups
+ * still resolve against `raw`'s options by semantic `key`, which is
+ * unaffected by display order either way.
  */
 export function resolveFeedback(
-  question: ProductionQuestion,
+  raw: ProductionQuestion,
+  resolvedQuestion: QuestionFixture,
   selectedKey: AnswerOptionFixture["key"]
 ): FeedbackFixture & { repairTargetId?: string } {
-  const selectedOption = question.options.find((o) => o.key === selectedKey);
-  if (!selectedOption) throw new Error(`Unresolvable option key "${selectedKey}" on ${question.id}`);
-  const correctOption = question.options.find((o) => o.correct);
-  if (!correctOption) throw new Error(`Question ${question.id} has no correct option`);
+  const selectedOption = raw.options.find((o) => o.key === selectedKey);
+  if (!selectedOption) throw new Error(`Unresolvable option key "${selectedKey}" on ${raw.id}`);
+  const correctOption = raw.options.find((o) => o.correct);
+  if (!correctOption) throw new Error(`Question ${raw.id} has no correct option`);
   const correct = selectedOption.correct;
 
   return {
-    question: resolveQuestion(question),
+    question: resolvedQuestion,
     selectedKey,
     correct,
     why: correctOption.rationale,
     whySelectedWasWeaker: correct ? undefined : selectedOption.rationale,
-    pattern: resolvePattern(question.patterns),
-    qualifier: resolveQualifier(question.qualifier),
-    role: resolveRole(question.primary_role),
+    pattern: resolvePattern(raw.patterns),
+    qualifier: resolveQualifier(raw.qualifier),
+    role: resolveRole(raw.primary_role),
     lifecycle: [],
-    memoryRule: question.memory_rule ?? correctOption.rationale,
+    memoryRule: raw.memory_rule ?? correctOption.rationale,
     repairTargetId: correct ? undefined : selectedOption.repair_target
   };
 }

@@ -4,6 +4,7 @@ import { ProgressLine } from "../components/ProgressLine/ProgressLine";
 import { AnswerOption } from "../components/AnswerOption/AnswerOption";
 import { Button } from "../components/Button/Button";
 import type { AnswerOptionFixture, RecallCheckFixture } from "../types/content";
+import { displayLetterForPosition } from "../content/answerOrder";
 import "./RecallScreen.css";
 
 interface RecallScreenProps {
@@ -35,10 +36,11 @@ export function RecallScreen({ recallCheck, onContinue }: RecallScreenProps): JS
       <h1 class="recall-prompt">{recallCheck.prompt}</h1>
 
       <div class="recall-options" role="group" aria-label="Recall answer options">
-        {recallCheck.options.map((option) => (
+        {recallCheck.options.map((option, index) => (
           <AnswerOption
             key={option.key}
             option={option}
+            displayLetter={displayLetterForPosition(index)}
             selected={selected === option.key}
             submitted={submitted}
             onSelect={() => setSelected(option.key)}

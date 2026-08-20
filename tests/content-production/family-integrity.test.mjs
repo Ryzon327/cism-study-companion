@@ -104,7 +104,10 @@ test("every family has exactly its expected active variant count (Phase 6C + Pha
     "family.d1.authority-accountability-decision": 3,
     "family.d1.governance-vs-management": 3,
     "family.d1.governance-layer-authority": 4,
-    "family.d1.data-ownership-accountability": 4
+    "family.d1.data-ownership-accountability": 4,
+    "family.d1.security-strategy-alignment": 3,
+    "family.d1.business-justification-roadmap": 3,
+    "family.d1.governance-effectiveness": 3
   };
   const bad = [];
   for (const [familyId, count] of Object.entries(expected)) {
@@ -290,4 +293,62 @@ test("recall selects the family the approved progression specifies: U2 recalls U
   assert.equal(orderedRecallFamilyIds("lesson.d1.authority-follows-accountability")[0], "family.d1.governance-vs-management");
   assert.equal(orderedRecallFamilyIds("lesson.d1.governance-layer-authority")[0], "family.d1.authority-accountability-decision");
   assert.equal(orderedRecallFamilyIds("lesson.d1.data-ownership-accountability")[0], "family.d1.governance-layer-authority");
+});
+
+// --- Phase 7B-2: U5/U6/U7, U1-U4 preservation ---
+
+test("Phase 7B-1 U1-U4 content remains fully preserved by Phase 7B-2 (lessons, families, variant counts unchanged)", () => {
+  assert.deepEqual(lessonsById.get("lesson.d1.governance-vs-management").prerequisites, ["lesson.foundation.ask-qualifier"]);
+  assert.deepEqual(lessonsById.get("lesson.d1.authority-follows-accountability").prerequisites, [
+    "lesson.d1.governance-vs-management",
+    "lesson.foundation.ask-qualifier"
+  ]);
+  assert.deepEqual(lessonsById.get("lesson.d1.governance-layer-authority").prerequisites, ["lesson.d1.authority-follows-accountability"]);
+  assert.deepEqual(lessonsById.get("lesson.d1.data-ownership-accountability").prerequisites, ["lesson.d1.governance-layer-authority"]);
+
+  assert.equal(familyVariantsFor("family.d1.governance-vs-management").length, 3);
+  assert.equal(familyVariantsFor("family.d1.authority-accountability-decision").length, 3);
+  assert.equal(familyVariantsFor("family.d1.governance-layer-authority").length, 4);
+  assert.equal(familyVariantsFor("family.d1.data-ownership-accountability").length, 4);
+});
+
+test("Phase 7B-2 U5 -> U6 -> U7 prerequisite chain extends the sequence correctly", () => {
+  assert.deepEqual(lessonsById.get("lesson.d1.security-strategy-alignment").prerequisites, ["lesson.d1.data-ownership-accountability"]);
+  assert.deepEqual(lessonsById.get("lesson.d1.business-justification-roadmap").prerequisites, ["lesson.d1.security-strategy-alignment"]);
+  assert.deepEqual(lessonsById.get("lesson.d1.governance-effectiveness").prerequisites, ["lesson.d1.business-justification-roadmap"]);
+});
+
+test("recall selects the family the approved Phase 7B-2 progression specifies: U5 recalls U4, U6 recalls U5, U7 recalls U6", () => {
+  assert.equal(orderedRecallFamilyIds("lesson.d1.security-strategy-alignment")[0], "family.d1.data-ownership-accountability");
+  assert.equal(orderedRecallFamilyIds("lesson.d1.business-justification-roadmap")[0], "family.d1.security-strategy-alignment");
+  assert.equal(orderedRecallFamilyIds("lesson.d1.governance-effectiveness")[0], "family.d1.business-justification-roadmap");
+});
+
+test("recall expansion is cumulative through the full U1-U7 chain (earlier prerequisites remain reachable, never lost)", () => {
+  const u7Families = ancestorFamilies("lesson.d1.governance-effectiveness");
+  for (const id of [
+    "family.d1.business-justification-roadmap",
+    "family.d1.security-strategy-alignment",
+    "family.d1.data-ownership-accountability",
+    "family.d1.governance-layer-authority",
+    "family.d1.authority-accountability-decision",
+    "family.d1.governance-vs-management",
+    "family.foundation.qualifier-recognition"
+  ]) {
+    assert.ok(u7Families.has(id), `U7's cumulative recall pool is missing ${id}`);
+  }
+  assert.ok(!u7Families.has("family.d1.governance-effectiveness"), "U7 must never recall its own family");
+});
+
+test("U7 remains ONE combined family, not split into U7A/U7B, per the explicit Phase 7B-2 instruction", () => {
+  const u7Concepts = data.concepts.filter((c) => c.id === "concept.d1.governance-effectiveness");
+  const u7Families2 = data.families.filter((f) => f.id.startsWith("family.d1.governance-effectiveness"));
+  assert.equal(u7Concepts.length, 1);
+  assert.equal(u7Families2.length, 1);
+});
+
+test("U7's family does not name a specific named framework as a canonical/required teaching vocabulary (not a framework-cataloging lesson)", () => {
+  const family = familyById.get("family.d1.governance-effectiveness");
+  const namedFrameworkPattern = /\b(ISO ?27001|COBIT|NIST)\b/i;
+  assert.equal(namedFrameworkPattern.test(family.teaching_objective + " " + family.invariant_reasoning), false);
 });

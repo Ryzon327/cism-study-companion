@@ -68,7 +68,13 @@ test.describe("Production Daily Study (Foundation + early Domain 1 candidate con
     await page.getByRole("button", { name: "Check answer" }).click();
 
     await expect(page.getByRole("heading", { name: "Repair the reasoning" })).toBeVisible();
-    await expect(page.getByText(/C\. Internal Audit, to independently verify/)).toBeVisible();
+    // The leading letter is no longer asserted here: answer position now
+    // varies per exposure (see app/src/content/answerOrder.ts), so the
+    // semantic option "Internal Audit..." may legitimately be labeled any
+    // of A-D depending on this question's exposure count. The text itself
+    // is still the reliable, order-independent signal that feedback named
+    // the actual selected option.
+    await expect(page.getByText(/Internal Audit, to independently verify/)).toBeVisible();
 
     await page.getByRole("button", { name: "Continue →" }).click();
     await expect(page.getByRole("heading", { name: "Let's correct that reasoning." })).toBeVisible();

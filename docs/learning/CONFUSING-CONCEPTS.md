@@ -98,8 +98,9 @@ initiative will actually be executed — developed *after* the strategy and
 business case exist, not before. Confusing any two of these three — for
 example, treating roadmap-level detail as if it were the strategy itself —
 is a common Domain 1 distractor pattern. **[CANDIDATE]** — approved
-Phase 7A as a future Domain 1 distinction (not yet taught; reserved for the
-Phase 7B slice that implements D1-U5/U6).
+Phase 7A, activated as a live teaching distinction in Phase 7B-2's D1-U6
+(`lesson.d1.business-justification-roadmap`,
+`family.d1.business-justification-roadmap`).
 
 ### Preventive vs. Detective vs. Corrective vs. Compensating Controls
 Preventive controls stop an event before it happens. Detective controls

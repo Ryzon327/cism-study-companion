@@ -4,11 +4,20 @@ import { RoleTag } from "../RoleTag/RoleTag";
 import { QualifierMark } from "../QualifierMark/QualifierMark";
 import { LifecycleTrack } from "../LifecycleTrack/LifecycleTrack";
 import { MemoryRule } from "../MemoryRule/MemoryRule";
+import { displayLetterForPosition } from "../../content/answerOrder";
 import "./FeedbackPanel.css";
 
 export function FeedbackPanel({ feedback }: { feedback: FeedbackFixture }): JSX.Element {
-  const selectedOption = feedback.question.options.find((o) => o.key === feedback.selectedKey);
-  const correctOption = feedback.question.options.find((o) => o.correct);
+  // `feedback.question.options` is the exact already-ordered array the
+  // learner saw during Apply — letters here must be derived from POSITION
+  // in this array, not from `.key` (semantic identity), or the letter
+  // printed in feedback could name a different on-screen slot than what
+  // the learner actually saw and chose from.
+  const options = feedback.question.options;
+  const selectedOption = options.find((o) => o.key === feedback.selectedKey);
+  const correctOption = options.find((o) => o.correct);
+  const selectedLetter = selectedOption ? displayLetterForPosition(options.indexOf(selectedOption)) : "";
+  const correctLetter = correctOption ? displayLetterForPosition(options.indexOf(correctOption)) : "";
 
   return (
     <section class="feedback-panel" aria-label="Answer feedback">
@@ -26,7 +35,7 @@ export function FeedbackPanel({ feedback }: { feedback: FeedbackFixture }): JSX.
           <span class="feedback-answer-label">Your answer</span>
           <span class={`feedback-answer-value ${feedback.correct ? "feedback-answer-correct" : "feedback-answer-wrong"}`}>
             <span aria-hidden="true">{feedback.correct ? "✓" : "✕"}</span>
-            {selectedOption?.key.toUpperCase()}. {selectedOption?.text}
+            {selectedLetter}. {selectedOption?.text}
           </span>
         </div>
         {!feedback.correct && (
@@ -34,7 +43,7 @@ export function FeedbackPanel({ feedback }: { feedback: FeedbackFixture }): JSX.
             <span class="feedback-answer-label">Correct answer</span>
             <span class="feedback-answer-value feedback-answer-correct">
               <span aria-hidden="true">✓</span>
-              {correctOption?.key.toUpperCase()}. {correctOption?.text}
+              {correctLetter}. {correctOption?.text}
             </span>
           </div>
         )}
@@ -47,7 +56,7 @@ export function FeedbackPanel({ feedback }: { feedback: FeedbackFixture }): JSX.
 
       {!feedback.correct && feedback.whySelectedWasWeaker && (
         <details class="feedback-details">
-          <summary>Why {selectedOption?.key.toUpperCase()} was weaker</summary>
+          <summary>Why {selectedLetter} was weaker</summary>
           <p>{feedback.whySelectedWasWeaker}</p>
         </details>
       )}

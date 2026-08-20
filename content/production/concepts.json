@@ -58,5 +58,41 @@
     "source": "source.learner-supplied.domain-1-question-bank",
     "version": 1,
     "note": "PHASE 7B-1 CANDIDATE — authored by Claude Code per approved Phase 7A architecture and Phase 7B-1 scope, grounded in docs/learning/ROLE-AUTHORITY-MATRIX.md's Data Owner row and evidenced by the supplied Domain 1 source material's dense data-ownership question cluster within Organizational Structures, Roles, and Responsibilities. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "concept.d1.security-strategy-alignment",
+    "display_name": "Security strategy follows business direction",
+    "home_domain": "domain.d1",
+    "plain": "An information security strategy exists to support the organization's actual objectives, priorities, and risk appetite — it is driven by business direction, not by which security posture is technically strongest in isolation. Strategic direction (what security needs to achieve) is distinct from implementation detail (the specific steps that follow).",
+    "related_patterns": ["pattern.p01"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "source": "source.learner-supplied.domain-1-question-bank",
+    "version": 1,
+    "note": "PHASE 7B-2 CANDIDATE — authored by Claude Code per approved Phase 7A architecture and Phase 7B-2 scope (D1-U5), grounded in docs/learning/PATTERN-LIBRARY.md (P01) and evidenced by the supplied Domain 1 source material's Information Security Strategy Development sub-area (the single largest category in the source bank). Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "concept.d1.business-justification-roadmap",
+    "display_name": "Business justification, business case, and roadmap",
+    "home_domain": "domain.d1",
+    "plain": "A security initiative is justified by connecting it to business value, risk, cost, and organizational priorities, not merely because it improves security. Strategy sets where and why security is going; a business case justifies why a specific initiative deserves support; a roadmap sequences strategic direction into practical steps over time.",
+    "related_patterns": ["pattern.p01", "pattern.p08"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "source": "source.learner-supplied.domain-1-question-bank",
+    "version": 1,
+    "note": "PHASE 7B-2 CANDIDATE — authored by Claude Code per approved Phase 7A architecture and Phase 7B-2 scope (D1-U6), grounded in docs/learning/CONFUSING-CONCEPTS.md's Business Case vs. Strategy vs. Roadmap pair (approved Phase 7A, activated here) and evidenced by the supplied Domain 1 source material's Strategic Planning sub-area. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "concept.d1.governance-effectiveness",
+    "display_name": "Governance effectiveness: structure and activity vs. measured outcome",
+    "home_domain": "domain.d1",
+    "plain": "Frameworks and standards create structure and consistency for a security program, and GRC integrates related governance, risk, and compliance activities to reduce duplication — but none of these prove governance is effective. Effectiveness is demonstrated by measuring whether security activity produces the intended business/risk outcome, not by how much activity occurred or which framework was adopted.",
+    "related_patterns": ["pattern.p07", "pattern.p14"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "source": "source.learner-supplied.domain-1-question-bank",
+    "version": 1,
+    "note": "PHASE 7B-2 CANDIDATE — authored by Claude Code per approved Phase 7A architecture and Phase 7B-2 scope (D1-U7), grounded in docs/learning/PATTERN-LIBRARY.md (P07, P14) and evidenced by the supplied Domain 1 source material's Information Governance Frameworks and Standards sub-area. Deliberately not a framework-cataloging concept — teaches why frameworks/GRC/measurement matter, not a list of named frameworks. Not yet human-reviewed or promoted."
   }
 ]
