@@ -107,7 +107,9 @@ test("every family has exactly its expected active variant count (Phase 6C + Pha
     "family.d1.data-ownership-accountability": 4,
     "family.d1.security-strategy-alignment": 3,
     "family.d1.business-justification-roadmap": 3,
-    "family.d1.governance-effectiveness": 3
+    "family.d1.governance-effectiveness": 3,
+    "family.d1.legal-regulatory-risk": 3,
+    "family.d1.organizational-culture-governance": 3
   };
   const bad = [];
   for (const [familyId, count] of Object.entries(expected)) {
@@ -351,4 +353,68 @@ test("U7's family does not name a specific named framework as a canonical/requir
   const family = familyById.get("family.d1.governance-effectiveness");
   const namedFrameworkPattern = /\b(ISO ?27001|COBIT|NIST)\b/i;
   assert.equal(namedFrameworkPattern.test(family.teaching_objective + " " + family.invariant_reasoning), false);
+});
+
+// --- Phase 7B-3: U8/U9, U1-U7 preservation, U8 non-adjacent recall-back ---
+
+test("Phase 7B-1/7B-2 U1-U7 content remains fully preserved by Phase 7B-3 (lessons, families, variant counts unchanged)", () => {
+  assert.deepEqual(lessonsById.get("lesson.d1.governance-vs-management").prerequisites, ["lesson.foundation.ask-qualifier"]);
+  assert.deepEqual(lessonsById.get("lesson.d1.authority-follows-accountability").prerequisites, [
+    "lesson.d1.governance-vs-management",
+    "lesson.foundation.ask-qualifier"
+  ]);
+  assert.deepEqual(lessonsById.get("lesson.d1.governance-layer-authority").prerequisites, ["lesson.d1.authority-follows-accountability"]);
+  assert.deepEqual(lessonsById.get("lesson.d1.data-ownership-accountability").prerequisites, ["lesson.d1.governance-layer-authority"]);
+  assert.deepEqual(lessonsById.get("lesson.d1.security-strategy-alignment").prerequisites, ["lesson.d1.data-ownership-accountability"]);
+  assert.deepEqual(lessonsById.get("lesson.d1.business-justification-roadmap").prerequisites, ["lesson.d1.security-strategy-alignment"]);
+  assert.deepEqual(lessonsById.get("lesson.d1.governance-effectiveness").prerequisites, ["lesson.d1.business-justification-roadmap"]);
+
+  assert.equal(familyVariantsFor("family.d1.governance-vs-management").length, 3);
+  assert.equal(familyVariantsFor("family.d1.authority-accountability-decision").length, 3);
+  assert.equal(familyVariantsFor("family.d1.governance-layer-authority").length, 4);
+  assert.equal(familyVariantsFor("family.d1.data-ownership-accountability").length, 4);
+  assert.equal(familyVariantsFor("family.d1.security-strategy-alignment").length, 3);
+  assert.equal(familyVariantsFor("family.d1.business-justification-roadmap").length, 3);
+  assert.equal(familyVariantsFor("family.d1.governance-effectiveness").length, 3);
+});
+
+test("Phase 7B-3 U8 -> U9 prerequisite chain is exactly as specified, with U8's deliberate non-adjacent U1 recall-back ordering", () => {
+  // U1 (lesson.d1.governance-vs-management) is listed FIRST, ahead of U7,
+  // so recall resolves to U1's family — the approved Phase 7B-3
+  // non-adjacent "U8 recalls U1" instruction — see the recall-order test
+  // below. U7 is still a prerequisite (second) so the full cumulative
+  // U2-U7 chain remains reachable exactly as for every other unit.
+  assert.deepEqual(lessonsById.get("lesson.d1.legal-regulatory-risk").prerequisites, [
+    "lesson.d1.governance-vs-management",
+    "lesson.d1.governance-effectiveness"
+  ]);
+  assert.deepEqual(lessonsById.get("lesson.d1.organizational-culture-governance").prerequisites, ["lesson.d1.legal-regulatory-risk"]);
+});
+
+test("recall selects the family the approved Phase 7B-3 progression specifies: U8 recalls U1 (non-adjacent, not U7), U9 recalls U8", () => {
+  assert.equal(orderedRecallFamilyIds("lesson.d1.legal-regulatory-risk")[0], "family.d1.governance-vs-management");
+  assert.equal(orderedRecallFamilyIds("lesson.d1.organizational-culture-governance")[0], "family.d1.legal-regulatory-risk");
+});
+
+test("recall expansion is cumulative through the full U1-U9 chain (earlier prerequisites remain reachable, never lost)", () => {
+  const u9Families = ancestorFamilies("lesson.d1.organizational-culture-governance");
+  for (const id of [
+    "family.d1.legal-regulatory-risk",
+    "family.d1.governance-effectiveness",
+    "family.d1.business-justification-roadmap",
+    "family.d1.security-strategy-alignment",
+    "family.d1.data-ownership-accountability",
+    "family.d1.governance-layer-authority",
+    "family.d1.authority-accountability-decision",
+    "family.d1.governance-vs-management",
+    "family.foundation.qualifier-recognition"
+  ]) {
+    assert.ok(u9Families.has(id), `U9's cumulative recall pool is missing ${id}`);
+  }
+  assert.ok(!u9Families.has("family.d1.organizational-culture-governance"), "U9 must never recall its own family");
+
+  const u8Families = ancestorFamilies("lesson.d1.legal-regulatory-risk");
+  assert.ok(u8Families.has("family.d1.governance-vs-management"), "U8 must reach U1's family (non-adjacent recall-back)");
+  assert.ok(u8Families.has("family.d1.governance-effectiveness"), "U8 must still cumulatively reach U7's family");
+  assert.ok(!u8Families.has("family.d1.legal-regulatory-risk"), "U8 must never recall its own family");
 });

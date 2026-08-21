@@ -2,6 +2,7 @@ import type {
   AnswerOptionFixture,
   CompletionSummaryFixture,
   FeedbackFixture,
+  HomeStateFixture,
   LessonFixture,
   QuestionFixture,
   RecallCheckFixture,
@@ -20,6 +21,13 @@ import type {
  * see App.tsx's dev-only content-source toggle in the Prototype panel.
  */
 export interface DailyStudyContentSource {
+  // Truthful Home/Journey presentation for whichever content this source
+  // is currently serving — see docs/regressions/REGISTRY.md and the Phase
+  // 7B-3 gate record's Home/Journey-mismatch entry. The Phase 5B prototype
+  // adapter returns its fixed, unchanged fixture; the production adapter
+  // derives this from the actual current QA lesson so Home can never claim
+  // a domain/lesson the app isn't actually presenting elsewhere.
+  getHomeState(): HomeStateFixture;
   getRecall(): RecallCheckFixture;
   getLesson(): LessonFixture;
   getApplyQuestion(): { question: QuestionFixture; meta?: string };

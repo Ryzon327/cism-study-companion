@@ -17,6 +17,20 @@ export interface JourneyStep {
   state: "completed" | "current" | "upcoming";
 }
 
+export interface TodayFocusFixture {
+  domainLabel: string;
+  domainNumeral: string;
+  domainPosition: string;
+  title: string;
+  reason: string;
+  estimatedMinutes: number;
+}
+
+export interface HomeStateFixture {
+  journeySteps: JourneyStep[];
+  todayFocus: TodayFocusFixture;
+}
+
 export interface PatternFixture {
   id: string;
   displayName: string;

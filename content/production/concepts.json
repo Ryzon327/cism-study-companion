@@ -94,5 +94,29 @@
     "source": "source.learner-supplied.domain-1-question-bank",
     "version": 1,
     "note": "PHASE 7B-2 CANDIDATE — authored by Claude Code per approved Phase 7A architecture and Phase 7B-2 scope (D1-U7), grounded in docs/learning/PATTERN-LIBRARY.md (P07, P14) and evidenced by the supplied Domain 1 source material's Information Governance Frameworks and Standards sub-area. Deliberately not a framework-cataloging concept — teaches why frameworks/GRC/measurement matter, not a list of named frameworks. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "concept.d1.legal-regulatory-risk",
+    "display_name": "Legal, regulatory, and contractual requirements as risk",
+    "home_domain": "domain.d1",
+    "plain": "A new legal, regulatory, or contractual requirement is a risk-management question, not an automatic trigger for immediate implementation: it must first be assessed for applicability, scope, and affected business processes before any treatment is decided, and the compliance obligation itself does not by itself pick the right role or the right action.",
+    "related_patterns": ["pattern.p02", "pattern.p03"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "source": "source.learner-supplied.domain-1-question-bank",
+    "version": 1,
+    "note": "PHASE 7B-3 CANDIDATE — authored by Claude Code per approved Phase 7A architecture and Phase 7B-3 scope (D1-U8), grounded in docs/learning/PATTERN-LIBRARY.md (P02, P03), docs/learning/ROLE-AUTHORITY-MATRIX.md's Legal/Compliance row, and schema/registry/qualifiers.json's own canonical FIRST example (a new regulation's FIRST action is determining affected processes, not selecting controls) — evidenced by the supplied Domain 1 source material's Legal and Regulatory Requirements sub-area. Deliberately does not encode 'the compliance-sounding option is always correct' — see the family's invariant_reasoning. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "concept.d1.organizational-culture-governance",
+    "display_name": "Organizational culture and governance effectiveness",
+    "home_domain": "domain.d1",
+    "plain": "Governance is not effective merely because leadership directs or publishes a policy — organizational culture (adoption, behavior, resistance to change, leadership tone and consistency) determines whether governance actually becomes real in practice. This extends pattern P07 (implementation does not prove effectiveness) to the cultural/behavioral layer: a mandate is necessary but not sufficient.",
+    "related_patterns": ["pattern.p07"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "source": "source.learner-supplied.domain-1-question-bank",
+    "version": 1,
+    "note": "PHASE 7B-3 CANDIDATE — authored by Claude Code per approved Phase 7A architecture and Phase 7B-3 scope (D1-U9, Domain 1 capstone), grounded in docs/learning/PATTERN-LIBRARY.md (P07) and evidenced by the supplied Domain 1 source material's Organizational Culture sub-area. Deliberately not a general HR/change-management concept — scoped to why culture affects whether governance is effective, per the explicit Phase 7B-3 instruction. Not yet human-reviewed or promoted."
   }
 ]
