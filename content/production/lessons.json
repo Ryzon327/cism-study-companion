@@ -214,5 +214,59 @@
     "version": 1,
     "source": "source.learner-supplied.domain-1-question-bank",
     "note": "PHASE 7B-2 CANDIDATE — authored by Claude Code per approved Phase 7A architecture and Phase 7B-2 scope (D1-U7), kept as one combined unit per the explicit Phase 7B-2 instruction not to split it preemptively. Grounded in docs/learning/PATTERN-LIBRARY.md (P07, P14) and evidenced by the supplied Domain 1 source material's Information Governance Frameworks and Standards sub-area. Deliberately not a framework-cataloging lesson. Builds on lesson.d1.business-justification-roadmap (U6) as its prerequisite - the final lesson in the Phase 7B-2 slice (U5 -> U6 -> U7). Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d1.legal-regulatory-risk",
+    "domain": "domain.d1",
+    "concepts": ["concept.d1.legal-regulatory-risk"],
+    "patterns": ["pattern.p02", "pattern.p03"],
+    "prerequisites": ["lesson.d1.governance-vs-management", "lesson.d1.governance-effectiveness"],
+    "objective": "Reason about a new legal, regulatory, or contractual requirement as a risk-management question - determining applicability, scope, and affected business processes before deciding on treatment - rather than jumping straight from 'a requirement exists' to 'implement controls now', and correctly match interpretation, assessment, and decision authority to the role that actually holds it.",
+    "context": "A new law, regulation, or contract clause is not itself an instruction to act. Before anything is implemented, someone has to work out whether it actually applies, what it covers, and which business processes it touches - and that assessment sits alongside, not instead of, the usual CISM authority questions: Legal/Compliance interprets the obligation, the security manager assesses its security impact and coordinates a response, and the accountable business or senior-management authority decides how the resulting risk is treated.",
+    "cism_perspective": "CISM stems built around a new legal, regulatory, or contractual requirement are still testing the same management reasoning as every other Domain 1 scenario - they just dress it in compliance language. The tempting wrong answer skips the assessment step and jumps straight to implementation, hands interpretation or decision authority to the wrong role, or treats 'it's required' as if that alone settles which option is correct.",
+    "recognition_clues": [
+      "The stem introduces a new law, regulation, or contract term and then asks what should happen FIRST, NEXT, or BEST - that's a signal to locate the assessment step, not the implementation step.",
+      "An answer choice jumps straight to implementing a specific control before the stem has established that the control's scope actually matches what's required."
+    ],
+    "scenario": "A new data-protection regulation is confirmed to apply to a service the enterprise recently launched. Before any control is implemented, the FIRST action is determining which business processes and data are actually within the regulation's scope - not selecting or deploying a specific technical control, and not assuming every system is now equally affected.",
+    "traps": [
+      "Treating 'a regulation now applies' as an instruction to immediately implement the strongest available controls everywhere, without first assessing actual scope.",
+      "Assuming a compliance-flavored answer choice must be correct simply because it mentions the regulation, even when it skips assessment, misassigns authority, or ignores business scope."
+    ],
+    "memory_rules": ["A new requirement is a risk to assess first, not an instruction to implement first."],
+    "retrieval_refs": ["question.d1.0025"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-1-question-bank",
+    "note": "PHASE 7B-3 CANDIDATE — authored by Claude Code per approved Phase 7A architecture and Phase 7B-3 scope (D1-U8). Grounded in docs/learning/PATTERN-LIBRARY.md (P02, P03), docs/learning/ROLE-AUTHORITY-MATRIX.md's Legal/Compliance row, and schema/registry/qualifiers.json's own canonical FIRST-qualifier example, evidenced by the supplied Domain 1 source material's Legal and Regulatory Requirements sub-area. Prerequisites deliberately list lesson.d1.governance-vs-management (U1) FIRST, ahead of lesson.d1.governance-effectiveness (U7) — this is the approved Phase 7B-3 non-adjacent recall-back instruction: Recall for U8 resolves to U1's family (governance vs. management), re-testing retention of the earliest Domain 1 reasoning after seven intervening units, rather than only ever recalling the immediately preceding unit. U7 is still listed as a prerequisite (second) so the full cumulative U2-U7 chain remains reachable exactly as it does for every other unit in this sequence. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d1.organizational-culture-governance",
+    "domain": "domain.d1",
+    "concepts": ["concept.d1.organizational-culture-governance"],
+    "patterns": ["pattern.p07"],
+    "prerequisites": ["lesson.d1.legal-regulatory-risk"],
+    "objective": "Recognize that governance is not effective merely because leadership directs or publishes a policy - organizational culture (adoption, behavior, resistance to change, and leadership tone/consistency) determines whether governance actually becomes real in practice - and correctly identify what a described adoption or culture problem actually calls for, rather than reaching for a fixed reflex answer.",
+    "context": "A policy that leadership has mandated and published still has to survive contact with how people actually behave. Culture shapes whether staff follow it, escalate concerns, accept security responsibility, and treat risk the way leadership intends. When a scenario explicitly describes resistance, inconsistent executive behavior, or an adoption gap, the fact that a mandate already exists does not, by itself, answer what should happen next.",
+    "cism_perspective": "CISM stems in this space often describe a governance mechanism that is technically in place - a policy is published, training was delivered - and then state a specific cultural or behavioral problem anyway. The correct answer responds to that specific stated problem. 'Management already mandated it' and 'send more training' are both real, sometimes-correct answers - the trap is treating either one as a universal default rather than reading what the scenario says is actually broken.",
+    "recognition_clues": [
+      "The stem describes a policy or mandate that already exists, then separately states a concrete adoption/behavior/resistance problem - the mandate's existence is not what's being asked about.",
+      "An answer choice restates that leadership already directed the outcome, or proposes a generic action (more training, more discipline) that doesn't address the specific gap the stem just described."
+    ],
+    "scenario": "Executives publicly endorse a security policy but are repeatedly observed bypassing it themselves; staff-wide compliance has grown inconsistent as a result. The gap here is leadership tone and consistency, not the wording of the policy or the security team's technical controls - the correct response addresses the behavior driving the culture, not the document or the technology.",
+    "traps": [
+      "Concluding that no further action is needed because senior management already mandated the policy, when the stem describes an adoption or behavior problem the mandate alone hasn't solved.",
+      "Reaching for a purely technical or disciplinary fix to a problem the stem has framed as cultural or behavioral - or repeating an already-delivered generic action (like identical training) without addressing why it didn't work the first time."
+    ],
+    "memory_rules": ["A mandate is necessary but not sufficient - culture decides whether governance is real in practice."],
+    "retrieval_refs": ["question.d1.0028"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-1-question-bank",
+    "note": "PHASE 7B-3 CANDIDATE — authored by Claude Code per approved Phase 7A architecture and Phase 7B-3 scope (D1-U9, Domain 1 capstone). Grounded in docs/learning/PATTERN-LIBRARY.md (P07 — implementation does not prove effectiveness, extended here to the cultural/behavioral layer) and evidenced by the supplied Domain 1 source material's Organizational Culture sub-area. Builds on lesson.d1.legal-regulatory-risk (U8) as its single prerequisite, per the explicit Phase 7B-3 instruction not to build a special one-off recall selector for U9 - the existing cumulative-recall architecture already surfaces the full U1-U8 chain through U8's own prerequisite links. This completes the nine-unit Domain 1 curriculum architecture approved in Phase 7A; it does not itself constitute a Domain 1 completion gate (see the separately deferred Domain 1 end-to-end validation gate). Not yet human-reviewed or promoted."
   }
 ]

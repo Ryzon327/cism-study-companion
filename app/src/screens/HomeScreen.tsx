@@ -1,14 +1,16 @@
 import type { JSX } from "preact";
 import { Button } from "../components/Button/Button";
 import { Journey } from "../components/Journey/Journey";
-import { journeySteps, todayFocus } from "../data/fixtures";
+import type { DailyStudyContentSource } from "../session/contentSource";
 import "./HomeScreen.css";
 
 interface HomeScreenProps {
   onNavigate: (id: string) => void;
+  contentSource: DailyStudyContentSource;
 }
 
-export function HomeScreen({ onNavigate }: HomeScreenProps): JSX.Element {
+export function HomeScreen({ onNavigate, contentSource }: HomeScreenProps): JSX.Element {
+  const { journeySteps, todayFocus } = contentSource.getHomeState();
   return (
     <div class="screen home-screen">
       <h1 class="visually-hidden">Today</h1>

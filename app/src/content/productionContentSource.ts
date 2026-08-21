@@ -10,7 +10,7 @@
  * docs/data-model/REPETITION-AND-RECALL-MODEL.md.
  */
 import type { DailyStudyContentSource } from "../session/contentSource";
-import type { AnswerOptionFixture, QuestionFixture, RepairCheckFixture } from "../types/content";
+import type { AnswerOptionFixture, JourneyStep, QuestionFixture, RepairCheckFixture } from "../types/content";
 import { registry, production, requireDisplayName } from "./registry";
 import {
   resolveLesson,
@@ -91,7 +91,76 @@ const FALLBACK_REPAIR: RepairCheckFixture = {
   confirmation: "Carry that reasoning forward to the next scenario that looks like this one."
 };
 
+// Same six-step scaffold app/src/data/fixtures.ts's approved Phase 5B
+// Journey already uses (id/label unchanged) — only `state` differs here,
+// derived generically from ORDER, not a special case per domain. A stage's
+// state is relative to the current QA lesson's domain position in this
+// fixed sequence: stages before it are "completed" (a truthful statement
+// about ordered CURRICULUM POSITION — Domain 1 content is sequenced after
+// Foundation, so if Domain 1 is current, Foundation's position has
+// necessarily already passed), the stage matching the current domain is
+// "current", and every later stage is "upcoming". This is still not a
+// real persisted learner-progress/mastery model (see the Phase 7B-3 gate
+// record's Home/Journey-mismatch entry) — it never claims a real learner
+// actually mastered anything, only where the app's current QA lesson sits
+// in the fixed curriculum sequence. Extends to any future domain with no
+// per-domain conditional: see getHomeState()'s ordered comparison below.
+const JOURNEY_STEP_DEFS: { id: string; label: string; domainId: string | null }[] = [
+  { id: "foundation", label: "Foundation", domainId: "domain.foundation" },
+  { id: "d1", label: "Domain 1", domainId: "domain.d1" },
+  { id: "d2", label: "Domain 2", domainId: "domain.d2" },
+  { id: "d3", label: "Domain 3", domainId: "domain.d3" },
+  { id: "d4", label: "Domain 4", domainId: "domain.d4" },
+  { id: "reinforcement", label: "Adaptive Reinforcement", domainId: null }
+];
+
+/**
+ * Pure, generic ordered-position derivation — deliberately independent of
+ * any specific domain id so it can never become a per-domain special
+ * case. Exported so its generalization to domains with no authored
+ * curriculum yet (Domain 2, Domain 3, ...) can be proven directly, without
+ * needing real lesson content for those domains to exist first — see
+ * tests/frontend/unit/production-content.test.tsx's "future Domain 2/3"
+ * coverage.
+ */
+export function deriveJourneySteps(currentDomainId: string | null): JourneyStep[] {
+  const currentStepIndex = JOURNEY_STEP_DEFS.findIndex((s) => s.domainId === currentDomainId);
+  return JOURNEY_STEP_DEFS.map((step, i) => ({
+    id: step.id,
+    label: step.label,
+    state: i < currentStepIndex ? "completed" : i === currentStepIndex ? "current" : "upcoming"
+  }));
+}
+
 export const productionContentSource: DailyStudyContentSource = {
+  getHomeState() {
+    const lesson = requireProductionLesson(todaysLessonId);
+    const concept = production.concepts.get(lesson.concepts[0] ?? "");
+    const domain = registry.domains.get(lesson.domain);
+    const currentStepIndex = JOURNEY_STEP_DEFS.findIndex((s) => s.domainId === lesson.domain);
+    // d1..d4 happen to sit at array indices 1..4, so the index doubles as
+    // the domain's own number with no separate parsing of the domain id.
+    const domainNumber = currentStepIndex >= 1 && currentStepIndex <= 4 ? currentStepIndex : null;
+
+    const journeySteps = deriveJourneySteps(lesson.domain);
+
+    const domainDisplayName = domain?.display_name ?? lesson.domain;
+    return {
+      journeySteps,
+      todayFocus: {
+        domainLabel: domainNumber !== null ? `D${domainNumber} · ${domainDisplayName}` : domainDisplayName,
+        domainNumeral: domainNumber !== null ? String(domainNumber).padStart(2, "0") : "—",
+        domainPosition:
+          domainNumber !== null
+            ? `Domain ${domainNumber} of ${JOURNEY_STEP_DEFS.length}`
+            : `${domainDisplayName} of ${JOURNEY_STEP_DEFS.length}`,
+        title: concept?.display_name ?? lesson.objective,
+        reason: lesson.objective,
+        estimatedMinutes: 25
+      }
+    };
+  },
+
   getRecall() {
     const familyIds = recallFamilyIdsFor(todaysLessonId);
     const familyId = familyIds[0];

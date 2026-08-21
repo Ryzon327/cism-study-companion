@@ -6,9 +6,13 @@
  */
 import type { DailyStudyContentSource } from "../session/contentSource";
 import type { AnswerOptionFixture } from "../types/content";
-import { lesson, applyQuestion, recallCheck, repairCheck, completionSummary, todayFocus, buildFeedback } from "./fixtures";
+import { lesson, applyQuestion, recallCheck, repairCheck, completionSummary, todayFocus, journeySteps, buildFeedback } from "./fixtures";
 
 export const prototypeContentSource: DailyStudyContentSource = {
+  // The approved Phase 5B fixture, unchanged — this is the preserved
+  // visual/reference experience (Domain 2 · Residual risk), never affected
+  // by which production lesson the QA panel currently has selected.
+  getHomeState: () => ({ journeySteps, todayFocus }),
   getRecall: () => recallCheck,
   getLesson: () => lesson,
   getApplyQuestion: () => ({ question: applyQuestion, meta: "Question 1 of 1 · Domain 2" }),

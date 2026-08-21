@@ -182,6 +182,64 @@ test.describe("Production Daily Study (Foundation + early Domain 1 candidate con
     expect(prompts).toContain(fourth);
   });
 
+  test("Home truthfully reflects the current Production QA lesson (D1-U8 -> D1-U9), never the stale D2 prototype state", async ({ page }) => {
+    await page.goto("/");
+    await page.locator(".prototype-switcher-trigger").click();
+    await page.getByRole("radio", { name: "Production (candidate)" }).click();
+    await page.getByRole("button", { name: "D1-U8 — Legal, Regulatory & Contractual Risk" }).click();
+    await page.locator(".prototype-switcher-trigger").click();
+
+    // Domain must read D1, never the old hard-coded D2 prototype pill.
+    await expect(page.locator(".home-domain-pill")).toHaveText("D1 · Governance");
+    // Title corresponds to the actual selected lesson's concept, not a
+    // hard-coded prototype string.
+    await expect(page.getByRole("heading", { name: /Legal, regulatory, and contractual requirements as risk/i })).toBeVisible();
+
+    // Domain 1 is current, never shown as completed; Domain 2 is never
+    // shown as current while a D1 lesson is selected. Foundation IS
+    // completed — it precedes Domain 1 in the fixed curriculum sequence,
+    // an ordered-position fact, never a fabricated learner-mastery claim —
+    // and it is the ONLY step completed (Domain 1 itself is current, not
+    // completed; nothing later is completed either).
+    const journey = page.locator(".journey");
+    await expect(journey.locator(".journey-step-current")).toContainText("Domain 1");
+    await expect(journey.locator(".journey-step-current")).not.toContainText("Domain 2");
+    await expect(journey.locator(".journey-step-completed")).toHaveCount(1);
+    await expect(journey.locator(".journey-step-completed")).toContainText("Foundation");
+
+    // Changing the QA lesson to D1-U9 (without navigating away from Home)
+    // updates the presentation — no stale U8 or prototype D2 content, and
+    // Foundation/Domain 1/Domain 2 states are unchanged by the switch.
+    await page.locator(".prototype-switcher-trigger").click();
+    await page.getByRole("button", { name: "D1-U9 — Organizational Culture & Governance" }).click();
+    await page.locator(".prototype-switcher-trigger").click();
+
+    await expect(page.getByRole("heading", { name: /Organizational culture and governance effectiveness/i })).toBeVisible();
+    await expect(page.getByText("Legal, regulatory, and contractual requirements as risk")).toHaveCount(0);
+    await expect(page.getByText("Residual risk and treatment decisions")).toHaveCount(0);
+    await expect(journey.locator(".journey-step-current")).toContainText("Domain 1");
+    await expect(journey.locator(".journey-step-completed")).toHaveCount(1);
+    await expect(journey.locator(".journey-step-completed")).toContainText("Foundation");
+
+    const storageLength = await page.evaluate(() => window.localStorage.length);
+    expect(storageLength).toBe(0);
+  });
+
+  test("Prototype fixture mode's Home/Journey is unaffected by any production QA lesson selection", async ({ page }) => {
+    await page.goto("/");
+    await page.locator(".prototype-switcher-trigger").click();
+    await page.getByRole("radio", { name: "Production (candidate)" }).click();
+    await page.getByRole("button", { name: "D1-U9 — Organizational Culture & Governance" }).click();
+    await page.getByRole("radio", { name: "Prototype fixtures", exact: true }).click();
+    await page.locator(".prototype-switcher-trigger").click();
+
+    await expect(page.getByRole("heading", { name: /Residual risk and treatment decisions/ })).toBeVisible();
+    await expect(page.locator(".home-domain-pill")).toHaveText("D2 · Risk Management");
+    const journey = page.locator(".journey");
+    await expect(journey.locator(".journey-step-current")).toContainText("Domain 2");
+    await expect(journey.locator(".journey-step-completed")).toHaveCount(2); // Foundation and Domain 1 — the approved, unchanged D2 fixture
+  });
+
   test("no localStorage is read or written during a full production session", async ({ page }) => {
     await switchToProductionContent(page);
     await page.getByRole("button", { name: /Start Today's Study/ }).click();

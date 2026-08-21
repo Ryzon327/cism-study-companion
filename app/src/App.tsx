@@ -65,7 +65,9 @@ const REVIEW_LESSON_ITEMS: PrototypeStateItem[] = [
   { id: "lesson.d1.data-ownership-accountability", label: "D1-U4 — Data Ownership" },
   { id: "lesson.d1.security-strategy-alignment", label: "D1-U5 — Security Strategy & Alignment" },
   { id: "lesson.d1.business-justification-roadmap", label: "D1-U6 — Business Justification & Roadmaps" },
-  { id: "lesson.d1.governance-effectiveness", label: "D1-U7 — Frameworks, GRC & Effectiveness" }
+  { id: "lesson.d1.governance-effectiveness", label: "D1-U7 — Frameworks, GRC & Effectiveness" },
+  { id: "lesson.d1.legal-regulatory-risk", label: "D1-U8 — Legal, Regulatory & Contractual Risk" },
+  { id: "lesson.d1.organizational-culture-governance", label: "D1-U9 — Organizational Culture & Governance" }
 ];
 
 const SESSION_SCREENS = new Set([
@@ -105,7 +107,7 @@ function renderScreen(
 ): JSX.Element {
   switch (id) {
     case "home":
-      return <HomeScreen onNavigate={onNavigate} />;
+      return <HomeScreen onNavigate={onNavigate} contentSource={contentSource} />;
     case "daily-study-session":
       return <DailyStudySession contentSource={contentSource} onDone={() => onNavigate("home")} />;
     case "daily-study-learn":
@@ -123,7 +125,7 @@ function renderScreen(
     case "review-center":
       return <ReviewCenterScreen onReturnToExam={() => onNavigate("practice-exam")} />;
     default:
-      return <HomeScreen onNavigate={onNavigate} />;
+      return <HomeScreen onNavigate={onNavigate} contentSource={contentSource} />;
   }
 }
 

@@ -14,9 +14,11 @@ import { emptyHistory, recordExposure } from "../../../app/src/content/selection
 import {
   productionContentSource,
   setTodaysLessonIdForReview,
-  getTodaysLessonIdForReview
+  getTodaysLessonIdForReview,
+  deriveJourneySteps
 } from "../../../app/src/content/productionContentSource";
 import { resetExposureHistoryForTests } from "../../../app/src/content/exposureStore";
+import { prototypeContentSource } from "../../../app/src/data/prototypeContentSource";
 
 const TODAYS_LESSON_ID = "lesson.d1.authority-follows-accountability";
 const PREREQ_LESSON_ID = "lesson.foundation.ask-qualifier";
@@ -355,6 +357,118 @@ describe("no future-domain leakage / taught-before-tested still holds with famil
   it("requireProductionLesson resolves both slice lessons without error", () => {
     expect(() => requireProductionLesson(TODAYS_LESSON_ID)).not.toThrow();
     expect(() => requireProductionLesson(PREREQ_LESSON_ID)).not.toThrow();
+  });
+});
+
+describe("Home/Journey state (Phase 7B-3 defect fix) — the UI must not independently invent learner progress", () => {
+  const originalLessonId = getTodaysLessonIdForReview();
+  const U8_LESSON_ID = "lesson.d1.legal-regulatory-risk";
+  const U9_LESSON_ID = "lesson.d1.organizational-culture-governance";
+
+  afterEach(() => {
+    setTodaysLessonIdForReview(originalLessonId);
+  });
+
+  // A. Prototype fixture mode retains the approved D2 Home/Journey fixture.
+  it("prototype mode's Home/Journey state is the unchanged, approved Phase 5B D2 fixture", () => {
+    const { journeySteps, todayFocus } = prototypeContentSource.getHomeState();
+    expect(journeySteps.find((s) => s.id === "d2")?.state).toBe("current");
+    expect(journeySteps.find((s) => s.id === "d1")?.state).toBe("completed");
+    expect(todayFocus.title).toBe("Residual risk and treatment decisions");
+    expect(todayFocus.domainLabel).toBe("D2 · Risk Management");
+  });
+
+  // 1, 2. Production mode with a Domain 1 lesson (D1-U8 or D1-U9):
+  // Foundation completed (it precedes Domain 1 in the fixed curriculum
+  // sequence — an ordered-position fact, not a fabricated mastery claim),
+  // Domain 1 current, Domain 2 (and every later stage) upcoming.
+  it.each([
+    ["D1-U8", "lesson.d1.legal-regulatory-risk"],
+    ["D1-U9", "lesson.d1.organizational-culture-governance"]
+  ])("production mode with %s selected shows Foundation completed, Domain 1 current, Domain 2+ upcoming", (_label, lessonId) => {
+    setTodaysLessonIdForReview(lessonId);
+    const { journeySteps } = productionContentSource.getHomeState();
+    expect(journeySteps.find((s) => s.id === "foundation")?.state).toBe("completed");
+    expect(journeySteps.find((s) => s.id === "d1")?.state).toBe("current");
+    expect(journeySteps.find((s) => s.id === "d2")?.state).toBe("upcoming");
+    expect(journeySteps.find((s) => s.id === "d3")?.state).toBe("upcoming");
+    expect(journeySteps.find((s) => s.id === "d4")?.state).toBe("upcoming");
+    expect(journeySteps.find((s) => s.id === "reinforcement")?.state).toBe("upcoming");
+  });
+
+  // 5, 6. Future-stage architectural proof: the SAME generic derivation
+  // (no per-domain conditional — deriveJourneySteps takes only a domain
+  // id) naturally produces the correct ordered state once Domain 2 or
+  // Domain 3 becomes current, with no curriculum for those domains needing
+  // to exist yet. This is what proves the fix generalizes rather than
+  // special-casing Domain 1.
+  it("deriveJourneySteps generalizes to a future Domain 2 current state with no per-domain special case", () => {
+    const steps = deriveJourneySteps("domain.d2");
+    expect(steps.find((s) => s.id === "foundation")?.state).toBe("completed");
+    expect(steps.find((s) => s.id === "d1")?.state).toBe("completed");
+    expect(steps.find((s) => s.id === "d2")?.state).toBe("current");
+    expect(steps.find((s) => s.id === "d3")?.state).toBe("upcoming");
+    expect(steps.find((s) => s.id === "d4")?.state).toBe("upcoming");
+    expect(steps.find((s) => s.id === "reinforcement")?.state).toBe("upcoming");
+  });
+
+  it("deriveJourneySteps generalizes to a future Domain 3 current state with no per-domain special case", () => {
+    const steps = deriveJourneySteps("domain.d3");
+    expect(steps.find((s) => s.id === "foundation")?.state).toBe("completed");
+    expect(steps.find((s) => s.id === "d1")?.state).toBe("completed");
+    expect(steps.find((s) => s.id === "d2")?.state).toBe("completed");
+    expect(steps.find((s) => s.id === "d3")?.state).toBe("current");
+    expect(steps.find((s) => s.id === "d4")?.state).toBe("upcoming");
+    expect(steps.find((s) => s.id === "reinforcement")?.state).toBe("upcoming");
+  });
+
+  it("deriveJourneySteps handles Foundation itself as current (no earlier stage exists to mark completed)", () => {
+    const steps = deriveJourneySteps("domain.foundation");
+    expect(steps.find((s) => s.id === "foundation")?.state).toBe("current");
+    expect(steps.find((s) => s.id === "d1")?.state).toBe("upcoming");
+  });
+
+  // E. Production Home lesson/title corresponds to the currently selected
+  // production QA lesson.
+  it("production Home's title/domain corresponds to the currently selected D1-U8 lesson, using canonical metadata", () => {
+    setTodaysLessonIdForReview(U8_LESSON_ID);
+    const { todayFocus } = productionContentSource.getHomeState();
+    expect(todayFocus.domainLabel).toBe("D1 · Governance");
+    expect(todayFocus.title.toLowerCase()).toContain("legal");
+  });
+
+  // 3. Changing the QA lesson from U8 to U9 updates Home rather than
+  // retaining stale U8 or prototype D2 content — lesson title changes,
+  // Foundation stays completed, Domain 1 stays current, Domain 2 stays
+  // upcoming, no stale Journey state appears.
+  it("changing the QA lesson from D1-U8 to D1-U9 changes Home's title accordingly, with no stale U8/D2 content or stale Journey state", () => {
+    setTodaysLessonIdForReview(U8_LESSON_ID);
+    const u8Title = productionContentSource.getHomeState().todayFocus.title;
+
+    setTodaysLessonIdForReview(U9_LESSON_ID);
+    const { journeySteps, todayFocus } = productionContentSource.getHomeState();
+    expect(todayFocus.title).not.toBe(u8Title);
+    expect(todayFocus.title.toLowerCase()).toContain("culture");
+    expect(todayFocus.domainLabel).toBe("D1 · Governance");
+    expect(journeySteps.find((s) => s.id === "foundation")?.state).toBe("completed");
+    expect(journeySteps.find((s) => s.id === "d1")?.state).toBe("current");
+    expect(journeySteps.find((s) => s.id === "d2")?.state).toBe("upcoming");
+  });
+
+  // G. No persistence mechanism is introduced: getHomeState is a pure
+  // function of the in-memory QA lesson pointer, computed fresh from
+  // content/production/ + schema/registry/ on every call — no cross-call
+  // state is read from or written to anywhere outside that pointer. (Full
+  // browser-level "no localStorage" proof lives in
+  // tests/frontend/e2e/production-daily-study.spec.ts, which exercises a
+  // real window; jsdom's localStorage shim is unreliable to spy on here.)
+  it("getHomeState is idempotent and side-effect-free: calling it repeatedly for the same lesson never changes its own result", () => {
+    setTodaysLessonIdForReview(U9_LESSON_ID);
+    const first = productionContentSource.getHomeState();
+    const second = productionContentSource.getHomeState();
+    const third = productionContentSource.getHomeState();
+    expect(second).toEqual(first);
+    expect(third).toEqual(first);
   });
 });
 
