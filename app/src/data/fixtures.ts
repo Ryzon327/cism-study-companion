@@ -32,7 +32,10 @@ export const todayFocus = {
   domainPosition: "Domain 2 of 6",
   title: "Residual risk and treatment decisions",
   reason: "Continuing lifecycle sequencing from yesterday.",
-  estimatedMinutes: 25
+  // Distinct from `reason` above (the main paragraph) — a short orientation
+  // label for the snapshot card only, reusing the lesson's own established
+  // short concept title rather than repeating the longer reason text.
+  focus: "Residual risk"
 };
 
 export const lesson: LessonFixture = {

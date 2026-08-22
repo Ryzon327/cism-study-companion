@@ -15,7 +15,8 @@ import {
   productionContentSource,
   setTodaysLessonIdForReview,
   getTodaysLessonIdForReview,
-  deriveJourneySteps
+  deriveJourneySteps,
+  shortConceptLabel
 } from "../../../app/src/content/productionContentSource";
 import { resetExposureHistoryForTests } from "../../../app/src/content/exposureStore";
 import { prototypeContentSource } from "../../../app/src/data/prototypeContentSource";
@@ -469,6 +470,93 @@ describe("Home/Journey state (Phase 7B-3 defect fix) — the UI must not indepen
     const third = productionContentSource.getHomeState();
     expect(second).toEqual(first);
     expect(third).toEqual(first);
+  });
+});
+
+describe("Home UX correction (Phase 7C follow-up) — the snapshot card must not duplicate the main paragraph, and no fabricated duration is displayed", () => {
+  const originalLessonId = getTodaysLessonIdForReview();
+  const U7_LESSON_ID = "lesson.d1.governance-effectiveness";
+  const U8_LESSON_ID = "lesson.d1.legal-regulatory-risk";
+  const U9_LESSON_ID = "lesson.d1.organizational-culture-governance";
+
+  afterEach(() => {
+    setTodaysLessonIdForReview(originalLessonId);
+  });
+
+  // 1, 2, 3. Main paragraph remains present; the card's `focus` value is
+  // never identical to (nor a truncation/paraphrase-by-prefix of) `reason`.
+  it.each([
+    ["D1-U7", U7_LESSON_ID],
+    ["D1-U8", U8_LESSON_ID],
+    ["D1-U9", U9_LESSON_ID]
+  ])("%s: the main paragraph (reason) remains present, and the card's focus value is distinct from it — not a duplicate or truncation", (_label, lessonId) => {
+    setTodaysLessonIdForReview(lessonId);
+    const { todayFocus } = productionContentSource.getHomeState();
+    expect(todayFocus.reason.length).toBeGreaterThan(0);
+    expect(todayFocus.focus.length).toBeGreaterThan(0);
+    expect(todayFocus.focus).not.toBe(todayFocus.reason);
+    expect(todayFocus.reason.startsWith(todayFocus.focus)).toBe(false);
+  });
+
+  // 4. The card still correctly identifies the active domain (unaffected
+  // by this change — domainLabel/domainPosition logic untouched).
+  it("the card's domain label still identifies the active domain correctly", () => {
+    setTodaysLessonIdForReview(U8_LESSON_ID);
+    expect(productionContentSource.getHomeState().todayFocus.domainLabel).toBe("D1 · Governance");
+  });
+
+  // 5, 10. Genericity: shortConceptLabel is a pure function of a display
+  // name string — no lesson/unit id ever appears in its logic — proven
+  // with synthetic strings that have nothing to do with any real concept.
+  it("shortConceptLabel derives generically from any display name — no per-lesson/unit hard-coding", () => {
+    expect(shortConceptLabel("Some future concept: with elaboration after a colon")).toBe("Some future concept");
+    expect(shortConceptLabel("A short display name with no colon at all")).toBe("A short display name with no colon at all");
+    expect(shortConceptLabel("Edge: case: two colons")).toBe("Edge");
+  });
+
+  // 6, 7, 8. U7, U8, U9 each render a genuinely distinct, non-duplicate
+  // focus value, generically derived (not per-unit branching in code).
+  it("U7's focus is the short form of its own concept's display name, distinct from its reason", () => {
+    setTodaysLessonIdForReview(U7_LESSON_ID);
+    const { todayFocus } = productionContentSource.getHomeState();
+    expect(todayFocus.focus).toBe("Governance effectiveness");
+  });
+
+  it("U8's focus is derived from its own concept, distinct from its reason", () => {
+    setTodaysLessonIdForReview(U8_LESSON_ID);
+    const { todayFocus } = productionContentSource.getHomeState();
+    expect(todayFocus.focus.length).toBeGreaterThan(0);
+    expect(todayFocus.focus).not.toBe(todayFocus.reason);
+  });
+
+  it("U9's focus is derived from its own concept, distinct from its reason", () => {
+    setTodaysLessonIdForReview(U9_LESSON_ID);
+    const { todayFocus } = productionContentSource.getHomeState();
+    expect(todayFocus.focus.length).toBeGreaterThan(0);
+    expect(todayFocus.focus).not.toBe(todayFocus.reason);
+  });
+
+  // 9. Switching U7 -> U8 -> U9 without reload updates focus correctly,
+  // with no stale content carried over from the previous lesson.
+  it("switching U7 -> U8 -> U9 updates focus each time, with no stale carryover", () => {
+    setTodaysLessonIdForReview(U7_LESSON_ID);
+    const u7Focus = productionContentSource.getHomeState().todayFocus.focus;
+
+    setTodaysLessonIdForReview(U8_LESSON_ID);
+    const u8Focus = productionContentSource.getHomeState().todayFocus.focus;
+    expect(u8Focus).not.toBe(u7Focus);
+
+    setTodaysLessonIdForReview(U9_LESSON_ID);
+    const u9Focus = productionContentSource.getHomeState().todayFocus.focus;
+    expect(u9Focus).not.toBe(u7Focus);
+    expect(u9Focus).not.toBe(u8Focus);
+  });
+
+  // 20. TodayFocusFixture no longer carries any fabricated numeric
+  // duration field at all (removed, not just hidden from render).
+  it("TodayFocusFixture no longer has an estimatedMinutes (or any numeric duration) field", () => {
+    const { todayFocus } = productionContentSource.getHomeState();
+    expect("estimatedMinutes" in todayFocus).toBe(false);
   });
 });
 

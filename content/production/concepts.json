@@ -118,5 +118,17 @@
     "source": "source.learner-supplied.domain-1-question-bank",
     "version": 1,
     "note": "PHASE 7B-3 CANDIDATE — authored by Claude Code per approved Phase 7A architecture and Phase 7B-3 scope (D1-U9, Domain 1 capstone), grounded in docs/learning/PATTERN-LIBRARY.md (P07) and evidenced by the supplied Domain 1 source material's Organizational Culture sub-area. Deliberately not a general HR/change-management concept — scoped to why culture affects whether governance is effective, per the explicit Phase 7B-3 instruction. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "concept.d1.policy-artifact-hierarchy",
+    "display_name": "Policy, standard, procedure, and guideline",
+    "home_domain": "domain.d1",
+    "plain": "Policy states high-level, durable management direction and intent. A standard defines a mandatory boundary or requirement that links that policy to more detailed practice. A procedure defines the specific, mandatory steps taken to meet a standard or policy. A guideline offers recommended, non-mandatory practice. The distinction rests on authority, prescriptiveness, and level of detail - not a fixed document count every enterprise must maintain identically.",
+    "related_patterns": ["pattern.p07"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "source": "source.learner-supplied.domain-1-question-bank",
+    "version": 1,
+    "note": "PHASE 7C CANDIDATE (Domain 1 readiness follow-up, G1) — authored by Claude Code following the Phase 7C read-only assessment's finding that this canonical docs/learning/DOMAIN-1-BLUEPRINT.md requirement ('the learner can recognize the policy/standard/procedure/guideline hierarchy') was not yet taught anywhere in Domain 1. Activates the previously-documented-but-unactivated Policy vs. Standard vs. Procedure vs. Guideline pair in docs/learning/CONFUSING-CONCEPTS.md. Taught inside lesson.d1.governance-effectiveness (U7) rather than a new unit, per explicit architect instruction. Not yet human-reviewed or promoted."
   }
 ]

@@ -204,7 +204,7 @@
     "display_name": "Domain 1 — Legal, Regulatory & Contractual Requirements as Risk",
     "domain": "domain.d1",
     "concepts": ["concept.d1.legal-regulatory-risk"],
-    "patterns": ["pattern.p02", "pattern.p03"],
+    "patterns": ["pattern.p02", "pattern.p03", "pattern.p08"],
     "evidence_dimensions": ["evidence.qualifier", "evidence.authority", "evidence.role", "evidence.business-context"],
     "role_target": null,
     "qualifier_target": null,
@@ -219,10 +219,10 @@
     "content_status": "CANDIDATE",
     "verification_status": "unverified",
     "active": true,
-    "version": 1,
+    "version": 2,
     "replaced_by": null,
     "source": "source.learner-supplied.domain-1-question-bank",
-    "note": "PHASE 7B-3 CANDIDATE (D1-U8) — authored by Claude Code per approved Phase 7A architecture and Phase 7B-3 scope. role_target is null because the tempting-wrong role varies per variant (Legal/Compliance, the security manager, or the accountable business/senior-management authority can each be misassigned a verb that isn't theirs), matching the same non-fixed-hierarchy design already established by family.d1.authority-accountability-decision and family.d1.governance-layer-authority. decision_type is decision.risk because the family's whole premise is that compliance obligations are reasoned about as risk, not as a separate category. Not yet human-reviewed or promoted."
+    "note": "PHASE 7B-3 CANDIDATE (D1-U8) — authored by Claude Code per approved Phase 7A architecture and Phase 7B-3 scope. role_target is null because the tempting-wrong role varies per variant (Legal/Compliance, the security manager, or the accountable business/senior-management authority can each be misassigned a verb that isn't theirs), matching the same non-fixed-hierarchy design already established by family.d1.authority-accountability-decision and family.d1.governance-layer-authority. decision_type is decision.risk because the family's whole premise is that compliance obligations are reasoned about as risk, not as a separate category. PHASE 7C UPDATE (Domain 1 readiness follow-up, G3): version bumped 1 -> 2; pattern.p08 (Risk-Driven Prioritization) added to reflect the new fourth variant's risk-based-prioritization reasoning target, matching the precedent already set by family.d1.business-justification-roadmap's use of p08 in Domain 1. All three original variants unchanged. Not yet human-reviewed or promoted."
   },
   {
     "id": "family.d1.organizational-culture-governance",
@@ -244,9 +244,34 @@
     "content_status": "CANDIDATE",
     "verification_status": "unverified",
     "active": true,
+    "version": 2,
+    "replaced_by": null,
+    "source": "source.learner-supplied.domain-1-question-bank",
+    "note": "PHASE 7B-3 CANDIDATE (D1-U9, Domain 1 capstone) — authored by Claude Code per approved Phase 7A architecture and Phase 7B-3 scope. role_target is null because this family's variation axis is which cultural/behavioral gap the scenario describes (resistance, leadership-tone inconsistency, cross-cultural adoption variance), not a recurring distractor role. Deliberately not a general HR/change-management family - scoped to the governance-effectiveness question extended to the cultural layer. PHASE 7C UPDATE (Domain 1 readiness follow-up, G4): version bumped 1 -> 2 for the new fourth variant, which closes the gap the Phase 7C read-only assessment identified between this family's own teaching_objective (which already asserted culture shapes 'how risk appetite is expressed in decisions') and its variants (none of which had actually tested that link). All three original variants unchanged. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "family.d1.policy-artifact-hierarchy",
+    "display_name": "Domain 1 — Policy, Standard, Procedure & Guideline Hierarchy",
+    "domain": "domain.d1",
+    "concepts": ["concept.d1.policy-artifact-hierarchy"],
+    "patterns": ["pattern.p07"],
+    "evidence_dimensions": ["evidence.vocabulary", "evidence.knowledge"],
+    "role_target": null,
+    "qualifier_target": null,
+    "lifecycle": null,
+    "stage_target": null,
+    "decision_type": "decision.program-control",
+    "teaching_objective": "Correctly classify a described governance artifact as a policy, standard, procedure, or guideline based on its authority, prescriptiveness, and level of detail - not by memorizing four dictionary definitions or assuming a fixed document count every enterprise must maintain identically.",
+    "invariant_reasoning": "The correct answer always follows the artifact's actual authority and prescriptiveness as described in the stem - mandatory, high-level management direction is a policy; a mandatory boundary or requirement supporting that policy is a standard; the specific mandatory steps taken to meet a standard or policy are a procedure; recommended, non-mandatory practice is a guideline. The tempting wrong answer confuses two adjacent artifacts in the hierarchy (most often policy/standard or procedure/guideline) because both sound like they describe 'a requirement' or both sound like they describe 'how to do something,' without reasoning about actual authority and prescriptiveness.",
+    "variation_strategy": ["business-setting", "wording-structure", "distractor-temptation"],
+    "difficulty_band": "introductory",
+    "minimum_variant_count": 3,
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
     "version": 1,
     "replaced_by": null,
     "source": "source.learner-supplied.domain-1-question-bank",
-    "note": "PHASE 7B-3 CANDIDATE (D1-U9, Domain 1 capstone) — authored by Claude Code per approved Phase 7A architecture and Phase 7B-3 scope. role_target is null because this family's variation axis is which cultural/behavioral gap the scenario describes (resistance, leadership-tone inconsistency, cross-cultural adoption variance), not a recurring distractor role. Deliberately not a general HR/change-management family - scoped to the governance-effectiveness question extended to the cultural layer. Not yet human-reviewed or promoted."
+    "note": "PHASE 7C CANDIDATE (Domain 1 readiness follow-up, G1) — authored by Claude Code per architect decision following the Phase 7C read-only assessment's finding that docs/learning/DOMAIN-1-BLUEPRINT.md's canonical 'must accomplish' requirement (recognize the policy/standard/procedure/guideline hierarchy) was not yet taught anywhere in Domain 1. Taught inside lesson.d1.governance-effectiveness (U7) rather than a new unit, per explicit instruction; tested via this dedicated family rather than folded into family.d1.governance-effectiveness's own variants, since artifact classification is a distinct reasoning target from that family's activity-vs-outcome target. decision_type is decision.program-control because the family's premise (how security requirements become policies, standards, procedures, and operating practices) matches that decision type's own registry definition almost verbatim. Not yet human-reviewed or promoted."
   }
 ]

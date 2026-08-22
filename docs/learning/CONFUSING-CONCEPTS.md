@@ -73,7 +73,11 @@ Policy states high-level, durable management direction. A standard sets a
 mandatory boundary that links policy to more detailed practice. A procedure
 is the step-by-step method. A guideline is recommended, non-mandatory
 practice. Policy is the least likely of the four to change simply because
-technology changes. **[CANDIDATE]**
+technology changes. **[CANDIDATE]** — approved Phase 2, activated as a live
+teaching distinction in Phase 7C's Domain 1 readiness follow-up
+(`lesson.d1.governance-effectiveness`, `family.d1.policy-artifact-hierarchy`),
+closing the gap the Phase 7C read-only assessment found between this
+documented pair and Domain 1's taught content.
 
 ### Security Steering Committee vs. Board / Senior Management
 Both are governance-layer bodies, and both are frequently "involved" in the

@@ -95,6 +95,15 @@
   margin: var(--space-4) 0;
 }
 
+.home-hero-snapshot-label {
+  font-size: var(--font-size-meta);
+  font-weight: 700;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-2);
+}
+
 .home-hero-snapshot-detail {
   color: var(--text-muted);
   font-size: var(--font-size-meta);

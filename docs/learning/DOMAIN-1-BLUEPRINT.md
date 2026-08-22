@@ -77,6 +77,19 @@ scenarios rather than introducing entirely new reasoning machinery.
 - The learner understands that a published policy is not, by itself, evidence of effective governance.
 - Recall of Foundation's eight-step process continues, now grounded in real governance scenarios (see [Curriculum Blueprint](CURRICULUM-BLUEPRINT.md) for the cumulative-recall requirement).
 
+## Domain 1 readiness note (Phase 7C)
+
+**[CANDIDATE — operational note, not a change to the canonical requirements
+above.]** The Phase 7C read-only assessment found that Domain 1 exercises
+the BEST/MOST qualifiers substantively but has no NEXT-qualifier practice.
+This is a recorded architect decision, not an oversight: NEXT is part of
+the canonical qualifier vocabulary (`schema/registry/qualifiers.json`),
+but Domain 1 completion does not require artificial coverage of every
+qualifier merely to satisfy a distribution target. Domain 1 should use
+NEXT only when authentic, source-backed reasoning calls for it — its
+current absence is not a blocking Domain 1 gap. This note does not modify
+any canonical qualifier definition.
+
 ## Cross-references
 
 [Pattern Library](PATTERN-LIBRARY.md) · [Role & Authority Matrix](ROLE-AUTHORITY-MATRIX.md) · [Lifecycle Model](LIFECYCLE-MODEL.md) · [Confusing Concepts](CONFUSING-CONCEPTS.md) · [Foundation Blueprint](FOUNDATION-BLUEPRINT.md)

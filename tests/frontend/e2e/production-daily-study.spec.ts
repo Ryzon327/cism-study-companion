@@ -225,7 +225,57 @@ test.describe("Production Daily Study (Foundation + early Domain 1 candidate con
     expect(storageLength).toBe(0);
   });
 
-  test("Prototype fixture mode's Home/Journey is unaffected by any production QA lesson selection", async ({ page }) => {
+  test("Home UX correction (Phase 7C follow-up): the Domain card no longer duplicates the main lesson paragraph, and no fabricated duration is shown, across U7 -> U8 -> U9", async ({ page }) => {
+    await page.goto("/");
+    await page.locator(".prototype-switcher-trigger").click();
+    await page.getByRole("radio", { name: "Production (candidate)" }).click();
+    await page.getByRole("button", { name: "D1-U7 — Frameworks, GRC & Effectiveness" }).click();
+    await page.locator(".prototype-switcher-trigger").click();
+
+    // No fabricated numeric duration anywhere on Home.
+    await expect(page.getByText(/~\d+\s*min session/i)).toHaveCount(0);
+    await expect(page.getByText("Quick study session")).toBeVisible();
+
+    // The main paragraph and the card's Focus line must not be the same
+    // text — the card shows a short orientation label, not a second copy
+    // of the lesson's full objective.
+    const mainParagraph = (await page.locator(".home-hero-reason").textContent())?.trim() ?? "";
+    const cardFocus = (await page.locator(".home-hero-snapshot-detail").textContent())?.trim() ?? "";
+    expect(mainParagraph.length).toBeGreaterThan(0);
+    expect(cardFocus.length).toBeGreaterThan(0);
+    expect(cardFocus).not.toBe(mainParagraph);
+    expect(mainParagraph.startsWith(cardFocus)).toBe(false);
+    await expect(page.locator(".home-hero-snapshot-label")).toHaveText("Focus");
+    await expect(page.locator(".home-hero-snapshot-detail")).toHaveText("Governance effectiveness");
+    // Domain card still correctly identifies the active domain.
+    await expect(page.locator(".home-domain-pill")).toHaveText("D1 · Governance");
+
+    // Switch to U8 without reload — the card updates, no stale U7 content.
+    await page.locator(".prototype-switcher-trigger").click();
+    await page.getByRole("button", { name: "D1-U8 — Legal, Regulatory & Contractual Risk" }).click();
+    await page.locator(".prototype-switcher-trigger").click();
+
+    const u8MainParagraph = (await page.locator(".home-hero-reason").textContent())?.trim() ?? "";
+    const u8CardFocus = (await page.locator(".home-hero-snapshot-detail").textContent())?.trim() ?? "";
+    expect(u8CardFocus).not.toBe(u8MainParagraph);
+    expect(u8CardFocus).not.toBe(cardFocus); // no stale U7 value
+    await expect(page.getByText(/~\d+\s*min session/i)).toHaveCount(0);
+    await expect(page.getByText("Quick study session")).toBeVisible();
+
+    // Switch to U9 without reload — same guarantees hold again.
+    await page.locator(".prototype-switcher-trigger").click();
+    await page.getByRole("button", { name: "D1-U9 — Organizational Culture & Governance" }).click();
+    await page.locator(".prototype-switcher-trigger").click();
+
+    const u9MainParagraph = (await page.locator(".home-hero-reason").textContent())?.trim() ?? "";
+    const u9CardFocus = (await page.locator(".home-hero-snapshot-detail").textContent())?.trim() ?? "";
+    expect(u9CardFocus).not.toBe(u9MainParagraph);
+    expect(u9CardFocus).not.toBe(u8CardFocus); // no stale U8 value
+    await expect(page.getByText(/~\d+\s*min session/i)).toHaveCount(0);
+    await expect(page.getByText("Quick study session")).toBeVisible();
+  });
+
+  test("Prototype fixture mode's Home/Journey is unaffected by any production QA lesson selection, and the Phase 7C Home UX correction applies consistently there too", async ({ page }) => {
     await page.goto("/");
     await page.locator(".prototype-switcher-trigger").click();
     await page.getByRole("radio", { name: "Production (candidate)" }).click();
@@ -238,6 +288,20 @@ test.describe("Production Daily Study (Foundation + early Domain 1 candidate con
     const journey = page.locator(".journey");
     await expect(journey.locator(".journey-step-current")).toContainText("Domain 2");
     await expect(journey.locator(".journey-step-completed")).toHaveCount(2); // Foundation and Domain 1 — the approved, unchanged D2 fixture
+
+    // The Phase 7C Home UX correction is a shared-component change (one
+    // HomeScreen serves both content sources) — Prototype's approved core
+    // content (title, main paragraph, domain label/position, journey
+    // state) is fully unchanged above; only the card's short orientation
+    // label and the non-numeric session wording apply here too, exactly
+    // as they now do in Production, and Prototype's card no longer
+    // duplicates its own main paragraph either.
+    await expect(page.getByText(/~\d+\s*min session/i)).toHaveCount(0);
+    await expect(page.getByText("Quick study session")).toBeVisible();
+    await expect(page.locator(".home-hero-snapshot-label")).toHaveText("Focus");
+    await expect(page.locator(".home-hero-snapshot-detail")).toHaveText("Residual risk");
+    const mainParagraph = (await page.locator(".home-hero-reason").textContent())?.trim() ?? "";
+    expect(mainParagraph).not.toBe("Residual risk");
   });
 
   test("no localStorage is read or written during a full production session", async ({ page }) => {
