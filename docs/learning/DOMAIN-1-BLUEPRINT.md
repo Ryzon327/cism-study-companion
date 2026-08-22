@@ -90,6 +90,23 @@ NEXT only when authentic, source-backed reasoning calls for it — its
 current absence is not a blocking Domain 1 gap. This note does not modify
 any canonical qualifier definition.
 
+## Domain 1 readiness note (Phase 8B)
+
+**[CANDIDATE — operational note, not a change to the canonical requirements
+above.]** The Phase 8B Domain 1 Final Readiness Audit found and corrected
+a family-level distractor-length bias affecting 7 questions across 2
+families (`family.d1.governance-effectiveness`,
+`family.d1.organizational-culture-governance`); see
+[`PHASE-8B-GATE-RECORD.md`](PHASE-8B-GATE-RECORD.md) for the full audit,
+correction, and founder Human Experience Gate. Following that gate,
+**Domain 1 Final Readiness: PASS** for the current MVP curriculum
+boundary — not a claim of perfection or immutability, and not a
+`CANONICAL` promotion decision, which remains separate and future. U7's
+greater length relative to other Domain 1 lessons was reviewed and
+explicitly accepted, not trimmed: lesson-length uniformity is not itself a
+curriculum-quality requirement, and "concise but fruitful" is judged by
+felt learning experience, not character count.
+
 ## Cross-references
 
 [Pattern Library](PATTERN-LIBRARY.md) · [Role & Authority Matrix](ROLE-AUTHORITY-MATRIX.md) · [Lifecycle Model](LIFECYCLE-MODEL.md) · [Confusing Concepts](CONFUSING-CONCEPTS.md) · [Foundation Blueprint](FOUNDATION-BLUEPRINT.md)

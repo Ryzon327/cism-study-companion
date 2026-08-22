@@ -113,6 +113,102 @@ test("structural variation exists: within a family, no variant is a pure paraphr
   assert.equal(bad.length, 0, bad.join("\n"));
 });
 
+// --- Family-level answer-length bias ----------------------------------
+// Phase 8B Domain 1 Final Readiness Audit found that two families
+// (family.d1.governance-effectiveness and
+// family.d1.organizational-culture-governance) had the correct option be
+// the single longest option in 100% of their variants (3/3 and 4/4
+// respectively) — an exploitable "pick the longest answer" shortcut that
+// exists independently of the answer-position randomization architecture
+// (app/src/content/answerOrder.ts only randomizes *display* position; it
+// cannot mask a *semantic* length tell in the option text itself).
+//
+// This check is deliberately NOT "the correct answer may never be the
+// longest option" — a legitimate, well-written correct answer is often
+// genuinely longer than its distractors (it has to state a real position
+// AND its qualifying condition), and forcing artificial length parity
+// would just trade one artificial pattern for another. A single question,
+// or even a couple of questions, having the correct option come out
+// longest is ordinary variation: the whole-bank rate has consistently sat
+// in the 40-55% range with individual families ranging 0%-67% (see the
+// Phase 8B re-audit). What made governance-effectiveness and
+// organizational-culture-governance a genuine defect was that EVERY
+// variant in the family shared the property, with no exceptions — a
+// perfect, memorizable tell scoped to that family. So this rule only
+// fires on that specific shape: a family with enough variants to make
+// "always" mean something (3+, matching every family in this bank) where
+// the correct option is the strict longest in literally 100% of them.
+function familyLengthBiasRatio(variants) {
+  let longestCount = 0;
+  for (const q of variants) {
+    const lengths = q.options.map((o) => o.text.trim().length);
+    const maxLength = Math.max(...lengths);
+    const correctLength = q.options.find((o) => o.correct).text.trim().length;
+    if (correctLength === maxLength) longestCount++;
+  }
+  return longestCount / variants.length;
+}
+
+test("no family (3+ variants) has the correct option as the longest option in 100% of variants (blocking)", () => {
+  const bad = [];
+  for (const [familyId, variants] of variantsByFamily()) {
+    if (variants.length < 3) continue;
+    const ratio = familyLengthBiasRatio(variants);
+    if (ratio === 1) {
+      bad.push(
+        `${familyId}: correct option is the longest option in ${variants.length}/${variants.length} variants — systematic length tell, not ordinary variation`
+      );
+    }
+  }
+  assert.equal(bad.length, 0, bad.join("\n"));
+});
+
+// Proof this rule would have caught the pre-Phase-8B-correction defect:
+// reconstructs the exact pre-fix option-text lengths for the two affected
+// families (governance-effectiveness 3/3, organizational-culture-governance
+// 4/4, as measured during the Phase 8B audit) and confirms the same
+// detector flags both. This is a fixed historical fixture, not live
+// production data — it exists purely so the detection rule above can
+// never regress into a no-op without this test failing first.
+test("length-bias detector would have caught the pre-fix Phase 8B data (historical regression fixture)", () => {
+  function fixtureQuestion(correctLength, otherLengths) {
+    return {
+      options: [
+        { correct: true, text: "x".repeat(correctLength) },
+        ...otherLengths.map((len) => ({ correct: false, text: "x".repeat(len) }))
+      ]
+    };
+  }
+
+  // governance-effectiveness pre-fix: question.d1.0022/0023/0024, correct
+  // option was strictly longest in all 3 (168>148, 116>106, 194>135).
+  const preFixGovernanceEffectiveness = [
+    fixtureQuestion(168, [145, 148, 122]),
+    fixtureQuestion(116, [106, 100, 105]),
+    fixtureQuestion(194, [131, 129, 124])
+  ];
+  // organizational-culture-governance pre-fix: question.d1.0028/0029/
+  // 0030/0035, correct option was strictly longest in all 4.
+  const preFixOrganizationalCultureGovernance = [
+    fixtureQuestion(175, [103, 88, 86]),
+    fixtureQuestion(195, [69, 75, 108]),
+    fixtureQuestion(201, [75, 119, 122]),
+    fixtureQuestion(199, [88, 100, 78])
+  ];
+
+  assert.equal(familyLengthBiasRatio(preFixGovernanceEffectiveness), 1);
+  assert.equal(familyLengthBiasRatio(preFixOrganizationalCultureGovernance), 1);
+
+  // Sanity check the detector isn't just always true: mixed lengths where
+  // the correct option is NOT always longest must not report a 100% ratio.
+  const postFixMixedExample = [
+    fixtureQuestion(168, [145, 148, 122]),
+    fixtureQuestion(116, [106, 129, 105]), // correct is NOT longest here
+    fixtureQuestion(194, [135, 129, 124])
+  ];
+  assert.notEqual(familyLengthBiasRatio(postFixMixedExample), 1);
+});
+
 // --- Non-blocking similarity signal -----------------------------------
 // This check NEVER fails the suite. Per architect decision #6, a raw
 // text-similarity score is informational only; it is printed for human
