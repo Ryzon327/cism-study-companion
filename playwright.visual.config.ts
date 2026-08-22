@@ -16,7 +16,11 @@ import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
   testDir: "tests/frontend/visual",
   fullyParallel: false,
-  reporter: [["list"]],
+  // HTML report only in CI (Phase 8A) — a browsable artifact for
+  // diagnosing a visual-diff failure without re-running locally; the
+  // per-test actual/expected/diff PNGs Playwright already writes to
+  // test-results/ on any failure need no extra reporter config.
+  reporter: process.env.CI ? [["list"], ["html", { open: "never" }]] : [["list"]],
   use: {
     baseURL: "http://localhost:5173"
   },
