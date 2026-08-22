@@ -132,6 +132,24 @@ export function deriveJourneySteps(currentDomainId: string | null): JourneyStep[
   }));
 }
 
+/**
+ * A short orientation label for the Home snapshot card, generically
+ * derived from whichever concept the current lesson teaches — never
+ * hard-coded per lesson/domain, so it works unchanged for any future
+ * concept. Concept `display_name`s that use a colon as a short-label /
+ * elaboration separator (e.g. "Governance effectiveness: structure and
+ * activity vs. measured outcome") yield just the short label; a
+ * display_name with no colon is already short enough to use as-is. This
+ * is deliberately never the same string as `reason` (the main paragraph,
+ * sourced from `lesson.objective`) — see the Phase 7C Home UX correction
+ * in docs/learning/PHASE-7C-GATE-RECORD.md for why the two were
+ * duplicating each other before this function existed.
+ */
+export function shortConceptLabel(displayName: string): string {
+  const colonIndex = displayName.indexOf(":");
+  return colonIndex === -1 ? displayName : displayName.slice(0, colonIndex).trim();
+}
+
 export const productionContentSource: DailyStudyContentSource = {
   getHomeState() {
     const lesson = requireProductionLesson(todaysLessonId);
@@ -156,7 +174,7 @@ export const productionContentSource: DailyStudyContentSource = {
             : `${domainDisplayName} of ${JOURNEY_STEP_DEFS.length}`,
         title: concept?.display_name ?? lesson.objective,
         reason: lesson.objective,
-        estimatedMinutes: 25
+        focus: concept ? shortConceptLabel(concept.display_name) : domainDisplayName
       }
     };
   },

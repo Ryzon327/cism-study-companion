@@ -23,7 +23,7 @@ export function HomeScreen({ onNavigate, contentSource }: HomeScreenProps): JSX.
           <p class="home-hero-reason">{todayFocus.reason}</p>
           <div class="home-hero-actions">
             <Button onClick={() => onNavigate("daily-study-session")}>Start Today's Study &rarr;</Button>
-            <span class="home-hero-meta">~{todayFocus.estimatedMinutes} min session</span>
+            <span class="home-hero-meta">Quick study session</span>
           </div>
         </div>
 
@@ -31,7 +31,8 @@ export function HomeScreen({ onNavigate, contentSource }: HomeScreenProps): JSX.
           <span class="home-hero-snapshot-numeral">{todayFocus.domainNumeral}</span>
           <span class="home-hero-snapshot-position">{todayFocus.domainPosition}</span>
           <span class="home-hero-snapshot-rule" />
-          <span class="home-hero-snapshot-detail">{todayFocus.reason}</span>
+          <span class="home-hero-snapshot-label">Focus</span>
+          <span class="home-hero-snapshot-detail">{todayFocus.focus}</span>
         </aside>
       </section>
 

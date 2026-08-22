@@ -23,7 +23,12 @@ export interface TodayFocusFixture {
   domainPosition: string;
   title: string;
   reason: string;
-  estimatedMinutes: number;
+  // Short orientation label for the Home snapshot card ONLY — never the
+  // same text as `reason` (the main paragraph's source). Deliberately not
+  // a duration estimate: see docs/learning/PHASE-7C-GATE-RECORD.md's Home
+  // UX correction entry for why a fabricated numeric session length was
+  // removed instead of being replaced with a different guessed number.
+  focus: string;
 }
 
 export interface HomeStateFixture {

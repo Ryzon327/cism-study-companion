@@ -191,29 +191,34 @@
   {
     "id": "lesson.d1.governance-effectiveness",
     "domain": "domain.d1",
-    "concepts": ["concept.d1.governance-effectiveness"],
+    "concepts": ["concept.d1.governance-effectiveness", "concept.d1.policy-artifact-hierarchy"],
     "patterns": ["pattern.p07", "pattern.p14"],
     "prerequisites": ["lesson.d1.business-justification-roadmap"],
-    "objective": "Recognize that frameworks, standards, and GRC mechanisms create structure and consistency but do not by themselves prove governance is effective - effectiveness requires measuring whether security activity produces the intended business/risk outcome, not merely how much activity occurred.",
-    "context": "A framework and a standard both exist to create consistency and structure for a security program - they are a means, not the goal itself. GRC integrates governance, risk, and compliance activities across the enterprise to reduce duplication and improve efficiency. None of these, on their own, tell leadership whether the security program is actually achieving its intended outcome - that requires measurement focused on results, not activity counts.",
-    "cism_perspective": "CISM stems often describe an enterprise that has adopted a framework, published standards, or reports a high volume of security activity, then ask whether this demonstrates effectiveness. The correct answer recognizes that structure and activity are necessary but not sufficient - effectiveness is demonstrated by outcome-focused measurement, not by the existence or volume of the machinery itself.",
+    "objective": "Recognize that frameworks, standards, and GRC mechanisms create structure and consistency but do not by themselves prove governance is effective - effectiveness requires measuring whether security activity produces the intended business/risk outcome, not merely how much activity occurred - and recognize policy/standard/procedure/guideline as that same structure, distinguished by authority and prescriptiveness, not a fixed document count.",
+    "context": "A framework and a standard both exist to create consistency and structure for a security program - they are a means, not the goal itself. GRC integrates governance, risk, and compliance activities across the enterprise to reduce duplication and improve efficiency. None of these, on their own, tell leadership whether the security program is actually achieving its intended outcome - that requires measurement focused on results, not activity counts. That structure has its own hierarchy: policy sets high-level management direction; a standard sets the mandatory boundary that links policy to practice; a procedure is the specific mandatory method; a guideline is recommended, not mandatory. What matters is authority and prescriptiveness, not memorizing four definitions or assuming one rigid document tree.",
+    "cism_perspective": "CISM stems often describe an enterprise that has adopted a framework, published standards, or reports a high volume of security activity, then ask whether this demonstrates effectiveness. The correct answer recognizes that structure and activity are necessary but not sufficient - effectiveness is demonstrated by outcome-focused measurement, not by the existence or volume of the machinery itself. A related stem may ask which artifact a statement represents - follow its actual authority and prescriptiveness, not surface wording.",
     "recognition_clues": [
       "The stem describes adopting a framework, publishing standards, or a high count of security activities, then asks about effectiveness - that's an implementation-does-not-prove-effectiveness signal.",
-      "An answer choice reports how much was done rather than what outcome resulted - that's an activity-count trap, not a measurement of effectiveness."
+      "An answer choice reports how much was done rather than what outcome resulted - that's an activity-count trap, not a measurement of effectiveness.",
+      "Detailed 'mandatory boundary' or 'required steps' language signals a standard or procedure, not policy - policy sets direction only."
     ],
     "scenario": "An enterprise adopts a recognized security framework and reports that it completed all planned control assessments this year. Leadership asks whether the security program is effective. Completing the assessments shows the program is operating - it does not, by itself, show that the intended risk or business outcomes were achieved.",
     "traps": [
       "Treating framework adoption or standard publication as proof the program works.",
-      "Measuring effectiveness by counting activities completed rather than the outcomes those activities were meant to produce."
+      "Measuring effectiveness by counting activities completed rather than the outcomes those activities were meant to produce.",
+      "Treating 'guideline' as interchangeable with 'standard'/'procedure' - a guideline is discretionary; the other two are mandatory."
     ],
-    "memory_rules": ["Activity shows the program is running; outcomes show it's working."],
-    "retrieval_refs": ["question.d1.0022"],
+    "memory_rules": [
+      "Activity shows the program is running; outcomes show it's working.",
+      "Policy says what and why at the top; standards set mandatory boundaries; procedures say exactly how; guidelines just recommend."
+    ],
+    "retrieval_refs": ["question.d1.0022", "question.d1.0031"],
     "content_status": "CANDIDATE",
     "verification_status": "unverified",
     "active": true,
-    "version": 1,
+    "version": 2,
     "source": "source.learner-supplied.domain-1-question-bank",
-    "note": "PHASE 7B-2 CANDIDATE — authored by Claude Code per approved Phase 7A architecture and Phase 7B-2 scope (D1-U7), kept as one combined unit per the explicit Phase 7B-2 instruction not to split it preemptively. Grounded in docs/learning/PATTERN-LIBRARY.md (P07, P14) and evidenced by the supplied Domain 1 source material's Information Governance Frameworks and Standards sub-area. Deliberately not a framework-cataloging lesson. Builds on lesson.d1.business-justification-roadmap (U6) as its prerequisite - the final lesson in the Phase 7B-2 slice (U5 -> U6 -> U7). Not yet human-reviewed or promoted."
+    "note": "PHASE 7B-2 CANDIDATE — authored by Claude Code per approved Phase 7A architecture and Phase 7B-2 scope (D1-U7), kept as one combined unit per the explicit Phase 7B-2 instruction not to split it preemptively. Grounded in docs/learning/PATTERN-LIBRARY.md (P07, P14) and evidenced by the supplied Domain 1 source material's Information Governance Frameworks and Standards sub-area. Deliberately not a framework-cataloging lesson. Builds on lesson.d1.business-justification-roadmap (U6) as its prerequisite - the final lesson in the Phase 7B-2 slice (U5 -> U6 -> U7). PHASE 7C UPDATE (Domain 1 readiness follow-up, G1): version bumped 1 -> 2. Additively extends this same lesson (not a new unit, per explicit architect instruction) to also teach the policy/standard/procedure/guideline hierarchy - docs/learning/DOMAIN-1-BLUEPRINT.md's canonical 'must accomplish' requirement, found untaught anywhere in Domain 1 by the Phase 7C read-only assessment. retrieval_refs gained a second entry (question.d1.0031, family.d1.policy-artifact-hierarchy's anchor) alongside the original question.d1.0022 (family.d1.governance-effectiveness) - this lesson's own Apply step is unaffected (anchorFamilyIdFor still resolves to retrieval_refs[0]'s family, i.e. the original, unchanged governance-effectiveness family), while the new family becomes recall-eligible for every later lesson in the chain (U8, U9) via the same recall-pool mechanism that already expands each retrieval_ref's family. All originally-approved U7 text is preserved verbatim; only additive sentences/clues/traps/rules were appended. Not yet human-reviewed or promoted."
   },
   {
     "id": "lesson.d1.legal-regulatory-risk",
