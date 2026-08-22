@@ -273,5 +273,70 @@
     "version": 1,
     "source": "source.learner-supplied.domain-1-question-bank",
     "note": "PHASE 7B-3 CANDIDATE — authored by Claude Code per approved Phase 7A architecture and Phase 7B-3 scope (D1-U9, Domain 1 capstone). Grounded in docs/learning/PATTERN-LIBRARY.md (P07 — implementation does not prove effectiveness, extended here to the cultural/behavioral layer) and evidenced by the supplied Domain 1 source material's Organizational Culture sub-area. Builds on lesson.d1.legal-regulatory-risk (U8) as its single prerequisite, per the explicit Phase 7B-3 instruction not to build a special one-off recall selector for U9 - the existing cumulative-recall architecture already surfaces the full U1-U8 chain through U8's own prerequisite links. This completes the nine-unit Domain 1 curriculum architecture approved in Phase 7A; it does not itself constitute a Domain 1 completion gate (see the separately deferred Domain 1 end-to-end validation gate). Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d2.risk-fundamentals",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-fundamentals"],
+    "patterns": ["pattern.p12"],
+    "prerequisites": ["lesson.d1.organizational-culture-governance"],
+    "objective": "Distinguish threat, vulnerability, and risk from each other, and recognize that a new or changing technology (such as an AI-powered system) creates new risk context without exempting the enterprise from the standard risk-management discipline.",
+    "context": "A threat is something capable of causing harm. A vulnerability is a weakness that a threat could exploit. Neither one, by itself, is risk - risk is what results when a credible threat, an exploitable vulnerability, and a real business consequence all come together. Counting vulnerabilities is not the same as measuring risk: a system with many vulnerabilities but no credible threat or negligible business impact can represent less risk than a system with a single vulnerability whose exploitation would be severe. This same reasoning applies when new technology or business conditions appear - a new AI-powered system, for example, changes what threats/vulnerabilities/exposures exist, but the enterprise still applies its established risk-management process to understand and address them; new technology does not require an entirely separate risk discipline, and it does not get a pass from the discipline either.",
+    "cism_perspective": "CISM stems often describe vulnerability counts, scan results, or a new technology and ask what this means for risk. The correct answer resists treating any single input - vulnerability count, threat presence, or a system simply being new - as equivalent to risk itself. Risk requires connecting all three: a credible threat, an exploitable weakness, and the business consequence if that weakness were actually exploited.",
+    "recognition_clues": [
+      "The stem gives a vulnerability count or scan result and asks about risk - that's a vulnerability-count-as-risk signal.",
+      "The stem introduces a new technology (an AI system, a new platform) and asks whether it needs special treatment - that's an emerging-risk-context signal, not a request for a new risk process.",
+      "An answer choice compares two systems using only vulnerability count or only threat presence, without mentioning business consequence."
+    ],
+    "scenario": "An enterprise deploys a new AI-powered system integrated into an existing business process. The new system does not eliminate the need for risk assessment, and it does not require an entirely separate risk-management process either - it is assessed the same way any other new exposure would be: by identifying what threats and vulnerabilities it introduces and what business impact would follow if they were exploited.",
+    "traps": [
+      "Treating vulnerability count as if it were the same thing as risk.",
+      "Assuming a new technology is risk-free because it hasn't been exploited yet, or so risky it must be avoided entirely, rather than assessed.",
+      "Assuming a new technology requires a wholly separate, specialty risk-management process rather than the enterprise's existing one."
+    ],
+    "memory_rules": [
+      "Threat + vulnerability + business impact = risk - not any one alone.",
+      "New technology changes the risk context; it does not replace risk management."
+    ],
+    "retrieval_refs": ["question.d2.0002"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-1 CANDIDATE (D2-U1, Domain 2 entry point) — authored by Claude Code per approved Phase 9A Domain 2 architecture and Phase 9B-1 scope. Prerequisite is lesson.d1.organizational-culture-governance (D1-U9, Domain 1's capstone lesson), carrying the full cumulative Domain 1 + Foundation recall pool forward into Domain 2 exactly as Domain 1's own first lesson carried Foundation's recall pool forward. Grounded in docs/learning/PATTERN-LIBRARY.md (P12) and evidenced by the supplied Domain 2 source material's Risk Assessment and Analysis and Emerging Risk and Threat Landscape sub-areas. AI appears only as one example of emerging risk, per the explicit Phase 9B-1 instruction not to make AI the lesson. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d2.risk-assessment-lifecycle",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-assessment-lifecycle"],
+    "patterns": ["pattern.p04"],
+    "prerequisites": ["lesson.d2.risk-fundamentals"],
+    "objective": "Recognize which stage of the CANONICAL risk lifecycle (Context, Identify, Analyze, Evaluate) a scenario describes by reading its own stated facts as evidence of which stages have already occurred - not by memorizing the stage order.",
+    "context": "Consider an enterprise launching a new online payment capability, walked through all four stages as one continuous story. Context asks: what are we assessing, and under what conditions? - here, that's the objective (enable online payments), the scope (which systems, processes, and third parties are included), and the criteria the risk will eventually be judged against. Identify asks: what could create risk? - the assets involved (the payment system, customer data), the threats (fraud, a breach), and the vulnerabilities that could let a threat succeed. Analyze asks: how likely is it, and how bad could it be? - for example, a low-likelihood but high-impact fraud scenario, once likelihood and impact have actually been characterized. Evaluate asks: given the analysis, is this acceptable, or does it require action? - comparing that analyzed risk against the enterprise's own risk appetite and tolerance. Each stage only makes sense once the one before it has actually happened, so a scenario's own stated facts are evidence of which stages are already complete - Domain 2 is simply the first place this 'what stage am I in' reasoning (already introduced in the abstract by Foundation, and by Domain 1's roadmap-follows-strategy sequencing) has an explicit, named sequence to apply it against.",
+    "cism_perspective": "The critical question on every CISM stem in this area is: what has already happened, and therefore where am I in the lifecycle? If a stem says likelihood and impact have already been determined, Context, Identify, and Analyze have all already occurred - the scenario is now at Evaluate, whether or not the word 'evaluate' ever appears. Jumping to a later stage (deciding a risk needs treatment before it has even been analyzed) or declaring a risk significant before it's been evaluated against actual criteria is the single most common trap here - the fix is reading what already happened, not memorizing what comes next in the abstract.",
+    "recognition_clues": [
+      "The stem states an objective has just been defined and asks what comes NEXT - that's a Context-stage sequencing signal.",
+      "The stem describes a newly formed effort to assess risk and asks what should happen FIRST - that's an Identify-stage signal (what must exist before anything else can be analyzed).",
+      "The stem gives likelihood and impact figures and asks whether the risk 'needs to be treated' - that's testing whether Analyze is being confused with Evaluate."
+    ],
+    "scenario": "An enterprise launching a new online payment capability first defines its objective, scope, and criteria (Context: what are we assessing, and under what conditions?); then identifies the payment system, customer data, and the threats/vulnerabilities that could put them at risk (Identify: what could create risk?); then determines how likely a fraud event is and how much it would cost the business (Analyze: how likely is it, and how bad could it be?); and only then compares that analyzed risk against its own risk appetite to decide whether it's acceptable or needs action (Evaluate: given the analysis, is this acceptable, or does it require action?). A stem that already states likelihood and impact have been determined has already completed Context, Identify, and Analyze - it is asking about Evaluate, whether or not that word appears.",
+    "traps": [
+      "Treating a risk that has only been analyzed (likelihood/impact known) as if it has already been evaluated (compared against criteria) or already decided (ready for treatment).",
+      "Skipping ahead to a treatment or ownership question before the assessment's own scope or the risk's own likelihood/impact has actually been established.",
+      "Assuming the earliest-sounding stage is always correct, rather than reading the scenario's own stated facts as evidence of which stages are already complete."
+    ],
+    "memory_rules": [
+      "Context, then Identify, then Analyze, then Evaluate - each one depends on the last actually being done.",
+      "Analyzed tells you how bad and how likely; evaluated tells you whether that's acceptable - they are not the same step.",
+      "Ask: what has already happened, and therefore where am I in the lifecycle?"
+    ],
+    "retrieval_refs": ["question.d2.0005"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 2,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-1 CANDIDATE (D2-U2) — authored by Claude Code per approved Phase 9A Domain 2 architecture and Phase 9B-1 scope. Deliberately stops at Evaluate — Treat and later lifecycle stages are out of scope for this batch. Grounded in docs/learning/LIFECYCLE-MODEL.md's CANONICAL Domain 2 risk lifecycle and docs/learning/PATTERN-LIBRARY.md (P04), evidenced by the supplied Domain 2 source material's Risk Assessment and Analysis sub-area. The cross-domain connection to Foundation's STAGE reasoning step and Domain 1's business-case/roadmap sequencing (per the approved Phase 9A cross-domain recall design) is carried in this lesson's own context/cism_perspective narrative; the mechanical recall pool reaches the full Domain 1 + Foundation chain transitively through lesson.d2.risk-fundamentals's own prerequisite, since D2-U2 is only the second Domain 2 lesson authored and has no non-adjacent Domain 2 unit yet to skip over — the approved non-adjacent recall design (U7 recalling U8) begins mechanically once those later units exist. PHASE 9B-1 HUMAN EXPERIENCE GATE FOLLOW-UP: version bumped 1 -> 2 following founder-reported feedback that U2 lacked a concrete scenario reference for applying the lifecycle in practice ('i need reference'). context and scenario were rewritten around one continuous online-payment-capability story walking Context -> Identify -> Analyze -> Evaluate, framed as four recognition questions (what are we assessing?/what could create risk?/how likely and how bad?/is this acceptable or does it require action?); cism_perspective was rewritten to foreground the explicit 'what has already happened, and therefore where am I' reasoning question; a third memory_rule states that question directly. objective, recognition_clues, and the first two memory_rules carry the same substance as version 1, reworded only to foreground stated-fact evidence over memorized order; retrieval_refs, prerequisites, concepts, and patterns are unchanged. All three existing question variants (question.d2.0005/0006/0007) were reviewed against this lesson's new framing and found to already provide sufficient stated-fact evidence for stage-location reasoning - none were rewritten, per the explicit instruction not to automatically modify variants that already work. Not yet human-reviewed against this revision."
   }
 ]

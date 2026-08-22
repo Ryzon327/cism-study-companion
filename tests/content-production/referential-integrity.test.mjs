@@ -62,6 +62,38 @@ test("lifecycle/stage are only ever set for domains that have a canonical lifecy
   assert.equal(bad.length, 0, `Domain 1/Foundation questions must never reference a lifecycle: ${bad.join(", ")}`);
 });
 
+// Added Phase 9B-1: the first production questions to actually set
+// lifecycle/stage (Domain 2) exist now, so this closes a previously-latent
+// gap — lifecycle/stage were loaded into the index (see
+// helpers/load-production.mjs) but never actually checked for resolution
+// until real data existed to check.
+test("every Question.lifecycle/stage, when set, resolves to a real lifecycle/lifecycle-stage entry, and the stage belongs to the declared lifecycle", () => {
+  const bad = [];
+  for (const q of data.questions) {
+    if (q.lifecycle && !resolves(q.lifecycle, "lifecycles")) bad.push(`${q.id}.lifecycle -> ${q.lifecycle}`);
+    if (q.stage) {
+      if (!resolves(q.stage, "lifecycleStages")) {
+        bad.push(`${q.id}.stage -> ${q.stage}`);
+      } else {
+        const stageEntry = data.lifecycleStages.find((s) => s.id === q.stage);
+        if (q.lifecycle && stageEntry.lifecycle !== q.lifecycle) {
+          bad.push(`${q.id}.stage ${q.stage} belongs to ${stageEntry.lifecycle}, not declared lifecycle ${q.lifecycle}`);
+        }
+      }
+    }
+  }
+  assert.equal(bad.length, 0, bad.join("\n"));
+});
+
+test("every Family.lifecycle/stage_target, when set, resolves to a real lifecycle/lifecycle-stage entry", () => {
+  const bad = [];
+  for (const f of data.families) {
+    if (f.lifecycle && !resolves(f.lifecycle, "lifecycles")) bad.push(`${f.id}.lifecycle -> ${f.lifecycle}`);
+    if (f.stage_target && !resolves(f.stage_target, "lifecycleStages")) bad.push(`${f.id}.stage_target -> ${f.stage_target}`);
+  }
+  assert.equal(bad.length, 0, bad.join("\n"));
+});
+
 test("every Lesson's domain/concepts/patterns/prerequisites/retrieval_refs resolve", () => {
   const bad = [];
   for (const l of data.lessons) {

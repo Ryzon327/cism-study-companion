@@ -130,5 +130,29 @@
     "source": "source.learner-supplied.domain-1-question-bank",
     "version": 1,
     "note": "PHASE 7C CANDIDATE (Domain 1 readiness follow-up, G1) — authored by Claude Code following the Phase 7C read-only assessment's finding that this canonical docs/learning/DOMAIN-1-BLUEPRINT.md requirement ('the learner can recognize the policy/standard/procedure/guideline hierarchy') was not yet taught anywhere in Domain 1. Activates the previously-documented-but-unactivated Policy vs. Standard vs. Procedure vs. Guideline pair in docs/learning/CONFUSING-CONCEPTS.md. Taught inside lesson.d1.governance-effectiveness (U7) rather than a new unit, per explicit architect instruction. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "concept.d2.risk-fundamentals",
+    "display_name": "Threat vs. vulnerability vs. risk",
+    "home_domain": "domain.d2",
+    "plain": "A threat is something capable of causing harm; a vulnerability is a weakness that could be exploited; risk is what results from the combination of a threat, a vulnerability, and the business impact if the two came together - not any one of these three alone. Counting vulnerabilities, or noting that a threat exists, does not by itself tell you how much risk exists; the business consequence if exploitation actually occurred is what determines that.",
+    "related_patterns": ["pattern.p12"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "version": 1,
+    "note": "PHASE 9B-1 CANDIDATE — authored by Claude Code per approved Phase 9A Domain 2 architecture (D2-U1). Grounded in docs/learning/PATTERN-LIBRARY.md (P12) and evidenced by the supplied Domain 2 source material's Risk Assessment and Analysis and Emerging Risk and Threat Landscape sub-areas. Deliberately scoped to Threat/Vulnerability/Risk only, per the explicit Phase 9B-1 instruction — Inherent vs. Residual Risk is deferred to a later batch where treatment/residual risk has meaning. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "concept.d2.risk-assessment-lifecycle",
+    "display_name": "Risk assessment lifecycle: Context, Identify, Analyze, Evaluate",
+    "home_domain": "domain.d2",
+    "plain": "Before any risk can be assessed, the objectives, scope, and criteria for the assessment must be established (Context). A specific risk is then named (Identify) before its likelihood and impact can be characterized (Analyze). Only once a risk has been analyzed can it be compared against risk appetite/tolerance criteria to judge its significance (Evaluate). Each stage depends on the one before it having actually happened - recognizing which stage a scenario describes is often the key to answering correctly.",
+    "related_patterns": ["pattern.p04"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "version": 1,
+    "note": "PHASE 9B-1 CANDIDATE — authored by Claude Code per approved Phase 9A Domain 2 architecture (D2-U2). Grounded in docs/learning/LIFECYCLE-MODEL.md's CANONICAL Domain 2 risk lifecycle and docs/learning/PATTERN-LIBRARY.md (P04), evidenced by the supplied Domain 2 source material's Risk Assessment and Analysis sub-area. Deliberately stops at Evaluate — Treat and later stages are out of scope for this batch, per explicit instruction. Not yet human-reviewed or promoted."
   }
 ]
