@@ -51,6 +51,31 @@ AV, EF, SLE, ARO, ALE in the
 direct cost-benefit comparison but requires more reliable data. Neither is
 universally "better" — see [Pattern P10](PATTERN-LIBRARY.md#p10--method-fits-objective). **[CANDIDATE]**
 
+### Risk Owner vs. Control Owner
+The Risk Owner is accountable **for the risk itself**: they make or own the
+business risk decision within their appropriate authority, and determine or
+accept how the risk should ultimately be addressed, subject to
+organizational governance. The Control Owner is accountable **for a
+specific control or control set** — its design, operation, maintenance, and
+effectiveness — and provides control-related information and performance
+evidence. A Control Owner does not automatically become the Risk Owner
+merely by operating a control that addresses the risk. This is not "the
+Risk Owner is always more senior" — the same ROLE + VERB + CONTEXT
+reasoning that governs the rest of the
+[Role & Authority Matrix](ROLE-AUTHORITY-MATRIX.md) applies here: match
+accountability for *this specific risk decision* to the person who actually
+holds it in *this specific scenario*, not to a fixed hierarchy. See
+[Pattern P02](PATTERN-LIBRARY.md#p02--authority-follows-accountability) and
+[Pattern P03](PATTERN-LIBRARY.md#p03--role-verb-matching). **[CANDIDATE]** —
+approved Phase 9A as a planned Domain 2 distinction, evidenced by the
+supplied Domain 2 source material's "Risk and Control Ownership" Knowledge
+Statement area (22 questions; e.g., a risk-manager's testing expertise vs.
+the individual accountable for loss, and several AI/generative-AI system
+scenarios explicitly framed as "who is the PRIMARY owner of the risk and
+controls"). Planned to be taught and tested in
+[`D2-U8`](DOMAIN-2-BLUEPRINT.md#d2-u8--risk-owner-vs-control-owner); not yet
+implemented as production content.
+
 ## Domain 1 / Domain 3 pairs
 
 ### Governance vs. Management
