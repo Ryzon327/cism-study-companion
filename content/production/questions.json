@@ -1145,5 +1145,329 @@
     "version": 1,
     "source": "source.learner-supplied.domain-1-question-bank",
     "note": "PHASE 7C CANDIDATE (Domain 1 readiness follow-up, G4) - authored by Claude Code as the fourth variant of family.d1.organizational-culture-governance (D1-U9), added to close a gap the Phase 7C read-only assessment identified: the family's own teaching_objective asserted that culture shapes 'how risk appetite is expressed in decisions' without any variant actually testing it. Directly evidenced by the supplied Domain 1 source material's 'MOST significant factor in determining risk appetite... organizational culture' question. Deliberately does not teach that culture overrides approved risk appetite or that training fixes risk appetite - both incorrect distractors here. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0002",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-fundamentals"],
+    "patterns": ["pattern.p12"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager", "role.board-senior-management"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-fundamentals",
+    "variation_tags": ["business-setting:vulnerability-count-comparison", "distractor-temptation:vulnerability-count-as-risk", "asset-or-process-context:legacy-vs-payment-systems"],
+    "prompt": "A security manager reports that a legacy internal reporting application has 40 known vulnerabilities, while a newer customer-payment application has only 3. A board member asks which system represents the greater risk to the enterprise. What is the BEST response?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Risk cannot be determined from vulnerability count alone - it depends on how likely each system's vulnerabilities are to be exploited and what business impact would follow if they were, not simply how many vulnerabilities exist.",
+        "correct": true,
+        "rationale": "Vulnerability count is only one input. Risk requires connecting the vulnerabilities to a credible threat and the resulting business impact - a system with fewer vulnerabilities can still represent the greater risk if exploitation would be more likely or more damaging."
+      },
+      {
+        "key": "b",
+        "text": "The legacy reporting application represents the greater risk, since it has significantly more known vulnerabilities.",
+        "correct": false,
+        "rationale": "This treats vulnerability count itself as equivalent to risk - exactly the trap this reasoning target exists to catch. A higher vulnerability count does not, by itself, establish greater risk.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "The customer-payment application represents the greater risk, since payment-related systems are always the highest priority for regulators and customers alike, regardless of vulnerability count or actual exposure.",
+        "correct": false,
+        "rationale": "This substitutes a general assumption about system category for actually reasoning about threat, vulnerability, and impact in this specific scenario - risk still needs to be determined, not assumed from a system's category alone.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "d",
+        "text": "Risk is effectively the same for both systems, since both have vulnerabilities present and neither has yet been exploited.",
+        "correct": false,
+        "rationale": "This dismisses the need to differentiate risk at all - the presence of any vulnerability does not mean all vulnerable systems carry equal risk; likelihood and impact still need to be considered.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "Risk is the combination of a credible threat, an exploitable vulnerability, and the resulting business impact - not any single input like vulnerability count. A system with fewer vulnerabilities can still represent the greater risk if exploitation would be more likely or more damaging.",
+    "recognition_clue": "A stem comparing two systems primarily by vulnerability count, and asking which represents greater risk, is signaling that risk cannot be read off the count alone.",
+    "memory_rule": "Vulnerability count is one input, not the answer - threat, vulnerability, and impact together determine risk.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-1 CANDIDATE - authored by Claude Code as the first variant of family.d2.risk-fundamentals (D2-U1). Original scenario testing the reasoning target evidenced by the supplied Domain 2 source material's Risk Assessment and Analysis sub-area (e.g., the 'likelihood of compromise and subsequent impact' vs. 'existence of identified threats and vulnerabilities' distinction) - not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0003",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-fundamentals"],
+    "patterns": ["pattern.p12"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.business-process-owner"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-fundamentals",
+    "variation_tags": ["business-setting:ai-crm-integration", "distractor-temptation:new-technology-exemption", "asset-or-process-context:emerging-technology-integration"],
+    "prompt": "An enterprise is integrating a new AI-powered chatbot into its existing customer relationship management (CRM) system. A business unit leader asks whether this introduces any risk-management considerations beyond what the CRM system has already gone through. What is the BEST response?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Yes - the new AI capability changes what threats, vulnerabilities, and exposures exist, so it should be assessed through the enterprise's existing risk-management process, the same way any other new exposure would be.",
+        "correct": true,
+        "rationale": "New technology changes the risk context - new capabilities can introduce new threats and vulnerabilities - so it needs to be assessed. That assessment uses the enterprise's existing risk-management process; the technology being new doesn't require a separate process, and it doesn't exempt it from one either."
+      },
+      {
+        "key": "b",
+        "text": "No further consideration is needed, since the CRM system already completed a risk assessment previously.",
+        "correct": false,
+        "rationale": "A prior assessment of the CRM system does not cover a new capability added afterward - the new AI feature changes the system's threat/vulnerability profile and needs its own assessment.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Yes - a dedicated AI-specific risk management framework, entirely separate from the enterprise's existing risk-management process and governed by its own dedicated policies, should be created before proceeding.",
+        "correct": false,
+        "rationale": "This overcorrects: emerging technology changes the risk context, but it doesn't require an entirely separate specialty risk-management discipline - the enterprise's existing risk-management process already applies.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "No - since the technology is unproven, all use of it should be avoided until it has a longer track record.",
+        "correct": false,
+        "rationale": "This treats 'new' as equivalent to 'must be avoided' rather than 'must be assessed' - avoidance without assessment isn't a risk-management response, it's skipping the process entirely.",
+        "repair_target": "repair.decision-error"
+      }
+    ],
+    "explanation": "New technology changes the risk context by introducing new potential threats, vulnerabilities, and exposures - it should be assessed through the enterprise's existing risk-management process, not exempted from assessment and not requiring an entirely separate specialty process.",
+    "recognition_clue": "A stem introducing a new technology (such as an AI capability) and asking whether special treatment is needed is testing whether new technology bypasses or requires a separate risk-management process, rather than simply being assessed by the existing one.",
+    "memory_rule": "New technology changes the risk context; it does not replace risk management.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-1 CANDIDATE - authored by Claude Code as the second variant of family.d2.risk-fundamentals (D2-U1), the approved emerging-risk/AI example. Original scenario testing the reasoning target evidenced by the supplied Domain 2 source material's Emerging Risk and Threat Landscape sub-area (e.g., the AI risk-management-culture question). AI appears only as one illustrative emerging-risk scenario, per explicit instruction - not a dedicated AI-governance lesson, framework, or policy. Not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0004",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-fundamentals"],
+    "patterns": ["pattern.p12"],
+    "qualifier": "qualifier.most",
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-fundamentals",
+    "variation_tags": ["business-setting:high-impact-vs-many-minor-vulnerabilities", "distractor-temptation:vulnerability-count-as-risk", "asset-or-process-context:revenue-system-vs-test-environment"],
+    "prompt": "System A has a single unpatched vulnerability; if exploited, it would halt the enterprise's core revenue-generating operation for several days. System B, an internal test environment used only twice a year with no sensitive data, has numerous minor vulnerabilities that have not been remediated. Which system represents the MOST significant risk to the enterprise?",
+    "options": [
+      {
+        "key": "a",
+        "text": "System A - because the business impact of a single exploited vulnerability there would be severe, even though System B has far more vulnerabilities overall.",
+        "correct": true,
+        "rationale": "Risk depends on the combination of likelihood/exploitability and business impact, not the sheer count of vulnerabilities present. A single high-impact exposure can represent greater risk than many low-impact ones."
+      },
+      {
+        "key": "b",
+        "text": "System B - because it has significantly more unremediated vulnerabilities than System A.",
+        "correct": false,
+        "rationale": "This again treats vulnerability count as equivalent to risk. System B's vulnerabilities carry limited business consequence given its low usage and lack of sensitive data, regardless of how many exist.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Both systems represent essentially equal risk, since each has at least one unremediated vulnerability.",
+        "correct": false,
+        "rationale": "This dismisses the need to weigh business impact at all - the mere presence of an unremediated vulnerability does not make two systems equivalent in risk.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "Neither system currently represents meaningful risk, since both sets of vulnerabilities are already known, documented, and being actively tracked in the vulnerability register.",
+        "correct": false,
+        "rationale": "Being identified and tracked is an activity, not a risk reduction - a known, unremediated vulnerability with severe potential impact still represents real risk until it is actually addressed.",
+        "repair_target": "repair.business-context-error"
+      }
+    ],
+    "explanation": "Risk depends on the combination of likelihood/exploitability and business impact, not vulnerability count. A single high-impact exposure can represent greater risk than many low-impact ones, and being tracked is not the same as being resolved.",
+    "recognition_clue": "A stem contrasting a high-impact single vulnerability against many low-impact ones is testing whether vulnerability count is mistaken for actual risk.",
+    "memory_rule": "One severe exposure can outweigh many minor ones - count is not impact.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-1 CANDIDATE - authored by Claude Code as the third variant of family.d2.risk-fundamentals (D2-U1). Original scenario grounded in docs/learning/PATTERN-LIBRARY.md's own P12 example scenario (many vulnerabilities/no credible threat/negligible impact vs. few vulnerabilities/severe consequence) and the supplied Domain 2 source material's Risk Assessment and Analysis sub-area - not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0005",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-assessment-lifecycle"],
+    "patterns": ["pattern.p04"],
+    "qualifier": "qualifier.next",
+    "roles_mentioned": ["role.security-manager"],
+    "primary_role": "role.security-manager",
+    "lifecycle": "lifecycle.risk",
+    "stage": "stage.risk.context",
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-assessment-lifecycle",
+    "variation_tags": ["qualifier:next", "lifecycle-framing:context-stage-sequencing", "business-setting:third-party-data-processing-assessment"],
+    "prompt": "A CISO has just finished defining the objective of an upcoming risk assessment: determining the enterprise's exposure from its third-party data-processing arrangements. What should the CISO determine NEXT?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The scope of the assessment - which processes, systems, and third parties will actually be included.",
+        "correct": true,
+        "rationale": "Once the objective of an assessment is defined, the scope that will be examined is determined next - before methodology, constraints, or results can be meaningfully addressed."
+      },
+      {
+        "key": "b",
+        "text": "The specific quantitative risk calculation method to be used.",
+        "correct": false,
+        "rationale": "Selecting a specific assessment method is a later step, appropriate once scope and constraints are understood - not the immediate next step after only the objective has been set.",
+        "repair_target": "repair.sequence-error"
+      },
+      {
+        "key": "c",
+        "text": "The treatment options available for any risk the assessment eventually identifies.",
+        "correct": false,
+        "rationale": "Treatment options come after a risk has been identified, analyzed, and evaluated - not immediately after the assessment's objective alone has been defined.",
+        "repair_target": "repair.lifecycle-error"
+      },
+      {
+        "key": "d",
+        "text": "Which individuals will be assigned responsibility for remediating any risk the assessment eventually finds.",
+        "correct": false,
+        "rationale": "Assigning remediation responsibility presumes risks have already been found and a treatment decided - far too early, given only the objective has been defined so far.",
+        "repair_target": "repair.lifecycle-error"
+      }
+    ],
+    "explanation": "Once an assessment's objective is defined, its scope - what will actually be examined - is determined next, before methodology, constraints, or downstream treatment/ownership questions become relevant.",
+    "recognition_clue": "A stem stating an objective has just been defined and asking what comes NEXT is a Context-stage sequencing signal.",
+    "memory_rule": "Objective, then scope - the rest follows only after both are set.",
+    "evidence_dimensions": ["evidence.lifecycle", "evidence.sequence"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-1 CANDIDATE - authored by Claude Code as the first variant of family.d2.risk-assessment-lifecycle (D2-U2). Original scenario testing the reasoning target evidenced by the supplied Domain 2 source material's genuine NEXT-tagged sequencing question ('Once the objective of performing a security review has been defined, the NEXT step... is to determine: scope') - not a reproduction or paraphrase of that or any specific source question. NEXT is used here because the source genuinely supports this sequencing reasoning, per the approved Phase 9A qualifier strategy. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0006",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-assessment-lifecycle"],
+    "patterns": ["pattern.p04"],
+    "qualifier": "qualifier.first",
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": "lifecycle.risk",
+    "stage": "stage.risk.identify",
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-assessment-lifecycle",
+    "variation_tags": ["qualifier:first", "lifecycle-framing:identify-stage-prerequisite", "business-setting:new-risk-function-asset-inventory"],
+    "prompt": "A newly formed risk management function wants to begin performing information risk analysis across the enterprise's IT environment. What should be done FIRST?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Compile an inventory of the assets involved.",
+        "correct": true,
+        "rationale": "Nothing else - assigning ownership, categorizing assets, or analyzing likelihood and impact - can be meaningfully done before the assets themselves have actually been identified and inventoried."
+      },
+      {
+        "key": "b",
+        "text": "Determine the likelihood and potential business impact of loss events affecting these assets.",
+        "correct": false,
+        "rationale": "Likelihood and impact analysis is a later step (Analyze) - it requires knowing which assets exist first, which hasn't happened yet in this scenario.",
+        "repair_target": "repair.lifecycle-error"
+      },
+      {
+        "key": "c",
+        "text": "Compare identified risks against the enterprise's risk appetite and tolerance.",
+        "correct": false,
+        "rationale": "Evaluating risk against appetite/tolerance criteria comes even later than analysis - this jumps two stages ahead of where the scenario actually is.",
+        "repair_target": "repair.lifecycle-error"
+      },
+      {
+        "key": "d",
+        "text": "Assign ownership responsibility for each asset in the environment.",
+        "correct": false,
+        "rationale": "Ownership can only be assigned to assets that have actually been identified - a plausible-sounding early step, but it still depends on the inventory existing first.",
+        "repair_target": "repair.sequence-error"
+      }
+    ],
+    "explanation": "Nothing else in a risk analysis - ownership, categorization, likelihood/impact - can be meaningfully determined before the relevant assets have actually been identified and inventoried first.",
+    "recognition_clue": "A stem describing a newly formed effort to assess risk and asking what should happen FIRST is an Identify-stage signal.",
+    "memory_rule": "You can't analyze, own, or evaluate an asset that hasn't been identified yet.",
+    "evidence_dimensions": ["evidence.lifecycle", "evidence.sequence"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-1 CANDIDATE - authored by Claude Code as the second variant of family.d2.risk-assessment-lifecycle (D2-U2). Original scenario testing the reasoning target evidenced by the supplied Domain 2 source material's genuine FIRST-tagged question ('What is the FIRST step of performing an information risk analysis?' - asset inventory) - not a reproduction or paraphrase of that or any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0007",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-assessment-lifecycle"],
+    "patterns": ["pattern.p04"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": "lifecycle.risk",
+    "stage": "stage.risk.analyze",
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-assessment-lifecycle",
+    "variation_tags": ["qualifier:best", "lifecycle-framing:analyze-vs-evaluate-distinction", "business-setting:analyzed-risk-treatment-inquiry"],
+    "prompt": "A risk assessment has determined that a particular risk has a high likelihood of occurring and would cause significant financial impact if it did. A stakeholder asks whether this risk needs to be treated. What is the BEST response?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Not yet determinable from likelihood and impact alone - the risk must still be compared against the enterprise's risk appetite and tolerance criteria before a treatment decision can be made.",
+        "correct": true,
+        "rationale": "Likelihood and impact describe how bad and how likely a risk is (Analyze) - whether it needs to be treated depends on comparing that analyzed risk against the enterprise's own criteria (Evaluate), which hasn't happened yet in this scenario."
+      },
+      {
+        "key": "b",
+        "text": "Yes - any risk with high likelihood and high impact must always be treated.",
+        "correct": false,
+        "rationale": "This conflates analysis with evaluation - a high likelihood/impact risk still needs to be compared against the enterprise's actual appetite and tolerance before concluding treatment is required; the analysis alone doesn't decide that.",
+        "repair_target": "repair.lifecycle-error"
+      },
+      {
+        "key": "c",
+        "text": "No further action is required, since the risk has already been identified and analyzed.",
+        "correct": false,
+        "rationale": "This stops the process too early - being identified and analyzed is not the same as being evaluated for acceptability, and evaluation still needs to happen before any conclusion about treatment.",
+        "repair_target": "repair.lifecycle-error"
+      },
+      {
+        "key": "d",
+        "text": "It depends on which specific quantitative method was used to calculate the impact figure.",
+        "correct": false,
+        "rationale": "This focuses on assessment methodology rather than the actual gap in this scenario - whether the risk has been compared against the enterprise's criteria, which is a separate step from which calculation method produced the impact figure.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "Analysis (likelihood and impact) is a separate step from evaluation (comparing the analyzed risk against appetite/tolerance criteria) - a high-likelihood, high-impact risk still needs to be evaluated before concluding it must be treated.",
+    "recognition_clue": "A stem giving likelihood/impact figures and asking whether a risk 'needs to be treated' is testing whether Analyze is being confused with Evaluate.",
+    "memory_rule": "Analyzed tells you how bad and how likely; evaluated tells you whether that's acceptable.",
+    "evidence_dimensions": ["evidence.lifecycle", "evidence.sequence"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-1 CANDIDATE - authored by Claude Code as the third variant of family.d2.risk-assessment-lifecycle (D2-U2). Original scenario grounded directly in docs/learning/LIFECYCLE-MODEL.md's CANONICAL Analyze/Evaluate stage definitions ('Analyze: risk has not yet been judged against criteria' / 'Evaluate: analyzed risk compared against risk criteria/appetite') - not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
   }
 ]

@@ -110,7 +110,9 @@ test("every family has exactly its expected active variant count (Phase 6C + Pha
     "family.d1.governance-effectiveness": 3,
     "family.d1.legal-regulatory-risk": 4,
     "family.d1.organizational-culture-governance": 4,
-    "family.d1.policy-artifact-hierarchy": 3
+    "family.d1.policy-artifact-hierarchy": 3,
+    "family.d2.risk-fundamentals": 3,
+    "family.d2.risk-assessment-lifecycle": 3
   };
   const bad = [];
   for (const [familyId, count] of Object.entries(expected)) {

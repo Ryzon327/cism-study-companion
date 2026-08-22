@@ -67,7 +67,9 @@ const REVIEW_LESSON_ITEMS: PrototypeStateItem[] = [
   { id: "lesson.d1.business-justification-roadmap", label: "D1-U6 — Business Justification & Roadmaps" },
   { id: "lesson.d1.governance-effectiveness", label: "D1-U7 — Frameworks, GRC & Effectiveness" },
   { id: "lesson.d1.legal-regulatory-risk", label: "D1-U8 — Legal, Regulatory & Contractual Risk" },
-  { id: "lesson.d1.organizational-culture-governance", label: "D1-U9 — Organizational Culture & Governance" }
+  { id: "lesson.d1.organizational-culture-governance", label: "D1-U9 — Organizational Culture & Governance" },
+  { id: "lesson.d2.risk-fundamentals", label: "D2-U1 — Risk Fundamentals & Emerging Risk" },
+  { id: "lesson.d2.risk-assessment-lifecycle", label: "D2-U2 — Risk Assessment Lifecycle" }
 ];
 
 const SESSION_SCREENS = new Set([
