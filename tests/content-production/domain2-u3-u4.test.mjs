@@ -183,13 +183,9 @@ test("Prerequisite chain is exactly D2-U1 -> D2-U2 -> D2-U3 -> D2-U4", () => {
   assert.deepEqual(lessonsById.get("lesson.d2.quantitative-risk-decisions").prerequisites, ["lesson.d2.risk-analysis-methods"]);
 });
 
-test("No Domain 2 unit beyond U1-U4 exists yet (U5+ not authored)", () => {
-  const knownUnitIds = ["risk-fundamentals", "risk-assessment-lifecycle", "risk-analysis-methods", "quantitative-risk-decisions"];
-  const laterUnitIds = [...data.concepts, ...data.lessons, ...data.families]
-    .map((e) => e.id)
-    .filter((id) => /^(concept|lesson|family)\.d2\./.test(id))
-    .filter((id) => !knownUnitIds.some((u) => id.includes(u)));
-  assert.equal(laterUnitIds.length, 0, `no Domain 2 unit beyond U1-U4 may exist yet: ${laterUnitIds.join(", ")}`);
+test("D2-U3/U4's own families still have exactly 3 active variants each, unaffected by later Domain 2 batches", () => {
+  assert.equal(questionsByFamily("family.d2.risk-analysis-methods").length, 3);
+  assert.equal(questionsByFamily("family.d2.quantitative-risk-decisions").length, 3);
 });
 
 test("All new U3/U4 entities are CANDIDATE, unverified, and none reference a future domain (D3/D4)", () => {
@@ -211,10 +207,6 @@ test("All new U3/U4 entities are CANDIDATE, unverified, and none reference a fut
   assert.equal(bad.length, 0, `no Domain 2 entity may reference Domain 3/4: ${bad.join(", ")}`);
 });
 
-test("Domain 2 production question count is exactly 12 after U1-U4 (3 variants x 4 families)", () => {
-  const d2Questions = data.questions.filter((q) => q.domain === "domain.d2");
-  assert.equal(d2Questions.length, 12, `expected 12 Domain 2 questions, got ${d2Questions.length}`);
-});
 
 test("D2-U1 and D2-U2 remain completely unchanged by this batch", () => {
   const u1 = lessonsById.get("lesson.d2.risk-fundamentals");

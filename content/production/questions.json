@@ -1793,5 +1793,329 @@
     "version": 1,
     "source": "source.learner-supplied.domain-2-question-bank",
     "note": "PHASE 9B-2 CANDIDATE - authored by Claude Code as the third variant of family.d2.quantitative-risk-decisions (D2-U4) - the required interpretation-not-arithmetic variant, using the same scenario anchor as the lesson (e-commerce ransomware exposure) to test whether ALE is mistaken for automatic decision authority, per explicit Phase 9B-2 instruction. Not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0014",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-evaluation"],
+    "patterns": ["pattern.p02"],
+    "qualifier": "qualifier.next",
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": "lifecycle.risk",
+    "stage": "stage.risk.evaluate",
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-evaluation",
+    "variation_tags": ["business-setting:payment-system-fraud-risk", "distractor-temptation:treatment-before-evaluation", "role-mix:no-named-role"],
+    "prompt": "A customer-facing online payment system has already been analyzed: the likelihood of a specific fraud scenario is moderate, and the business impact if it occurred would be high. What should happen NEXT?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Compare the analyzed risk against the organization's own risk appetite, tolerance, and other established criteria to determine whether it is acceptable - not decide on a specific control yet.",
+        "correct": true,
+        "rationale": "The risk has been analyzed (likelihood and impact known) but not yet evaluated against organizational criteria - that comparison is the next step, before any treatment decision is made."
+      },
+      {
+        "key": "b",
+        "text": "Select and implement a specific technical control to reduce the fraud likelihood immediately.",
+        "correct": false,
+        "rationale": "This jumps to treatment before the analyzed risk has been evaluated against organizational criteria - evaluation comes first, and it may turn out the risk is already acceptable.",
+        "repair_target": "repair.lifecycle-error"
+      },
+      {
+        "key": "c",
+        "text": "Re-run the likelihood and impact analysis using a different quantitative method to double-check the figures.",
+        "correct": false,
+        "rationale": "The scenario states the analysis is already complete - repeating it without new evidence ignores that the next step is evaluation, not re-analysis.",
+        "repair_target": "repair.lifecycle-error"
+      },
+      {
+        "key": "d",
+        "text": "Escalate the matter directly to the board of directors for formal risk acceptance, regardless of the risk's actual significance or whether a scoped risk owner already has the authority to decide.",
+        "correct": false,
+        "rationale": "This assumes the board is always the correct authority and skips straight to an acceptance decision, when the risk hasn't even been evaluated against criteria yet, let alone assigned to its actual accountable owner.",
+        "repair_target": "repair.authority-error"
+      }
+    ],
+    "explanation": "An analyzed risk (likelihood and impact known) has not yet been evaluated - that requires comparing it against the organization's own risk appetite, tolerance, and other criteria before any treatment or acceptance decision is made.",
+    "recognition_clue": "A stem stating likelihood and impact have already been determined and asking what happens NEXT is an Evaluate-stage signal, not a request to re-analyze or treat.",
+    "memory_rule": "Analysis tells you what the risk looks like; evaluation tells you what it means to the organization.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-3 CANDIDATE - authored by Claude Code as the first variant of family.d2.risk-evaluation (D2-U5), and this family's anchor/retrieval question. Original scenario testing the reasoning target evidenced by the supplied Domain 2 source material's acceptable-risk-determination questions - not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0015",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-evaluation"],
+    "patterns": ["pattern.p02"],
+    "qualifier": "qualifier.most",
+    "roles_mentioned": ["role.board-senior-management"],
+    "primary_role": "role.board-senior-management",
+    "lifecycle": "lifecycle.risk",
+    "stage": "stage.risk.evaluate",
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-evaluation",
+    "variation_tags": ["business-setting:appetite-exceeded-within-tolerance", "distractor-temptation:appetite-tolerance-conflation", "role-mix:senior-management"],
+    "prompt": "A risk has been analyzed and determined to exceed the enterprise's stated risk appetite, but it remains within its stated risk tolerance. Senior management chooses to mitigate the risk further rather than accept it as-is, even though it technically falls within tolerance. What is the MOST likely reason for this decision?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Senior management may be concerned the stated business impact was underestimated, and prefer to mitigate further to keep actual exposure comfortably within bounds, even though it technically falls within tolerance.",
+        "correct": true,
+        "rationale": "Falling within tolerance does not obligate acceptance - if there is genuine concern that the impact estimate is understated, mitigating further to stay comfortably within acceptable bounds is a reasonable, informed management decision."
+      },
+      {
+        "key": "b",
+        "text": "Risk tolerance thresholds are only advisory and may be disregarded whenever convenient for the business.",
+        "correct": false,
+        "rationale": "Tolerance is an established organizational criterion, not an optional guideline - this trivializes the very threshold the scenario states the risk actually falls within.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Any risk that exceeds the stated risk appetite must always be avoided outright, regardless of where it falls relative to tolerance, cost of avoidance, or the specific business context involved.",
+        "correct": false,
+        "rationale": "This ignores that the risk falls within the enterprise's own stated tolerance - avoidance is not automatically required just because appetite is exceeded, since tolerance is the more specific operational threshold that actually governs this case.",
+        "repair_target": "repair.vocabulary-error"
+      },
+      {
+        "key": "d",
+        "text": "Mitigating a risk that already falls within tolerance is unnecessary and reflects an overly cautious, wasteful use of security resources that could be much better spent addressing higher-priority risks elsewhere in the program.",
+        "correct": false,
+        "rationale": "This assumes falling within tolerance always means no further action is warranted, ignoring that management may have a legitimate, stated reason (concern about underestimated impact) for treating further anyway.",
+        "repair_target": "repair.decision-error"
+      }
+    ],
+    "explanation": "Exceeding appetite while remaining within tolerance does not obligate acceptance - management may reasonably choose to mitigate further, particularly when there is concern the impact was underestimated, since tolerance still represents a genuine but narrower operational boundary, not a guarantee of acceptability.",
+    "recognition_clue": "A stem describing a risk that exceeds appetite but stays within tolerance, paired with a management decision to still take action, is testing the Appetite vs. Tolerance distinction directly.",
+    "memory_rule": "Appetite sets the general risk posture; tolerance is the acceptable variation around a specific objective - they are related, not identical.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-3 CANDIDATE - authored by Claude Code as the second variant of family.d2.risk-evaluation (D2-U5). Original scenario directly grounded in the supplied Domain 2 source material's own matched example (an enterprise rationally choosing to mitigate a risk exceeding appetite but within tolerance, out of concern the stated impact was underestimated) - not a reproduction or paraphrase of that or any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0016",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-evaluation"],
+    "patterns": ["pattern.p02"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.risk-owner", "role.security-manager"],
+    "primary_role": "role.risk-owner",
+    "lifecycle": "lifecycle.risk",
+    "stage": "stage.risk.evaluate",
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-evaluation",
+    "variation_tags": ["business-setting:security-manager-recommends-acceptability", "distractor-temptation:security-manager-decides", "role-mix:risk-owner-vs-security-manager"],
+    "prompt": "An information security manager completes a thorough risk assessment and personally concludes that a specific analyzed risk is acceptable. Who should BEST determine whether that conclusion is actually correct?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The risk owner accountable for this specific risk - not the information security manager who merely performed the technical assessment and recommended a course of action - is the one who determines whether the risk is acceptable.",
+        "correct": true,
+        "rationale": "The security manager's role here is to assess and recommend; the actual acceptability decision belongs to whoever is accountable for that specific risk, which may or may not be the security manager depending on scope and context."
+      },
+      {
+        "key": "b",
+        "text": "The information security manager who performed the risk assessment should decide whether the risk is acceptable, since they understand it best.",
+        "correct": false,
+        "rationale": "Technical expertise and understanding of a risk does not, by itself, confer decision authority over its acceptability - that authority follows accountability, not familiarity.",
+        "repair_target": "repair.authority-error"
+      },
+      {
+        "key": "c",
+        "text": "The board of directors must personally decide on every risk of this kind, regardless of its scope, business unit, or the existence of an accountable risk owner already delegated that authority.",
+        "correct": false,
+        "rationale": "This assumes the board decides every acceptability question by default, ignoring that accountability for a specific risk is often already delegated to a scoped risk owner.",
+        "repair_target": "repair.authority-error"
+      },
+      {
+        "key": "d",
+        "text": "No one needs to make an explicit acceptability decision, since the risk was already identified and analyzed in detail.",
+        "correct": false,
+        "rationale": "Being identified and analyzed does not make a risk acceptable by default - a genuine acceptability decision by the accountable authority is still required.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "The security manager's role is to assess and recommend, not to decide - the acceptability of a specific risk is a decision for whichever authority is actually accountable for it, which is not automatically the security manager, the board, or nobody at all.",
+    "recognition_clue": "A stem where the person who performed the analysis also concludes on acceptability, and an answer choice defers to that same person, is an authority-error trap.",
+    "memory_rule": "Security identifies, analyzes, and recommends; the accountable authority decides whether the risk is acceptable.",
+    "evidence_dimensions": ["evidence.authority", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-3 CANDIDATE - authored by Claude Code as the third variant of family.d2.risk-evaluation (D2-U5), reapplying Domain 1's Pattern P02 (Authority Follows Accountability) reasoning directly to Domain 2's risk-acceptability context, evidenced by the supplied Domain 2 source material's finding that acceptability is ultimately a management/accountability decision, not a technical one. Not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0017",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-treatment-response"],
+    "patterns": ["pattern.p01"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": "lifecycle.risk",
+    "stage": "stage.risk.treat",
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-treatment-response",
+    "variation_tags": ["business-setting:payment-system-mitigation-selection", "distractor-temptation:strongest-control-bias", "decision-consequence:business-value-preserved"],
+    "prompt": "After evaluating the online payment system's fraud risk against organizational criteria, the enterprise determines the risk is not currently acceptable. The payment feature itself is important to the business and is not being reconsidered. What is the BEST treatment approach?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Implement a proportionate fraud-detection control that reduces the risk to an acceptable level while preserving the payment feature the business needs.",
+        "correct": true,
+        "rationale": "Since the payment feature isn't being reconsidered, mitigation that brings the risk to an acceptable level while preserving that business value is the treatment that actually fits the stated context."
+      },
+      {
+        "key": "b",
+        "text": "Implement the most comprehensive fraud-prevention technology available on the market today, regardless of its cost, implementation timeline, or effect on the customer payment experience.",
+        "correct": false,
+        "rationale": "Choosing the strongest available option regardless of cost or business impact ignores whether that level of control is actually needed to reach acceptability - more comprehensive is not automatically the right fit.",
+        "repair_target": "repair.decision-error"
+      },
+      {
+        "key": "c",
+        "text": "Discontinue the online payment feature entirely, since eliminating the activity is the surest way to remove the risk.",
+        "correct": false,
+        "rationale": "The scenario explicitly states the payment feature is not being reconsidered - avoidance ignores that stated business context in favor of the most risk-eliminating option regardless of business need.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "d",
+        "text": "Select whichever available control is cheapest to implement, since minimizing cost is the primary objective of any risk treatment.",
+        "correct": false,
+        "rationale": "Cost is a real factor, but treating it as the primary objective ignores whether the cheapest option actually reduces the risk to an acceptable level - fit to the business need, not cost alone, drives the decision.",
+        "repair_target": "repair.decision-error"
+      }
+    ],
+    "explanation": "With the payment feature confirmed as a business necessity, the treatment that fits is mitigation proportionate to reaching acceptability - not the strongest available control, not eliminating the activity the business has already said it needs, and not the cheapest option regardless of whether it actually works.",
+    "recognition_clue": "A stem stating a business activity is not being reconsidered, paired with an answer choice proposing to stop that activity anyway, is a business-context-error trap.",
+    "memory_rule": "The best treatment fits the business objective and the risk's actual position relative to criteria - not the strongest, cheapest, or most familiar option by default.",
+    "evidence_dimensions": ["evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-3 CANDIDATE - authored by Claude Code as the first variant of family.d2.risk-treatment-response (D2-U6), and this family's anchor/retrieval question - continues the payment-system scenario from D2-U5 as one continuous story from Evaluate into Treat. Original scenario testing the reasoning target evidenced by the supplied Domain 2 source material's treatment-selection questions - not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0018",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-treatment-response"],
+    "patterns": ["pattern.p01"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": "lifecycle.risk",
+    "stage": "stage.risk.treat",
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-treatment-response",
+    "variation_tags": ["business-setting:cyber-insurance-purchase", "distractor-temptation:transfer-eliminates-accountability", "decision-consequence:accountability-persists"],
+    "prompt": "An enterprise purchases a cyber-insurance policy to help offset potential financial losses from a specific data-breach risk. Does this mean the enterprise is no longer accountable for that risk?",
+    "options": [
+      {
+        "key": "a",
+        "text": "No - purchasing insurance shifts some of the financial consequence to the insurer, but the enterprise remains accountable for the underlying risk itself.",
+        "correct": true,
+        "rationale": "Risk transfer shares or shifts the financial or operational consequence of a risk - it does not shift the enterprise's own accountability for the risk existing and being managed."
+      },
+      {
+        "key": "b",
+        "text": "Yes - once insurance is purchased, the enterprise is no longer accountable for the risk in any respect, since the insurer now bears full responsibility for it.",
+        "correct": false,
+        "rationale": "This treats risk transfer as if it eliminated accountability entirely - insurance shifts some financial consequence, not the enterprise's own responsibility for the underlying risk.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "No further risk-management action is ever required once a risk has been insured.",
+        "correct": false,
+        "rationale": "Purchasing insurance is one treatment decision at one point in time - it does not exempt the risk from ongoing monitoring, reassessment, or further action if conditions change.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "This is actually an example of risk mitigation, not risk transfer, since insurance reduces the enterprise's exposure.",
+        "correct": false,
+        "rationale": "Insurance shares the financial consequence of a loss event with another party - it does not reduce the underlying likelihood or impact of the event itself, which is what mitigation does.",
+        "repair_target": "repair.vocabulary-error"
+      }
+    ],
+    "explanation": "Purchasing insurance is risk transfer - it shifts some financial consequence to another party, but the enterprise remains accountable for the underlying risk; transfer is not the same as mitigation, and it does not eliminate the organization's own responsibility.",
+    "recognition_clue": "A stem describing insurance or contractual risk-sharing, paired with an answer choice claiming it removes all accountability, is a transfer-eliminates-accountability trap.",
+    "memory_rule": "Avoid stops the activity; mitigate reduces likelihood/impact; transfer shares the consequence (not the accountability); accept is a knowing, authorized decision - not neglect.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-3 CANDIDATE - authored by Claude Code as the second variant of family.d2.risk-treatment-response (D2-U6). Original scenario grounded in the supplied Domain 2 source material's finding that insurance is an example of risk transfer, extended per explicit Phase 9B-3 instruction to test that transfer does not eliminate organizational accountability - not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0019",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-treatment-response"],
+    "patterns": ["pattern.p01"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": "lifecycle.risk",
+    "stage": "stage.risk.treat",
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-treatment-response",
+    "variation_tags": ["business-setting:unauthorized-informal-inaction", "distractor-temptation:acceptance-as-neglect", "decision-consequence:authorized-decision-required"],
+    "prompt": "A department head, without consulting anyone with formal risk-acceptance authority, simply decides not to address a known risk because dealing with it seems inconvenient. Does this constitute a valid risk acceptance?",
+    "options": [
+      {
+        "key": "a",
+        "text": "No - this is not a valid risk acceptance, since acceptance requires a knowing, authorized decision by the accountable risk authority, not an informal choice by someone without that authority to leave a risk untreated.",
+        "correct": true,
+        "rationale": "Acceptance is a deliberate, authorized decision to retain a known risk - an informal choice by someone lacking that authority, made mainly out of convenience, is unmanaged risk, not a valid acceptance."
+      },
+      {
+        "key": "b",
+        "text": "Yes - any decision not to act on a risk qualifies as risk acceptance, regardless of who makes it or whether it was formally authorized.",
+        "correct": false,
+        "rationale": "This treats acceptance as merely 'not acting,' when acceptance is specifically a knowing, authorized decision - inaction by someone without the authority to make that call is not the same thing.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Yes - department heads always have the authority to accept any risk within their own department, regardless of its scope or significance.",
+        "correct": false,
+        "rationale": "This assumes a fixed hierarchy where department heads always hold acceptance authority, when accountability for a specific risk depends on its actual scope and the organization's own governance, not title alone.",
+        "repair_target": "repair.authority-error"
+      },
+      {
+        "key": "d",
+        "text": "No formal decision or documentation is required for a risk acceptance to be considered valid, as long as the risk was previously identified.",
+        "correct": false,
+        "rationale": "A risk having been identified at some point does not substitute for the deliberate, authorized decision that acceptance actually requires.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "Risk acceptance is a knowing, authorized decision by the accountable risk authority to retain a known risk - an informal choice to leave a risk untreated, made by someone without that authority, is unmanaged exposure, not a valid acceptance.",
+    "recognition_clue": "A stem describing informal, unauthorized inaction on a known risk, paired with an answer choice calling it 'acceptance,' is an acceptance-as-neglect trap.",
+    "memory_rule": "Avoid stops the activity; mitigate reduces likelihood/impact; transfer shares the consequence (not the accountability); accept is a knowing, authorized decision - not neglect.",
+    "evidence_dimensions": ["evidence.decision", "evidence.business-context"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-3 CANDIDATE - authored by Claude Code as the third variant of family.d2.risk-treatment-response (D2-U6). Original scenario grounded in the supplied Domain 2 source material's own acceptance definition ('accepting the risk... and doing nothing further'), deliberately extended per explicit Phase 9B-3 instruction to distinguish authorized acceptance from unauthorized/passive neglect - not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
   }
 ]

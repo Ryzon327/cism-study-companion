@@ -403,5 +403,74 @@
     "version": 1,
     "source": "source.learner-supplied.domain-2-question-bank",
     "note": "PHASE 9B-2 CANDIDATE (D2-U4) — authored by Claude Code per approved Phase 9A Domain 2 architecture, Phase 9B-2 scope, and the CANONICAL quantitative-risk requirement in docs/learning/DOMAIN-2-BLUEPRINT.md (non-negotiable regardless of source frequency - SLE/ARO/EF/AV do not appear as literal acronyms in the supplied source; ALE appears 3 times). Grounded in docs/learning/PATTERN-LIBRARY.md (P10) and evidenced by the supplied source material's 'calculating asset value is the first step in risk analysis' question and its ALE-limitation question. Deliberately scoped to the depth needed for a management decision, not arithmetic for its own sake - one coherent scenario anchor (an e-commerce ransomware exposure) carries all five terms and the resulting decision, per the D2-U2 scenario-anchor learning-design finding. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d2.risk-evaluation",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-evaluation"],
+    "patterns": ["pattern.p02"],
+    "prerequisites": ["lesson.d2.risk-assessment-lifecycle"],
+    "objective": "Distinguish what analysis tells you (how likely a risk is and how bad it could be) from what evaluation tells you (what that analyzed risk means to the organization, compared against its own criteria, appetite, and tolerance), and recognize that acceptability is a decision for the accountable business/risk authority, not whoever performed the analysis.",
+    "context": "Consider a customer-facing payment system that has already been analyzed: moderate likelihood of a specific fraud scenario, high business impact if it occurred. That analysis alone doesn't answer whether the risk is acceptable - answering that requires comparing it against the enterprise's own established criteria, including its risk appetite (the broad amount and type of risk it's willing to pursue or retain in support of its objectives - a strategic-level posture) and its risk tolerance (the acceptable variation around a specific objective or threshold - a narrower, more operational boundary). A risk can exceed appetite yet still sit within tolerance, or fall clearly outside both - the comparison against criteria is what evaluation actually does, and it's a distinct step from analysis. Once that comparison is made, deciding whether the risk is actually acceptable is a decision for the accountable business or risk authority - the same accountability-follows-authority reasoning Domain 1 already established (security identifies, analyzes, and recommends; the accountable authority decides), now applied to risk acceptability specifically.",
+    "cism_perspective": "CISM stems in this area often give you an already-analyzed risk (likelihood and impact stated) and ask what happens next, or whether it's acceptable, or who decides that. The correct answer recognizes that analysis and evaluation are separate steps - a risk having known likelihood/impact doesn't yet tell you whether it's acceptable, that requires comparing it against appetite/tolerance/other criteria - and that the acceptability judgment itself belongs to the accountable authority, not automatically to security/risk staff, the board by default, or whoever ran the analysis.",
+    "recognition_clues": [
+      "The stem states likelihood and impact have already been determined and asks what happens next or whether the risk is acceptable - that's an Evaluate-stage signal, not a request to re-analyze.",
+      "The stem describes a risk that exceeds one threshold (appetite) but not another (tolerance), or vice versa - that's testing the Appetite vs. Tolerance distinction directly.",
+      "The stem asks who decides whether a risk is acceptable, and an answer choice names whoever performed the analysis (a security or risk manager) rather than the accountable business/risk authority - that's an authority-error trap."
+    ],
+    "scenario": "A customer-facing payment system's risk has already been analyzed: moderate likelihood, high business impact. The question at this point is not 'what control should be bought' - that's a treatment question, one stage further along. The question is: how does this analyzed risk compare with the organization's own established criteria, appetite, and tolerance? Only after that comparison is made does it become clear whether the risk is acceptable as-is or needs further action - and that acceptability judgment belongs to the accountable business or risk authority, not to whoever performed the analysis.",
+    "traps": [
+      "Treating an already-analyzed risk (likelihood/impact known) as if it were already evaluated (compared against criteria) or already decided.",
+      "Jumping straight to a treatment/control question ('what should I buy') before the analyzed risk has actually been compared against organizational criteria.",
+      "Assuming a security manager, risk manager, or the board always decides acceptability by default, rather than recognizing that decision belongs to whichever authority is accountable for that specific risk in that specific context.",
+      "Collapsing risk appetite and risk tolerance into identical thresholds, rather than recognizing appetite as the broader strategic posture and tolerance as the narrower operational boundary around it."
+    ],
+    "memory_rules": [
+      "Analysis tells you what the risk looks like; evaluation tells you what it means to the organization.",
+      "Appetite sets the general risk posture; tolerance is the acceptable variation around a specific objective - they are related, not identical.",
+      "Security identifies, analyzes, and recommends; the accountable authority decides whether the risk is acceptable."
+    ],
+    "retrieval_refs": ["question.d2.0014"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-3 CANDIDATE (D2-U5) — authored by Claude Code per approved Phase 9A Domain 2 architecture and Phase 9B-3 scope. Prerequisite is lesson.d2.risk-assessment-lifecycle (D2-U2) only, per the approved Phase 9A prerequisite graph - D2-U5 branches directly off D2-U2, parallel to D2-U3/D2-U4, not chained through the quantitative unit; quantitative analysis is one possible analysis method, not a prerequisite for risk evaluation generally. Grounded in docs/learning/PATTERN-LIBRARY.md (P02 - Authority Follows Accountability) and docs/learning/CONFUSING-CONCEPTS.md's approved Risk Appetite vs. Risk Tolerance pair, evidenced by the supplied Domain 2 source material's acceptable-risk-determination questions (e.g., 'the decision whether an IT risk has been reduced to an acceptable level should be determined by organizational requirements... a management decision') and its appetite-exceeds-but-within-tolerance question. Carries forward the D2-U2 scenario-anchor learning-design finding (one payment-system scenario). Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d2.risk-treatment-response",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-treatment-response"],
+    "patterns": ["pattern.p01"],
+    "prerequisites": ["lesson.d2.risk-evaluation"],
+    "objective": "Select an appropriate risk treatment - avoid, mitigate, transfer/share, or accept - based on business objectives, risk level, cost, and feasibility, rather than assuming one treatment (the strongest control, the cheapest option, or transfer) is universally best.",
+    "context": "Continuing the payment-system scenario from evaluation: once a risk is found to exceed the enterprise's acceptable criteria, a treatment must be selected. Avoid means stopping the activity that creates the risk entirely - here, that might mean discontinuing the specific payment feature, appropriate only when the business decides the risk isn't worth the activity at all. Mitigate means reducing likelihood and/or impact through controls or other action - implementing stronger fraud detection, for example. Transfer/share means shifting or sharing some of the financial or operational consequence with another party, such as purchasing insurance against fraud losses - but transferring the financial consequence does not transfer the organization's own accountability for the risk; the enterprise remains responsible for it even after purchasing coverage. Accept means the accountable authority makes a knowing, authorized decision to retain the risk because it's already within established criteria - this is a deliberate decision with a name behind it, not passive neglect or a security manager quietly deciding not to act. There is no universally 'strongest' treatment: the right one is whichever best supports the business objective while bringing the risk to an acceptable position, given its actual cost, feasibility, and the organization's own risk appetite and tolerance - the same business-alignment reasoning Domain 1 already established (a technically superior option isn't automatically correct if it doesn't serve what the business actually needs).",
+    "cism_perspective": "CISM stems in this area describe a risk that needs a response and ask which treatment fits - the trap is picking based on a general bias (strongest control, cheapest option, most common choice) rather than the specific business context in the stem. A second common trap treats transfer as if it removes the organization's responsibility entirely, or treats acceptance as if it were simply doing nothing rather than an authorized, documented decision.",
+    "recognition_clues": [
+      "The stem describes a risk whose activity itself could reasonably be stopped, and the business has decided it's not worth pursuing - that's an avoidance signal.",
+      "The stem describes implementing a specific control to reduce likelihood or impact - that's a mitigation signal.",
+      "The stem describes insurance, contractual risk-sharing, or outsourcing the operational consequence to another party - that's a transfer/share signal, but does not mean the organization's own accountability disappears.",
+      "The stem describes an authorized business/risk authority knowingly deciding to retain a risk already within criteria - that's acceptance, not neglect."
+    ],
+    "scenario": "After evaluating the payment system's analyzed risk against organizational criteria and finding it unacceptable as-is, the enterprise selects mitigation - implementing stronger fraud-detection controls - because that treatment best reduces the risk to an acceptable level while preserving the payment feature the business needs, rather than avoiding the feature entirely (losing business value), transferring it alone (which wouldn't reduce the underlying risk or remove the enterprise's own accountability), or accepting it outright (which the evaluation already determined was not appropriate given the risk's position relative to criteria).",
+    "traps": [
+      "Assuming the strongest or most comprehensive control is automatically the correct treatment, regardless of cost, feasibility, or what the business actually needs.",
+      "Assuming the cheapest treatment is automatically correct, without regard to whether it actually reduces the risk enough.",
+      "Treating risk transfer (such as insurance) as if it eliminates the organization's own accountability for the risk, rather than merely shifting some financial or operational consequence.",
+      "Treating acceptance as passive inaction or an unauthorized decision by whoever happens to be closest to the risk, rather than a knowing, authorized decision by the accountable authority.",
+      "Selecting a treatment before the risk has actually been evaluated against criteria - treatment follows evaluation, not the other way around."
+    ],
+    "memory_rules": [
+      "Avoid stops the activity; mitigate reduces likelihood/impact; transfer shares the consequence (not the accountability); accept is a knowing, authorized decision - not neglect.",
+      "The best treatment fits the business objective and the risk's actual position relative to criteria - not the strongest, cheapest, or most familiar option by default."
+    ],
+    "retrieval_refs": ["question.d2.0017"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-3 CANDIDATE (D2-U6) — authored by Claude Code per approved Phase 9A Domain 2 architecture and Phase 9B-3 scope. Grounded in docs/learning/PATTERN-LIBRARY.md (P01 - Business Alignment) and evidenced by the supplied Domain 2 source material's treatment-identification questions (insurance as risk transfer; security controls as risk mitigation; stopping an activity as risk avoidance; 'accepting the risk... and doing nothing further' reworded here as an authorized decision rather than passive neglect, per explicit instruction). Continues the same payment-system scenario anchor from D2-U5 rather than introducing a new one, reinforcing the Analyze -> Evaluate -> Treat conceptual bridge as one continuous story. Deliberately stops before residual-risk/validate-acceptability teaching, which belongs to D2-U7. Not yet human-reviewed or promoted."
   }
 ]
