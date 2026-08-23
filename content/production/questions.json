@@ -1469,5 +1469,329 @@
     "version": 1,
     "source": "source.learner-supplied.domain-2-question-bank",
     "note": "PHASE 9B-1 CANDIDATE - authored by Claude Code as the third variant of family.d2.risk-assessment-lifecycle (D2-U2). Original scenario grounded directly in docs/learning/LIFECYCLE-MODEL.md's CANONICAL Analyze/Evaluate stage definitions ('Analyze: risk has not yet been judged against criteria' / 'Evaluate: analyzed risk compared against risk criteria/appetite') - not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0008",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-analysis-methods"],
+    "patterns": ["pattern.p10"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": "lifecycle.risk",
+    "stage": "stage.risk.analyze",
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-analysis-methods",
+    "variation_tags": ["business-setting:rapid-enterprise-prioritization", "decision-consequence:relative-ranking-not-dollar-figure", "distractor-temptation:false-precision"],
+    "prompt": "A security team must quickly rank 50 identified risks across the enterprise to decide which few deserve immediate senior-management attention this quarter. Reliable financial impact data is not yet available for most of them. Which approach is BEST for this initial ranking?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Use a qualitative rating, such as High/Medium/Low, to rank all 50 risks now - reliable financial data is not yet available, and a fast, relative ranking is exactly what this decision needs.",
+        "correct": true,
+        "rationale": "The decision needs a quick, relative comparison across many risks, not a precise dollar figure for each - qualitative ratings fit that need directly, and forcing numbers onto unreliable data would not make the ranking more useful."
+      },
+      {
+        "key": "b",
+        "text": "Assign a specific dollar-loss estimate to each of the 50 risks now, even though reliable financial data is not yet available for most of them, since numeric rankings look more rigorous.",
+        "correct": false,
+        "rationale": "Fabricating dollar estimates without reliable data is false precision, not rigor - a confident-looking number built on unreliable data is less trustworthy than an honest qualitative rating, not more.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Delay ranking any of the 50 risks until precise financial impact figures can be calculated for all of them.",
+        "correct": false,
+        "rationale": "This ignores that the decision at hand (a fast initial ranking) doesn't require precise figures at all - qualitative analysis exists precisely to support this kind of decision without waiting for complete data.",
+        "repair_target": "repair.decision-error"
+      },
+      {
+        "key": "d",
+        "text": "Rank only the risks that already have complete quantitative data available, and set the rest aside until similar data exists.",
+        "correct": false,
+        "rationale": "This treats quantitative data as a prerequisite for being considered at all, when the actual decision (ranking all 50 for attention) is exactly the kind qualitative analysis is well suited to support.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "The decision at hand - a fast, relative ranking across many risks with limited data - is exactly what qualitative analysis is for. Forcing numeric precision onto data that doesn't support it, or waiting for data that isn't needed, both miss what this specific decision actually requires.",
+    "recognition_clue": "A stem describing a need to rank or compare many risks quickly, with limited data, is a qualitative-fit signal.",
+    "memory_rule": "Ask what the decision needs before asking which method sounds more rigorous.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-2 CANDIDATE - authored by Claude Code as the first variant of family.d2.risk-analysis-methods (D2-U3). Original scenario testing the reasoning target evidenced by the supplied Domain 2 source material's qualitative-fit questions (e.g., a permanent decline in customer confidence best assessed qualitatively) - not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0009",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-analysis-methods"],
+    "patterns": ["pattern.p10"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager"],
+    "primary_role": "role.security-manager",
+    "lifecycle": "lifecycle.risk",
+    "stage": "stage.risk.analyze",
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-analysis-methods",
+    "variation_tags": ["business-setting:control-cost-justification", "decision-consequence:defensible-dollar-comparison", "distractor-temptation:consistency-over-fit"],
+    "prompt": "A security manager must decide whether a proposed $150,000 annual control is worth its cost, and needs to compare it directly against the expected annual monetary loss from the risk it addresses. Which approach is BEST suited to this decision?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Quantitative analysis - the decision requires directly comparing a dollar cost against an expected dollar loss, which only an approach that expresses risk in monetary terms can support.",
+        "correct": true,
+        "rationale": "This decision specifically requires a defensible dollar comparison - exactly what quantitative analysis is designed to support, unlike a relative rating that cannot be compared directly against a dollar figure."
+      },
+      {
+        "key": "b",
+        "text": "Qualitative analysis, since High/Medium/Low ratings are simpler to present to the control-approval committee.",
+        "correct": false,
+        "rationale": "Choosing a method for ease of presentation rather than fit to the decision misses the point - this decision specifically requires a dollar comparison that a qualitative rating cannot provide.",
+        "repair_target": "repair.decision-error"
+      },
+      {
+        "key": "c",
+        "text": "Qualitative analysis, since quantitative methods require too much data to be practical for this particular decision.",
+        "correct": false,
+        "rationale": "This assumes quantitative data isn't available without the stem actually saying so - the decision as stated (comparing a specific cost against an expected loss) calls for quantitative analysis.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "Either method works equally well here, since both ultimately produce some form of risk ranking.",
+        "correct": false,
+        "rationale": "This ignores that the specific decision requires a dollar-for-dollar comparison, which only quantitative analysis actually provides - the two methods are not interchangeable for this decision.",
+        "repair_target": "repair.decision-error"
+      }
+    ],
+    "explanation": "Comparing a specific dollar cost against an expected dollar loss requires an approach that expresses risk in monetary terms - exactly what quantitative analysis provides. A qualitative rating cannot be compared directly against a specific cost figure.",
+    "recognition_clue": "A stem describing a dollar cost compared against an expected dollar loss is a quantitative-fit signal.",
+    "memory_rule": "Ask what the decision needs before asking which method sounds more rigorous.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.decision", "evidence.pattern-recognition"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-2 CANDIDATE - authored by Claude Code as the second variant of family.d2.risk-analysis-methods (D2-U3). Original scenario testing the reasoning target evidenced by the supplied Domain 2 source material's quantitative-fit questions (e.g., an electrical power outage best assessed quantitatively because it can be quantified into monetary amounts) - not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0010",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-analysis-methods"],
+    "patterns": ["pattern.p10"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": "lifecycle.risk",
+    "stage": "stage.risk.analyze",
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-analysis-methods",
+    "variation_tags": ["business-setting:reputational-impact-after-breach", "decision-consequence:honest-description-not-fabricated-number", "distractor-temptation:false-precision"],
+    "prompt": "Following a data breach, an enterprise wants to assess the risk of a lasting decline in customer trust and loyalty. Reliable financial data connecting trust decline to specific revenue loss does not exist. Which approach is BEST for this specific risk?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Qualitative analysis - customer trust and loyalty decline does not lend itself to reliable quantification, and a descriptive rating gives more honest, usable information than a fabricated dollar figure.",
+        "correct": true,
+        "rationale": "Trust and loyalty decline is exactly the kind of impact that resists reliable quantification - a descriptive rating is more honest and more useful here than a dollar figure with no real data behind it."
+      },
+      {
+        "key": "b",
+        "text": "Quantitative analysis, assigning a specific dollar estimate to the trust decline based on the team's best professional judgment, since numeric figures are always more defensible than descriptive ratings.",
+        "correct": false,
+        "rationale": "A dollar estimate with no reliable data behind it is false precision, not a more defensible answer - it looks more rigorous without actually being more accurate.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Quantitative analysis, since customer trust risk should be measured the same way as the enterprise's other risks for consistency.",
+        "correct": false,
+        "rationale": "Choosing a method for consistency with other risks, rather than fit to this specific risk's own characteristics, ignores that trust decline genuinely doesn't quantify well.",
+        "repair_target": "repair.decision-error"
+      },
+      {
+        "key": "d",
+        "text": "No formal assessment is needed for this risk, since customer trust cannot be reliably measured by any method.",
+        "correct": false,
+        "rationale": "This overcorrects - qualitative analysis is a genuine, valid method for exactly this kind of risk, not merely a fallback to be abandoned when quantification fails.",
+        "repair_target": "repair.decision-error"
+      }
+    ],
+    "explanation": "Customer trust and loyalty decline is a textbook case of an impact that resists reliable quantification - qualitative analysis is the genuinely appropriate method here, not a consolation prize for when numbers aren't available.",
+    "recognition_clue": "A stem describing an impact that resists quantification (trust, reputation, morale), paired with an answer choice that still insists on a specific dollar figure, is a false-precision trap.",
+    "memory_rule": "A confident-looking number built on data that doesn't exist is false precision, not real rigor.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-2 CANDIDATE - authored by Claude Code as the third variant of family.d2.risk-analysis-methods (D2-U3). Original scenario directly grounded in the supplied Domain 2 source material's own matched-pair example (a permanent decline in customer confidence best assessed qualitatively, since it does not lend itself well to measurement with quantitative techniques) - not a reproduction or paraphrase of that or any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0011",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.quantitative-risk-decisions"],
+    "patterns": ["pattern.p10"],
+    "qualifier": null,
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": "lifecycle.risk",
+    "stage": "stage.risk.analyze",
+    "decision_type": "decision.risk",
+    "family": "family.d2.quantitative-risk-decisions",
+    "variation_tags": ["decision-consequence:single-event-loss-figure", "wording-structure:calculation-with-explicit-values", "distractor-temptation:sle-conflated-with-asset-value"],
+    "prompt": "A manufacturing enterprise's primary production line is valued at $2,000,000. A specific equipment failure is expected to destroy or require replacement of about 15% of that value each time it occurs. What is the Single Loss Expectancy (SLE) for this equipment failure?",
+    "options": [
+      {
+        "key": "a",
+        "text": "$300,000 - calculated as the $2,000,000 asset value multiplied by the 15% exposure factor, representing the expected loss from one occurrence.",
+        "correct": true,
+        "rationale": "SLE = Asset Value x Exposure Factor = $2,000,000 x 0.15 = $300,000 - the expected loss from a single occurrence of this equipment failure."
+      },
+      {
+        "key": "b",
+        "text": "$2,000,000 - the full value of the production line, without applying the exposure factor to determine how much of that value would actually be lost.",
+        "correct": false,
+        "rationale": "This uses the Asset Value alone, skipping the Exposure Factor entirely - SLE requires multiplying AV by EF, not treating the full asset value as the loss from one event.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "$600,000 - calculated as if the failure were expected to occur twice per year, a rate that was not stated anywhere in this scenario.",
+        "correct": false,
+        "rationale": "This introduces an occurrence rate (an ARO) that the scenario never mentions, and conflates SLE (one event) with an annualized figure - no ARO was given, so no annualization applies here.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "15% - the exposure factor itself, rather than the resulting dollar amount of expected loss.",
+        "correct": false,
+        "rationale": "This restates the Exposure Factor rather than completing the calculation - SLE is the dollar result of multiplying Asset Value by Exposure Factor, not the Exposure Factor alone.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "Single Loss Expectancy is Asset Value multiplied by Exposure Factor - the expected loss from one occurrence. Here, $2,000,000 x 0.15 = $300,000.",
+    "recognition_clue": "A stem giving an asset value and a percentage expected to be lost in one event is asking for SLE (AV x EF).",
+    "memory_rule": "ONE EVENT: Asset Value x Exposure Factor = Single Loss Expectancy.",
+    "evidence_dimensions": ["evidence.knowledge"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-2 CANDIDATE - authored by Claude Code as the first variant of family.d2.quantitative-risk-decisions (D2-U4) - a pure SLE calculation, evidenced by the supplied Domain 2 source material's finding that calculating asset value is described as the first step in quantitative risk analysis. Not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0012",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.quantitative-risk-decisions"],
+    "patterns": ["pattern.p10"],
+    "qualifier": null,
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": "lifecycle.risk",
+    "stage": "stage.risk.analyze",
+    "decision_type": "decision.risk",
+    "family": "family.d2.quantitative-risk-decisions",
+    "variation_tags": ["decision-consequence:annualized-loss-figure", "wording-structure:calculation-with-explicit-values", "distractor-temptation:aro-misread-as-frequency-not-rate"],
+    "prompt": "A retailer's customer database is valued at $900,000. A successful data-exfiltration event is expected to compromise about 30% of that value each time it occurs, and is expected to occur about once every four years. What is the Annualized Loss Expectancy (ALE) for this risk?",
+    "options": [
+      {
+        "key": "a",
+        "text": "$67,500 - calculated as the $270,000 single loss expectancy multiplied by an annualized rate of occurrence of 0.25, representing the expected loss averaged over a year.",
+        "correct": true,
+        "rationale": "SLE = $900,000 x 0.30 = $270,000. An event expected once every four years has an Annualized Rate of Occurrence of 0.25 (1 divided by 4). ALE = $270,000 x 0.25 = $67,500."
+      },
+      {
+        "key": "b",
+        "text": "$270,000 - the single loss expectancy for one occurrence, without annualizing it by how often the event is actually expected to happen.",
+        "correct": false,
+        "rationale": "This stops at SLE (one event) and never applies the Annualized Rate of Occurrence - ALE requires multiplying SLE by ARO to average the loss over a year.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "$900,000 - the full value of the customer database, mistaken for the annualized loss expectancy.",
+        "correct": false,
+        "rationale": "This treats the Asset Value itself as the annualized loss figure, skipping both the Exposure Factor and the Annualized Rate of Occurrence entirely.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "$1,080,000 - calculated by misreading 'once every four years' as an annualized rate of occurrence of 4, rather than the correct 0.25.",
+        "correct": false,
+        "rationale": "An event happening once every four years is rarer than once per year, so its Annualized Rate of Occurrence is below 1.0 (specifically 0.25), not 4 - a rarer event has a lower rate, not a higher one.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "ALE is Single Loss Expectancy multiplied by Annualized Rate of Occurrence. Here, SLE = $900,000 x 0.30 = $270,000, and an event occurring once every four years has an ARO of 0.25, so ALE = $270,000 x 0.25 = $67,500.",
+    "recognition_clue": "A stem adding how often an event is expected to happen per year, on top of an asset value and exposure factor, is asking for ALE (SLE x ARO).",
+    "memory_rule": "ONE YEAR: Single Loss Expectancy x Annualized Rate of Occurrence = Annualized Loss Expectancy.",
+    "evidence_dimensions": ["evidence.knowledge"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-2 CANDIDATE - authored by Claude Code as the second variant of family.d2.quantitative-risk-decisions (D2-U4) - an ALE calculation deliberately including the ARO-misreading trap named in the Phase 9B-2 instructions ('once every four years' misread as ARO=4 rather than 0.25). Not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0013",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.quantitative-risk-decisions"],
+    "patterns": ["pattern.p10"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": "lifecycle.risk",
+    "stage": "stage.risk.analyze",
+    "decision_type": "decision.risk",
+    "family": "family.d2.quantitative-risk-decisions",
+    "variation_tags": ["decision-consequence:ale-as-one-input-not-automatic-decision", "wording-structure:interpretation-not-calculation", "distractor-temptation:ale-treated-as-automatic-decision"],
+    "prompt": "Using the earlier example, an enterprise calculates that a proposed control's $200,000 annual cost exceeds the $50,000 annualized loss expectancy (ALE) it would offset. What is the BEST interpretation of this comparison?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The comparison is one legitimate input into the treatment decision, but it does not automatically decide it - regulatory obligations, safety, reputation, or risk appetite could still justify approving the control despite its higher cost.",
+        "correct": true,
+        "rationale": "A cost-versus-ALE comparison is genuinely useful information, but treatment decisions can legitimately weigh other factors beyond this one number - the comparison informs the decision without automatically making it."
+      },
+      {
+        "key": "b",
+        "text": "The control should automatically be rejected, since its annual cost exceeds the calculated annualized loss expectancy.",
+        "correct": false,
+        "rationale": "This treats the cost-vs-ALE comparison as if it were the entire decision by itself, ignoring that other legitimate factors (regulatory, safety, reputational, risk appetite) can still justify a control that costs more than its ALE.",
+        "repair_target": "repair.decision-error"
+      },
+      {
+        "key": "c",
+        "text": "The annualized loss expectancy calculation must be wrong, since a legitimate control would never cost more than the loss it prevents.",
+        "correct": false,
+        "rationale": "This doubts the arithmetic rather than reasoning about the decision - a control can legitimately cost more than its ALE offsets when other factors justify it; that doesn't mean the calculation itself is wrong.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "The comparison is irrelevant, since security decisions should never be based on cost.",
+        "correct": false,
+        "rationale": "This overcorrects in the other direction - cost-benefit comparison is a genuine, useful input into treatment decisions; the point is that it isn't the only input, not that it has no value at all.",
+        "repair_target": "repair.decision-error"
+      }
+    ],
+    "explanation": "A calculated ALE compared against a control's cost is a legitimate, useful input into a treatment decision - but treatment decisions can weigh other factors (regulatory, safety, reputational, risk appetite) that may still justify a control costing more than the ALE it offsets. The number informs the decision; it does not make it automatically.",
+    "recognition_clue": "A stem comparing a control's cost against a calculated ALE and asking what that comparison means is testing whether ALE is being treated as the automatic decision, rather than one input to it.",
+    "memory_rule": "A risk number matters because it helps make a better decision - not because CISM wants you to be an actuary.",
+    "evidence_dimensions": ["evidence.decision", "evidence.business-context"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-2 CANDIDATE - authored by Claude Code as the third variant of family.d2.quantitative-risk-decisions (D2-U4) - the required interpretation-not-arithmetic variant, using the same scenario anchor as the lesson (e-commerce ransomware exposure) to test whether ALE is mistaken for automatic decision authority, per explicit Phase 9B-2 instruction. Not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
   }
 ]
