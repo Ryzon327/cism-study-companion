@@ -178,5 +178,29 @@
     "source": "source.learner-supplied.domain-2-question-bank",
     "version": 1,
     "note": "PHASE 9B-2 CANDIDATE — authored by Claude Code per approved Phase 9A Domain 2 architecture (D2-U4) and the CANONICAL quantitative-risk requirement in docs/learning/DOMAIN-2-BLUEPRINT.md. Grounded in docs/learning/PATTERN-LIBRARY.md (P10) and evidenced by the supplied Domain 2 source material (e.g., asset valuation as the first step in quantitative risk analysis; the ALE-limitation question). Deliberately scoped to the depth needed for a management decision, not arithmetic for its own sake, per explicit instruction. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "concept.d2.risk-evaluation",
+    "display_name": "Risk evaluation: comparing analyzed risk against criteria, appetite, and tolerance",
+    "home_domain": "domain.d2",
+    "plain": "Analysis tells you what a risk looks like - its likelihood and impact. Evaluation tells you what that risk means to the organization - comparing the analyzed risk against established criteria, including risk appetite (the broad amount/type of risk the organization is willing to pursue or retain, a strategic-level posture) and risk tolerance (the acceptable variation around a specific objective or threshold, a narrower operational boundary). Evaluation determines whether an analyzed risk is acceptable as-is or requires further action - but the decision of what is actually acceptable belongs to the appropriately accountable business/risk authority, not to whoever performed the analysis.",
+    "related_patterns": ["pattern.p02"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "version": 1,
+    "note": "PHASE 9B-3 CANDIDATE — authored by Claude Code per approved Phase 9A Domain 2 architecture (D2-U5). Grounded in docs/learning/PATTERN-LIBRARY.md (P02 - Authority Follows Accountability) and docs/learning/CONFUSING-CONCEPTS.md's approved Risk Appetite vs. Risk Tolerance pair, evidenced by the supplied Domain 2 source material's acceptable-risk-determination and appetite/tolerance-threshold questions. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "concept.d2.risk-treatment-response",
+    "display_name": "Risk treatment: selecting a response that fits the business",
+    "home_domain": "domain.d2",
+    "plain": "Once an evaluated risk is found unacceptable, the enterprise selects a treatment: avoid (stop the activity causing the risk), mitigate (reduce likelihood and/or impact through controls or other action), transfer/share (shift or share some financial or operational consequence with another party, such as through insurance - which does not eliminate the organization's own accountability for the risk), or accept (a knowing, authorized decision by the accountable authority to retain the risk within established criteria, not passive neglect). There is no universally strongest treatment - the best one fits the business objective, the risk level, cost, feasibility, and the organization's own risk appetite/tolerance.",
+    "related_patterns": ["pattern.p01"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "version": 1,
+    "note": "PHASE 9B-3 CANDIDATE — authored by Claude Code per approved Phase 9A Domain 2 architecture (D2-U6). Grounded in docs/learning/PATTERN-LIBRARY.md (P01 - Business Alignment) and evidenced by the supplied Domain 2 source material's treatment-option identification questions (insurance as risk transfer, security controls as risk mitigation, stopping an activity as risk avoidance). Deliberately stops before residual-risk/validate-acceptability teaching, which belongs to D2-U7. Not yet human-reviewed or promoted."
   }
 ]

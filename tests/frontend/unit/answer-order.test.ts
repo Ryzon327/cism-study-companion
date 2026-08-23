@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { orderOptionsForDisplay, displayPositionOf, displayLetterForPosition } from "../../../app/src/content/answerOrder";
+import productionQuestionsRaw from "../../../content/production/questions.json";
 
 interface Opt {
   key: string;
@@ -139,5 +140,37 @@ describe("answerOrder — helper functions", () => {
   it("a single-option list is returned unchanged (no reordering possible or needed)", () => {
     const single = [OPTIONS[0]!];
     expect(orderOptionsForDisplay(single, "question.test.0008", 5)).toEqual(single);
+  });
+});
+
+// Added following a Phase 9B-3 investigation into a founder-reported
+// concern about answer-position bias (found not confirmed — see
+// docs/learning/PHASE-9B3-GATE-RECORD.md). That investigation surfaced a
+// real, separate coverage gap worth closing on its own merits: every prior
+// test in this file exercised the algorithm only against a fixed list of
+// five Domain 1/Foundation question IDs chosen when this file was written,
+// so a defect specific to any newer question ID would never have been
+// caught by this suite. This closes that gap generically — iterating over
+// every ACTUAL production question ID currently authored, rather than a
+// fixed sample — so it covers whatever is added in future phases without
+// needing a manual update each time. It encodes the same "never stuck at
+// one position" shape as the historical defect this architecture was built
+// to prevent, not an artificial distribution target.
+describe("answerOrder — whole-bank regression: no production question exhibits a first-position (or any fixed-position) bias across repeated exposures", () => {
+  const allQuestions = productionQuestionsRaw as unknown as Array<{
+    id: string;
+    options: Array<{ key: string; correct: boolean }>;
+  }>;
+
+  it("every production question's correct answer visits more than one display position across 8 exposures, and is never stuck at position A the whole time", () => {
+    for (const q of allQuestions) {
+      const correctKey = q.options.find((o) => o.correct)!.key;
+      const positions = Array.from({ length: 8 }, (_, e) => {
+        const ordered = orderOptionsForDisplay(q.options, q.id, e);
+        return displayPositionOf(ordered, correctKey);
+      });
+      expect(new Set(positions).size, `${q.id}: correct answer never moves across 8 exposures`).toBeGreaterThan(1);
+      expect(positions.every((p) => p === 0), `${q.id}: correct answer is at position A for all 8 exposures`).toBe(false);
+    }
   });
 });

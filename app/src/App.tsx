@@ -71,7 +71,9 @@ const REVIEW_LESSON_ITEMS: PrototypeStateItem[] = [
   { id: "lesson.d2.risk-fundamentals", label: "D2-U1 — Risk Fundamentals & Emerging Risk" },
   { id: "lesson.d2.risk-assessment-lifecycle", label: "D2-U2 — Risk Assessment Lifecycle" },
   { id: "lesson.d2.risk-analysis-methods", label: "D2-U3 — Risk Analysis Methods" },
-  { id: "lesson.d2.quantitative-risk-decisions", label: "D2-U4 — Quantitative Risk for Decisions" }
+  { id: "lesson.d2.quantitative-risk-decisions", label: "D2-U4 — Quantitative Risk for Decisions" },
+  { id: "lesson.d2.risk-evaluation", label: "D2-U5 — Risk Evaluation" },
+  { id: "lesson.d2.risk-treatment-response", label: "D2-U6 — Risk Treatment / Response Selection" }
 ];
 
 const SESSION_SCREENS = new Set([
