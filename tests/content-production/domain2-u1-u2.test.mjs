@@ -161,7 +161,7 @@ test("D2-U2: FIRST and NEXT qualifier usage is source-supported and not manufact
   assert.equal(nextCount, 1, "expected exactly one NEXT-qualifier variant, matching the source-evidenced sequencing question — NEXT must not be manufactured beyond genuine evidence");
 });
 
-test("D2-U2: cross-domain prerequisite chain is exactly as approved (Domain 1 complete -> D2-U1 -> D2-U2), no future Domain 2 unit exposed", () => {
+test("D2-U2: cross-domain prerequisite chain is exactly as approved (Domain 1 complete -> D2-U1 -> D2-U2)", () => {
   assert.deepEqual(
     lessonsById.get("lesson.d2.risk-fundamentals").prerequisites,
     ["lesson.d1.organizational-culture-governance"],
@@ -172,12 +172,10 @@ test("D2-U2: cross-domain prerequisite chain is exactly as approved (Domain 1 co
     ["lesson.d2.risk-fundamentals"],
     "D2-U2 must be prerequisite on D2-U1 only"
   );
-  // No later Domain 2 unit (U3+) exists yet as production content.
-  const laterUnitIds = [...data.concepts, ...data.lessons, ...data.families]
-    .map((e) => e.id)
-    .filter((id) => /^(concept|lesson|family)\.d2\./.test(id))
-    .filter((id) => !id.includes("risk-fundamentals") && !id.includes("risk-assessment-lifecycle"));
-  assert.equal(laterUnitIds.length, 0, `no Domain 2 unit beyond U1/U2 may exist yet: ${laterUnitIds.join(", ")}`);
+  // Note: this file no longer asserts "no Domain 2 unit beyond U1/U2 exists" —
+  // that was a Phase 9B-1 batch-boundary guard, superseded once Phase 9B-2
+  // legitimately added D2-U3/U4. The current batch boundary (no U5+ yet) is
+  // asserted in domain2-u3-u4.test.mjs instead.
 });
 
 test("D2-U2: taught-before-tested holds for both new lessons (retrieval question's concepts are taught by that lesson or its prerequisites)", () => {
@@ -226,9 +224,9 @@ test("Domain 2 so far: all new entities are CANDIDATE, unverified, and none refe
   assert.equal(bad.length, 0, `no Domain 2 entity may reference Domain 3/4: ${bad.join(", ")}`);
 });
 
-test("Domain 2 production question count is exactly 6 after this batch (family.d2.risk-fundamentals + family.d2.risk-assessment-lifecycle, 3 each)", () => {
-  const d2Questions = data.questions.filter((q) => q.domain === "domain.d2");
-  assert.equal(d2Questions.length, 6, `expected 6 Domain 2 questions, got ${d2Questions.length}`);
+test("D2-U1/U2's own families still have exactly 3 active variants each, unaffected by later Domain 2 batches", () => {
+  assert.equal(questionsByFamily("family.d2.risk-fundamentals").length, 3);
+  assert.equal(questionsByFamily("family.d2.risk-assessment-lifecycle").length, 3);
 });
 
 // --- Phase 9B-1 Human Experience Gate follow-up: D2-U2 scenario-anchor repair ---

@@ -338,5 +338,70 @@
     "version": 2,
     "source": "source.learner-supplied.domain-2-question-bank",
     "note": "PHASE 9B-1 CANDIDATE (D2-U2) — authored by Claude Code per approved Phase 9A Domain 2 architecture and Phase 9B-1 scope. Deliberately stops at Evaluate — Treat and later lifecycle stages are out of scope for this batch. Grounded in docs/learning/LIFECYCLE-MODEL.md's CANONICAL Domain 2 risk lifecycle and docs/learning/PATTERN-LIBRARY.md (P04), evidenced by the supplied Domain 2 source material's Risk Assessment and Analysis sub-area. The cross-domain connection to Foundation's STAGE reasoning step and Domain 1's business-case/roadmap sequencing (per the approved Phase 9A cross-domain recall design) is carried in this lesson's own context/cism_perspective narrative; the mechanical recall pool reaches the full Domain 1 + Foundation chain transitively through lesson.d2.risk-fundamentals's own prerequisite, since D2-U2 is only the second Domain 2 lesson authored and has no non-adjacent Domain 2 unit yet to skip over — the approved non-adjacent recall design (U7 recalling U8) begins mechanically once those later units exist. PHASE 9B-1 HUMAN EXPERIENCE GATE FOLLOW-UP: version bumped 1 -> 2 following founder-reported feedback that U2 lacked a concrete scenario reference for applying the lifecycle in practice ('i need reference'). context and scenario were rewritten around one continuous online-payment-capability story walking Context -> Identify -> Analyze -> Evaluate, framed as four recognition questions (what are we assessing?/what could create risk?/how likely and how bad?/is this acceptable or does it require action?); cism_perspective was rewritten to foreground the explicit 'what has already happened, and therefore where am I' reasoning question; a third memory_rule states that question directly. objective, recognition_clues, and the first two memory_rules carry the same substance as version 1, reworded only to foreground stated-fact evidence over memorized order; retrieval_refs, prerequisites, concepts, and patterns are unchanged. All three existing question variants (question.d2.0005/0006/0007) were reviewed against this lesson's new framing and found to already provide sufficient stated-fact evidence for stage-location reasoning - none were rewritten, per the explicit instruction not to automatically modify variants that already work. Not yet human-reviewed against this revision."
+  },
+  {
+    "id": "lesson.d2.risk-analysis-methods",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-analysis-methods"],
+    "patterns": ["pattern.p10"],
+    "prerequisites": ["lesson.d2.risk-assessment-lifecycle"],
+    "objective": "Select the risk-analysis method - qualitative or quantitative - that fits the decision actually being supported, rather than assuming quantitative is inherently superior or more rigorous.",
+    "context": "Consider an enterprise assessing the risk from a recent data breach. Some parts of that risk are easy to express in dollars - the cost of incident response and system restoration - so quantitative analysis fits: assign defensible monetary values and compare them directly. Other parts are not - the potential decline in customer trust and loyalty doesn't reduce cleanly to a dollar figure, so qualitative analysis (a descriptive rating such as High/Medium/Low) fits better: forcing a specific number onto something that doesn't quantify well would be more misleading than helpful, not more rigorous. The question to ask before choosing either method is always the same: what decision am I trying to support, and what level or type of information actually gives me enough to make it? Needing to quickly rank many risks with limited data calls for qualitative; needing to compare an expected dollar loss against a specific treatment cost calls for quantitative. Neither method is universally 'better' - each is fit for a different kind of decision.",
+    "cism_perspective": "CISM stems in this area describe a specific decision - rank many risks quickly, justify a control's cost, or assess something that resists quantification - and ask which method BEST fits it. The correct answer traces back to what the decision actually needs. The most common trap is treating quantitative as automatically more rigorous or more defensible, even when reliable data doesn't exist or the decision doesn't require a dollar figure - forcing false precision onto data that doesn't support it is a worse answer than an honest qualitative rating.",
+    "recognition_clues": [
+      "The stem describes needing to rank or compare many risks quickly, often before complete data exists - that's a qualitative-fit signal.",
+      "The stem describes comparing a specific dollar cost against an expected dollar loss - that's a quantitative-fit signal.",
+      "The stem describes something that resists quantification (trust, morale, reputation) and an answer choice still insists on assigning it a specific dollar figure - that's a false-precision trap."
+    ],
+    "scenario": "An enterprise assessing risk from a data breach uses quantitative analysis for the incident-response and restoration cost (a real dollar figure, defensible from data on hand), and qualitative analysis for the potential decline in customer trust and loyalty (a High/Medium/Low rating, since forcing a specific dollar estimate onto trust decline would be less honest than a descriptive rating, not more rigorous). The method follows the decision each piece of risk is meant to support, not a general preference for one method over the other.",
+    "traps": [
+      "Assuming quantitative analysis is always more rigorous or more defensible, even when reliable data doesn't exist to support a numeric estimate.",
+      "Choosing a method because it's simpler to present or feels more consistent with other risks in the same assessment, rather than because it fits this decision.",
+      "Concluding that a risk cannot be assessed at all just because it doesn't quantify well - qualitative analysis is a genuine method, not a fallback for when quantification fails."
+    ],
+    "memory_rules": [
+      "Ask what the decision needs before asking which method sounds more rigorous.",
+      "A confident-looking number built on data that doesn't exist is false precision, not real rigor."
+    ],
+    "retrieval_refs": ["question.d2.0008"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-2 CANDIDATE (D2-U3) — authored by Claude Code per approved Phase 9A Domain 2 architecture and Phase 9B-2 scope. Grounded in docs/learning/PATTERN-LIBRARY.md (P10 — Method Fits Objective) and evidenced by the supplied Domain 2 source material's matched-pair qualitative/quantitative fit questions (customer-confidence decline best assessed qualitatively; an electrical power outage best assessed quantitatively). Carries forward the D2-U2 scenario-anchor learning-design finding (one continuous data-breach story illustrating both methods) since method-fit is itself an abstract, easy-to-memorize-without-understanding distinction. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d2.quantitative-risk-decisions",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.quantitative-risk-decisions"],
+    "patterns": ["pattern.p10"],
+    "prerequisites": ["lesson.d2.risk-analysis-methods"],
+    "objective": "Understand what Asset Value, Exposure Factor, Single Loss Expectancy, Annualized Rate of Occurrence, and Annualized Loss Expectancy each mean, compute SLE and ALE from given values, and use the resulting ALE to support - not automatically make - a treatment decision.",
+    "context": "Consider an enterprise's e-commerce order-processing system, valued at $500,000 (its Asset Value). A successful ransomware attack against it is expected to corrupt or destroy about 20% of that value each time it succeeds (its Exposure Factor). Multiplying those together gives the Single Loss Expectancy - the expected loss from ONE occurrence: $500,000 x 0.20 = $100,000. Based on history and threat intelligence, this type of attack is expected to succeed about once every two years - an Annualized Rate of Occurrence of 0.5 (once per year would be 1.0; twice per year would be 2.0). Multiplying SLE by ARO gives the Annualized Loss Expectancy - the expected loss averaged over a YEAR: $100,000 x 0.5 = $50,000. A proposed control to prevent this attack costs $200,000 per year. Comparing that $200,000 cost against the $50,000 ALE it would offset is a legitimate, useful part of the decision - but it does not automatically decide it. Regulatory obligations, safety, reputation, or the enterprise's own risk appetite could still justify approving the control even though its cost exceeds the ALE it offsets. The number informs the decision; it does not make the decision by itself.",
+    "cism_perspective": "CISM expects these calculations only to the depth that supports a decision, not as arithmetic for its own sake. The critical distinction is ONE EVENT versus ONE YEAR: SLE (Asset Value x Exposure Factor) is what one occurrence would cost; ALE (SLE x Annualized Rate of Occurrence) is what that risk costs on average per year, accounting for how often it's expected to happen. A common trap is treating the un-annualized SLE as if it were already the yearly figure, or misreading how a stated frequency (like 'once every four years') translates into an Annualized Rate of Occurrence below 1.0. An equally common trap is treating a cost-versus-ALE comparison as if it alone decides whether to approve a control, rather than as one input a real decision also weighs against other factors.",
+    "recognition_clues": [
+      "The stem gives an asset value and a percentage expected to be lost in one event - that's asking for SLE (AV x EF).",
+      "The stem adds how often that event is expected to happen per year - that's asking for ALE (SLE x ARO).",
+      "The stem compares a control's cost against a calculated ALE and asks what that comparison means - that's testing whether ALE is being treated as the automatic decision, rather than one input to it."
+    ],
+    "scenario": "An e-commerce order-processing system valued at $500,000 (Asset Value) faces a ransomware attack with a 20% Exposure Factor, giving a Single Loss Expectancy of $100,000 for one occurrence. Threat intelligence suggests this attack succeeds about once every two years (an Annualized Rate of Occurrence of 0.5), giving an Annualized Loss Expectancy of $50,000 per year. A proposed $200,000-per-year control would cost more than this ALE - a real input into the treatment decision, but not one that decides it by itself; regulatory, safety, reputational, or risk-appetite considerations could still justify the control.",
+    "traps": [
+      "Treating the Single Loss Expectancy (one event) as if it were already the Annualized Loss Expectancy (one year), skipping the Annualized Rate of Occurrence step entirely.",
+      "Misreading a stated frequency like 'once every four years' as an Annualized Rate of Occurrence of 4 rather than 0.25 - a rarer event has a LOWER rate, not a higher one.",
+      "Treating a control-cost-versus-ALE comparison as if it automatically decides whether to approve or reject the control, rather than as one legitimate input among several."
+    ],
+    "memory_rules": [
+      "ONE EVENT: Asset Value x Exposure Factor = Single Loss Expectancy.",
+      "ONE YEAR: Single Loss Expectancy x Annualized Rate of Occurrence = Annualized Loss Expectancy.",
+      "A risk number matters because it helps make a better decision - not because CISM wants you to be an actuary."
+    ],
+    "retrieval_refs": ["question.d2.0011"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-2 CANDIDATE (D2-U4) — authored by Claude Code per approved Phase 9A Domain 2 architecture, Phase 9B-2 scope, and the CANONICAL quantitative-risk requirement in docs/learning/DOMAIN-2-BLUEPRINT.md (non-negotiable regardless of source frequency - SLE/ARO/EF/AV do not appear as literal acronyms in the supplied source; ALE appears 3 times). Grounded in docs/learning/PATTERN-LIBRARY.md (P10) and evidenced by the supplied source material's 'calculating asset value is the first step in risk analysis' question and its ALE-limitation question. Deliberately scoped to the depth needed for a management decision, not arithmetic for its own sake - one coherent scenario anchor (an e-commerce ransomware exposure) carries all five terms and the resulting decision, per the D2-U2 scenario-anchor learning-design finding. Not yet human-reviewed or promoted."
   }
 ]

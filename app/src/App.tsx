@@ -69,7 +69,9 @@ const REVIEW_LESSON_ITEMS: PrototypeStateItem[] = [
   { id: "lesson.d1.legal-regulatory-risk", label: "D1-U8 — Legal, Regulatory & Contractual Risk" },
   { id: "lesson.d1.organizational-culture-governance", label: "D1-U9 — Organizational Culture & Governance" },
   { id: "lesson.d2.risk-fundamentals", label: "D2-U1 — Risk Fundamentals & Emerging Risk" },
-  { id: "lesson.d2.risk-assessment-lifecycle", label: "D2-U2 — Risk Assessment Lifecycle" }
+  { id: "lesson.d2.risk-assessment-lifecycle", label: "D2-U2 — Risk Assessment Lifecycle" },
+  { id: "lesson.d2.risk-analysis-methods", label: "D2-U3 — Risk Analysis Methods" },
+  { id: "lesson.d2.quantitative-risk-decisions", label: "D2-U4 — Quantitative Risk for Decisions" }
 ];
 
 const SESSION_SCREENS = new Set([

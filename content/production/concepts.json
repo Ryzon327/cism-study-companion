@@ -154,5 +154,29 @@
     "source": "source.learner-supplied.domain-2-question-bank",
     "version": 1,
     "note": "PHASE 9B-1 CANDIDATE — authored by Claude Code per approved Phase 9A Domain 2 architecture (D2-U2). Grounded in docs/learning/LIFECYCLE-MODEL.md's CANONICAL Domain 2 risk lifecycle and docs/learning/PATTERN-LIBRARY.md (P04), evidenced by the supplied Domain 2 source material's Risk Assessment and Analysis sub-area. Deliberately stops at Evaluate — Treat and later stages are out of scope for this batch, per explicit instruction. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "concept.d2.risk-analysis-methods",
+    "display_name": "Qualitative vs. quantitative risk analysis: method fits objective",
+    "home_domain": "domain.d2",
+    "plain": "Qualitative analysis uses descriptive/ordinal ratings (e.g., High/Medium/Low) and fits decisions needing a fast, relative comparison or involving impacts that don't quantify well (trust, morale, reputation). Quantitative analysis expresses risk in numeric/monetary terms and fits decisions that require a defensible dollar comparison, such as justifying a control's cost - but it requires sufficiently reliable data, and forcing numeric precision onto unreliable data is false precision, not rigor. Neither method is universally superior; the right one is the one that gives the decision enough of the right kind of information.",
+    "related_patterns": ["pattern.p10"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "version": 1,
+    "note": "PHASE 9B-2 CANDIDATE — authored by Claude Code per approved Phase 9A Domain 2 architecture (D2-U3). Grounded in docs/learning/PATTERN-LIBRARY.md (P10 — Method Fits Objective) and evidenced by the supplied Domain 2 source material's matched-pair qualitative/quantitative fit questions (e.g., a permanent decline in customer confidence best assessed qualitatively vs. an electrical power outage best assessed quantitatively). Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "concept.d2.quantitative-risk-decisions",
+    "display_name": "Quantitative risk for decisions: AV, EF, SLE, ARO, ALE",
+    "home_domain": "domain.d2",
+    "plain": "Asset Value (AV) is the value of the asset/exposure being considered. Exposure Factor (EF) is the portion of that value expected to be lost in one occurrence. Single Loss Expectancy (SLE = AV x EF) is the expected loss from one occurrence. Annualized Rate of Occurrence (ARO) is how often that occurrence is expected per year. Annualized Loss Expectancy (ALE = SLE x ARO) is the expected loss averaged over a year. ALE is one legitimate input into a treatment decision - comparing it against a control's cost is useful, but the comparison alone does not automatically decide whether to approve or reject the control; other factors (regulatory, safety, reputational, risk appetite) can still matter.",
+    "related_patterns": ["pattern.p10"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "version": 1,
+    "note": "PHASE 9B-2 CANDIDATE — authored by Claude Code per approved Phase 9A Domain 2 architecture (D2-U4) and the CANONICAL quantitative-risk requirement in docs/learning/DOMAIN-2-BLUEPRINT.md. Grounded in docs/learning/PATTERN-LIBRARY.md (P10) and evidenced by the supplied Domain 2 source material (e.g., asset valuation as the first step in quantitative risk analysis; the ALE-limitation question). Deliberately scoped to the depth needed for a management decision, not arithmetic for its own sake, per explicit instruction. Not yet human-reviewed or promoted."
   }
 ]
