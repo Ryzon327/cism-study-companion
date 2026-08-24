@@ -6,8 +6,12 @@
 // Inherent-vs-Residual framing, residual-does-not-imply-zero, acceptability
 // following determination, source-supported NEXT usage, Risk Owner vs.
 // Control Owner framing without seniority/title shortcuts, the AI scenario
-// staying scenario-only, the approved non-adjacent U7-recalls-U8 wiring,
-// and no leakage of a future Domain 2 unit (U9+). General structural
+// staying scenario-only, and the approved non-adjacent U7-recalls-U8 wiring.
+// (Phase 9B-5 added D2-U9/U10 in the same batch cycle; the two tests that
+// originally asserted "no unit beyond U8 exists yet" and "exactly 24
+// Domain 2 questions" were narrowed to batch-scoped assertions once that
+// batch legitimately superseded them — see domain2-u9-u10.test.mjs for
+// this phase's own structural coverage.) General structural
 // invariants (id format, referential integrity, length-bias, paraphrase
 // detection, etc.) are already covered domain-agnostically by the other
 // files in this directory and are not re-asserted here.
@@ -315,7 +319,7 @@ test("No prerequisite cycle exists among D2-U7/D2-U8 and their ancestors", () =>
   assert.equal(cycles.length, 0, cycles.join("\n"));
 });
 
-test("No Domain 2 unit beyond U1-U8 exists yet (U9+ not authored)", () => {
+test("D2-U1 through D2-U8's own concept/lesson/family entities still all exist (Phase 9B-5 supersedes this batch's own no-U9+-yet guard)", () => {
   const knownUnitIds = [
     "risk-fundamentals",
     "risk-assessment-lifecycle",
@@ -326,16 +330,18 @@ test("No Domain 2 unit beyond U1-U8 exists yet (U9+ not authored)", () => {
     "residual-risk-acceptability",
     "risk-control-ownership"
   ];
-  const laterUnitIds = [...data.concepts, ...data.lessons, ...data.families]
+  const d2EntityIds = [...data.concepts, ...data.lessons, ...data.families]
     .map((e) => e.id)
-    .filter((id) => /^(concept|lesson|family)\.d2\./.test(id))
-    .filter((id) => !knownUnitIds.some((u) => id.includes(u)));
-  assert.equal(laterUnitIds.length, 0, `no Domain 2 unit beyond U1-U8 may exist yet: ${laterUnitIds.join(", ")}`);
+    .filter((id) => /^(concept|lesson|family)\.d2\./.test(id));
+  const missing = knownUnitIds.filter((u) => !d2EntityIds.some((id) => id.includes(u)));
+  assert.equal(missing.length, 0, `expected U1-U8 unit entities still present, missing: ${missing.join(", ")}`);
 });
 
-test("Domain 2 production question count is exactly 24 after U1-U8 (3 variants x 8 families)", () => {
-  const d2Questions = data.questions.filter((q) => q.domain === "domain.d2");
-  assert.equal(d2Questions.length, 24, `expected 24 Domain 2 questions, got ${d2Questions.length}`);
+test("D2-U7 and D2-U8's own families still have exactly 3 active variants each (Phase 9B-5 supersedes this batch's own global Domain 2 count)", () => {
+  const u7Variants = data.questions.filter((q) => q.family === "family.d2.residual-risk-acceptability" && q.active);
+  const u8Variants = data.questions.filter((q) => q.family === "family.d2.risk-control-ownership" && q.active);
+  assert.equal(u7Variants.length, 3, `expected 3 active family.d2.residual-risk-acceptability variants, got ${u7Variants.length}`);
+  assert.equal(u8Variants.length, 3, `expected 3 active family.d2.risk-control-ownership variants, got ${u8Variants.length}`);
 });
 
 test("D2-U1 through D2-U6 remain completely unchanged by this batch", () => {

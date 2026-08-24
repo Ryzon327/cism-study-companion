@@ -20,4 +20,5 @@
   font-size: 1.0625rem;
   line-height: var(--line-height-reading);
   font-style: italic;
+  white-space: pre-line;
 }
