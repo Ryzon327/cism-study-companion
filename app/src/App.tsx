@@ -75,7 +75,9 @@ const REVIEW_LESSON_ITEMS: PrototypeStateItem[] = [
   { id: "lesson.d2.risk-evaluation", label: "D2-U5 — Risk Evaluation" },
   { id: "lesson.d2.risk-treatment-response", label: "D2-U6 — Risk Treatment / Response Selection" },
   { id: "lesson.d2.residual-risk-acceptability", label: "D2-U7 — Residual Risk & Acceptability" },
-  { id: "lesson.d2.risk-control-ownership", label: "D2-U8 — Risk Owner vs. Control Owner" }
+  { id: "lesson.d2.risk-control-ownership", label: "D2-U8 — Risk Owner vs. Control Owner" },
+  { id: "lesson.d2.risk-monitoring-reporting", label: "D2-U9 — Risk Monitoring, Reassessment & Reporting" },
+  { id: "lesson.d2.risk-management-embedding-synthesis", label: "D2-U10 — Embedding Risk Management & Domain 2 Synthesis" }
 ];
 
 const SESSION_SCREENS = new Set([

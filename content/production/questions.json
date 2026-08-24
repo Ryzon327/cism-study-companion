@@ -2441,5 +2441,364 @@
     "version": 1,
     "source": "source.learner-supplied.domain-2-question-bank",
     "note": "PHASE 9B-4 CANDIDATE - authored by Claude Code as the third variant of family.d2.risk-control-ownership (D2-U8). Original scenario grounded directly in the supplied Domain 2 source material's own 'MAIN responsibility of the risk owner' question ('the risk owner decides on which risk response options are selected, which controls are selected, and which resources are assigned... the control owner is responsible for oversight and measurement of the controls') - not a reproduction or paraphrase of that or any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0026",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-monitoring-reporting"],
+    "patterns": ["pattern.p15"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.risk-owner", "role.security-manager"],
+    "primary_role": "role.risk-owner",
+    "lifecycle": "lifecycle.risk",
+    "stage": "stage.risk.monitor-reassess",
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-monitoring-reporting",
+    "variation_tags": [
+      "business-setting:payment-system-vendor-acquisition",
+      "distractor-temptation:accepted-risk-is-closed",
+      "lifecycle-framing:monitor-then-reassess"
+    ],
+    "prompt": "Months after the enterprise's risk owner validated that the residual payment-system fraud risk was acceptable, monitoring detects that the vendor providing the core fraud-detection engine has been acquired by an unfamiliar third party, and little is known about that new owner's security practices. Which of the following is the BEST response?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Reassess the payment-system fraud risk, since the vendor acquisition is a material change to an assumption the earlier acceptance depended on.",
+        "correct": true,
+        "rationale": "A vendor acquisition that introduces real uncertainty about a control's continued reliability is exactly the kind of material change monitoring exists to catch - reassessing the risk in light of it, rather than treating the earlier acceptance as still automatically valid, is the correct next step."
+      },
+      {
+        "key": "b",
+        "text": "Take no further action, since the residual fraud risk was already formally validated as acceptable.",
+        "correct": false,
+        "rationale": "Acceptance was a judgment made against the assumptions true at that time, not a permanent closure of the matter - a material change like this specifically calls that judgment back into question.",
+        "repair_target": "repair.decision-error"
+      },
+      {
+        "key": "c",
+        "text": "Immediately select and implement a new fraud-detection control, without first determining whether this change actually warrants a reassessment.",
+        "correct": false,
+        "rationale": "Selecting a new treatment is a step that comes after determining whether reassessment is actually warranted and what it reveals - jumping straight to a new control skips that determination.",
+        "repair_target": "repair.lifecycle-error"
+      },
+      {
+        "key": "d",
+        "text": "Wait until the enterprise's next regularly scheduled risk-assessment cycle, regardless of the nature of this change.",
+        "correct": false,
+        "rationale": "A scheduled cadence is one legitimate reassessment trigger, but it isn't the only one - a material change of this kind warrants attention on its own timeline, not only whenever the calendar happens to call for a review.",
+        "repair_target": "repair.sequence-error"
+      }
+    ],
+    "explanation": "Once a risk has been validated as acceptable, that judgment rests on the assumptions true at the time - here, a stable, known vendor for the fraud-detection control. A vendor acquisition that introduces real uncertainty is a material change, and material change is exactly what should trigger reassessment - not a scheduled-only view of when reassessment happens, and not treating the earlier acceptance as a permanent, unrevisitable decision.",
+    "recognition_clue": "A stem describing a change since a prior risk acceptance - new ownership of a vendor, a shift in what was previously known and stable - and asking what should happen next is a genuine reassessment-trigger signal, not evidence the matter is closed.",
+    "memory_rule": "A risk decision is a point-in-time decision - monitoring tells you whether the assumptions behind it are still true.",
+    "evidence_dimensions": ["evidence.lifecycle", "evidence.sequence", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-5 CANDIDATE - authored by Claude Code as the first variant of family.d2.risk-monitoring-reporting (D2-U9), and this family's anchor/retrieval question. Original scenario continuing the D2-U5/U6/U7 payment-system story, testing the reasoning target evidenced by the supplied Domain 2 source material's own 'PRIMARY candidate for a risk reassessment' question (a key software vendor bought by an unknown enterprise, versus routine, already-effective control alerts) - not a reproduction or paraphrase of that or any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0027",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-monitoring-reporting"],
+    "patterns": ["pattern.p11"],
+    "qualifier": "qualifier.most",
+    "roles_mentioned": ["role.board-senior-management"],
+    "primary_role": null,
+    "lifecycle": "lifecycle.risk",
+    "stage": "stage.risk.monitor-reassess",
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-monitoring-reporting",
+    "variation_tags": [
+      "business-setting:board-risk-tolerance-report",
+      "distractor-temptation:raw-technical-detail-to-board",
+      "role-mix:board-senior-management"
+    ],
+    "prompt": "Following the fraud-detection vendor's acquisition, the reassessed payment-system fraud risk now exceeds the board's stated risk tolerance. Which of the following would be MOST appropriate to include in the report to the board?",
+    "options": [
+      {
+        "key": "a",
+        "text": "A clear statement that the fraud risk now exceeds the board's stated tolerance and requires a decision on further treatment or continued acceptance.",
+        "correct": true,
+        "rationale": "The board needs decision-relevant risk information - specifically, that a stated threshold has been crossed and a decision is now required of them - not raw activity or technical detail they cannot act on directly."
+      },
+      {
+        "key": "b",
+        "text": "The number of fraud-detection system health checks the security team performed this quarter.",
+        "correct": false,
+        "rationale": "A count of completed activities does not tell the board whether the current risk level is acceptable or what decision they need to make - it describes effort, not outcome.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "c",
+        "text": "The technical configuration details of the fraud-detection engine's current detection rules.",
+        "correct": false,
+        "rationale": "Configuration-level technical detail is appropriate for an operational control team, not for a board that needs to decide on tolerance and treatment, not on rule syntax.",
+        "repair_target": "repair.technical-vs-management-error"
+      },
+      {
+        "key": "d",
+        "text": "A complete historical log of every fraud alert the system has generated since it was first implemented.",
+        "correct": false,
+        "rationale": "A raw historical log doesn't tell the board what has changed or what decision it now requires - it is exactly the kind of undigested detail audience-appropriate reporting is meant to avoid.",
+        "repair_target": "repair.technical-vs-management-error"
+      }
+    ],
+    "explanation": "Audience-appropriate reporting means matching information to what its actual reader needs to decide. A board facing a risk that has crossed its own stated tolerance needs that fact stated plainly, along with the decision it now requires - not activity counts, configuration detail, or raw historical logs, all of which describe security-team work rather than the business decision at hand.",
+    "recognition_clue": "A stem asks what is MOST appropriate to report to a named senior audience; the correct answer states the decision-relevant risk fact plainly, while distractors offer activity counts or overly technical detail.",
+    "memory_rule": "A report is only as good as the decision it lets its actual reader make.",
+    "evidence_dimensions": ["evidence.business-context", "evidence.decision", "evidence.technical-vs-management"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-5 CANDIDATE - authored by Claude Code as the second variant of family.d2.risk-monitoring-reporting (D2-U9). Original scenario grounded in the supplied Domain 2 source material's own reporting-to-senior-management content (key risk indicators tied to critical business assets as MOST appropriate for ongoing, timely decisions; business objectives as the MOST important element when planning what to report) - not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0028",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-monitoring-reporting"],
+    "patterns": ["pattern.p07"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": "lifecycle.risk",
+    "stage": "stage.risk.monitor-reassess",
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-monitoring-reporting",
+    "variation_tags": [
+      "business-setting:program-effectiveness-measurement",
+      "distractor-temptation:activity-count-as-effectiveness",
+      "wording-structure:activity-versus-outcome-framing"
+    ],
+    "prompt": "Which of the following would BEST indicate whether the enterprise's risk-management program - including its handling of the payment-system fraud risk - is actually effective?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The number and business impact of security incidents that were not anticipated or adequately mitigated by current risk-management activities.",
+        "correct": true,
+        "rationale": "Effectiveness is demonstrated by outcomes - incidents that actually caused meaningful business impact despite the program's efforts - not by how much activity the program performed."
+      },
+      {
+        "key": "b",
+        "text": "The number of risk assessments completed across the enterprise this year.",
+        "correct": false,
+        "rationale": "Completing assessments is activity, not outcome - a high count doesn't establish that the risk those assessments covered was actually managed to an acceptable level.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "c",
+        "text": "The number of vulnerabilities identified during the most recent assessment cycle.",
+        "correct": false,
+        "rationale": "Identifying vulnerabilities is a useful input, but identification alone doesn't show whether the resulting risk was actually treated to an acceptable level - it measures discovery, not effectiveness.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "The number of security control reviews conducted and documented across the enterprise.",
+        "correct": false,
+        "rationale": "Documenting that reviews took place demonstrates that a process ran, not that the risk the process was meant to manage was actually reduced to an acceptable level.",
+        "repair_target": "repair.business-context-error"
+      }
+    ],
+    "explanation": "Program effectiveness is an outcome question, not an activity question: incidents that still caused significant business impact despite the program's efforts are the strongest signal that something in risk management isn't working, regardless of how many assessments, identifications, or reviews were completed along the way.",
+    "recognition_clue": "A stem asks what BEST indicates program effectiveness and offers activity counts (assessments completed, vulnerabilities identified, reviews conducted) as tempting distractors - the correct answer measures business outcomes instead.",
+    "memory_rule": "A metric is only as good as the decision it lets someone make.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.decision", "evidence.business-context"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-5 CANDIDATE - authored by Claude Code as the third variant of family.d2.risk-monitoring-reporting (D2-U9). Original scenario transferring Domain 1's implementation-does-not-equal-effectiveness reasoning (P07) into Domain 2, grounded in the supplied Domain 2 source material's own 'effectiveness of managing business risk is BEST measured by' question (incidents causing significant financial loss or business disruption, versus counts of compliant assessments or unmitigated vulnerabilities) - not a reproduction or paraphrase of that or any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0029",
+    "domain": "domain.d2",
+    "concepts": [
+      "concept.d2.risk-management-embedding-synthesis",
+      "concept.d2.risk-control-ownership",
+      "concept.d2.risk-monitoring-reporting"
+    ],
+    "patterns": ["pattern.p09"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.risk-owner", "role.security-manager"],
+    "primary_role": "role.risk-owner",
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-management-synthesis",
+    "variation_tags": [
+      "business-setting:payment-system-full-lifecycle",
+      "distractor-temptation:implementer-authority-overreach",
+      "decision-consequence:reassess-and-route-to-risk-owner"
+    ],
+    "prompt": "The enterprise's payment-system fraud-detection controls were implemented as treatment, and the risk owner validated the residual fraud risk as acceptable. Eighteen months later, monitoring detects that transaction volume has tripled following a new business partnership, and the fraud-detection vendor has been acquired by an unfamiliar third party. The information security manager, who selected the original control but does not own this risk, proposes replacing the fraud-detection engine immediately on their own authority. Which of the following is the BEST course of action?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The risk owner should reassess the payment-system fraud risk in light of the transaction-volume increase and vendor change, and decide on any further treatment.",
+        "correct": true,
+        "rationale": "The material changes monitoring detected are a genuine reassessment trigger, and the decision that follows - whether further treatment is needed, and what - belongs to the accountable risk owner, not to whoever selected or implemented the original control."
+      },
+      {
+        "key": "b",
+        "text": "The information security manager should replace the fraud-detection engine immediately, since the authority to select the original treatment carries over to any later changes.",
+        "correct": false,
+        "rationale": "Selecting or implementing a control does not carry ongoing decision authority over the risk itself - that accountability belongs to the risk owner, not to whoever operated or selected the control.",
+        "repair_target": "repair.authority-error"
+      },
+      {
+        "key": "c",
+        "text": "No reassessment is needed, since the residual fraud risk was already formally validated as acceptable.",
+        "correct": false,
+        "rationale": "That validation rested on assumptions - this transaction volume, this vendor - that have now materially changed; treating it as permanently settled ignores exactly what monitoring exists to catch.",
+        "repair_target": "repair.decision-error"
+      },
+      {
+        "key": "d",
+        "text": "The matter should wait until the next regularly scheduled review cycle, since informal monitoring observations alone don't warrant an out-of-cycle decision.",
+        "correct": false,
+        "rationale": "A scheduled cadence is one legitimate reassessment trigger, but a change this material - a tripled transaction volume and an unfamiliar new vendor owner - warrants attention on its own timeline.",
+        "repair_target": "repair.sequence-error"
+      }
+    ],
+    "explanation": "This scenario combines two Domain 2 reasoning targets at once: recognizing that a material change is a genuine reassessment trigger (not routine monitoring, not something to defer to a fixed schedule), and recognizing that the decision this triggers belongs to the accountable risk owner - not to whoever selected or implemented the original control, however reasonable their proposal sounds.",
+    "recognition_clue": "A stem combines a material-change reassessment trigger with a role other than the risk owner proposing to act unilaterally; the correct answer routes the decision to the risk owner rather than accepting the other role's proposed authority.",
+    "memory_rule": "Now I can see the entire risk-management picture I've been building piece by piece.",
+    "evidence_dimensions": ["evidence.authority", "evidence.decision", "evidence.lifecycle"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-5 CANDIDATE - authored by Claude Code as the first variant of family.d2.risk-management-synthesis (D2-U10), and this family's anchor/retrieval question. Continues the recurring D2-U5/U6/U7/U9 payment-system story to its natural end point, deliberately combining D2-U8's ownership reasoning with D2-U9's reassessment-trigger reasoning in one integrated scenario, per the approved Domain Synthesis / Capstone principle. Original scenario; not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0030",
+    "domain": "domain.d2",
+    "concepts": [
+      "concept.d2.risk-management-embedding-synthesis",
+      "concept.d2.risk-assessment-lifecycle"
+    ],
+    "patterns": ["pattern.p09"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.business-process-owner"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-management-synthesis",
+    "variation_tags": [
+      "business-setting:cloud-erp-procurement",
+      "distractor-temptation:embed-risk-after-the-fact",
+      "decision-consequence:identify-risk-before-contract"
+    ],
+    "prompt": "An enterprise is early in evaluating a new cloud-based ERP platform as part of a business modernization initiative. No risk-related work has yet been performed, and the business sponsor wants to proceed directly to vendor contract negotiation. Which of the following BEST reflects the appropriate risk-management action at this point?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Ensure an appropriate procurement process is followed that identifies the risk this platform would introduce before contract negotiation proceeds.",
+        "correct": true,
+        "rationale": "Identifying the risk a new system introduces belongs at the start of the process, while decisions can still be shaped by what is found - not after a contract has already committed the enterprise to the platform."
+      },
+      {
+        "key": "b",
+        "text": "Proceed with contract negotiation, since risk can be identified and treated once the platform is actually implemented.",
+        "correct": false,
+        "rationale": "Waiting until implementation to identify risk reverses the lifecycle's own order - by then, decisions the risk identification should have shaped have already been made.",
+        "repair_target": "repair.lifecycle-error"
+      },
+      {
+        "key": "c",
+        "text": "Require the business sponsor to personally accept any risk the new platform introduces before negotiations begin, without first identifying what that risk actually is.",
+        "correct": false,
+        "rationale": "Acceptance is a judgment made about a specific, identified risk - asking someone to accept an unidentified risk skips the identification and analysis a real acceptance decision depends on.",
+        "repair_target": "repair.sequence-error"
+      },
+      {
+        "key": "d",
+        "text": "Escalate the initiative to the board for a go/no-go decision before any risk-identification work has been done.",
+        "correct": false,
+        "rationale": "Escalating to the board before any risk work exists gives them nothing concrete to decide on - board-level escalation is warranted for a genuine disagreement or a risk that exceeds tolerance, not as a substitute for identifying the risk in the first place.",
+        "repair_target": "repair.authority-error"
+      }
+    ],
+    "explanation": "Embedding risk management into the business means identifying risk within the procurement process itself, at the point real decisions are still being shaped - not after a contract is signed, not by asking for acceptance of a risk nobody has identified yet, and not by escalating to the board before there is anything specific to decide.",
+    "recognition_clue": "A stem describes a new initiative or purchase where no risk work has happened yet and business sponsors want to move straight to commitment; the correct answer brings risk identification into the process now, rather than deferring it or skipping straight to acceptance or escalation.",
+    "memory_rule": "Security that lives outside the business process gets bypassed by it.",
+    "evidence_dimensions": ["evidence.lifecycle", "evidence.sequence", "evidence.business-context"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-5 CANDIDATE - authored by Claude Code as the second variant of family.d2.risk-management-synthesis (D2-U10), deliberately using a different business setting (cloud-ERP procurement, not the payment-system story) per the reference-for-comprehension-plus-varied-scenarios-for-transfer rule. Grounded in the supplied Domain 2 source material's own procurement content ('appropriate procurement processes' as the FIRST step to manage risk from a new critical IT-system acquisition, identifying risk within the procurement process itself rather than through post-hoc acceptance or budget-only senior-management involvement) - not a reproduction or paraphrase of that or any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0031",
+    "domain": "domain.d2",
+    "concepts": [
+      "concept.d2.risk-management-embedding-synthesis",
+      "concept.d2.risk-evaluation",
+      "concept.d2.risk-monitoring-reporting"
+    ],
+    "patterns": ["pattern.p08"],
+    "qualifier": "qualifier.most",
+    "roles_mentioned": ["role.board-senior-management", "role.security-manager"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-management-synthesis",
+    "variation_tags": [
+      "business-setting:regional-expansion-board-briefing",
+      "distractor-temptation:maximal-action-as-safest",
+      "decision-consequence:evaluate-against-appetite-for-board"
+    ],
+    "prompt": "The board is preparing to decide whether to approve an enterprise's expansion into a new regional market with different regulatory requirements, and has asked the information security manager for input. Which of the following would be MOST useful to include in that input?",
+    "options": [
+      {
+        "key": "a",
+        "text": "A summary of the risks the expansion would introduce relative to the enterprise's risk appetite, and which of those risks would require treatment, transfer, or acceptance before proceeding.",
+        "correct": true,
+        "rationale": "This ties directly to the decision the board is actually making - whether to approve the expansion - by showing which risks matter against the enterprise's own appetite and what would need to happen about them."
+      },
+      {
+        "key": "b",
+        "text": "A detailed technical inventory of every control currently deployed across the enterprise's existing regional data centers.",
+        "correct": false,
+        "rationale": "An inventory of existing, unrelated technical controls doesn't speak to the risk this specific expansion decision would introduce - it's detailed, but not decision-relevant to what the board is actually deciding.",
+        "repair_target": "repair.technical-vs-management-error"
+      },
+      {
+        "key": "c",
+        "text": "The number of security assessments completed in the enterprise's current region over the past year.",
+        "correct": false,
+        "rationale": "A count of assessments already performed elsewhere is activity, not an evaluation of the new risk this specific expansion would introduce.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "d",
+        "text": "A recommendation that the board defer its decision until a full quantitative loss calculation has been completed for every risk the expansion could introduce.",
+        "correct": false,
+        "rationale": "Requiring exhaustive quantitative analysis for every possible risk doesn't fit an approval decision at this stage - the method should fit what the decision actually needs, not default to the most exhaustive option available.",
+        "repair_target": "repair.decision-error"
+      }
+    ],
+    "explanation": "The board's actual decision is whether to approve the expansion, so the most useful input evaluates the risks it would introduce against the enterprise's own appetite and names what would need to happen about them - not an inventory of unrelated existing controls, a count of past activity, or a demand for exhaustive quantitative analysis that doesn't fit the decision actually being made.",
+    "recognition_clue": "A stem asks what is MOST useful to a board deciding on a specific business decision; the correct answer ties directly to that decision (risk against appetite, what treatment is needed), while distractors offer unrelated detail, activity counts, or an exhaustive-sounding but poorly fitted method.",
+    "memory_rule": "Ask what the method needs to prove, not which method sounds more rigorous.",
+    "evidence_dimensions": ["evidence.decision", "evidence.business-context", "evidence.technical-vs-management"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-5 CANDIDATE - authored by Claude Code as the third variant of family.d2.risk-management-synthesis (D2-U10), deliberately using a different business setting (a regional-expansion board briefing, not the payment-system story) per the reference-for-comprehension-plus-varied-scenarios-for-transfer rule. Combines D2-U5's appetite/evaluation reasoning, D2-U3/U4's method-fits-objective reasoning (applied, not retaught), and D2-U9's audience-appropriate-reporting reasoning in one integrated scenario. Original scenario; not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
   }
 ]
