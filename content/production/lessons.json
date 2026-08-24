@@ -472,5 +472,71 @@
     "version": 1,
     "source": "source.learner-supplied.domain-2-question-bank",
     "note": "PHASE 9B-3 CANDIDATE (D2-U6) — authored by Claude Code per approved Phase 9A Domain 2 architecture and Phase 9B-3 scope. Grounded in docs/learning/PATTERN-LIBRARY.md (P01 - Business Alignment) and evidenced by the supplied Domain 2 source material's treatment-identification questions (insurance as risk transfer; security controls as risk mitigation; stopping an activity as risk avoidance; 'accepting the risk... and doing nothing further' reworded here as an authorized decision rather than passive neglect, per explicit instruction). Continues the same payment-system scenario anchor from D2-U5 rather than introducing a new one, reinforcing the Analyze -> Evaluate -> Treat conceptual bridge as one continuous story. Deliberately stops before residual-risk/validate-acceptability teaching, which belongs to D2-U7. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d2.risk-control-ownership",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-control-ownership"],
+    "patterns": ["pattern.p02", "pattern.p03"],
+    "prerequisites": ["lesson.d2.risk-fundamentals"],
+    "objective": "Distinguish the Risk Owner (accountable for a specific risk's disposition) from the Control Owner (accountable for a specific control's operation and effectiveness), and recognize that operating or being technically closest to a control does not by itself confer authority over the underlying risk.",
+    "context": "A business unit is launching a new AI-enabled feature in its customer-facing system. The Risk Owner - typically the business process owner accountable for that system - decides on the risk response, selects which controls to apply, assigns resources, and remains accountable for managing the risk to an acceptable level. The Control Owner - often a technical role, such as the IT system manager configuring the access controls that protect the AI system's training data - is accountable for that specific control's design, implementation, and ongoing effectiveness, and reports on how well it's performing. The Control Owner does not thereby become the Risk Owner: being the person with the technical expertise to configure and monitor a control is a different accountability than being accountable for the business consequence if the underlying risk materializes. The same ROLE + VERB + CONTEXT reasoning Domain 1 already established for Recommend/Approve/Implement/Verify applies here directly: 'who decides whether to accept the risk' points to the Risk Owner; 'who ensures the control operates as intended' points to the Control Owner; neither question is answered by seniority or job title alone.",
+    "cism_perspective": "CISM stems in this area describe a risk and its associated control(s), often assigned to different people, and ask who is accountable for a specific decision or action - approving an exception, deciding on treatment, ensuring a control works, reporting a deficiency. The correct answer traces the verb back to the correct accountability: decisions about the risk itself belong to the Risk Owner; the control's operation and effectiveness belong to the Control Owner. The most common trap offers the person with the most technical proximity or the most senior-sounding title as if that settled the question, when the actual answer depends on which specific accountability the verb in the stem is asking about.",
+    "recognition_clues": [
+      "The stem asks who approves an exception to a control, or who decides whether a risk is acceptable - that points to the Risk Owner, accountable for the risk itself.",
+      "The stem asks who ensures a control is implemented and operating effectively, or who reports on a control's performance - that points to the Control Owner.",
+      "An answer choice picks the most technically expert or most senior-sounding role regardless of which specific accountability the stem's verb is actually asking about - that's a technical-proximity or seniority-bias trap."
+    ],
+    "scenario": "An organization launching an AI-enabled feature assigns the business process owner as Risk Owner (accountable for the risk the feature introduces, deciding on treatment and resourcing) and the IT system manager as Control Owner (accountable for the access controls protecting the AI system's training data, and for those controls actually working). If the IT system manager identifies a control deficiency, they escalate it - they do not thereby gain authority to decide how the underlying business risk should be handled; that decision remains with the Risk Owner.",
+    "traps": [
+      "Assuming the most technically proximate or expert role (the one operating or configuring the control) is automatically accountable for the underlying risk.",
+      "Assuming the most senior-sounding title always holds risk-acceptance authority, rather than the role specifically accountable for that risk in that context.",
+      "Assuming an assessor or reviewer of a control's effectiveness is thereby the decision-maker for the risk - identifying or reporting a deficiency is not the same as deciding what to do about the risk it affects."
+    ],
+    "memory_rules": [
+      "Control owner runs the control; risk owner owns the outcome.",
+      "Read the verb before the role: 'who decides' points to the risk owner; 'who ensures the control works' points to the control owner."
+    ],
+    "retrieval_refs": ["question.d2.0023"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-4 CANDIDATE (D2-U8) — authored by Claude Code per approved Phase 9A Domain 2 architecture and Phase 9B-4 scope. Prerequisite is lesson.d2.risk-fundamentals (D2-U1) only, per the approved Phase 9A prerequisite graph - D2-U8 branches directly off D2-U1, conceptually parallel to the U2-U7 lifecycle chain, exactly as approved (\"U8 remains conceptually parallel off U1\"). Grounded in docs/learning/PATTERN-LIBRARY.md (P02, P03) and evidenced by the supplied Domain 2 source material's Risk and Control Ownership sub-area, including its AI-integrated-application control-ownership question (used here only as one scenario illustrating the same Risk Owner vs. Control Owner distinction, not as AI governance content, per explicit instruction). Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d2.residual-risk-acceptability",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.residual-risk-acceptability"],
+    "patterns": ["pattern.p04", "pattern.p02"],
+    "prerequisites": ["lesson.d2.risk-control-ownership", "lesson.d2.risk-treatment-response"],
+    "objective": "Distinguish inherent risk (before treatment) from residual risk (after treatment), recognize that applying a treatment changes the risk level without eliminating it, and sequence residual-risk determination before the acceptability decision - which belongs to the accountable risk/business authority, not automatically to whoever selected the treatment.",
+    "context": "Continuing the payment-system story: after evaluating the fraud risk and selecting mitigation (stronger fraud-detection controls), the enterprise has NOT eliminated the risk - it has changed it. The risk level before that mitigation was applied is the inherent risk; what remains after the mitigation is actually in place is the residual risk, and that residual level is not automatically zero, nor is it automatically acceptable just because a treatment was applied. The learner's task after treatment is first to determine what actually remains (the residual risk), and only then to validate whether that remaining risk is acceptable relative to the enterprise's own risk appetite and tolerance - two distinct steps, not one. That acceptability judgment belongs to the accountable risk or business authority for this specific risk, following the same accountability-follows-authority reasoning already established for evaluation generally (Domain 1's security-identifies-and-recommends, accountable-authority-decides pattern, and D2-U5's risk-owner-not-analyst reasoning) - not automatically to the security manager who selected or implemented the mitigation, and not automatically the board by default.",
+    "cism_perspective": "CISM stems in this area describe a treatment that has already been applied and ask what happens next, or what remains, or who decides on acceptability. The critical reasoning question is the same 'what has already happened, and therefore where am I' question introduced in D2-U2: if a stem says a control was implemented and describes a likelihood/impact that changed but did not vanish, residual risk has effectively been determined - the next step is to validate whether that residual risk is acceptable, not to select a treatment again (that's already happened) and not to assume the matter is settled without an actual acceptability decision.",
+    "recognition_clues": [
+      "The stem describes a treatment or control already applied, with likelihood or impact reduced but not eliminated - that's evidence residual risk now exists and needs to be determined.",
+      "The stem states residual risk has already been determined and asks what should happen NEXT - that's a genuine, source-supported NEXT-sequencing signal pointing to validating acceptability, not re-selecting treatment or immediately transferring/documenting acceptance.",
+      "An answer choice assumes a successfully implemented control brings risk to zero, or treats 'the risk was treated' as the same thing as 'the remaining risk was judged acceptable' - both conflate treatment with acceptability."
+    ],
+    "scenario": "After the enterprise mitigates the payment system's fraud risk with stronger detection controls, the likelihood of a successful fraud event decreases but does not reach zero. The original (inherent) risk is no longer the relevant state to reason about - the enterprise must first determine what residual risk actually remains, and only then validate whether that residual level is acceptable against its own risk appetite and tolerance, a decision for the accountable risk owner, not automatically for whoever selected the mitigating control.",
+    "traps": [
+      "Assuming a successfully implemented treatment or control reduces risk to zero, rather than to some remaining (residual) level that still needs to be determined.",
+      "Treating 'the risk was treated' as equivalent to 'the remaining risk is acceptable' - determining residual risk and validating its acceptability are two distinct steps, in that order.",
+      "Selecting a treatment again, or reversing to an earlier lifecycle stage, once residual risk has already been determined - the next step is forward (validate acceptability), not backward.",
+      "Assuming the security manager, or whoever selected the treatment, automatically has authority to accept the residual risk, rather than the accountable risk/business authority for that specific risk."
+    ],
+    "memory_rules": [
+      "Inherent risk is before treatment; residual risk is what's left after treatment - treatment changes the risk, it doesn't erase it.",
+      "Determine what's left, then judge if that's OK - in that order.",
+      "Ask: what has already happened, and therefore where am I in the lifecycle?"
+    ],
+    "retrieval_refs": ["question.d2.0020"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-4 CANDIDATE (D2-U7) — authored by Claude Code per approved Phase 9A Domain 2 architecture and Phase 9B-4 scope. Prerequisites are lesson.d2.risk-control-ownership (D2-U8) listed FIRST and lesson.d2.risk-treatment-response (D2-U6) listed SECOND - this realizes the approved Phase 9A non-adjacent recall design ('U7 recalls U8, not merely U6') using the exact same mechanism already proven for Domain 1's 'U8 recalls U1' edge (Phase 7B-3): recallPoolFor()/recallFamilyIdsFor() (app/src/content/resolve.ts) visit prerequisites in array order and each prerequisite's OWN retrieval_refs family is added to the recall pool before that prerequisite's own prerequisites are recursively visited, so listing D2-U8 first makes family.d2.risk-control-ownership the first (default) recall family for D2-U7, while D2-U6 second still ensures the full cumulative U1-U6 chain remains reachable. This does NOT create a prerequisite cycle (D2-U8's own prerequisite is D2-U1 only; D2-U7 is a strict sink relative to both branches) and does NOT violate taught-before-tested (D2-U7's own retrieval_refs question tests only concept.d2.residual-risk-acceptability, which D2-U7 itself teaches - the additional D2-U8 prerequisite only expands what is recall-eligible, it does not change what D2-U7's own Apply question is permitted to test). Verified safe because both D2-U7 and D2-U8 are authored and land in the same commit/batch, so the full resulting content graph is internally consistent the moment either references the other - there is no staged-rollout ordering concern. Grounded in docs/learning/CONFUSING-CONCEPTS.md's approved Inherent vs. Residual Risk pair and docs/learning/PATTERN-LIBRARY.md (P04, P02), evidenced by the supplied Domain 2 source material's own inherent/residual definition and its genuine NEXT-tagged residual-risk-acceptability-validation question. Continues the D2-U5/U6 payment-system scenario anchor into Treat's aftermath. Not yet human-reviewed or promoted."
   }
 ]

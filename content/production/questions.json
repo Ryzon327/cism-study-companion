@@ -2117,5 +2117,329 @@
     "version": 1,
     "source": "source.learner-supplied.domain-2-question-bank",
     "note": "PHASE 9B-3 CANDIDATE - authored by Claude Code as the third variant of family.d2.risk-treatment-response (D2-U6). Original scenario grounded in the supplied Domain 2 source material's own acceptance definition ('accepting the risk... and doing nothing further'), deliberately extended per explicit Phase 9B-3 instruction to distinguish authorized acceptance from unauthorized/passive neglect - not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0020",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.residual-risk-acceptability"],
+    "patterns": ["pattern.p04"],
+    "qualifier": "qualifier.next",
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": "lifecycle.risk",
+    "stage": "stage.risk.determine-residual-risk",
+    "decision_type": "decision.risk",
+    "family": "family.d2.residual-risk-acceptability",
+    "variation_tags": ["business-setting:payment-system-mitigation-outcome", "distractor-temptation:treatment-before-evaluation", "lifecycle-framing:next-after-residual-determined"],
+    "prompt": "After the enterprise's payment-system fraud-detection mitigation was implemented, the likelihood of a successful fraud event decreased but did not reach zero. Having determined this residual risk, what should the enterprise do NEXT?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Validate whether the residual fraud risk that remains is actually acceptable, relative to the enterprise's risk appetite and tolerance.",
+        "correct": true,
+        "rationale": "Once residual risk has been determined, the next step is to validate whether that remaining risk is acceptable against the enterprise's own criteria - not to re-treat, transfer, or formally accept it before that validation happens."
+      },
+      {
+        "key": "b",
+        "text": "Select an additional treatment option, since the original risk clearly still exists in some form.",
+        "correct": false,
+        "rationale": "Treatment has already occurred and residual risk has already been determined - selecting another treatment before validating whether the current residual level is even unacceptable skips the actual next step.",
+        "repair_target": "repair.lifecycle-error"
+      },
+      {
+        "key": "c",
+        "text": "Formally document and accept the residual risk without first validating whether it falls within acceptable criteria.",
+        "correct": false,
+        "rationale": "Formal acceptance is a step that comes after validating acceptability, not instead of it - accepting a risk without first checking it against actual criteria isn't a meaningful acceptance decision.",
+        "repair_target": "repair.sequence-error"
+      },
+      {
+        "key": "d",
+        "text": "Transfer the remaining risk to a third party, such as through an insurance policy, before determining whether that remaining risk is even significant.",
+        "correct": false,
+        "rationale": "Transfer is a treatment option, and treatment has already been selected and applied in this scenario - proposing another treatment step before validating acceptability is premature.",
+        "repair_target": "repair.sequence-error"
+      }
+    ],
+    "explanation": "Once residual risk has been determined, the next step is to validate whether it is acceptable relative to the enterprise's own risk appetite and tolerance - not to select another treatment, transfer the risk again, or formally accept it before that validation has actually happened.",
+    "recognition_clue": "A stem stating residual risk has already been determined and asking what happens NEXT is a genuine, source-supported sequencing signal pointing to validating acceptability.",
+    "memory_rule": "Determine what's left, then judge if that's OK - in that order.",
+    "evidence_dimensions": ["evidence.lifecycle", "evidence.sequence"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-4 CANDIDATE - authored by Claude Code as the first variant of family.d2.residual-risk-acceptability (D2-U7), and this family's anchor/retrieval question. Original scenario continuing the D2-U5/U6 payment-system story, testing the reasoning target evidenced by the supplied Domain 2 source material's genuine NEXT-tagged question ('after residual risk has been determined, the enterprise should NEXT... validate that the residual risk is acceptable') - not a reproduction or paraphrase of that or any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0021",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.residual-risk-acceptability"],
+    "patterns": ["pattern.p04"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": "lifecycle.risk",
+    "stage": null,
+    "decision_type": "decision.risk",
+    "family": "family.d2.residual-risk-acceptability",
+    "variation_tags": ["business-setting:before-after-control-comparison", "distractor-temptation:residual-treated-as-permanent-baseline", "wording-structure:two-figures-one-scenario"],
+    "prompt": "Before a specific access control was implemented, a system's likelihood of unauthorized data exposure was estimated at 40%. After the control was implemented and is now operating, that likelihood is estimated at 15%. Which BEST describes these two figures?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The 40% figure describes the inherent risk - what the likelihood was before the control existed - while the 15% figure describes the residual risk that remains now that the control is actually operating.",
+        "correct": true,
+        "rationale": "Inherent risk is the risk level before considering the effect of controls; residual risk is what remains once controls are actually in place and operating - exactly the relationship between these two figures."
+      },
+      {
+        "key": "b",
+        "text": "Both the 40% and 15% figures describe the same thing - the current risk level - so the control apparently made no real difference to how the risk should be classified.",
+        "correct": false,
+        "rationale": "This ignores that the two figures describe two different points relative to the control's existence - before and after - which is exactly what the inherent/residual distinction is for.",
+        "repair_target": "repair.vocabulary-error"
+      },
+      {
+        "key": "c",
+        "text": "The 15% figure is the inherent risk, since it reflects the more current, up-to-date state of the system after the control was added.",
+        "correct": false,
+        "rationale": "This reverses the two terms - inherent risk is specifically the risk level before controls, regardless of which figure happens to be more recent or current.",
+        "repair_target": "repair.vocabulary-error"
+      },
+      {
+        "key": "d",
+        "text": "The 40% figure should be discarded entirely once a control exists, since only the current, post-control likelihood is ever relevant to risk-management decisions.",
+        "correct": false,
+        "rationale": "The inherent-risk figure remains meaningful context (for example, to gauge how much a control is actually reducing risk) even after a control exists - it isn't simply discarded.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "Inherent risk is the risk level before considering the effect of controls; residual risk is what remains once controls are actually implemented and operating - the 40% figure is inherent, the 15% figure is residual.",
+    "recognition_clue": "A stem giving a 'before controls' figure and an 'after controls, now operating' figure is testing the Inherent vs. Residual Risk distinction directly.",
+    "memory_rule": "Inherent risk is before treatment; residual risk is what's left after treatment - treatment changes the risk, it doesn't erase it.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.vocabulary"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-4 CANDIDATE - authored by Claude Code as the second variant of family.d2.residual-risk-acceptability (D2-U7). Original scenario grounded directly in the supplied Domain 2 source material's own inherent/residual definition ('a risk prior to mitigation is called inherent risk; the risk that remains after countermeasures and controls have been implemented is residual risk') - not a reproduction or paraphrase of that or any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0022",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.residual-risk-acceptability"],
+    "patterns": ["pattern.p02"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.risk-owner", "role.security-manager"],
+    "primary_role": "role.risk-owner",
+    "lifecycle": "lifecycle.risk",
+    "stage": "stage.risk.validate-acceptability",
+    "decision_type": "decision.risk",
+    "family": "family.d2.residual-risk-acceptability",
+    "variation_tags": ["business-setting:residual-risk-acceptance-authority", "distractor-temptation:implementer-decides-acceptability", "role-mix:risk-owner-vs-security-manager"],
+    "prompt": "A security manager selected and implemented a mitigating control for the payment system's fraud risk, and the resulting residual risk now needs to be judged acceptable or not. Who is BEST positioned to make that acceptability decision?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The risk owner accountable for this specific risk decides whether the residual risk is acceptable - not the security manager who selected and implemented the mitigating control.",
+        "correct": true,
+        "rationale": "Selecting and implementing a control is a security-function activity; deciding whether the resulting residual risk is acceptable belongs to whoever is accountable for that specific risk, which is not automatically the same person."
+      },
+      {
+        "key": "b",
+        "text": "The security manager who selected and implemented the mitigating control should decide whether the resulting residual risk is acceptable, since they understand the technical details of that control best.",
+        "correct": false,
+        "rationale": "Technical familiarity with the control does not confer authority over the business risk's acceptability - that decision follows accountability, not who implemented the fix.",
+        "repair_target": "repair.authority-error"
+      },
+      {
+        "key": "c",
+        "text": "The board of directors must personally validate the acceptability of every residual risk of this kind, regardless of its scope or the existence of an accountable risk owner.",
+        "correct": false,
+        "rationale": "This assumes the board decides every acceptability question by default, ignoring that accountability for a specific risk is often already delegated to a scoped risk owner.",
+        "repair_target": "repair.authority-error"
+      },
+      {
+        "key": "d",
+        "text": "No further decision is needed once a treatment has been successfully implemented, since implementing a control is itself sufficient evidence the resulting risk is acceptable.",
+        "correct": false,
+        "rationale": "Implementing a control changes the risk level; it does not itself constitute an acceptability judgment - that judgment still needs to be made against actual criteria.",
+        "repair_target": "repair.lifecycle-error"
+      }
+    ],
+    "explanation": "Selecting and implementing a control is a security-function activity; judging whether the resulting residual risk is acceptable is a decision that follows accountability for the specific risk, not technical familiarity with whichever control was applied.",
+    "recognition_clue": "A stem where the person who implemented a control is offered as the one who also decides on the resulting risk's acceptability is an authority-error trap.",
+    "memory_rule": "Ask: what has already happened, and therefore where am I in the lifecycle?",
+    "evidence_dimensions": ["evidence.authority", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-4 CANDIDATE - authored by Claude Code as the third variant of family.d2.residual-risk-acceptability (D2-U7), reapplying Pattern P02 (Authority Follows Accountability) - already used for D2-U5's evaluation-authority reasoning - to the residual-risk-acceptance decision specifically. Not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0023",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-control-ownership"],
+    "patterns": ["pattern.p02"],
+    "qualifier": "qualifier.most",
+    "roles_mentioned": ["role.risk-owner", "role.control-owner"],
+    "primary_role": "role.risk-owner",
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-control-ownership",
+    "variation_tags": ["business-setting:control-exception-approval", "distractor-temptation:control-owner-approves-exception", "role-mix:risk-owner-vs-control-owner-vs-others"],
+    "prompt": "A business unit requests an exception to a control implemented to mitigate an IT-related risk. Which of the following positions is MOST appropriate to approve this exception?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The risk owner - accountable for the loss that would result from this risk - is the appropriate person to approve an exception to the control.",
+        "correct": true,
+        "rationale": "The risk owner is accountable for the loss that would result from this risk, making them the appropriate authority to approve an exception that changes how that risk is being managed."
+      },
+      {
+        "key": "b",
+        "text": "The head of IT should approve the exception, since IT ultimately manages the systems the control protects.",
+        "correct": false,
+        "rationale": "Managing the systems a control protects is an operational relationship, not the accountability for the business loss the risk represents - the head of IT may be consulted, but is not the accountable decision-maker here.",
+        "repair_target": "repair.authority-error"
+      },
+      {
+        "key": "c",
+        "text": "The control owner should approve the exception, since they are responsible for the control's day-to-day operation and are most familiar with it.",
+        "correct": false,
+        "rationale": "The control owner ensures the control operates effectively but is not necessarily accountable for the loss if the underlying risk materializes - familiarity with the control isn't the same as accountability for the risk.",
+        "repair_target": "repair.role-error"
+      },
+      {
+        "key": "d",
+        "text": "The risk manager who helped identify and assess this risk should approve the exception, since they have the most complete picture of the risk itself.",
+        "correct": false,
+        "rationale": "A risk manager helps identify and assess risk and supports decision-making, but assessing a risk is not the same as being accountable for the loss it represents.",
+        "repair_target": "repair.authority-error"
+      }
+    ],
+    "explanation": "The risk owner is accountable for the loss that would result from this risk, making them the appropriate authority to approve a control exception - not the control owner (operational familiarity), IT leadership (system management), or a risk manager (assessment support), none of whom hold that specific accountability.",
+    "recognition_clue": "A stem asking who approves an exception to a control - a decision about the risk itself - points to the Risk Owner, not whoever operates or assessed the control.",
+    "memory_rule": "Control owner runs the control; risk owner owns the outcome.",
+    "evidence_dimensions": ["evidence.role", "evidence.authority"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-4 CANDIDATE - authored by Claude Code as the first variant of family.d2.risk-control-ownership (D2-U8), and this family's anchor/retrieval question. Original scenario testing the reasoning target evidenced by the supplied Domain 2 source material's own control-exception-approval question ('the risk owner is accountable for the loss due to risk and, therefore, would be the proper person to approve exceptions to the control') - not a reproduction or paraphrase of that or any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0024",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-control-ownership"],
+    "patterns": ["pattern.p03"],
+    "qualifier": "qualifier.most",
+    "roles_mentioned": ["role.control-owner", "role.business-process-owner", "role.security-manager"],
+    "primary_role": "role.control-owner",
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-control-ownership",
+    "variation_tags": ["business-setting:ai-system-access-control-ownership", "distractor-temptation:business-owner-or-security-manager-as-control-owner", "role-mix:technical-vs-business-vs-advisory"],
+    "prompt": "An organization using an AI-integrated application has implemented restricted access controls to protect the training data from unauthorized modification. Which of the following is the MOST appropriate role to designate as the owner of this specific control?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The IT system manager - the technically capable role that can actually implement, monitor, and modify the access controls protecting the AI system's training data - should be designated as the control owner.",
+        "correct": true,
+        "rationale": "Control ownership belongs to whoever can actually implement, assess, monitor, and modify this specific technical control - the IT system manager has that capability here."
+      },
+      {
+        "key": "b",
+        "text": "The business process owner should be designated as the control owner, since they are ultimately accountable for the business process the AI system supports.",
+        "correct": false,
+        "rationale": "Accountability for the business process is a form of risk ownership, not the technical capability to implement and maintain this specific access control - the two roles are not interchangeable.",
+        "repair_target": "repair.role-error"
+      },
+      {
+        "key": "c",
+        "text": "The information security manager should be designated as the control owner, since they can be consulted on the control's design and implementation.",
+        "correct": false,
+        "rationale": "Being consulted on design and implementation is an advisory role, not the same as being the control owner who performs routine control-effectiveness activities directly.",
+        "repair_target": "repair.role-error"
+      },
+      {
+        "key": "d",
+        "text": "The board of directors should be designated as the control owner, since they hold ultimate accountability for the organization's strategic risk.",
+        "correct": false,
+        "rationale": "Strategic-level risk accountability is a governance function, not the same as being the control owner responsible for a specific technical control's day-to-day operation.",
+        "repair_target": "repair.role-error"
+      }
+    ],
+    "explanation": "Control ownership belongs to whoever has the technical capability to actually implement, monitor, and modify a specific control - here, the IT system manager - not the business process owner (risk ownership), the security manager (advisory), or the board (strategic governance).",
+    "recognition_clue": "A stem naming a specific technical control and asking who should own it is testing whether technical implementation capability is being confused with business risk accountability or advisory involvement.",
+    "memory_rule": "Read the verb before the role: 'who decides' points to the risk owner; 'who ensures the control works' points to the control owner.",
+    "evidence_dimensions": ["evidence.role", "evidence.pattern-recognition"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-4 CANDIDATE - authored by Claude Code as the second variant of family.d2.risk-control-ownership (D2-U8) - the approved AI/emerging-risk example, per the Phase 9A architecture (AI as scenario variety within this family, not a dedicated topic). Original scenario testing the reasoning target evidenced by the supplied Domain 2 source material's own AI-integrated-application control-ownership question - not a reproduction or paraphrase of that or any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d2.0025",
+    "domain": "domain.d2",
+    "concepts": ["concept.d2.risk-control-ownership"],
+    "patterns": ["pattern.p03"],
+    "qualifier": "qualifier.primary",
+    "roles_mentioned": ["role.risk-owner", "role.control-owner"],
+    "primary_role": "role.risk-owner",
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.risk",
+    "family": "family.d2.risk-control-ownership",
+    "variation_tags": ["business-setting:separate-risk-and-control-ownership", "distractor-temptation:risk-owner-personally-monitors-controls", "role-mix:risk-owner-vs-control-owner"],
+    "prompt": "In an environment where ownership of a risk and its related controls is assigned to different individuals, what is the PRIMARY responsibility of the risk owner?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Decide on an appropriate risk response option, select the controls needed to carry it out, and assign the resources required - while a separate control owner oversees and measures those controls' actual effectiveness.",
+        "correct": true,
+        "rationale": "The risk owner's primary responsibility is deciding on and resourcing the risk response - when a separate control owner exists, overseeing and measuring the controls' own effectiveness is that control owner's responsibility, not a duplicate duty of the risk owner."
+      },
+      {
+        "key": "b",
+        "text": "Personally analyze and evaluate the identified risk in detail, largely independent of input from the business entity that actually experiences it.",
+        "correct": false,
+        "rationale": "The risk owner's primary role isn't personally performing the technical analysis - risk owners may be involved in the process, but this isn't their main responsibility, and it isn't done independent of the business.",
+        "repair_target": "repair.role-error"
+      },
+      {
+        "key": "c",
+        "text": "Personally oversee and measure the effectiveness of the controls addressing this risk, even where a separate, dedicated control owner already exists for that purpose.",
+        "correct": false,
+        "rationale": "When a distinct control owner exists specifically for this purpose, overseeing and measuring control effectiveness is that control owner's responsibility, not a duty the risk owner duplicates personally.",
+        "repair_target": "repair.role-error"
+      },
+      {
+        "key": "d",
+        "text": "Determine the enterprise's overall risk appetite and tolerance levels, a responsibility that belongs to executive management rather than to an individual risk owner.",
+        "correct": false,
+        "rationale": "Risk appetite and tolerance are set at the executive-management level, not by an individual risk owner - though risk owners must work within those levels once set.",
+        "repair_target": "repair.role-error"
+      }
+    ],
+    "explanation": "The risk owner's primary responsibility is deciding on the risk response, selecting controls, and assigning resources - when a distinct control owner exists, that control owner (not the risk owner personally) oversees and measures the controls' effectiveness.",
+    "recognition_clue": "A stem stating risk and control ownership are assigned to different individuals is signaling that the risk owner's own responsibility is decision-and-resourcing, not personally duplicating the control owner's oversight duties.",
+    "memory_rule": "Control owner runs the control; risk owner owns the outcome.",
+    "evidence_dimensions": ["evidence.role", "evidence.pattern-recognition"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "note": "PHASE 9B-4 CANDIDATE - authored by Claude Code as the third variant of family.d2.risk-control-ownership (D2-U8). Original scenario grounded directly in the supplied Domain 2 source material's own 'MAIN responsibility of the risk owner' question ('the risk owner decides on which risk response options are selected, which controls are selected, and which resources are assigned... the control owner is responsible for oversight and measurement of the controls') - not a reproduction or paraphrase of that or any specific source question. Not yet human-reviewed or promoted."
   }
 ]

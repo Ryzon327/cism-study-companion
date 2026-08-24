@@ -536,6 +536,78 @@ be trimmed of necessary instruction merely to normalize character counts.
   any future authored content remain `CANDIDATE` until a separate,
   explicit promotion decision.
 
+### D2-U10 synthesis requirement (APPROVED — Phase 9B-4 founder decision, strengthened same phase, for Phase 9B-5)
+
+**Status: approved requirement for D2-U10 ("Embedding Risk Management Into
+the Business"), not yet implemented.** During the Phase 9B-4 Human
+Experience Gate, the founder — for whom Domain 2 was a personally weak
+area — reported that the recurring payment-system scenario running through
+D2-U2 → U7 specifically made the risk lifecycle understandable, and
+requested that Domain 2's closing unit combine the pieces into one full
+picture rather than leaving them as separate lessons. This is folded into
+D2-U10's already-approved purpose (Phase 9A), not a new unit — **D2-U10 now
+explicitly serves two combined roles: its original Phase 9A purpose
+(embedding risk management into business process) AND the final Domain 2
+synthesis/capstone experience**, per the general Domain synthesis / capstone
+principle now recorded in
+[`CURRICULUM-BLUEPRINT.md`](CURRICULUM-BLUEPRINT.md#domain-synthesis--capstone-principle).
+
+**The payment-system scenario is the primary reference model for this
+synthesis** — the founder specifically identified the recurring story,
+not an abstract recap, as what built the mental model. The synthesis must
+connect the complete Domain 2 mental model, at minimum:
+
+```
+BUSINESS CONTEXT
+   → THREAT / VULNERABILITY / IMPACT
+   → CONTEXT
+   → IDENTIFY
+   → ANALYZE
+   → EVALUATE
+   → METHOD SELECTION (Qualitative / Quantitative, where appropriate)
+   → APPETITE / TOLERANCE / CRITERIA
+   → TREATMENT
+   → RESIDUAL RISK
+   → ACCEPTABILITY
+   → RISK OWNER / CONTROL OWNER
+   → MONITOR / REASSESS / REPORT
+   → EMBED INTO BUSINESS DECISION-MAKING
+```
+
+This chain deliberately traces D2-U1 through D2-U9 in order, so the
+synthesis unit's own structure IS the evidence that every piece connects
+to the next — not a separate abstract diagram bolted onto the lesson.
+
+**Binding pedagogical rule: reference story for comprehension + varied
+scenarios for transfer.** The payment-system story is explicitly *not*
+permitted to become the only scenario used throughout the Domain 2
+curriculum — it exists to build the mental model; other scenarios (already
+used across D2-U1, U3, U4, U6, U8) continue to test whether the learner
+can transfer the reasoning to unfamiliar contexts. U10 synthesizes the
+mental model; it does not reteach every prior lesson, and it is explicitly
+**not** a long recap lecture or a list of definitions. Target Aha: *"Now I
+can see the entire risk-management picture I've been building piece by
+piece."*
+
+**Flow may differ from ordinary Domain 2 lessons**, per the general
+synthesis-flow allowance in
+[`CURRICULUM-BLUEPRINT.md`](CURRICULUM-BLUEPRINT.md#domain-synthesis--capstone-principle)
+(a conceptual Big-Picture → Guided-Reference-Scenario →
+Decision-Checkpoints → Why-CISM-Cares → Integrated-Practice →
+Domain-Wrap-Up shape, not yet implemented) — the standard
+Recall→Learn→Apply→Feedback shape is not assumed to carry over unchanged.
+Decision checkpoints inside D2-U10 should walk the payment-system story
+through this exact chain, asking questions in the same shape already
+proven across D2-U2/U5/U6/U7 ("what has already happened?", "what stage
+are we in?", "who is accountable here?", "which qualifier changes the
+question?"), and should reuse the future Foundation
+question-interpretation habits once that enhancement exists, rather than
+re-teaching them.
+
+This requirement is recorded here and in
+[`PHASE-9B4-GATE-RECORD.md`](PHASE-9B4-GATE-RECORD.md) for Phase 9B-5 to
+implement — no D2-U10 content exists yet as of this revision.
+
 ### Domain 2 implementation sequence (APPROVED)
 
 Small, human-reviewable batches, each independently gate-able at a founder

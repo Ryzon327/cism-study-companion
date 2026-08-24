@@ -99,6 +99,44 @@ DECISION — not a content claim, a sequencing suggestion for Phase 4]**
 - The learner can recognize, by name, the seven elimination traps above.
 - The learner has NOT yet been asked to classify a question across all four Mixed Practice dimensions at once — that remains gated until domain content exists to ground it (see [Curriculum Blueprint](CURRICULUM-BLUEPRINT.md)).
 
+## Foundation readiness note (Phase 9B-4) — approved future enhancement, not yet implemented
+
+**[CANDIDATE — operational note, not a change to the canonical eight-step
+process above.]** During the Phase 9B-4 Domain 2 gate
+([`PHASE-9B4-GATE-RECORD.md`](PHASE-9B4-GATE-RECORD.md)), the founder
+reported that a D2-U8 question specifically felt like a real CISM exam
+question because it required close attention to wording and to what was
+actually being asked, and identified this as a gap worth strengthening in
+Foundation's own question-interpretation teaching.
+
+**This is approved as a future, separately-bounded enhancement — it is
+NOT implemented by this note, and no Foundation production content has
+been modified.** Before any implementation, it requires its own bounded
+implementation/review step, per explicit instruction. It does not replace
+or redefine the canonical eight-step process above; it is a compact,
+learner-facing reading checklist that the eight steps already support.
+
+Approved reasoning model for that future work:
+
+1. What is the question actually asking me to decide?
+2. Who am I in this scenario? (Board, management, information security
+   manager, risk owner, control owner, or other relevant roles.)
+3. What VERB matters? (recommend, approve, implement, validate, monitor,
+   assess.)
+4. Where am I in the lifecycle? — Ask: "What has already happened?"
+5. What does the qualifier change? (FIRST, NEXT, BEST, MOST, PRIMARY.)
+6. Which answer fits the CISM management/governance perspective, rather
+   than simply being the most technical or immediately actionable answer?
+
+**Binding guardrail:** this must **not** become a collection of exam
+hacks such as "when you see FIRST, always choose X." Qualifiers are
+contextual (see the [Qualifier Decoder](QUALIFIER-DECODER.md)'s own
+explicit warnings against this); the enhancement teaches reasoning, not
+shortcut memorization. A future implementation may use tightly controlled
+paired scenarios where one important word or lifecycle condition changes,
+so the learner experiences *why* the correct decision changes — those
+paired questions are not implemented now.
+
 ## Cross-references
 
 - [Qualifier Decoder](QUALIFIER-DECODER.md), [Role & Authority Matrix](ROLE-AUTHORITY-MATRIX.md), [Lifecycle Model](LIFECYCLE-MODEL.md), [Pattern Library](PATTERN-LIBRARY.md) — Foundation's four supporting reference documents.
