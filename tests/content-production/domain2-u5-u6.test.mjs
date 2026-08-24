@@ -249,25 +249,9 @@ test("Prerequisite chain: D2-U5 branches directly off D2-U2 (not U3/U4), and D2-
   assert.deepEqual(lessonsById.get("lesson.d2.risk-treatment-response").prerequisites, ["lesson.d2.risk-evaluation"]);
 });
 
-test("No Domain 2 unit beyond U1-U6 exists yet (U7+ not authored)", () => {
-  const knownUnitIds = [
-    "risk-fundamentals",
-    "risk-assessment-lifecycle",
-    "risk-analysis-methods",
-    "quantitative-risk-decisions",
-    "risk-evaluation",
-    "risk-treatment-response"
-  ];
-  const laterUnitIds = [...data.concepts, ...data.lessons, ...data.families]
-    .map((e) => e.id)
-    .filter((id) => /^(concept|lesson|family)\.d2\./.test(id))
-    .filter((id) => !knownUnitIds.some((u) => id.includes(u)));
-  assert.equal(laterUnitIds.length, 0, `no Domain 2 unit beyond U1-U6 may exist yet: ${laterUnitIds.join(", ")}`);
-});
-
-test("Domain 2 production question count is exactly 18 after U1-U6 (3 variants x 6 families)", () => {
-  const d2Questions = data.questions.filter((q) => q.domain === "domain.d2");
-  assert.equal(d2Questions.length, 18, `expected 18 Domain 2 questions, got ${d2Questions.length}`);
+test("D2-U5/U6's own families still have exactly 3 active variants each, unaffected by later Domain 2 batches", () => {
+  assert.equal(questionsByFamily("family.d2.risk-evaluation").length, 3);
+  assert.equal(questionsByFamily("family.d2.risk-treatment-response").length, 3);
 });
 
 test("D2-U1 through D2-U4 remain completely unchanged by this batch", () => {

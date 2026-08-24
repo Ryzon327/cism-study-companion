@@ -202,5 +202,29 @@
     "source": "source.learner-supplied.domain-2-question-bank",
     "version": 1,
     "note": "PHASE 9B-3 CANDIDATE — authored by Claude Code per approved Phase 9A Domain 2 architecture (D2-U6). Grounded in docs/learning/PATTERN-LIBRARY.md (P01 - Business Alignment) and evidenced by the supplied Domain 2 source material's treatment-option identification questions (insurance as risk transfer, security controls as risk mitigation, stopping an activity as risk avoidance). Deliberately stops before residual-risk/validate-acceptability teaching, which belongs to D2-U7. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "concept.d2.residual-risk-acceptability",
+    "display_name": "Residual risk and acceptability: what remains after treatment, and whether that's acceptable",
+    "home_domain": "domain.d2",
+    "plain": "Inherent risk is the risk level before considering the effect of any controls or treatment; residual risk is what remains after controls/treatment have actually been applied. Applying a treatment does not mean the risk disappears - it means the risk level has changed, and that new (residual) level must itself be determined before anything else happens. Once residual risk is known, the next step is to validate whether it is acceptable relative to the enterprise's own risk appetite and tolerance - a decision for the accountable risk/business authority, not automatically for whoever selected or implemented the treatment.",
+    "related_patterns": ["pattern.p04", "pattern.p02"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "version": 1,
+    "note": "PHASE 9B-4 CANDIDATE — authored by Claude Code per approved Phase 9A Domain 2 architecture (D2-U7). Grounded in docs/learning/CONFUSING-CONCEPTS.md's approved Inherent vs. Residual Risk pair, docs/learning/PATTERN-LIBRARY.md (P04 - No Lifecycle Jumping; P02 - Authority Follows Accountability), and evidenced by the supplied Domain 2 source material's own inherent/residual definition ('a risk prior to mitigation is called inherent risk; the risk that remains after countermeasures and controls have been implemented is residual risk') and its genuine NEXT-tagged sequencing question ('after residual risk has been determined, the enterprise should NEXT... validate that the residual risk is acceptable'). Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "concept.d2.risk-control-ownership",
+    "display_name": "Risk Owner vs. Control Owner: accountability for the risk vs. accountability for a control",
+    "home_domain": "domain.d2",
+    "plain": "The Risk Owner is accountable for a specific risk - they decide on treatment options, select controls, assign resources, and are accountable for managing the risk to an acceptable level. The Control Owner is accountable for a specific control's design, operation, and effectiveness - ensuring it performs as intended and reporting on its performance - but does not thereby become accountable for the underlying business risk. Operating or being technically closest to a control does not automatically grant authority over the risk it addresses; the two roles can be held by different people, and the right answer to a role question always depends on the specific verb and context in the stem, not on job title or seniority alone.",
+    "related_patterns": ["pattern.p02", "pattern.p03"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "source": "source.learner-supplied.domain-2-question-bank",
+    "version": 1,
+    "note": "PHASE 9B-4 CANDIDATE — authored by Claude Code per approved Phase 9A Domain 2 architecture (D2-U8). Grounded in docs/learning/PATTERN-LIBRARY.md (P02 - Authority Follows Accountability; P03 - Role-Verb Matching) and evidenced by the supplied Domain 2 source material's own Risk Owner vs. Control Owner justifications (the risk owner is accountable for loss and approves control exceptions; the control owner ensures the control is effective but may not be accountable for loss; the risk owner's main duty is to decide on risk response/select controls/assign resources, not to personally oversee control effectiveness when a distinct control owner exists). Not yet human-reviewed or promoted."
   }
 ]

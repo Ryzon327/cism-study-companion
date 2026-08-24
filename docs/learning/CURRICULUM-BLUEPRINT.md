@@ -59,6 +59,92 @@ TEACH → RECALL → APPLY → MEASURE → REINFORCE
 - **MEASURE** — the learner's response is evaluated and, per the [Explanation Standard](LESSON-DESIGN-STANDARD.md#explanation-standard), explained.
 - **REINFORCE** — a diagnosed miss receives small, targeted repair per the [Repair Model](REPAIR-MODEL.md); a correct response may still receive brief reinforcement of the reasoning, not just the answer.
 
+## Domain synthesis / capstone principle
+
+**[CANDIDATE — approved Phase 9B-4 founder architectural decision, not
+part of the original Phase 2 CANONICAL specification above.]** Following
+strong founder feedback on Domain 2's recurring payment-system scenario
+(see [`docs/learning/PHASE-9B4-GATE-RECORD.md`](../learning/PHASE-9B4-GATE-RECORD.md)),
+each remaining CISM domain's curriculum should end with a concise
+**domain synthesis (capstone) experience** that connects the domain's
+individual lessons into one complete mental model — not merely another
+ordinary TEACH→APPLY lesson.
+
+**Applies at minimum to:** Domain 2, Domain 3, and Domain 4. **Domain 1
+does not require a retrofit** during the current build merely for
+symmetry — the founder already understands Domain 1 well; a Domain 1
+synthesis may be considered later only if reinforcement/final-readiness
+evidence shows it would add real learner value, per the same
+evidence-based standard this project applies everywhere else.
+
+**Purpose, not cosmetic:** a synthesis unit moves the learner from
+individual concepts, through the relationships *between* those concepts,
+to one coherent scenario/mental model, to integrated CISM reasoning, to
+transfer onto unfamiliar questions. The target realization is: *"I
+understand the individual pieces, and now I can see how the whole domain
+works together"* — understanding the domain as a system, not recalling a
+list of definitions.
+
+**No major new content.** A synthesis unit primarily integrates material
+already taught in that domain. It is explicitly not a dumping ground for
+missing curriculum — any new concept discovered while designing a
+synthesis unit must go through the normal curriculum coverage/change
+process, not be quietly inserted into the wrap-up. Connective explanation
+tying prior lessons together is fine; a new large teaching unit is not.
+
+**Reference model, chosen per domain.** Use a coherent, domain-appropriate
+recurring scenario when it materially helps the learner integrate the
+domain — for Domain 2, the payment-system story already used across
+D2-U2/U5/U6/U7 is the approved primary reference model. For Domain 3 and
+Domain 4, an appropriate recurring scenario must be selected from that
+domain's own source material and reasoning during that domain's own
+architecture phase — the payment-system scenario must not be force-fit
+into domains it doesn't naturally suit.
+
+**Binding: reference for comprehension + varied scenarios for transfer.**
+The recurring reference story builds the mental model; it must never
+become the only scenario a domain uses, and must never be overused to the
+point learners simply memorize the story instead of the underlying
+reasoning. Varied scenarios elsewhere in the domain continue to prove
+genuine transfer.
+
+**Synthesis experiences may use a different flow than ordinary lessons**,
+while remaining calm and concise — the standard Recall → Learn → Apply →
+Feedback shape is not assumed to apply unchanged. A conceptual (not yet
+implemented) shape for planning purposes: Big Picture → Guided Reference
+Scenario → Decision Checkpoints → Why CISM Cares → Integrated Practice →
+Domain Wrap-Up. Before implementing any different synthesis flow, inspect
+the existing frontend architecture and propose the smallest reusable
+design — this project does not fork into a separate learning system for
+one unit type.
+
+**Decision checkpoints** inside a synthesis unit periodically ask the
+learner to reason through the reference story — e.g., "what has already
+happened?", "what stage are we in?", "who is accountable here?", "what
+decision is actually being made?", "which qualifier changes the
+question?", "what information should drive the next decision?", "what
+would CISM expect management to do?" — reinforcing reasoning, not
+becoming a long quiz.
+
+**Relationship to the approved future Foundation enhancement.** The
+separately-approved future Foundation "how to read a CISM question"
+enhancement ([`FOUNDATION-BLUEPRINT.md`](FOUNDATION-BLUEPRINT.md#foundation-readiness-note-phase-9b-4))
+teaches question-interpretation habits (what's being asked, role, verb,
+lifecycle position, qualifier, management/governance perspective) from
+scratch. Domain synthesis units should **reuse** those reasoning habits
+once Foundation actually teaches them, not re-teach them independently.
+
+**Each future domain's architecture phase must define its own synthesis
+experience** — Domain 3 and Domain 4 must each identify: their own
+reference model, their own synthesis/capstone unit, the whole-domain
+mental model it connects, which concepts must connect, integrated
+reasoning checkpoints, and concise-but-fruitful delivery — without
+assuming the same unit count, scenario structure, or lesson length as
+Domain 2 or each other. See
+[`DOMAIN-2-BLUEPRINT.md`](DOMAIN-2-BLUEPRINT.md#d2-u10-synthesis-requirement-approved--phase-9b-4-founder-decision-for-phase-9b-5)
+for Domain 2's concrete instance of this principle, which future domains
+should follow as a pattern, not copy verbatim.
+
 ## The untaught-material rule
 
 **[CANONICAL] — this is a structural constraint, not a
