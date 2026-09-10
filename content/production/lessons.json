@@ -742,5 +742,71 @@
     "version": 1,
     "source": "source.learner-supplied.domain-3-question-bank",
     "note": "DOMAIN 3 U3/U4 AUTHORING BATCH CANDIDATE (D3-U4, Control Design & Selection) — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md and the Architect's D3-U3/U4 authoring directive. Prerequisites are lesson.d3.policy-governance (D3-U3, listed first so Recall resolves to its family) and lesson.d3.asset-classification (D3-U2) - both branches of the approved dependency shape converge here, per the explicit D3-U1 -> {{D3-U3, D3-U2}} -> D3-U4 structure. This is a dependency graph, not a lifecycle. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d3.control-implementation-integration",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.control-implementation-integration"],
+    "patterns": ["pattern.p09"],
+    "prerequisites": ["lesson.d3.control-design-selection"],
+    "objective": "Distinguish a control that has been implemented from one that is genuinely integrated into the business process it is supposed to protect, and recognize that a control embedded in existing operational workflow is preferred over a separate, parallel, security-only exercise that duplicates or merely runs alongside that workflow, building on the purpose-driven control selection already established in D3-U4.",
+    "context": "Selecting the right control (D3-U4) is not the finish line. A control can be fully implemented - deployed, documented, installed - and still fail to change how work actually gets done, if it exists as a separate activity running alongside the real business process rather than inside it. Integration means the control operates within the workflow where the risk actually occurs: built into the system, the approval step, or the process itself, so that doing the work correctly and satisfying the control become the same action - not two disconnected ones. A control that lives outside the process it protects is easy for that process to bypass, ignore, or quietly work around, no matter how completely it was implemented. This does not mean removing independent checks - assurance activities like audit should still remain independent - it means the day-to-day operational activity of the control itself should ride within existing workflow, not exist as a disconnected parallel process.",
+    "cism_perspective": "CISM stems in this area often describe a control that technically exists - a form, a checklist, a separate review - running alongside a business process that continues operating exactly as it did before. The correct answer embeds the control into that actual workflow rather than adding more oversight, a second parallel process, or more documentation around the outside of it. A stem may also offer a process owner, who already understands the business application's real needs, as the one who should carry out the integrated control - rather than a role positioned outside the process.",
+    "recognition_clues": [
+      "The stem describes a control running as a separate form, checklist, or review alongside a business process that continues operating unchanged - that's a bolt-on/parallel-process signal; the fix embeds the control into the workflow itself.",
+      "The stem offers 'more oversight,' 'more frequent review,' or 'more documentation' as the fix for a control that isn't changing behavior - that's a signal the real problem is integration, not insufficient monitoring.",
+      "The stem states that two separate activities have both been completed and asks whether the control is therefore working - that's a signal to check whether they are actually connected to one workflow, not just two completed tasks."
+    ],
+    "scenario": "Meridian selected a dual-approval control for vendor payments processed through the Aldergate plant's newly classified finance system (the D3-U4 decision). Aldergate's finance team continues approving payments entirely through its own longstanding spreadsheet-based process, while, separately, the security team requires staff to complete a signed paper compliance form before each payment is released. The finance team's real approvals still happen only in the spreadsheet; the compliance forms are filed without ever being checked against them. Meridian's information security manager recognizes that the fix is not more compliance-form audits or a security countersignature - it is redesigning the control so dual approval happens directly inside the finance team's own payment process, the place where the actual decision is made.",
+    "traps": [
+      "Adding more oversight, more frequent audits, or more documentation around a control instead of embedding it into the actual workflow where the risk occurs.",
+      "Creating a second parallel review process instead of consolidating the control into the business process's own existing activity.",
+      "Assuming a control is working because two separate activities have both been completed, without checking whether they are actually connected to the same real decision.",
+      "Positioning the control's ongoing operation with a role outside the business process, rather than with the process owner who already understands the application's real needs."
+    ],
+    "memory_rules": [
+      "A control becomes operationally meaningful when it is embedded into the business process it is supposed to protect - not when it exists as a separate, parallel activity alongside that process.",
+      "Security that lives outside the business process gets bypassed by it."
+    ],
+    "retrieval_refs": ["question.d3.0014"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "DOMAIN 3 U5/U6 AUTHORING BATCH CANDIDATE (D3-U5, Control Implementation & Integration) — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md and the Architect's D3-U5/U6 authoring directive. Prerequisite is lesson.d3.control-design-selection (D3-U4) only, continuing the Domain 3 chain - the control D3-U4 selected/designed for a purpose is what this lesson asks how to genuinely embed into operations. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d3.control-testing-evaluation",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.control-testing-evaluation"],
+    "patterns": ["pattern.p07"],
+    "prerequisites": ["lesson.d3.control-implementation-integration"],
+    "objective": "Distinguish evidence that a control has been implemented or completed as an activity from evidence that it is actually effective at achieving its intended outcome, recognize that the specific evidence required depends on the control's own purpose (established in D3-U4), and connect any gap a genuine evaluation reveals back to the residual risk the enterprise must still decide whether to accept.",
+    "context": "A control being installed, a policy existing, a procedure being documented, or staff completing a required activity are all facts about implementation - they prove something happened, not that it worked. Effectiveness is a separate claim: it requires evidence that the control is actually achieving the specific outcome it was selected for, and the exact evidence needed depends on that purpose - the same way a virus-detection tool's effectiveness depends on whether its definition files are current enough to catch what it is meant to catch, not merely on whether the software is installed and running. Once a control is genuinely tested and evaluated, any gap between what it achieves and what it was supposed to achieve becomes residual risk - the risk still remaining after the control has done what it can do - which the enterprise must then decide whether to accept, exactly as already established for risk treatment generally. Controls are considered adequate only once that residual risk is at or below what the enterprise is willing to accept - not simply because the controls exist.",
+    "cism_perspective": "CISM stems in this area often list an implementation fact - installed, documented, completed, deployed, published - and ask whether a control is effective; the correct answer resists treating that fact alone as proof and instead asks for evidence of the specific outcome the control was selected to produce. A stem may also ask when risk controls are sufficient or adequate; the correct answer ties adequacy to residual risk falling within the enterprise's accepted level, not to the mere presence of controls.",
+    "recognition_clues": [
+      "The stem states a control was installed, deployed, documented, or completed as an activity, and then asks whether it is effective, adequate, or working - that's an implementation-as-effectiveness trap; effectiveness needs evidence of outcome.",
+      "The stem offers a plausible-sounding evidence type (an activity count, a completion rate, configuration presence) that doesn't actually match what this control's own purpose requires proving.",
+      "The stem asks when controls are sufficient or adequate - that's a residual-risk signal: the answer should connect to residual risk falling within the enterprise's accepted level, not to controls simply existing."
+    ],
+    "scenario": "Meridian performs its first formal evaluation of the dual-approval control now embedded in the Aldergate plant's payment process (the D3-U5 outcome). The plant manager reports that the control is working because every payment now shows two recorded approvals in the system log. Meridian's information security manager instead asks for evidence that the second approval reflects genuinely independent review - rather than the same person approving twice, or one approver rubber-stamping without checking - because that is the actual outcome the control was selected to produce. When testing turns up several payments where the second approval was granted within seconds of the first, the manager recognizes this gap as a residual risk that must now be evaluated against Meridian's accepted risk level, not simply logged and left.",
+    "traps": [
+      "Treating a completed activity, installed tool, published policy, or logged event as proof of effectiveness, without evidence of the actual outcome the control was selected to produce.",
+      "Accepting generic-sounding evidence (a count, a completion rate, a log entry) without checking whether it actually matches what this specific control's purpose requires proving.",
+      "Concluding controls are sufficient or adequate simply because they exist, rather than because the residual risk they leave behind falls within what the enterprise is willing to accept.",
+      "Stopping at 'the gap was found' without connecting it back to residual risk that must be evaluated and decided upon."
+    ],
+    "memory_rules": [
+      "\"It exists\" answers a different question than \"it works\" - effectiveness requires evidence of the specific outcome, not just the activity.",
+      "Controls are adequate once the residual risk they leave behind is at or below what the enterprise accepts - not simply because the controls exist."
+    ],
+    "retrieval_refs": ["question.d3.0017"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "DOMAIN 3 U5/U6 AUTHORING BATCH CANDIDATE (D3-U6, Control Testing & Evaluation) — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md and the Architect's D3-U5/U6 authoring directive. Prerequisite is lesson.d3.control-implementation-integration (D3-U5) only, continuing the Domain 3 chain, which itself continues the full cumulative Foundation + Domain 1 + Domain 2 recall pool - including concept.d2.residual-risk-acceptability (D2-U7), reachable automatically through this chain with no new prerequisite edge required, exactly as concept.d1.policy-artifact-hierarchy was already shown reachable for D3-U3. This is dependency structure (D3-U4 -> D3-U5 -> D3-U6), never a lifecycle - no lifecycle/stage metadata is introduced. Not yet human-reviewed or promoted."
   }
 ]

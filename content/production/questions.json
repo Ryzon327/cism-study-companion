@@ -3448,5 +3448,329 @@
     "version": 1,
     "source": "source.learner-supplied.domain-3-question-bank",
     "note": "PHASE D3-U4 CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3B1 sub-area (a corrective control's purpose is to reduce/recover from impact, not to prevent or detect; preventive-control objectives should be developed PRIMARILY from risk aligned with enterprise risk appetite, not industry-checklist volume, monitoring-tool threat levels, or SLA uptime targets; when a required control cannot be applied, first assess risk and identify a compensating control rather than skip the requirement or halt progress). Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0014",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.control-implementation-integration"],
+    "patterns": ["pattern.p09"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager", "role.business-process-owner"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.control-implementation-integration",
+    "variation_tags": ["business-setting:acquisition-integration", "distractor-temptation:duplicate-parallel-process", "decision-consequence:embed-vs-bolt-on"],
+    "prompt": "Meridian selected a dual-approval control for vendor payments processed through the Aldergate plant's newly classified finance system. Aldergate's finance team continues approving payments entirely through its own longstanding spreadsheet-based process, while, separately, the security team requires staff to complete a signed paper compliance form before each payment is released. The finance team's real approvals still happen only in the spreadsheet, and the compliance forms are filed without ever being checked against them. What should Meridian's information security manager do?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Redesign the control so dual approval is required directly within the finance team's own payment process itself, rather than relying on a separate compliance form that runs alongside it.",
+        "correct": true,
+        "rationale": "A control becomes operationally meaningful when it is embedded into the actual workflow where the decision is made. Moving dual approval directly into the finance team's own payment process closes the gap between what the control requires and what actually happens when payments are approved."
+      },
+      {
+        "key": "b",
+        "text": "Increase the frequency of compliance-form audits to ensure staff are completing the forms correctly, and require the audit results to be formally reported to senior management each cycle.",
+        "correct": false,
+        "rationale": "More frequent audits of a disconnected form, even with formal reporting attached, do not change the fact that the finance team's real approvals happen entirely outside the control - auditing a bolt-on process more often does not integrate it.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "c",
+        "text": "Require the security team to review and countersign every compliance form before payments are released.",
+        "correct": false,
+        "rationale": "Adding a security countersignature to the same disconnected form creates a second parallel step rather than embedding dual approval into the finance team's actual payment process.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "d",
+        "text": "Conclude the control is already working, since both the spreadsheet approvals and the compliance forms are being completed.",
+        "correct": false,
+        "rationale": "Two separate activities both being completed does not mean they are connected to one real decision - the compliance forms are filed without ever being checked against the actual approvals, so the control is not yet operating as intended.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "A control is genuinely integrated when it operates inside the actual business process, not when a separate, parallel activity happens to run alongside that process. More audits, more countersignatures, or two completed-but-disconnected activities do not close that gap - only embedding the requirement into the real workflow does.",
+    "recognition_clue": "A stem describing a control running as a separate form, checklist, or review alongside a business process that continues operating unchanged is testing whether the fix embeds the control into the workflow itself, rather than adding oversight around the outside of it.",
+    "memory_rule": "A control becomes operationally meaningful when it is embedded into the business process it is supposed to protect - not when it exists as a separate, parallel activity alongside that process.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "PHASE D3-U5 CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3B2 sub-area (a process owner - not a system analyst, quality control manager, or the security manager alone - implements/maintains security for a specific business application, since the process owner has the most knowledge of that application's real needs) and the existing CANONICAL Pattern P09 (Security Embedded in Business Process), including its own approved change-management and HR-onboarding/offboarding example scenarios. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0015",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.control-implementation-integration"],
+    "patterns": ["pattern.p09"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager", "role.business-process-owner"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.control-implementation-integration",
+    "variation_tags": ["business-setting:hospital-network", "distractor-temptation:duplicate-parallel-process", "asset-or-process-context:access-review"],
+    "prompt": "A hospital's information security manager designs a new access-review requirement for its patient-scheduling system. Rather than embedding the review into the scheduling department's own existing quarterly staff-access audit, the security team creates a separate spreadsheet that only security staff maintain, disconnected from the scheduling department's own operational review. What is the BEST way to fix this?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Have the scheduling department's own process owner incorporate the access review into the department's existing quarterly audit, since the process owner already understands the application's actual access needs.",
+        "correct": true,
+        "rationale": "The process owner responsible for the scheduling application already has the most direct knowledge of who actually needs access and why. Incorporating the review into the department's own existing audit embeds the control into real operations instead of running it as a separate security-only exercise."
+      },
+      {
+        "key": "b",
+        "text": "Assign a security team member to independently perform the access review going forward, instead of the scheduling department.",
+        "correct": false,
+        "rationale": "Moving the review to a different individual outside the department still leaves it as a separate activity disconnected from the scheduling department's own operational process, rather than embedding it into that process.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "c",
+        "text": "Ask the scheduling department to also review the security team's separate spreadsheet each quarter, in addition to their own audit.",
+        "correct": false,
+        "rationale": "Adding a second review of a separate spreadsheet creates more work without consolidating the requirement into one integrated process - it is an additional parallel activity, not integration.",
+        "repair_target": "repair.decision-error"
+      },
+      {
+        "key": "d",
+        "text": "Document that both reviews now occur, satisfying the access-review requirement.",
+        "correct": false,
+        "rationale": "Documenting that two disconnected reviews occur does not establish that access decisions are actually being made correctly within one real process - it records activity, not integration.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "Embedding a control into the process owner's own existing operational activity - rather than running it as a parallel, security-maintained exercise - is what makes the control part of real operations. Adding a second review or documenting two disconnected activities does not achieve that.",
+    "recognition_clue": "A stem describing a security-maintained control running separately from a business department's own existing operational review is testing whether the fix consolidates the requirement into the process owner's real activity.",
+    "memory_rule": "A control becomes operationally meaningful when it is embedded into the business process it is supposed to protect - not when it exists as a separate, parallel activity alongside that process.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "PHASE D3-U5 CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3B2 sub-area (a process owner - not a system analyst, quality control manager, or the security manager alone - implements/maintains security for a specific business application, since the process owner has the most knowledge of that application's real needs) and the existing CANONICAL Pattern P09 (Security Embedded in Business Process), including its own approved change-management and HR-onboarding/offboarding example scenarios. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0016",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.control-implementation-integration"],
+    "patterns": ["pattern.p09"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.control-implementation-integration",
+    "variation_tags": ["business-setting:professional-services-firm", "distractor-temptation:catch-up-detective-activity", "asset-or-process-context:hr-offboarding"],
+    "prompt": "A professional services firm's information security manager requires that departing employees' system access be revoked, and currently relies on a monthly manual review by the security team to catch any accounts that should have been disabled. Which change would BEST integrate this control into the firm's actual operations?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Make access revocation an automatic, required step within HR's own offboarding process, triggered the moment a departure is processed, rather than caught later by a separate monthly review.",
+        "correct": true,
+        "rationale": "Embedding revocation directly into HR's existing offboarding workflow means access is removed as part of the departure itself, not discovered afterward by a separate security activity - this is what makes the control part of real operations."
+      },
+      {
+        "key": "b",
+        "text": "Increase the frequency of the security team's manual review from monthly to weekly, and require the results to be formally reported to senior management each cycle.",
+        "correct": false,
+        "rationale": "A more frequent catch-up review, even with formal reporting attached, still finds problems after the fact rather than preventing them - it does not embed revocation into the actual offboarding workflow.",
+        "repair_target": "repair.decision-error"
+      },
+      {
+        "key": "c",
+        "text": "Require HR to notify the security team by email whenever an employee departs, so the security team can revoke access separately.",
+        "correct": false,
+        "rationale": "This still leaves revocation as a second, separate step performed outside the offboarding process itself, just triggered sooner - it is faster, not integrated.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "d",
+        "text": "Have IT audit all active accounts against the HR roster once a quarter to identify any that should have been revoked.",
+        "correct": false,
+        "rationale": "A periodic reconciliation is a detective catch-up mechanism, not a change to how access is actually removed at the moment someone departs - it does not integrate the control into the offboarding workflow.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "Integration means the control's requirement becomes part of the process where the risk actually originates - here, HR's own offboarding workflow - rather than being caught afterward by a faster, more frequent, or more thorough separate review.",
+    "recognition_clue": "A stem describing a catch-up review that finds problems after they occur, and asking for the BEST way to integrate the control, is testing whether the fix moves the requirement into the originating workflow itself rather than making the catch-up faster.",
+    "memory_rule": "Security that lives outside the business process gets bypassed by it.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "PHASE D3-U5 CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3B2 sub-area (a process owner - not a system analyst, quality control manager, or the security manager alone - implements/maintains security for a specific business application, since the process owner has the most knowledge of that application's real needs) and the existing CANONICAL Pattern P09 (Security Embedded in Business Process), including its own approved change-management and HR-onboarding/offboarding example scenarios. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0017",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.control-testing-evaluation"],
+    "patterns": ["pattern.p07"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.control-testing-evaluation",
+    "variation_tags": ["business-setting:acquisition-integration", "distractor-temptation:activity-and-configuration-as-effectiveness", "asset-or-process-context:dual-approval-control"],
+    "prompt": "Meridian's Aldergate plant reports that its newly embedded dual-approval payment control is working, since every payment now shows two recorded approvals in the system log. During testing, Meridian's information security manager finds that several of these second approvals were granted within seconds of the first - consistent with the same approver clicking twice, not an independent second reviewer. What is the BEST evidence Meridian should require to confirm the control is actually effective?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Evidence that the second approval was performed by a genuinely different, independent reviewer who actually evaluated the payment - not merely that two approval entries exist in the log.",
+        "correct": true,
+        "rationale": "The control's actual purpose is independent review, not the mere presence of two log entries. Evidence must demonstrate that a genuinely different reviewer evaluated the payment - the specific outcome the control was selected to produce."
+      },
+      {
+        "key": "b",
+        "text": "The total count of payments that have gone through the dual-approval process since it was introduced, broken down by plant department for trend-reporting purposes.",
+        "correct": false,
+        "rationale": "A volume count broken down by department shows the process has been used, not that the second approval reflects genuine independent review - it is an activity count, not evidence of the intended outcome.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Confirmation that the payment system's dual-approval feature remains correctly configured and enabled.",
+        "correct": false,
+        "rationale": "Confirming the feature is enabled proves the control is implemented, not that it is being used as intended - the same rubber-stamping pattern could continue with the feature correctly configured.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "A statement from the plant manager that staff have been informed the control is now mandatory.",
+        "correct": false,
+        "rationale": "Staff being informed a control is mandatory is a communication fact, not evidence that the control is actually producing independent review in practice.",
+        "repair_target": "repair.business-context-error"
+      }
+    ],
+    "explanation": "Effectiveness evidence must match the control's actual purpose. A log entry, a usage count, or a configuration check can all be true while the intended outcome - genuine independent review - is not actually happening.",
+    "recognition_clue": "A stem describing a control whose activity records look complete, but whose actual purpose (independent review) may not be occurring, is testing whether outcome evidence is distinguished from activity, count, or configuration evidence.",
+    "memory_rule": "\"It exists\" answers a different question than \"it works\" - effectiveness requires evidence of the specific outcome, not just the activity.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "PHASE D3-U6 CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3B3 sub-area (risk controls are sufficient only when residual risk is at or below the enterprise's risk acceptance level, not simply because controls exist; achieving the control's own objective is the most important benefit when reviewing risk-treatment options; a virus-detection tool's effectiveness depends on current definition files, not merely on whether it is installed) and the existing CANONICAL Pattern P07 (Implementation ≠ Effectiveness), Domain 3's single most load-bearing pattern per DOMAIN-3-BLUEPRINT.md. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0018",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.control-testing-evaluation"],
+    "patterns": ["pattern.p07"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.control-testing-evaluation",
+    "variation_tags": ["business-setting:university", "distractor-temptation:documentation-and-training-as-effectiveness", "asset-or-process-context:data-loss-prevention"],
+    "prompt": "A university's information security manager is asked to confirm that a newly deployed control preventing student financial records from being emailed outside the university is effective. What is the BEST evidence to request?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Evidence that attempts to send student financial records outside the university have actually been blocked or flagged, based on detection rules that reflect what that data currently looks like.",
+        "correct": true,
+        "rationale": "The control's purpose is to stop financial records from leaving the university - effectiveness requires evidence that this specific outcome is actually happening now, based on rules that still match the current data, not merely that the control was set up."
+      },
+      {
+        "key": "b",
+        "text": "Confirmation that the control was successfully installed on all relevant email servers, along with a signed acceptance form from the IT department confirming rollout is complete.",
+        "correct": false,
+        "rationale": "Successful installation and a signed rollout acceptance both prove implementation, not that the control's detection rules still catch what the data actually looks like today - neither demonstrates the intended outcome.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "The number of staff who completed training on the new email-restriction policy.",
+        "correct": false,
+        "rationale": "Training completion measures an activity, not whether outgoing financial records are actually being blocked or flagged - it does not demonstrate the control's outcome.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "A copy of the policy documenting the new email restriction.",
+        "correct": false,
+        "rationale": "A policy document describes what is required; it is not evidence that the requirement is actually being achieved in practice.",
+        "repair_target": "repair.vocabulary-error"
+      }
+    ],
+    "explanation": "Evidence of effectiveness must demonstrate the actual outcome a control is meant to produce - here, financial records genuinely being blocked or flagged in practice - not installation, training completion, or the existence of a policy describing the requirement.",
+    "recognition_clue": "A stem offering installation, training completion, or policy documentation as evidence a specific technical control is effective is testing whether outcome evidence is distinguished from implementation/activity/documentation evidence.",
+    "memory_rule": "\"It exists\" answers a different question than \"it works\" - effectiveness requires evidence of the specific outcome, not just the activity.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "PHASE D3-U6 CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3B3 sub-area (risk controls are sufficient only when residual risk is at or below the enterprise's risk acceptance level, not simply because controls exist; achieving the control's own objective is the most important benefit when reviewing risk-treatment options; a virus-detection tool's effectiveness depends on current definition files, not merely on whether it is installed) and the existing CANONICAL Pattern P07 (Implementation ≠ Effectiveness), Domain 3's single most load-bearing pattern per DOMAIN-3-BLUEPRINT.md. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0019",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.control-testing-evaluation"],
+    "patterns": ["pattern.p07"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager", "role.board-senior-management"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.control-testing-evaluation",
+    "variation_tags": ["business-setting:retail-chain-board-briefing", "distractor-temptation:cost-and-compliance-as-sufficiency", "decision-consequence:residual-risk-acceptability"],
+    "prompt": "A retail chain's risk register shows that several risk-mitigation controls have been implemented for its point-of-sale payment systems. A board member asks the information security manager whether these controls are now sufficient. What is the BEST basis for answering that question?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Whether the residual risk remaining after these controls is at or below the level of risk the retail chain has said it is willing to accept - not simply whether the controls have been implemented.",
+        "correct": true,
+        "rationale": "Controls are sufficient once the residual risk they leave behind falls within the enterprise's own accepted risk level. Implementation status alone does not establish whether that threshold has actually been met."
+      },
+      {
+        "key": "b",
+        "text": "Whether the total cost of the controls is less than the estimated annual loss they are meant to prevent, since that favorable cost comparison is what originally justified the investment to the board and secured its approval.",
+        "correct": false,
+        "rationale": "A favorable cost comparison can justify spending on a control, but it does not by itself establish whether the resulting residual risk is now within what the enterprise accepts.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Whether every control identified during the original risk assessment has now been implemented.",
+        "correct": false,
+        "rationale": "Completing every identified control shows implementation progress, not whether the risk that remains after those controls is actually within the accepted level.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "Whether the controls comply with the retail industry's relevant regulatory requirements.",
+        "correct": false,
+        "rationale": "Regulatory compliance is a separate consideration from whether the residual risk these controls leave behind is actually within the board's own accepted level.",
+        "repair_target": "repair.business-context-error"
+      }
+    ],
+    "explanation": "Sufficiency is a residual-risk question, not an implementation-completeness, cost, or compliance question: controls are adequate once the risk remaining after them is at or below what the enterprise has said it will accept.",
+    "recognition_clue": "A stem asking whether implemented controls are now 'sufficient' or 'adequate,' and offering cost, completeness, or compliance as the basis for answering, is testing whether residual risk against the accepted level is recognized as the actual test.",
+    "memory_rule": "Controls are adequate once the residual risk they leave behind is at or below what the enterprise accepts - not simply because the controls exist.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "PHASE D3-U6 CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3B3 sub-area (risk controls are sufficient only when residual risk is at or below the enterprise's risk acceptance level, not simply because controls exist; achieving the control's own objective is the most important benefit when reviewing risk-treatment options; a virus-detection tool's effectiveness depends on current definition files, not merely on whether it is installed) and the existing CANONICAL Pattern P07 (Implementation ≠ Effectiveness), Domain 3's single most load-bearing pattern per DOMAIN-3-BLUEPRINT.md. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
   }
 ]

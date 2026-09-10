@@ -260,14 +260,13 @@ test("Domain 3 so far (U1-U4): all new entities are CANDIDATE, unverified, and n
   assert.equal(bad.length, 0, `no Domain 3 U3/U4 entity may reference Domain 4: ${bad.join(", ")}`);
 });
 
-test("batch boundary: no Domain 3 unit beyond U1-U4 exists yet", () => {
-  const d3Lessons = data.lessons.filter((l) => l.domain === "domain.d3").map((l) => l.id);
-  assert.deepEqual(
-    d3Lessons.sort(),
-    ["lesson.d3.asset-classification", "lesson.d3.control-design-selection", "lesson.d3.policy-governance", "lesson.d3.program-foundations"].sort(),
-    "only D3-U1 through D3-U4 may exist in this batch - D3-U5+ is not yet authored"
-  );
-});
+// Originally "no Domain 3 unit beyond U1-U4 exists yet" — that boundary is
+// superseded now that D3-U5/U6 have legitimately been authored (see
+// domain3-u5-u6.test.mjs, which owns the current batch-boundary
+// assertion), mirroring the exact precedent already established when the
+// U1/U2 boundary was narrowed after U3/U4 (see the equivalent comment in
+// domain3-u1-u2.test.mjs). This file's own U3/U4 entities remain asserted
+// unchanged by the tests above.
 
 test("BUG-001/002/003 remain untouched: the registry file's status lines are unchanged by this batch (spot check via the concept-identity guard already covered above)", () => {
   // This batch cannot itself verify docs/regressions/REGISTRY.md content (no
