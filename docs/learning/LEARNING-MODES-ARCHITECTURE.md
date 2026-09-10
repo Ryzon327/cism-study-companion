@@ -137,15 +137,36 @@ Choose a domain → choose a concept (from that domain's taught concepts so far)
   → "Explore another" (return to concept choice) or "Return"
 ```
 
-Concept choice is scoped to **already-taught** concepts only (via the
-existing prerequisite/taught-set walk — see Reuse, below): this is what
-prevents Explore from ever exposing untaught material and is what answers
-"why am I seeing this" — the learner picked it. `docs/learning/
-CONFUSING-CONCEPTS.md`'s existing term-pairs (Threat vs. Vulnerability vs.
-Risk, Appetite vs. Tolerance, Risk Owner vs. Control Owner, Qualitative
-vs. Quantitative, Governance vs. Management, etc.) are a ready-made,
-already-authored candidate list for the concept picker — no new content
-required to launch a first version.
+Concept choice was originally recommended above as scoped to
+**already-taught** concepts only, via a prerequisite/taught-set walk. Built
+in Phase 10B-2 per this document's own later, higher-tier **[APPROVED,
+BINDING]** Domain 3/4 generic-compatibility strategy instead: Explore's
+domain/concept picker enumerates whatever `domains.json` +
+`content/production/concepts.json` currently contain (see
+`app/src/content/explore.ts`), so Domain 3/4 appear automatically the
+moment their content is authored, with zero code change — exactly what
+that section calls for. The "already-taught" recommendation above assumed
+a real per-learner completion/progression signal to walk; no such signal
+exists (no persistence — `todaysLessonId` is dev-only QA-selectable
+tooling, not a real learner's history), so literally implementing it would
+have scoped every real learner to whatever the QA pointer's fixed default
+happens to be, forever — worse than showing the real authored curriculum.
+`docs/regressions/` doesn't track this doc's own recommendation drift, so
+it's recorded here directly: this is a genuine, evidence-driven
+reconciliation of the two recommendations above and below, not a silent
+edit. **[APPROVED — Architect Decision, Phase 10B-2 review]**: all
+currently authored, active production concepts are available in Explore
+(active domain → active concept → available); future persistence may add
+learner-specific affordances (recently learned, weak concepts, etc.) on
+top of this rule, out of scope for Phase 10B-2. See
+`PHASE-10B2-GATE-RECORD.md`'s "Available-content rule" section for the
+full reasoning.
+`docs/learning/CONFUSING-CONCEPTS.md`'s existing term-pairs remain a
+ready-made reference for concepts that ARE a known confusing pair, applied
+where a concept's own already-authored data signals one (Phase 10B-2 uses
+the concept's own `display_name` containing "vs." as that generic signal,
+never a second hand-maintained pair list) — not a required allowlist that
+concepts without a pair must be excluded from.
 
 ### Practice
 

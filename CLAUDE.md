@@ -111,3 +111,21 @@ was established in Phase 1 and must keep running as the codebase grows.
 Before starting implementation work in any session, verify `git status` is
 clean and confirm which branch is checked out. Report both before making
 changes.
+
+**Branch preflight (added after a Phase 10B-2 process violation — work
+began on `main`'s working tree before the required phase branch existed).**
+Before the first write of any implementation phase that names an
+authorized phase branch, run:
+
+```
+git status --short
+git branch --show-current
+git rev-parse HEAD
+git rev-parse main
+git rev-parse origin/main
+```
+
+Then create/switch to that authorized branch, and immediately re-run
+`git branch --show-current` to confirm it took effect. If the authorized
+branch is not the active branch at that point, STOP before writing any
+file — do not implement first and reconcile branching after.
