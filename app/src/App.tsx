@@ -100,7 +100,9 @@ const REVIEW_LESSON_ITEMS: PrototypeStateItem[] = [
   { id: "lesson.d3.policy-governance", label: "D3-U3 — Program-Level Policy Governance" },
   { id: "lesson.d3.control-design-selection", label: "D3-U4 — Control Design & Selection" },
   { id: "lesson.d3.control-implementation-integration", label: "D3-U5 — Control Implementation & Integration" },
-  { id: "lesson.d3.control-testing-evaluation", label: "D3-U6 — Control Testing & Evaluation" }
+  { id: "lesson.d3.control-testing-evaluation", label: "D3-U6 — Control Testing & Evaluation" },
+  { id: "lesson.d3.awareness-training", label: "D3-U7 — Security Awareness & Training" },
+  { id: "lesson.d3.external-services", label: "D3-U8 — Managing External Services" }
 ];
 
 const SESSION_SCREENS = new Set([

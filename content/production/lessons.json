@@ -808,5 +808,71 @@
     "version": 1,
     "source": "source.learner-supplied.domain-3-question-bank",
     "note": "DOMAIN 3 U5/U6 AUTHORING BATCH CANDIDATE (D3-U6, Control Testing & Evaluation) — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md and the Architect's D3-U5/U6 authoring directive. Prerequisite is lesson.d3.control-implementation-integration (D3-U5) only, continuing the Domain 3 chain, which itself continues the full cumulative Foundation + Domain 1 + Domain 2 recall pool - including concept.d2.residual-risk-acceptability (D2-U7), reachable automatically through this chain with no new prerequisite edge required, exactly as concept.d1.policy-artifact-hierarchy was already shown reachable for D3-U3. This is dependency structure (D3-U4 -> D3-U5 -> D3-U6), never a lifecycle - no lifecycle/stage metadata is introduced. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d3.awareness-training",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.awareness-training-effectiveness"],
+    "patterns": ["pattern.p07"],
+    "prerequisites": ["lesson.d3.control-testing-evaluation"],
+    "objective": "Distinguish broad, ongoing security awareness from role-specific training, recognize that delivering either is an activity rather than evidence of changed behavior or reduced risk, and evaluate an awareness/training program by its effect on behavior and risk rather than by participation or completion alone - continuing the implementation-vs-effectiveness reasoning established in D3-U6, now applied to people rather than technical or procedural controls.",
+    "context": "Meridian has implemented and evaluated controls across the acquired Aldergate operation (D3-U5/U6), but some of the residual gaps in a security program are not purely technical - they live in what employees, supervisors, and administrators actually do. Awareness is the ongoing, broad effort to keep every employee conscious of expected security behavior and the consequences of compliance and noncompliance in their own job. Training goes further: it builds role-specific skill for people whose job responsibilities create a specific risk exposure, and it is most effective when customized to that audience rather than delivered as one generic module for everyone. Sending training - or collecting a completion percentage or a signed acknowledgment - is an activity. The actual goal is changing the behavior that produces risk, and because threats keep changing, that behavior has to be renewed, not achieved once. Because people are often the point where even good technical controls can be bypassed, awareness and training remain necessary alongside technical measures, not replaced by them.",
+    "cism_perspective": "CISM stems in this area often present a training activity - sent, completed, acknowledged, or repeated - and ask whether it means the program is working, or contrast a single generic module for all staff against content customized to a specific audience's actual job risk. The correct answer resists treating the activity fact as proof and instead looks for evidence of changed behavior or reduced risk, matched to the audience whose behavior actually creates the exposure. A stem may also ask what should happen first after a program clearly fails (such as a high phishing-simulation click rate); the correct answer secures leadership support for a genuine redesign before jumping to new policy language or a purely technical fix.",
+    "recognition_clues": [
+      "The stem cites a completion rate, a signed acknowledgment, or a training deadline as evidence the program is effective - that's an activity-as-effectiveness trap; effectiveness needs evidence of changed behavior or reduced risk.",
+      "The stem describes the same general awareness content being delivered to a group whose job creates a specific, different risk exposure - that's a generic-content signal; the fix is customizing content to that audience, not repeating or extending the same module.",
+      "The stem describes a training program that has clearly failed (a high click rate, a recurring behavior) and asks what to do first - that's a signal to secure leadership support for a real redesign, not to jump straight to a policy update or a technical fix that bypasses the human behavior involved."
+    ],
+    "scenario": "Meridian ran a phishing simulation across Aldergate's newly integrated staff. More than seventy percent of Aldergate's finance team - the same team now operating the dual-approval vendor-payment control from D3-U5/U6 - clicked a simulated email requesting an urgent change to a vendor's bank-account details. Meridian's information security manager recognizes that requiring the same generic annual module a second time, or writing a new policy line about phishing, will not close this specific gap. The fix starts with securing senior leadership's support for a genuinely redesigned program, one built around the finance team's own payment-approval risk, and judged afterward by whether the team's actual behavior - such as reporting suspicious payment-change requests instead of acting on them - actually changes.",
+    "traps": [
+      "Treating a completion rate, participation count, or signed acknowledgment as proof the program is effective.",
+      "Delivering the same generic, one-size-fits-all content to a group whose job creates a specific, identifiable risk exposure.",
+      "Jumping straight to a policy update or a purely technical fix (such as tighter email filtering) for a problem that a human-behavior pattern has just revealed.",
+      "Assuming awareness training, once delivered, remains effective indefinitely, when threats and the behavior they exploit keep changing."
+    ],
+    "memory_rules": [
+      "Sending training is an activity. Changing the behavior that produces risk is the outcome.",
+      "Awareness and training have to be earned continuously - what worked last year does not certify this year's behavior."
+    ],
+    "retrieval_refs": ["question.d3.0020"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "DOMAIN 3 U7/U8 AUTHORING BATCH CANDIDATE (D3-U7, Security Awareness & Training) — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md and the Architect's D3-U7/U8 authoring directive. Prerequisite is lesson.d3.control-testing-evaluation (D3-U6) only, continuing the Domain 3 chain - the same implementation-vs-effectiveness reasoning (P07) is reapplied here to awareness/training delivery vs. behavior change, a distinct reasoning target from U6's control-testing focus, per the Architect's explicit instruction not to simply repeat U6. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d3.external-services",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.external-services-accountability"],
+    "patterns": ["pattern.p02"],
+    "prerequisites": ["lesson.d3.awareness-training"],
+    "objective": "Recognize that outsourcing the performance of a service does not outsource accountability for its business outcome, that security requirements belong at the start of the vendor relationship, and that a contract, SLA, or provider claim is not itself the ongoing assurance the enterprise needs - continuing the authority-follows-accountability reasoning already established in Domain 1, now applied to relationships that cross the enterprise's own boundary.",
+    "context": "Aldergate's integration into Meridian depends in part on external providers - vendors, outsourcers, and service providers performing work Meridian itself does not perform directly. Responsibility for actually doing that work can move outside the enterprise, but accountability for the outcome, and for the risk it creates, does not: Meridian remains accountable for the same business outcomes whether its own staff or a contracted provider carries out the work. Security requirements should be established and communicated to a provider from the beginning of the relationship, when the business is defining what it actually needs, not bolted on after a contract is signed. A contract or service level agreement can require a security posture, but the contract's existence is not itself the assurance that the requirement is being met - ongoing, independent verification, most effectively periodic audits or reviews of the provider's actual practice, is what confirms that. A provider's own claim or certification is useful context but does not substitute for the enterprise's own assurance activity.",
+    "cism_perspective": "CISM stems in this area often describe a contract, SLA, indemnity clause, or provider certification already in place, and ask whether the enterprise's security obligation is now satisfied; the correct answer keeps accountability with the enterprise and reaches for its own independent verification rather than treating the document or claim as sufficient by itself. A stem may also ask what should happen first or next in a vendor relationship - the correct answer matches the enterprise's own current business requirements and sequencing (for example, establishing monitoring once a contract is signed, or confirming requirements are still current before assessing a disappointing vendor's capability).",
+    "recognition_clues": [
+      "The stem states a contract, SLA, indemnity clause, or third-party certification already exists and asks whether the enterprise's obligation is met - that's a contract-as-assurance trap; a document or claim is not the same as verified, ongoing compliance.",
+      "The stem describes a vendor relationship reaching a specific point (a contract just signed, a long-standing agreement now disappointing senior management) and asks what comes first or next - the answer should match the enterprise's own current business requirements and actual sequencing, not skip ahead to a technology or documentation step.",
+      "The stem implies that engaging a provider has moved the security responsibility itself outside the enterprise - that's the accountability-transfer trap; the business owner inside the enterprise remains accountable for the outcome."
+    ],
+    "scenario": "Meridian has just signed a contract with a new external vendor to manage Aldergate's day-to-day IT support during the integration. Meridian's information security manager recognizes that signing the contract does not itself protect Aldergate - the next real step is establishing ongoing, independent monitoring of the vendor's actual security practice, because Meridian, not the vendor, remains accountable if something goes wrong with the systems the vendor now supports.",
+    "traps": [
+      "Treating a signed contract, SLA, indemnity clause, or provider certification as if it discharges the enterprise's own responsibility to verify.",
+      "Waiting until a contract is signed, or until an incident occurs, before information security becomes involved in the vendor relationship.",
+      "Confusing the order of vendor-relationship steps - for example, assuming a nondisclosure agreement or SLA still needs to be arranged after a contract is already signed.",
+      "Assessing a disappointing vendor's capability or automating its reporting before confirming that the underlying agreement still reflects the enterprise's own current business requirements."
+    ],
+    "memory_rules": [
+      "Responsibility for performing a service can move outside the organization; accountability for the business outcome does not.",
+      "A contract states the requirement. Independent verification is what confirms it is actually being met."
+    ],
+    "retrieval_refs": ["question.d3.0023"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "DOMAIN 3 U7/U8 AUTHORING BATCH CANDIDATE (D3-U8, Managing External Services) — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md and the Architect's D3-U7/U8 authoring directive. Prerequisite is lesson.d3.awareness-training (D3-U7) only, continuing the Domain 3 chain, which itself continues the full cumulative Foundation + Domain 1 + Domain 2 recall pool - including concept.d1.authority-accountability and concept.d1.data-ownership, reachable automatically through this chain with no new prerequisite edge required, exactly as concept.d2.residual-risk-acceptability was already shown reachable for D3-U6. This is dependency structure (D3-U7 -> D3-U8), never a lifecycle - no lifecycle/stage metadata is introduced. Not yet human-reviewed or promoted."
   }
 ]
