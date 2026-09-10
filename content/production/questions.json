@@ -2800,5 +2800,329 @@
     "version": 1,
     "source": "source.learner-supplied.domain-2-question-bank",
     "note": "PHASE 9B-5 CANDIDATE - authored by Claude Code as the third variant of family.d2.risk-management-synthesis (D2-U10), deliberately using a different business setting (a regional-expansion board briefing, not the payment-system story) per the reference-for-comprehension-plus-varied-scenarios-for-transfer rule. Combines D2-U5's appetite/evaluation reasoning, D2-U3/U4's method-fits-objective reasoning (applied, not retaught), and D2-U9's audience-appropriate-reporting reasoning in one integrated scenario. Original scenario; not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0002",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.program-foundations"],
+    "patterns": ["pattern.p01"],
+    "qualifier": "qualifier.first",
+    "roles_mentioned": ["role.security-manager", "role.board-senior-management"],
+    "primary_role": "role.security-manager",
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.program-foundations",
+    "variation_tags": ["business-setting:acquisition-integration", "distractor-temptation:technology-first-deployment", "asset-or-process-context:newly-acquired-systems"],
+    "prompt": "Meridian Manufacturing has just acquired Aldergate Fabrication. Leadership has approved specific business objectives for the integration, including bringing Aldergate's operations under Meridian's compliance obligations within twelve months. Before Aldergate's systems are onboarded, the integration team proposes immediately deploying Meridian's standard security tool suite across all of Aldergate's systems. What should Meridian's information security manager do FIRST?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Determine what the approved integration objectives actually require the security program to accomplish - and in what order - before selecting or deploying any specific security tools.",
+        "correct": true,
+        "rationale": "A security program exists to turn approved business objectives into coordinated, prioritized execution. Understanding what the integration's own approved objectives require comes before choosing which tools or controls will satisfy that requirement - otherwise the tools are being deployed on their own, not as part of a coordinated program."
+      },
+      {
+        "key": "b",
+        "text": "Approve deployment of Meridian's standard security tool suite across Aldergate's systems immediately, since using Meridian's own established technology is the most direct way to bring the acquired systems under the program.",
+        "correct": false,
+        "rationale": "This treats deploying a familiar technology stack as if it were equivalent to having a coordinated program. A tool suite installed without first understanding what the specific integration objectives require can leave systems technically instrumented but still uncoordinated with the program's actual priorities.",
+        "repair_target": "repair.technical-vs-management-error"
+      },
+      {
+        "key": "c",
+        "text": "Postpone any program action on Aldergate's systems until Aldergate's own IT staff independently produce a complete written security policy covering their environment.",
+        "correct": false,
+        "rationale": "Waiting indefinitely for another party to produce documentation is not a program decision - it defers the security manager's own responsibility to determine what the approved integration objectives require, and leaves the acquired systems unaddressed in the meantime.",
+        "repair_target": "repair.decision-error"
+      },
+      {
+        "key": "d",
+        "text": "Instruct Aldergate's staff to continue operating under their existing local security practices unchanged until the twelve-month integration deadline approaches.",
+        "correct": false,
+        "rationale": "This treats the acquired organization's existing informal practices as an acceptable placeholder rather than something that needs to be brought into the program now. It does not connect Aldergate's current state to what the approved integration objectives actually require during the twelve-month window, not just at its end.",
+        "repair_target": "repair.business-context-error"
+      }
+    ],
+    "explanation": "A security program exists to turn approved business objectives into coordinated, prioritized execution - not to deploy familiar technology first and figure out the coordination later. Before any tool is selected, the security manager must determine what the approved integration objectives actually require the program to accomplish.",
+    "recognition_clue": "A stem describing a security manager (or team) reaching directly for a technology deployment before establishing what the approved business objective actually requires is signaling a technology-first trap.",
+    "memory_rule": "The program turns approved strategy and business objectives into coordinated execution - it is not any single tool, control, or project.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "PHASE D3-U1 CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's genuinely program/strategy-level 3A1 questions (program development beginning from management's desired outcomes; BEST business-value justification for program investment; BEST response to reduced program funding). Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0003",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.program-foundations"],
+    "patterns": ["pattern.p01"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager", "role.board-senior-management"],
+    "primary_role": "role.security-manager",
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.business",
+    "family": "family.d3.program-foundations",
+    "variation_tags": ["business-setting:financial-services-board-funding", "distractor-temptation:single-benefit-justification", "decision-consequence:program-investment-approval"],
+    "prompt": "A mid-size financial services firm's chief information security officer is preparing to ask the board for a significantly expanded budget to build out the firm's information security program, which today consists mainly of a handful of unconnected tools purchased over several years. Several board members are skeptical of new security spending. What is the BEST justification the CISO can offer?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Investing in a coordinated security program will reduce business disruption, financial loss, and reputational damage - increasing overall business value, not just security posture.",
+        "correct": true,
+        "rationale": "A program justification that connects investment to business value - fewer disruptions, fewer losses, stronger reputation - speaks directly to what a skeptical board is actually weighing, rather than resting on a single, narrower benefit that a board member can easily dismiss."
+      },
+      {
+        "key": "b",
+        "text": "The program will directly reduce the firm's information technology operating costs.",
+        "correct": false,
+        "rationale": "Cost reduction alone is rarely the real motivation for a security program and is an easy claim for a skeptical board to challenge or dismiss outright, since a security program is not primarily an IT cost-cutting initiative.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "c",
+        "text": "The program is necessary because it will bring the firm into compliance with existing regulatory requirements.",
+        "correct": false,
+        "rationale": "Compliance is secondary to overall business value as a justification, and a board can reasonably respond that the firm is already expected to meet its existing regulatory obligations regardless of this specific program request.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "The program will protect the firm's business assets from compromise.",
+        "correct": false,
+        "rationale": "Protection of assets, stated by itself, is not a strong enough justification for a skeptical board - it invites the counterargument that assets are already being protected today, without connecting the request to the broader business value the added investment would create.",
+        "repair_target": "repair.business-context-error"
+      }
+    ],
+    "explanation": "The strongest program-investment justification connects the program to overall business value - reduced disruption, reduced loss, stronger reputation - not to a single narrower claim like cost reduction, compliance alone, or asset protection alone, each of which a skeptical audience can dismiss on its own terms.",
+    "recognition_clue": "A stem asking for the BEST justification to convince a skeptical business audience to fund a security program is testing whether the answer connects to overall business value, not a single narrower benefit.",
+    "memory_rule": "Resource and technology decisions should trace back to an approved business/security priority, not exist independently of one.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "PHASE D3-U1 CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's genuinely program/strategy-level 3A1 questions (program development beginning from management's desired outcomes; BEST business-value justification for program investment; BEST response to reduced program funding). Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0004",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.program-foundations"],
+    "patterns": ["pattern.p01"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager", "role.board-senior-management"],
+    "primary_role": "role.security-manager",
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.program-foundations",
+    "variation_tags": ["business-setting:logistics-company-budget-cut", "distractor-temptation:uniform-cut-or-passive-acceptance", "decision-consequence:constrained-resource-allocation"],
+    "prompt": "A regional logistics company's information security budget for the coming year is unexpectedly cut by 20%, as part of a broader company-wide cost reduction. The information security manager must decide how to respond. What is the BEST approach?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Reprioritize program activities and resources toward the highest business-risk areas, including reducing cost through options like outsourcing or automating lower-risk activities, rather than reducing every activity by the same amount.",
+        "correct": true,
+        "rationale": "Resources should support the program's actual priorities. Reprioritizing toward the highest business-risk areas, and finding efficiency in lower-risk activities, keeps the program aligned with what matters most even under a real funding constraint."
+      },
+      {
+        "key": "b",
+        "text": "Reduce monitoring and compliance-enforcement activities proportionally across every area of the program, so that every activity absorbs an equal share of the budget cut.",
+        "correct": false,
+        "rationale": "An equal, across-the-board reduction ignores that some program activities matter more to the business than others. Treating every activity as equally important to cut is itself a failure to prioritize by actual business risk.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "c",
+        "text": "Ask senior management to formally accept the increased risk created by leaving all current program activities unchanged despite the funding cut.",
+        "correct": false,
+        "rationale": "This defers a decision that is the security manager's own responsibility to make first. Before asking management to simply accept more risk, the manager should determine whether the same funding level, reprioritized, can still cover the highest-risk areas.",
+        "repair_target": "repair.decision-error"
+      },
+      {
+        "key": "d",
+        "text": "Eliminate the program's lowest-visibility security services entirely, since they are the easiest to remove without immediately obvious business impact.",
+        "correct": false,
+        "rationale": "Choosing what to cut based on visibility or ease of removal, rather than the actual business risk each activity addresses, can remove exactly the wrong things - low visibility is not the same as low business importance.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "When program resources are constrained, the response should reprioritize toward the highest business-risk areas and look for efficiency (such as outsourcing or automating lower-risk work) rather than cutting uniformly, deferring the decision to management, or removing whatever is least visible.",
+    "recognition_clue": "A stem describing reduced or constrained program funding and asking for the BEST response is testing resource-prioritization reasoning, not whether risk should simply be accepted or cuts spread evenly.",
+    "memory_rule": "Resource and technology decisions should trace back to an approved business/security priority, not exist independently of one.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "PHASE D3-U1 CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's genuinely program/strategy-level 3A1 questions (program development beginning from management's desired outcomes; BEST business-value justification for program investment; BEST response to reduced program funding). Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0005",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.asset-classification"],
+    "patterns": ["pattern.p02", "pattern.p03"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager", "role.data-owner", "role.custodian-it-operations"],
+    "primary_role": "role.data-owner",
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.asset-classification",
+    "variation_tags": ["asset-or-process-context:acquired-database", "distractor-temptation:technical-proximity-as-authority", "business-setting:acquisition-integration"],
+    "prompt": "Aldergate Fabrication's newly acquired quality-control database has not yet been classified under Meridian's information security program. The technician who has operated the system for over a decade offers to assign its sensitivity classification himself, since he understands the system better than anyone else at Meridian. What is the BEST course of action for Meridian's information security manager?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Have the business owner accountable for the quality-control database's business value determine its classification; the technician's operational knowledge can then inform how the resulting protection requirements are implemented.",
+        "correct": true,
+        "rationale": "Classification is a business-accountability decision, not a technical-familiarity one. The accountable business owner determines what the asset is worth to the business and what compromise would cost it; the technician's expertise is then valuable for implementing the protection that classification requires."
+      },
+      {
+        "key": "b",
+        "text": "Accept the technician's offer, since his years of hands-on experience with the system make him the most qualified person to set its classification.",
+        "correct": false,
+        "rationale": "Operating a system for a long time builds technical familiarity, not business accountability for what the asset is worth or what its compromise would cost - the exact distinction this decision depends on.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Leave the database's classification undetermined for now, since Aldergate's systems have functioned without formal classification until this point.",
+        "correct": false,
+        "rationale": "The system having run without formal classification in the past is not a reason to continue that way now that it is part of Meridian's program - this defers a decision that needs to be made, rather than making it.",
+        "repair_target": "repair.decision-error"
+      },
+      {
+        "key": "d",
+        "text": "Classify the database according to its replacement cost and the age of its underlying technology, since those are the most concrete, measurable facts available about it.",
+        "correct": false,
+        "rationale": "Replacement cost and technology age describe the system, not its business criticality or sensitivity - the actual basis classification is supposed to reflect.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "Classification decisions belong to the business owner accountable for an asset's business value and the impact of its compromise - not to whoever is most technically familiar with operating it. A long-tenured technician's operational knowledge is valuable for implementing protection, not for setting the classification itself.",
+    "recognition_clue": "A stem offering a technically knowledgeable custodian, administrator, or long-tenured operator as the person who should set an asset's classification is testing whether technical familiarity is mistaken for business accountability.",
+    "memory_rule": "The business owner classifies the asset; the custodian protects it according to that classification.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.role", "evidence.business-context"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "PHASE D3-U2 CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3A2 sub-area (classification by criticality/sensitivity, not cost; the information owner — not the custodian — determines classification; an incomplete asset catalog as the GREATEST challenge to risk-prioritization). Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0006",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.asset-classification"],
+    "patterns": [],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager", "role.data-owner"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.asset-classification",
+    "variation_tags": ["business-setting:hospital-network", "distractor-temptation:cost-as-classification-basis", "asset-or-process-context:compared-systems"],
+    "prompt": "A hospital network is classifying two of its information systems. Its patient-scheduling system was built in-house at low cost, while its diagnostic-imaging equipment-management system was a large capital purchase. An administrator argues that the imaging system should automatically receive the higher sensitivity classification because it cost significantly more. What is the BEST response?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Classification should reflect each system's business criticality and sensitivity - including the scheduling system's role in patient care and the data it holds - not which system cost more to acquire.",
+        "correct": true,
+        "rationale": "Acquisition cost describes what a system was purchased for, not its business criticality or sensitivity. A lower-cost system can still hold highly sensitive information or support a highly critical function - which is exactly what classification is supposed to capture."
+      },
+      {
+        "key": "b",
+        "text": "Agree that the imaging system should receive the higher classification, since its greater acquisition cost reflects its greater importance to the hospital.",
+        "correct": false,
+        "rationale": "This substitutes acquisition cost for business criticality and sensitivity. A system's price does not by itself establish how important it is to patient care or how sensitive the information it holds is.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Classify both systems at the same level, to avoid the disagreement between the administrator and the security team.",
+        "correct": false,
+        "rationale": "Assigning identical classifications to avoid a disagreement sidesteps the actual determination that needs to be made, rather than reasoning through each system's real business criticality and sensitivity.",
+        "repair_target": "repair.decision-error"
+      },
+      {
+        "key": "d",
+        "text": "Classify the scheduling system based on how frequently similar systems are targeted by attackers, since threat frequency is a more objective measure than cost.",
+        "correct": false,
+        "rationale": "Threat frequency describes exposure to a specific risk, not the classification question of how critical or sensitive the asset itself is to the business - a related but distinct input that classification is not based on.",
+        "repair_target": "repair.vocabulary-error"
+      }
+    ],
+    "explanation": "Classification reflects business criticality and sensitivity - what the asset means to the business and what its compromise would cost - not acquisition cost, avoidance of disagreement, or exposure to a specific threat.",
+    "recognition_clue": "A stem offering acquisition cost, price, or a similar concrete-but-superficial trait as the reason one asset should be classified higher than another is testing the classification-basis distinction directly.",
+    "memory_rule": "Classification follows business criticality and sensitivity, not cost, age, or a single threat.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "PHASE D3-U2 CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3A2 sub-area (classification by criticality/sensitivity, not cost; the information owner — not the custodian — determines classification; an incomplete asset catalog as the GREATEST challenge to risk-prioritization). Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0007",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.asset-classification"],
+    "patterns": [],
+    "qualifier": "qualifier.greatest",
+    "roles_mentioned": ["role.security-manager", "role.business-process-owner"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.asset-classification",
+    "variation_tags": ["business-setting:financial-services-firm", "distractor-temptation:tool-first-fix", "asset-or-process-context:fragmented-inventory"],
+    "prompt": "A financial services firm's risk-prioritization initiative has stalled because several business units maintain their own undocumented, informal lists of the applications and data stores they use, with no enterprise-wide record of what actually exists. What poses the GREATEST challenge to the firm's ability to prioritize its risk-management activities?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The incomplete, fragmented inventory of the firm's own information assets.",
+        "correct": true,
+        "rationale": "Prioritization depends on knowing what exists and how important it is. An incomplete or fragmented inventory means the firm cannot meaningfully prioritize risk-management activities around assets it does not yet fully know it has, regardless of how the prioritization itself is later done."
+      },
+      {
+        "key": "b",
+        "text": "The firm's risk-analysis methodology is not sophisticated enough to rank the risks it has already identified.",
+        "correct": false,
+        "rationale": "This assumes the bottleneck is in analyzing already-identified risks, when the firm's actual problem is that it has not yet identified what assets exist in the first place - a more sophisticated method cannot rank what has not been inventoried.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "The firm has not yet purchased a dedicated risk-management software platform to support the initiative.",
+        "correct": false,
+        "rationale": "A software platform would not resolve the underlying problem - an incomplete, fragmented asset inventory - and treats a technology purchase as the fix for what is actually an identification gap.",
+        "repair_target": "repair.technical-vs-management-error"
+      },
+      {
+        "key": "d",
+        "text": "Business units are not yet using a standardized risk-scoring scale across the firm.",
+        "correct": false,
+        "rationale": "A standardized scoring scale matters once assets are known and can be compared, but it does not address the more fundamental problem described: the firm does not yet have a complete picture of what assets exist to score in the first place.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "An enterprise cannot meaningfully prioritize risk-management activities around assets it has not yet identified. A more sophisticated analysis method, a new tool, or a standardized scoring scale cannot substitute for a complete, accurate asset inventory.",
+    "recognition_clue": "A stem describing a stalled or ineffective risk-prioritization effort, where the real cause is an incomplete or fragmented asset inventory, is testing whether identification is recognized as the actual prerequisite - not analysis method, tooling, or scoring.",
+    "memory_rule": "Classification follows business criticality and sensitivity, not cost, age, or a single threat.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "PHASE D3-U2 CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3A2 sub-area (classification by criticality/sensitivity, not cost; the information owner — not the custodian — determines classification; an incomplete asset catalog as the GREATEST challenge to risk-prioritization). Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
   }
 ]
