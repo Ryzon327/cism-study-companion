@@ -8,12 +8,19 @@ interface CompletionScreenProps {
   summary?: CompletionSummaryFixture;
   domainPosition?: string;
   onDone?: () => void;
+  // Phase 10B-4: undefined means Optional Reinforcement has genuinely
+  // nothing eligible to offer right now (see reinforcement.ts's
+  // reinforcementEligibleCount) — the action is omitted entirely rather
+  // than shown disabled or shown anyway, so this screen never promises
+  // something that isn't truthfully available.
+  onReinforce?: () => void;
 }
 
 export function CompletionScreen({
   summary = defaultSummary,
   domainPosition = todayFocus.domainPosition,
-  onDone
+  onDone,
+  onReinforce
 }: CompletionScreenProps = {}): JSX.Element {
   return (
     <div class="screen completion-screen">
@@ -33,9 +40,11 @@ export function CompletionScreen({
 
       {domainPosition && <p class="completion-journey">{domainPosition}</p>}
 
-      <button type="button" class="completion-optional">
-        {summary.optionalLabel}
-      </button>
+      {onReinforce && (
+        <button type="button" class="completion-optional" onClick={onReinforce}>
+          {summary.optionalLabel}
+        </button>
+      )}
 
       <div class="completion-actions">
         <Button onClick={onDone}>Done</Button>

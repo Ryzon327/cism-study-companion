@@ -104,6 +104,13 @@ export interface RecallCheckFixture {
   prompt: string;
   options: AnswerOptionFixture[];
   reinforcement: string;
+  // Phase 10B-4: the underlying question's id, when the content source can
+  // supply one (the production source can; the Phase 5B prototype fixture
+  // cannot and omits it). Lets Optional Reinforcement draw a second,
+  // already-relevant family from the same Daily Study session — the recall
+  // question's own family — without Daily Study needing to expose any
+  // other lesson/family plumbing.
+  questionId?: string;
 }
 
 export interface RepairCheckFixture {

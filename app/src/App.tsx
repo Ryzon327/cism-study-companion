@@ -137,13 +137,19 @@ function renderScreen(
   onNavigate: (id: string) => void,
   contentSource: DailyStudyContentSource,
   exploreInitialConceptId: string | undefined,
-  onPracticeExploreConcept: (conceptId?: string) => void
+  onExploreConceptHandoff: (conceptId?: string) => void
 ): JSX.Element {
   switch (id) {
     case "home":
       return <HomeScreen onNavigate={onNavigate} contentSource={contentSource} />;
     case "daily-study-session":
-      return <DailyStudySession contentSource={contentSource} onDone={() => onNavigate("home")} />;
+      return (
+        <DailyStudySession
+          contentSource={contentSource}
+          onDone={() => onNavigate("home")}
+          onExploreConcept={(conceptId) => onExploreConceptHandoff(conceptId)}
+        />
+      );
     case "daily-study-learn":
       return <DailyStudyLearnScreen />;
     case "question-apply":
@@ -164,7 +170,7 @@ function renderScreen(
       return (
         <PracticeScreen
           onExit={() => onNavigate("home")}
-          onExploreConcept={(conceptId) => onPracticeExploreConcept(conceptId)}
+          onExploreConcept={(conceptId) => onExploreConceptHandoff(conceptId)}
         />
       );
     default:
@@ -190,7 +196,7 @@ export function App(): JSX.Element {
     setActiveId(PRODUCT_ENTRY_SCREEN[sectionId] ?? "home");
   }
 
-  function handlePracticeExploreConcept(conceptId?: string) {
+  function handleExploreConceptHandoff(conceptId?: string) {
     setExploreInitialConceptId(conceptId);
     setActiveId("explore");
   }
@@ -217,7 +223,7 @@ export function App(): JSX.Element {
         activeReviewLessonId={reviewLessonId}
         onSelectReviewLesson={handleSelectReviewLesson}
       >
-        {renderScreen(activeId, setActiveId, contentSource, exploreInitialConceptId, handlePracticeExploreConcept)}
+        {renderScreen(activeId, setActiveId, contentSource, exploreInitialConceptId, handleExploreConceptHandoff)}
       </AppShell>
     </ThemeProvider>
   );

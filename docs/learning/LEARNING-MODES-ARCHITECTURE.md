@@ -225,6 +225,21 @@ unless future evidence supports the actual experienced duration — the
 "5-minute" framing in the current dead button is exactly the kind of
 unearned specific promise to avoid repeating.
 
+**Built in Phase 10B-4**, two small refinements to the above: (1) sources
+from the specific Apply and Recall questions this exact session actually
+resolved (their own two families) rather than the lesson's full,
+potentially-multi-family recall pool — a deliberately narrower, fully
+deterministic scope requiring no new plumbing; the Apply question's family
+is prioritized first regardless of a database of possible repair targets,
+since a sibling of the just-taught concept is inherently the most relevant
+near-transfer regardless of which specific repair target fired. (2) The
+completion state is "Done" plus, only when a miss this round ties to a
+concept, a "Review: <concept> [Explore]" line reusing Explore's existing
+routing — a small, evidence-driven addition beyond "no summary beyond
+Done," matching the same missed-concept-review pattern Practice (Phase
+10B-3) already established. See `PHASE-10B4-GATE-RECORD.md` for the full
+implementation record.
+
 ## Practice vs. a future Mock Exam — explicit boundary — [APPROVED]
 
 Mock Exam is **not authorized for implementation** during the Phase 10B
