@@ -39,6 +39,13 @@ export interface DailyStudyContentSource {
   // not interpret it, only carries it forward — the same way it already
   // carries selectedKey forward.
   buildFeedback(question: QuestionFixture, selectedKey: AnswerOptionFixture["key"]): FeedbackFixture & { repairTargetId?: string };
-  getRepairCheck(repairTargetId?: string): RepairCheckFixture;
+  // Takes the full resolved feedback (not just the repair_target id) so a
+  // content source can ground repair content in the actual question/
+  // selected-option that triggered it (Phase 10B-1) — e.g. building a
+  // repair check that re-applies the missed concept to a different option
+  // from the same scenario, rather than a fixed generic drill. Content
+  // sources that have no such data (the Phase 5B prototype fixtures) may
+  // ignore the argument and return a fixed RepairCheckFixture as before.
+  getRepairCheck(feedback: FeedbackFixture & { repairTargetId?: string }): RepairCheckFixture;
   getCompletion(): { summary: CompletionSummaryFixture; domainPosition: string };
 }
