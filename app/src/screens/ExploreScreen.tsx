@@ -16,6 +16,11 @@ type ExplorePhase = "domains" | "concepts" | "concept" | "scenario";
 
 interface ExploreScreenProps {
   onExit: () => void;
+  // Phase 10B-3: lets Practice's summary hand off directly to a specific
+  // missed concept's review, without exposing Explore's internal phase
+  // state to callers. Optional — the normal "explore" nav entry omits it
+  // and still lands on the ordinary domain list unchanged.
+  initialConceptId?: string;
 }
 
 /**
@@ -34,10 +39,11 @@ interface ExploreScreenProps {
  * visible throughout, so the learner is never trapped and can always leave
  * or jump back to a different concept.
  */
-export function ExploreScreen({ onExit }: ExploreScreenProps): JSX.Element | null {
-  const [phase, setPhase] = useState<ExplorePhase>("domains");
-  const [domainId, setDomainId] = useState<string | null>(null);
-  const [conceptId, setConceptId] = useState<string | null>(null);
+export function ExploreScreen({ onExit, initialConceptId }: ExploreScreenProps): JSX.Element | null {
+  const initialConcept = initialConceptId ? getExploreConceptDetail(initialConceptId) : undefined;
+  const [phase, setPhase] = useState<ExplorePhase>(initialConcept ? "concept" : "domains");
+  const [domainId, setDomainId] = useState<string | null>(initialConcept?.domainId ?? null);
+  const [conceptId, setConceptId] = useState<string | null>(initialConcept ? initialConceptId! : null);
 
   if (phase === "domains") {
     const domains = listExploreDomains();

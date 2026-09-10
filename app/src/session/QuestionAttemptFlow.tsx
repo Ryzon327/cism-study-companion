@@ -12,7 +12,13 @@ export interface QuestionAttemptFlowProps {
   meta?: string;
   buildFeedback: (question: QuestionFixture, selectedKey: AnswerOptionFixture["key"]) => FeedbackFixture & { repairTargetId?: string };
   getRepairCheck: (feedback: FeedbackFixture & { repairTargetId?: string }) => RepairCheckFixture;
-  onComplete: () => void;
+  // Phase 10B-3: carries whether THIS attempt was ultimately correct, so a
+  // multi-question caller (Practice) can tally results without re-deriving
+  // correctness itself or wrapping buildFeedback. Existing callers
+  // (DailyStudySession, ExploreScreen) that only care "this attempt is
+  // over" remain valid unchanged — a callback expecting fewer parameters
+  // is assignable to one expecting more.
+  onComplete: (correct: boolean) => void;
 }
 
 /**
@@ -65,7 +71,7 @@ export function QuestionAttemptFlow({
       return (
         <FeedbackScreen
           feedback={feedback}
-          onContinue={() => (feedback.correct ? onComplete() : setPhase("repair"))}
+          onContinue={() => (feedback.correct ? onComplete(true) : setPhase("repair"))}
         />
       );
     }
@@ -78,7 +84,7 @@ export function QuestionAttemptFlow({
         <RepairScreen
           repairCheck={repairCheck}
           mistakeContext={feedback.whySelectedWasWeaker}
-          onContinue={onComplete}
+          onContinue={() => onComplete(false)}
         />
       );
     }

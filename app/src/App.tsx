@@ -12,6 +12,7 @@ import { CompletionScreen } from "./screens/CompletionScreen";
 import { PracticeExamScreen } from "./screens/PracticeExamScreen";
 import { ReviewCenterScreen } from "./screens/ReviewCenterScreen";
 import { ExploreScreen } from "./screens/ExploreScreen";
+import { PracticeScreen } from "./screens/PracticeScreen";
 import { DailyStudySession } from "./session/DailyStudySession";
 import type { DailyStudyContentSource } from "./session/contentSource";
 import { prototypeContentSource } from "./data/prototypeContentSource";
@@ -34,13 +35,15 @@ import { feedbackCorrect, feedbackIncorrect } from "./data/fixtures";
 const PRODUCT_NAV_ITEMS: ProductNavItem[] = [
   { id: "home", label: "Home" },
   { id: "daily-study", label: "Daily Study" },
-  { id: "explore", label: "Explore" }
+  { id: "explore", label: "Explore" },
+  { id: "practice", label: "Practice" }
 ];
 
 const PRODUCT_ENTRY_SCREEN: Record<string, string> = {
   home: "home",
   "daily-study": "daily-study-session",
-  explore: "explore"
+  explore: "explore",
+  practice: "practice"
 };
 
 // Phase 5B is a visual prototype: no routing library, per the Phase 5A
@@ -96,7 +99,15 @@ const SESSION_SCREENS = new Set([
   "feedback-correct",
   "feedback-incorrect",
   "daily-study-completion",
-  "practice-exam"
+  "practice-exam",
+  // Phase 10B-3: the whole bounded Practice experience (scope/count
+  // landing -> questions -> summary) recedes to a single Exit action, the
+  // same treatment Daily Study's own bounded session already gets — never
+  // trapping the learner (Exit always works), just matching the "focused,
+  // deliberate, bounded" feel a start-to-finish session calls for. Explore
+  // deliberately does NOT get this treatment (Phase 10B-2) since it's
+  // open-ended browsing, not a bounded session.
+  "practice"
 ]);
 
 // Deliberately just the flow name, not the specific phase/outcome — the
@@ -110,19 +121,23 @@ const SESSION_LABELS: Record<string, string> = {
   "feedback-correct": "Daily Study",
   "feedback-incorrect": "Daily Study",
   "daily-study-completion": "Daily Study",
-  "practice-exam": "Practice Exam"
+  "practice-exam": "Practice Exam",
+  practice: "Practice"
 };
 
 function sectionForScreen(id: string): string {
   if (id === "home") return "home";
   if (id === "practice-exam" || id === "review-center" || id === "explore") return "explore";
+  if (id === "practice") return "practice";
   return "daily-study";
 }
 
 function renderScreen(
   id: string,
   onNavigate: (id: string) => void,
-  contentSource: DailyStudyContentSource
+  contentSource: DailyStudyContentSource,
+  exploreInitialConceptId: string | undefined,
+  onPracticeExploreConcept: (conceptId?: string) => void
 ): JSX.Element {
   switch (id) {
     case "home":
@@ -144,7 +159,14 @@ function renderScreen(
     case "review-center":
       return <ReviewCenterScreen onReturnToExam={() => onNavigate("practice-exam")} />;
     case "explore":
-      return <ExploreScreen onExit={() => onNavigate("home")} />;
+      return <ExploreScreen onExit={() => onNavigate("home")} initialConceptId={exploreInitialConceptId} />;
+    case "practice":
+      return (
+        <PracticeScreen
+          onExit={() => onNavigate("home")}
+          onExploreConcept={(conceptId) => onPracticeExploreConcept(conceptId)}
+        />
+      );
     default:
       return <HomeScreen onNavigate={onNavigate} contentSource={contentSource} />;
   }
@@ -154,12 +176,23 @@ export function App(): JSX.Element {
   const [activeId, setActiveId] = useState("home");
   const [contentSourceMode, setContentSourceMode] = useState<ContentSourceMode>("prototype");
   const [reviewLessonId, setReviewLessonId] = useState(getTodaysLessonIdForReview());
+  // Phase 10B-3: set only by Practice's summary "Explore" handoff, never by
+  // normal product navigation — handleSelectProduct below always clears it,
+  // so clicking the real "Explore" nav item never inherits a stale concept
+  // from an earlier Practice session.
+  const [exploreInitialConceptId, setExploreInitialConceptId] = useState<string | undefined>(undefined);
 
   const mode = SESSION_SCREENS.has(activeId) ? "session" : "full";
   const contentSource = contentSourceMode === "production" ? productionContentSource : prototypeContentSource;
 
   function handleSelectProduct(sectionId: string) {
+    setExploreInitialConceptId(undefined);
     setActiveId(PRODUCT_ENTRY_SCREEN[sectionId] ?? "home");
+  }
+
+  function handlePracticeExploreConcept(conceptId?: string) {
+    setExploreInitialConceptId(conceptId);
+    setActiveId("explore");
   }
 
   function handleSelectReviewLesson(lessonId: string) {
@@ -184,7 +217,7 @@ export function App(): JSX.Element {
         activeReviewLessonId={reviewLessonId}
         onSelectReviewLesson={handleSelectReviewLesson}
       >
-        {renderScreen(activeId, setActiveId, contentSource)}
+        {renderScreen(activeId, setActiveId, contentSource, exploreInitialConceptId, handlePracticeExploreConcept)}
       </AppShell>
     </ThemeProvider>
   );

@@ -14,10 +14,10 @@ interface ProductNavProps {
 }
 
 /**
- * The learner's actual navigation — three destinations, matching what the
- * real application will offer. Deliberately separate from
- * PrototypeSwitcher, which exposes the Visual Prototype Gate's internal
- * states for QA and must never be mistaken for product navigation.
+ * The learner's actual navigation — the real destinations the application
+ * offers. Deliberately separate from PrototypeSwitcher, which exposes the
+ * Visual Prototype Gate's internal states for QA and must never be
+ * mistaken for product navigation.
  */
 export function ProductNav({ items, activeId, onSelect, className }: ProductNavProps): JSX.Element {
   return (

@@ -189,6 +189,19 @@ scoring beyond the plain summary, no streaks, no gamification, no
 dashboards, no configuration clutter. This is explicitly **not** an exam
 simulator (see the Practice-vs-Mock-Exam boundary below).
 
+**Built in Phase 10B-3** with two small, evidence-driven refinements to
+the recommendation above, both **[APPROVED — Architect Decision]** per
+that phase's own explicit instructions: (1) scope is "All available
+material" or one domain — the same all-authored-active-content rule
+approved for Explore (Phase 10B-2), not "taught so far," for the identical
+reason that rule was already reconciled (see `PHASE-10B2-GATE-RECORD.md`);
+"current unit's family" was judged too granular for MVP and was not built.
+(2) The summary's concept list is scoped to concepts a miss actually
+produced ("Review: <missed concepts>"), not literally "every concept
+encountered" regardless of correctness — a more focused, and more
+honestly actionable, reading of "needs review." See
+`PHASE-10B3-GATE-RECORD.md` for the full implementation record.
+
 ### Optional Reinforcement
 
 ```
