@@ -358,7 +358,8 @@ export const productionContentSource: DailyStudyContentSource = {
       domainLabel: requireDisplayName(registry.domains, recallQuestion.domain),
       prompt: recallQuestion.prompt,
       options: orderedOptions.map((o) => ({ key: o.key, text: o.text, correct: o.correct, rationale: o.rationale })),
-      reinforcement: correctOption?.rationale ?? recallQuestion.explanation
+      reinforcement: correctOption?.rationale ?? recallQuestion.explanation,
+      questionId: recallQuestion.id
     };
   },
 
@@ -411,7 +412,10 @@ export const productionContentSource: DailyStudyContentSource = {
       summary: {
         headline: "Today's study is complete.",
         detail: "Your next session will continue building on today's reasoning and bring it back through recall.",
-        optionalLabel: "Optional 5-minute reinforcement",
+        // Phase 10B-4: no promised duration — see PHASE-10B4-GATE-RECORD.md's
+        // no-fake-timer policy. CompletionScreen only shows this label when
+        // real reinforcement content is actually available.
+        optionalLabel: "A quick reinforcement",
         coveredItems: [
           recalledFamily ? `Recalled: ${recalledFamily.teaching_objective}` : "",
           `Learned: ${lesson.memory_rules[0] ?? lesson.objective}`,
