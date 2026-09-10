@@ -55,7 +55,10 @@ export interface ExploreConceptDetail {
 // A future domain with no trailing digit and exam_domain: true sorts last,
 // which only matters once such a domain is both authored AND has concepts,
 // at which point this can be revisited.
-function domainSortKey(domain: { id: string; exam_domain?: boolean }): number {
+// Exported for reuse by practice.ts (Phase 10B-3), which needs the same
+// Foundation-first-then-numbered-exam-domains ordering for its own scope
+// list — one ordering rule, not a second copy of it.
+export function domainSortKey(domain: { id: string; exam_domain?: boolean }): number {
   if (domain.exam_domain === false) return -1;
   const match = domain.id.match(/(\d+)$/);
   return match ? Number(match[1]) : Number.MAX_SAFE_INTEGER;
