@@ -362,15 +362,23 @@ test("No prerequisite cycle exists among D2-U9/D2-U10 and their ancestors", () =
   assert.equal(cycles.length, 0, cycles.join("\n"));
 });
 
-test("No Domain 3 (or later) entity or leakage exists anywhere in production content", () => {
+// Originally "No Domain 3 (or later) entity or leakage exists anywhere in
+// production content" — that boundary is superseded now that Domain 3 has
+// legitimately begun (D3-U1/U2, per docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md
+// and tests/content-production/domain3-u1-u2.test.mjs), exactly as
+// domain2-u1-u2.test.mjs's own "no Domain 2 unit beyond U1/U2" guard was
+// superseded once Phase 9B-2 legitimately added D2-U3/U4. The current
+// batch boundary (no Domain 4 yet, and no Domain 3 unit beyond U1/U2) is
+// asserted here and in domain3-u1-u2.test.mjs respectively.
+test("No Domain 4 (or later) entity or leakage exists anywhere in production content", () => {
   const laterDomainIds = [...data.concepts, ...data.lessons, ...data.families, ...data.questions]
     .map((e) => e.id)
-    .filter((id) => /\.d[3-9]\./.test(id) || /^domain\.d[3-9]$/.test(id));
-  assert.equal(laterDomainIds.length, 0, `no Domain 3+ entity may exist yet: ${laterDomainIds.join(", ")}`);
+    .filter((id) => /\.d[4-9]\./.test(id) || /^domain\.d[4-9]$/.test(id));
+  assert.equal(laterDomainIds.length, 0, `no Domain 4+ entity may exist yet: ${laterDomainIds.join(", ")}`);
 
   const questionDomains = new Set(data.questions.map((q) => q.domain));
   for (const d of questionDomains) {
-    assert.ok(["domain.foundation", "domain.d1", "domain.d2"].includes(d), `unexpected question domain present: ${d}`);
+    assert.ok(["domain.foundation", "domain.d1", "domain.d2", "domain.d3"].includes(d), `unexpected question domain present: ${d}`);
   }
 });
 

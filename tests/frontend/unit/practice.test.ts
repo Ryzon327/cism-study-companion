@@ -35,9 +35,14 @@ describe("Practice — scope discovery is generic (no D1/D2 hardcoding)", () => 
     expect(new Set(domainIds)).toEqual(expectedDomainIds);
   });
 
-  it("does not currently include Domain 3/4 (not yet authored) — the boundary is data-driven, not an allowlist", () => {
+  it("now includes Domain 3 (D3-U1/U2 authored) but not yet Domain 4 — the boundary is data-driven, not an allowlist", () => {
+    // Originally asserted neither D3 nor D4 was present. D3-U1/U2 have since
+    // been authored (see docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md
+    // and tests/content-production/domain3-u1-u2.test.mjs) with zero changes
+    // to practice.ts itself — Domain 3 simply appeared here automatically,
+    // which is the actual proof this boundary is data-driven.
     const scopes = listPracticeScopes();
-    expect(scopes.some((s) => s.id === "domain.d3")).toBe(false);
+    expect(scopes.some((s) => s.id === "domain.d3")).toBe(true);
     expect(scopes.some((s) => s.id === "domain.d4")).toBe(false);
   });
 

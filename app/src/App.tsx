@@ -94,7 +94,9 @@ const REVIEW_LESSON_ITEMS: PrototypeStateItem[] = [
   { id: "lesson.d2.residual-risk-acceptability", label: "D2-U7 — Residual Risk & Acceptability" },
   { id: "lesson.d2.risk-control-ownership", label: "D2-U8 — Risk Owner vs. Control Owner" },
   { id: "lesson.d2.risk-monitoring-reporting", label: "D2-U9 — Risk Monitoring, Reassessment & Reporting" },
-  { id: "lesson.d2.risk-management-embedding-synthesis", label: "D2-U10 — Embedding Risk Management & Domain 2 Synthesis" }
+  { id: "lesson.d2.risk-management-embedding-synthesis", label: "D2-U10 — Embedding Risk Management & Domain 2 Synthesis" },
+  { id: "lesson.d3.program-foundations", label: "D3-U1 — Program Foundations (Strategy to Program)" },
+  { id: "lesson.d3.asset-classification", label: "D3-U2 — Asset Identification & Classification" }
 ];
 
 const SESSION_SCREENS = new Set([
