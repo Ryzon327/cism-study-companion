@@ -119,14 +119,31 @@ learner-facing reading checklist that the eight steps already support.
 Approved reasoning model for that future work:
 
 1. What is the question actually asking me to decide?
-2. Who am I in this scenario? (Board, management, information security
+2. What perspective/lens is being tested? (e.g., Governance vs.
+   Management, Risk Owner vs. Control Owner, strategic vs. operational,
+   business vs. technical — named explicitly, not left implicit.)
+3. Who am I in this scenario? (Board, management, information security
    manager, risk owner, control owner, or other relevant roles.)
-3. What VERB matters? (recommend, approve, implement, validate, monitor,
+4. What VERB matters? (recommend, approve, implement, validate, monitor,
    assess.)
-4. Where am I in the lifecycle? — Ask: "What has already happened?"
-5. What does the qualifier change? (FIRST, NEXT, BEST, MOST, PRIMARY.)
-6. Which answer fits the CISM management/governance perspective, rather
+5. Where am I in the lifecycle? — Ask: "What has already happened?"
+6. What does the qualifier change? (FIRST, NEXT, BEST, MOST, PRIMARY.)
+7. Which answer fits the CISM management/governance perspective, rather
    than simply being the most technical or immediately actionable answer?
+
+**[CANDIDATE — added Phase 10B-1]** Step 2 (perspective/lens) was added
+after a Founder Human Experience finding during Phase 10B-1's repair-check
+redesign: naming the specific reasoning lens being tested (not just "who
+am I") measurably clarified a repair interaction that had otherwise become
+a meta-question answerable without understanding the concept. Phase
+10B-1's production Repair screens already surface a `Perspective: <concept
+pair>` line for `repair.knowledge-gap`/`repair.vocabulary-error`
+(`app/src/content/productionContentSource.ts`) — a first concrete,
+already-shipped instance of this exact habit, using already-existing
+`concept.display_name` data, not a new taxonomy. The future Foundation
+enhancement should teach this same habit explicitly rather than leave it
+implicit in step 3's role framing, and should reuse it, not re-derive it,
+once built.
 
 **Binding guardrail:** this must **not** become a collection of exam
 hacks such as "when you see FIRST, always choose X." Qualifiers are

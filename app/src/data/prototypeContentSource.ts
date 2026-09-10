@@ -20,6 +20,8 @@ export const prototypeContentSource: DailyStudyContentSource = {
   // `question` param is accepted for interface parity with the production
   // source but not needed here, since there is nothing to disambiguate.
   buildFeedback: (_question, selectedKey: AnswerOptionFixture["key"]) => buildFeedback(selectedKey),
-  getRepairCheck: () => repairCheck,
+  // Same interface-parity note as buildFeedback above: the fixed Phase 5B
+  // repair check doesn't vary by what triggered it.
+  getRepairCheck: (_feedback) => repairCheck,
   getCompletion: () => ({ summary: completionSummary, domainPosition: todayFocus.domainPosition })
 };

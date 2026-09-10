@@ -1,4 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
+import { TEST_BASE_URL, TEST_PORT } from "./tests/frontend/test-server";
 
 /**
  * Dedicated visual-regression config — the full 7-screen x 2-viewport x
@@ -12,6 +13,9 @@ import { defineConfig, devices } from "@playwright/test";
  * config). Chromium only, deliberately: cross-browser rendering
  * differences would otherwise produce false-positive diffs unrelated to
  * an actual design regression. See docs/design-system/TESTING-STRATEGY.md.
+ *
+ * Same dedicated-test-port + server-identity strategy as playwright.config.ts
+ * (Phase 10B-1 port-collision fix) — see test-server.ts / global-setup.ts.
  */
 export default defineConfig({
   testDir: "tests/frontend/visual",
@@ -21,13 +25,14 @@ export default defineConfig({
   // per-test actual/expected/diff PNGs Playwright already writes to
   // test-results/ on any failure need no extra reporter config.
   reporter: process.env.CI ? [["list"], ["html", { open: "never" }]] : [["list"]],
+  globalSetup: "./tests/frontend/global-setup.ts",
   use: {
-    baseURL: "http://localhost:5173"
+    baseURL: TEST_BASE_URL
   },
   projects: [{ name: "chromium-visual", use: { ...devices["Desktop Chrome"] } }],
   webServer: {
-    command: "npm run dev",
-    url: "http://localhost:5173",
+    command: `VITE_PORT=${TEST_PORT} npm run dev`,
+    url: TEST_BASE_URL,
     reuseExistingServer: !process.env.CI,
     timeout: 30_000
   }

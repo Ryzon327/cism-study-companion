@@ -62,7 +62,7 @@
     "stage_target": null,
     "decision_type": null,
     "teaching_objective": "Correctly classify a described activity as GOVERNANCE (direction, accountability, oversight, resource stewardship) or MANAGEMENT (execution within that direction), regardless of how technically detailed or significant the management activity sounds.",
-    "invariant_reasoning": "The correct answer is always the option that sets direction, accepts accountability, or exercises ongoing oversight at the enterprise level — never the option that merely executes, configures, assesses, or selects within a scope governance has already approved, no matter how effortful or important that execution sounds.",
+    "invariant_reasoning": "The correct answer is whichever option sets direction, accepts accountability, or exercises ongoing oversight at the enterprise level — not whichever option merely executes, configures, assesses, or selects within a scope governance has already approved, no matter how effortful or important that execution sounds.",
     "variation_strategy": ["business-setting", "wording-structure", "decision-consequence"],
     "difficulty_band": "introductory",
     "minimum_variant_count": 3,

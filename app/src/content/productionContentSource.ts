@@ -10,7 +10,7 @@
  * docs/data-model/REPETITION-AND-RECALL-MODEL.md.
  */
 import type { DailyStudyContentSource } from "../session/contentSource";
-import type { AnswerOptionFixture, JourneyStep, QuestionFixture, RepairCheckFixture } from "../types/content";
+import type { AnswerOptionFixture, FeedbackFixture, JourneyStep, QuestionFixture, RepairCheckFixture } from "../types/content";
 import { registry, production, requireDisplayName } from "./registry";
 import {
   resolveLesson,
@@ -20,6 +20,7 @@ import {
   recallFamilyIdsFor,
   anchorFamilyIdFor,
   selectFamilyVariant,
+  familyVariantsFor,
   requireProductionLesson,
   requireProductionQuestion
 } from "./resolve";
@@ -63,6 +64,18 @@ export function getTodaysLessonIdForReview(): string {
 // because it is presentation-adjacent repair *interaction* content, not
 // curriculum data with its own referential/provenance shape — see the
 // Phase 6B report's explicit rationale for this decision.
+//
+// PHASE 10B-1 repair-coverage audit (docs/learning/PHASE-10B1-GATE-RECORD.md):
+// of the 10 repair targets actually used across production content, this
+// map now carries dedicated content for 8. The remaining 2
+// (repair.knowledge-gap, repair.vocabulary-error) are deliberately NOT
+// given a fixed static entry here — both are used across many unrelated
+// concepts (governance vs. management, SLE/ALE arithmetic, policy-artifact
+// hierarchy, risk terminology, etc.), so one fixed drill would necessarily
+// be generic. Instead, getRepairCheck() below builds their repair content
+// dynamically from the CURRENT lesson's own concept.plain text — reusing
+// already-authored curriculum content instead of inventing a synthetic
+// quiz that guesses at an arbitrary concept's right/wrong contrast.
 const REPAIR_CONTENT: Record<string, RepairCheckFixture> = {
   "repair.authority-error": {
     prompt: "Which statement is accurate?",
@@ -79,6 +92,54 @@ const REPAIR_CONTENT: Record<string, RepairCheckFixture> = {
       { key: "b", text: "Internal Audit's role is independent assessment and reporting — not owning or deciding the risks it reviews.", correct: true, rationale: "" }
     ],
     confirmation: "That's the distinction to hold onto: independent assurance is a different role from decision authority."
+  },
+  "repair.business-context-error": {
+    prompt: "Which statement is accurate?",
+    options: [
+      { key: "a", text: "A technically sound or generally good security practice is the right answer as long as it doesn't conflict with policy.", correct: false, rationale: "" },
+      { key: "b", text: "The right answer has to fit the specific business objective, priority, or context the scenario actually describes — not just be generally sound practice.", correct: true, rationale: "" }
+    ],
+    confirmation: "Security exists to enable the business, not to maximize restriction - tie your answer back to the business context the stem actually gives you."
+  },
+  "repair.decision-error": {
+    prompt: "Which statement is accurate?",
+    options: [
+      { key: "a", text: "Waiting for more information, staying passive, or treating an unproven assumption as fact can stand in for the decision the scenario actually calls for.", correct: false, rationale: "" },
+      { key: "b", text: "A real decision requires acting on the evidence actually given - not deferring indefinitely, staying passive, or jumping to an unsupported conclusion.", correct: true, rationale: "" }
+    ],
+    confirmation: "Ask what decision the stem is actually calling for right now, based only on what it actually states."
+  },
+  "repair.lifecycle-error": {
+    prompt: "Which statement is accurate?",
+    options: [
+      { key: "a", text: "A generally correct action is still correct even if the scenario hasn't reached the stage where that action belongs yet.", correct: false, rationale: "" },
+      { key: "b", text: "A correct action performed at the wrong lifecycle stage is still the wrong answer - sequence matters as much as the action itself.", correct: true, rationale: "" }
+    ],
+    confirmation: "A correct action at the wrong stage is still the wrong answer - locate the current stage before picking the action."
+  },
+  "repair.qualifier-error": {
+    prompt: "Which statement is accurate?",
+    options: [
+      { key: "a", text: "Once you recognize a qualifier like FIRST, NEXT, BEST, MOST, or PRIMARY, the same type of answer is always correct for that qualifier.", correct: false, rationale: "" },
+      { key: "b", text: "Each qualifier changes what KIND of answer is being asked for - sequencing, ranking, or fit - and the correct answer still depends on what the stem says has already happened.", correct: true, rationale: "" }
+    ],
+    confirmation: "Identify what the qualifier is actually asking for, then check it against the stem's own stated facts - never treat a qualifier as a fixed shortcut to one answer."
+  },
+  "repair.sequence-error": {
+    prompt: "Which statement is accurate?",
+    options: [
+      { key: "a", text: "As long as the eventual action is the right one, the order it happens in doesn't change whether it's correct.", correct: false, rationale: "" },
+      { key: "b", text: "An otherwise-correct step taken out of its required order is still the wrong answer at this point in the scenario.", correct: true, rationale: "" }
+    ],
+    confirmation: "Check what has to happen first before this step is actually appropriate."
+  },
+  "repair.technical-vs-management-error": {
+    prompt: "Which statement is accurate?",
+    options: [
+      { key: "a", text: "The most technically detailed or complete answer is the right one for a management or governance-level question.", correct: false, rationale: "" },
+      { key: "b", text: "A management or governance-level question needs the answer that fits what that audience or role actually needs to decide, not the most technical option available.", correct: true, rationale: "" }
+    ],
+    confirmation: "'It exists' or 'it's detailed' answers a different question than 'it fits what this audience needs to decide.'"
   }
 };
 
@@ -90,6 +151,101 @@ const FALLBACK_REPAIR: RepairCheckFixture = {
   ],
   confirmation: "Carry that reasoning forward to the next scenario that looks like this one."
 };
+
+// repair.knowledge-gap and repair.vocabulary-error are used across dozens
+// of unrelated concepts (see PHASE-10B1-GATE-RECORD.md's audit) - rather
+// than one fixed drill, this builds a repair check that makes the learner
+// re-apply the missed distinction to a DIFFERENT concrete scenario, using
+// only already-authored question content - never a fabricated quiz.
+//
+// PHASE 10B-1 FOUNDER HUMAN-EXPERIENCE FINDINGS, in order (see
+// PHASE-10B1-GATE-RECORD.md's addenda):
+// 1. The first version asked a META question ("does this need a second
+//    look?") answerable without any concept understanding at all.
+// 2. The second version fixed that by re-presenting the SAME question's
+//    own correct option vs. an unselected wrong option - but reusing the
+//    SAME scenario meant the "Perspective:" line, read right after the
+//    mistake explanation, effectively telegraphed the answer (answer
+//    RECOGNITION, not reapplication - "obvious," per direct Founder
+//    feedback on the Governance-vs-Management case).
+//
+// This version performs genuine NEAR TRANSFER instead: it draws its two
+// options from a DIFFERENT variant in the SAME family (family.json's
+// minimum-3-variant floor guarantees at least one sibling always exists),
+// so the learner must classify a scenario they have not just seen
+// explained, using the same underlying distinction. Among the available
+// siblings, one whose own correct/wrong option text does not literally
+// contain the concept's own name-words or a canonical role's display name
+// is preferred (a generic, reusable anti-giveaway check against existing
+// registry vocabulary, not a new taxonomy) - e.g. it prefers an option
+// pair that reads as "approving objectives and budget" vs. "assigning
+// staff to projects" over one that reads as "the Board does X," so the
+// learner cannot pattern-match a role/seniority keyword instead of
+// reasoning about what the activity actually does. If every sibling still
+// contains such a term, the lowest-id sibling is used anyway (near
+// transfer to a different scenario, even an imperfect one, is still
+// strictly harder than re-showing the original scenario). The confirmation
+// remains the family's own already-authored `invariant_reasoning` - a
+// reasoning CRITERION ("the correct answer always sets direction/
+// accountability/oversight, never merely executes") rather than a keyword
+// or role shortcut; see PHASE-10B1-GATE-RECORD.md for why this existing,
+// curriculum-wide "always/never" phrasing was investigated and found to
+// describe a functional test, not an exam-hack shortcut like "Board is
+// always correct."
+function optionTextRevealsAnswerViaKeyword(text: string, concept: { display_name: string }): boolean {
+  const lower = text.toLowerCase();
+  const conceptWords = concept.display_name
+    .toLowerCase()
+    .split(/[^a-z]+/)
+    .filter((w) => w.length > 3 && w !== "versus");
+  if (conceptWords.some((w) => lower.includes(w))) return true;
+  for (const role of registry.roles.values()) {
+    const roleNames = (role.display_name as string).split("/").map((s) => s.trim().toLowerCase());
+    if (roleNames.some((name) => name.length > 2 && lower.includes(name))) return true;
+  }
+  return false;
+}
+
+function buildAppliedConceptRepair(feedback: FeedbackFixture): RepairCheckFixture | undefined {
+  const raw = requireProductionQuestion(feedback.question.id);
+  const concept = production.concepts.get(raw.concepts[0] ?? "");
+  if (!concept || !raw.family) return undefined;
+
+  const siblings = familyVariantsFor(raw.family)
+    .filter((q) => q.id !== raw.id)
+    .sort((a, b) => a.id.localeCompare(b.id));
+  if (siblings.length === 0) return undefined;
+
+  const siblingOptionPair = (sibling: (typeof siblings)[number]) => {
+    const correctOption = sibling.options.find((o) => o.correct);
+    const wrongOption = sibling.options.find((o) => !o.correct);
+    if (!correctOption || !wrongOption) return undefined;
+    return { correctOption, wrongOption };
+  };
+
+  const cleanSibling = siblings.find((sibling) => {
+    const pair = siblingOptionPair(sibling);
+    return (
+      pair &&
+      !optionTextRevealsAnswerViaKeyword(pair.correctOption.text, concept) &&
+      !optionTextRevealsAnswerViaKeyword(pair.wrongOption.text, concept)
+    );
+  });
+  const chosenSibling = cleanSibling ?? siblings[0]!;
+  const pair = siblingOptionPair(chosenSibling);
+  if (!pair) return undefined;
+
+  const family = production.families.get(raw.family);
+
+  return {
+    prompt: `Perspective: ${concept.display_name}. A different situation now - which of these fits?`,
+    options: [
+      { key: "a", text: pair.wrongOption.text, correct: false, rationale: "" },
+      { key: "b", text: pair.correctOption.text, correct: true, rationale: "" }
+    ],
+    confirmation: family?.invariant_reasoning ?? concept.plain
+  };
+}
 
 // Same six-step scaffold app/src/data/fixtures.ts's approved Phase 5B
 // Journey already uses (id/label unchanged) — only `state` differs here,
@@ -235,8 +391,13 @@ export const productionContentSource: DailyStudyContentSource = {
     return resolveFeedback(raw, question, selectedKey);
   },
 
-  getRepairCheck(repairTargetId?: string) {
+  getRepairCheck(feedback: FeedbackFixture & { repairTargetId?: string }) {
+    const repairTargetId = feedback.repairTargetId;
     if (!repairTargetId) return FALLBACK_REPAIR;
+    if (repairTargetId === "repair.knowledge-gap" || repairTargetId === "repair.vocabulary-error") {
+      const applied = buildAppliedConceptRepair(feedback);
+      if (applied) return applied;
+    }
     return REPAIR_CONTENT[repairTargetId] ?? FALLBACK_REPAIR;
   },
 

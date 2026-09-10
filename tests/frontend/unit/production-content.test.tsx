@@ -90,8 +90,12 @@ describe("production content resolver", () => {
   });
 
   it("the repair content source returns different micro-questions for different repair targets", () => {
-    const authorityRepair = productionContentSource.getRepairCheck("repair.authority-error");
-    const roleRepair = productionContentSource.getRepairCheck("repair.role-error");
+    const question = requireProductionQuestion("question.d1.0002");
+    const resolved = resolveQuestion(question);
+    const authorityFeedback = resolveFeedback(question, resolved, "b");
+    const roleFeedback = resolveFeedback(question, resolved, "c");
+    const authorityRepair = productionContentSource.getRepairCheck(authorityFeedback);
+    const roleRepair = productionContentSource.getRepairCheck(roleFeedback);
     expect(authorityRepair.prompt).not.toBe(undefined);
     expect(authorityRepair.confirmation).not.toBe(roleRepair.confirmation);
   });
@@ -346,7 +350,7 @@ describe("productionContentSource — invariant 32 (a production session can com
 
     const wrongFeedback = productionContentSource.buildFeedback(question, wrongKey);
     expect(wrongFeedback.correct).toBe(false);
-    expect(() => productionContentSource.getRepairCheck(wrongFeedback.repairTargetId)).not.toThrow();
+    expect(() => productionContentSource.getRepairCheck(wrongFeedback)).not.toThrow();
 
     const { summary, domainPosition } = productionContentSource.getCompletion();
     expect(summary.coveredItems.length).toBeGreaterThan(0);

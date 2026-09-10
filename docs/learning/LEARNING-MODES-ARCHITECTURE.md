@@ -288,14 +288,16 @@ Practice, and Reinforcement:
 - **`familyVariantsFor()` / `selectFamilyVariant()`** (`resolve.ts` / `selection.ts`) — already generic over any `familyId`; this is the exact-repeat, unseen-then-least-recently-seen policy the design docs already specify for Explore & Practice.
 - **`orderOptionsForDisplay()`** (`answerOrder.ts`) — already generic over any question id/exposure count.
 - **`resolveQuestion()` / `resolveFeedback()`** (`resolve.ts`) — already produce the exact fixtures the existing `Question`/`FeedbackPanel`/`RepairScreen` components consume, unmodified.
-- **`REPAIR_CONTENT` / `getRepairCheck()`** — the mechanism is reusable; the *content* is only 20% authored (see Decision 8 / Risks — to be audited per-target in 10B-1, not mechanically filled).
+- **`REPAIR_CONTENT` / `getRepairCheck()`** — the mechanism is reusable; the *content* gap identified here was resolved in Phase 10B-1 by per-target audit, not mechanical filling (see Decision 8 / Risks / `PHASE-10B1-GATE-RECORD.md`).
+- **`QuestionAttemptFlow`** (`app/src/session/QuestionAttemptFlow.tsx`, added Phase 10B-1) — the shared question→answer→feedback→repair primitive `DailyStudySession` now itself calls; the intended reuse point for Explore/Practice/Reinforcement once those phases are separately authorized.
 - **`exposureStore.ts`** — a single, already-global, module-scope, in-memory store keyed only by question id, with no session/mode partitioning. **[APPROVED] Share this one store across Daily Study, Explore, Practice, and Reinforcement** rather than inventing a second one — it already gives the desirable "don't immediately re-show something I just saw elsewhere" property for free, and matches the existing architecture's "one store, several readers" shape. This approval covers only the existing session-scoped in-memory architecture; it is not authorization for persistence. Not to be revisited unless later implementation evidence reveals a genuine defect.
 - **`CONFUSING-CONCEPTS.md`** — already an authored, ready-made concept list for Explore's picker and for Reinforcement's confusing-concept-pair follow-ups.
 
 **No new metadata is genuinely required** to build the MVP versions of
-all three modes. The one genuine content gap is **repair-content
-coverage** for 8 of 10 actually-used repair targets — to be resolved by
-audit (per Decision 8), not by mechanically authoring 8 new entries.
+all three modes. The repair-content coverage gap identified here (8 of 10
+actually-used repair targets) was resolved in Phase 10B-1 by per-target
+audit (per Decision 8), not by mechanically authoring 8 new entries — see
+`PHASE-10B1-GATE-RECORD.md` for the resulting classification.
 
 ## Persistence-boundary classification — [APPROVED]
 
@@ -478,12 +480,20 @@ Gate where noted.
 
 ## Risks / architectural concerns
 
-1. **Repair-content coverage gap (8 of 10 actually-used repair targets have
-   no dedicated content today)** — a pre-existing Daily Study gap, surfaced
-   fresh this phase, that will otherwise silently limit Practice's and
+1. **Repair-content coverage gap (8 of 10 actually-used repair targets had
+   no dedicated content when this was written)** — a pre-existing Daily
+   Study gap that would otherwise have silently limited Practice's and
    Reinforcement's feedback quality to generic text for most mistakes.
-   Addressed by audit (not mechanical authoring) in 10B-1, before
-   Practice/Reinforcement, not after.
+   **[RESOLVED in Phase 10B-1]** — see
+   [`PHASE-10B1-GATE-RECORD.md`](PHASE-10B1-GATE-RECORD.md): 6 of the 8
+   received dedicated static content; the remaining 2
+   (`repair.knowledge-gap`, `repair.vocabulary-error`) — used across dozens
+   of unrelated concepts — instead received a shared, lesson-grounded
+   treatment (dynamically built from the current lesson's own
+   `concept.plain`), rather than one fixed generic drill. The shared
+   `QuestionAttemptFlow` primitive (`app/src/session/QuestionAttemptFlow.tsx`)
+   also now exists, extracted from `DailyStudySession`'s own apply/feedback/
+   repair sequence, for Explore/Practice/Reinforcement to build on.
 2. **Naming collision risk**: "reinforcement" already means four different
    things in this codebase/docs (the canonical REINFORCE loop stage; the
    working `RecallScreen` explanatory text; the dormant
