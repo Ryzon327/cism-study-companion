@@ -676,5 +676,71 @@
     "version": 1,
     "source": "source.learner-supplied.domain-3-question-bank",
     "note": "DOMAIN 3 CURRICULUM ARCHITECTURE APPROVED / D3-U2 (Asset Identification & Classification) CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md and the Architect's D3-U1/U2 authoring directive. Prerequisite is lesson.d3.program-foundations (D3-U1), continuing the Domain 3 chain, which itself continues the full cumulative Foundation + Domain 1 + Domain 2 recall pool. Concept is deliberately its own concept.d3.asset-classification identity, distinct from the existing concept.d1.data-ownership - see the BUG-001 cross-domain identity safety note in DOMAIN-3-CURRICULUM-ARCHITECTURE.md §9. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d3.policy-governance",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.policy-governance"],
+    "patterns": ["pattern.p14"],
+    "prerequisites": ["lesson.d3.program-foundations"],
+    "objective": "Recognize that policies, standards, and procedures are binding organizational requirements while guidelines are discretionary recommendations, and reason from an artifact's actual governance effect - what it commits the organization to - rather than its title, tone, formatting, or issuing authority.",
+    "context": "A security program depends on artifacts that mean different things for governance: policies, standards, and procedures bind the organization to a requirement, while guidelines only recommend a practice business management may adapt within its own areas of control. This distinction is not about how formal, detailed, or official a document sounds - it is about what the document's own language actually commits the organization to. A statement using mandatory language ('must,' 'is required to') creates a binding requirement no matter how informally it is presented; a statement using recommendatory language ('should,' 'may consider') stays discretionary no matter how polished or serious it sounds. This is also why a procedure is worth formally documenting in the first place: an undocumented, binding process cannot be performed consistently and repeatably by everyone who has to carry it out, so its governance effect depends on being written down clearly, not just on being important.",
+    "cism_perspective": "CISM stems in this area often describe two documents side by side - one polished and officially titled, one informal or unusually named - and ask which one actually creates a binding requirement. The correct answer traces the artifact's own mandatory or recommendatory language, never its title, length, formatting, or how official it looks. A stem may also ask why a procedure should be formally documented; the correct answer connects documentation to consistent, repeatable execution, not to satisfying an audit or building metrics after the fact.",
+    "recognition_clues": [
+      "The stem offers a document's title, formatting, length, or seriousness of tone as the reason it is (or isn't) binding - that's a title/tone trap; the artifact's own mandatory or recommendatory language is what actually determines its governance effect.",
+      "The stem asks why a procedure or policy should be formally documented - that's a signal the correct answer is about consistent, repeatable execution, not audit satisfaction or metrics-building alone.",
+      "The stem describes an informally-named or unofficial-looking document containing 'must'/'required' language - that's a signal it is still binding, regardless of its presentation."
+    ],
+    "scenario": "While reviewing Aldergate Fabrication's inherited documentation, Meridian's information security manager finds a polished, professionally formatted document titled 'Information Security Policy' that repeatedly uses phrases like 'departments should consider' and 'employees are encouraged to.' A separate, plainly formatted one-page memo titled 'Access Request Notes' states that 'all access requests must be approved in writing by the department manager before provisioning.' The manager recognizes that Meridian's actual binding requirement for access approval lives in the plain memo, not the polished policy document - the memo's 'must be approved' language creates an obligation the policy document's 'should consider' language never does, regardless of which one looks more official.",
+    "traps": [
+      "Assuming a document is binding because of its official title, formal presentation, or length - or discretionary because it looks informal or unofficial.",
+      "Treating every inherited or newly received document as binding by default, rather than reasoning from its own mandatory or recommendatory language.",
+      "Assuming formally documenting a procedure exists primarily to satisfy an audit or build management metrics, rather than to make its execution consistent and repeatable.",
+      "Assuming a firmly-worded or highly detailed document must be binding, when its language is still only recommendatory ('should,' not 'must')."
+    ],
+    "memory_rules": [
+      "An artifact's governance effect follows its own binding or recommendatory language, not its title, tone, or formatting.",
+      "Guidelines recommend; policies, standards, and procedures bind - and a procedure is documented so its execution stays consistent and repeatable, not merely to satisfy an audit."
+    ],
+    "retrieval_refs": ["question.d3.0008"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "DOMAIN 3 U3/U4 AUTHORING BATCH CANDIDATE (D3-U3, Program-Level Policy Governance) — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md and the Architect's D3-U3/U4 authoring directive. Prerequisite is lesson.d3.program-foundations (D3-U1) only - not D3-U2 - per the approved architecture's non-adjacent, cross-cutting dependency shape (policy governance touches every later unit, not one lifecycle stage). This lesson's own retrieval question (below) does not reteach Domain 1's policy/standard/procedure/guideline definitions; D3-U1's prerequisite chain already transitively reaches lesson.d1.governance-effectiveness (D1-U7), whose own retrieval_refs include family.d1.policy-artifact-hierarchy - so this lesson's cumulative recall pool already contains that family automatically, with no new prerequisite edge required. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d3.control-design-selection",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.control-design-selection"],
+    "patterns": ["pattern.p06", "pattern.p08"],
+    "prerequisites": ["lesson.d3.policy-governance", "lesson.d3.asset-classification"],
+    "objective": "Classify and select information security controls (preventive, detective, corrective, compensating) by the outcome they are intended to produce in the stated scenario - not by technology name, vendor category, or sophistication - and recognize that control design/selection is a risk-driven decision tracing to the actual risk and the enterprise's risk appetite, building on the asset classification and policy-governance context already established.",
+    "context": "Once assets are classified and mandatory policy requirements are established, the program must design and select the specific controls that satisfy them. A control's classification - preventive, detective, corrective, or compensating - follows its purpose in the specific scenario: a preventive control stops an event before it happens; a detective control identifies that one has happened; a corrective control reduces or recovers from the impact after it has happened; a compensating control provides an alternative safeguard when the control a policy or standard actually requires cannot be applied, chosen only after assessing the risk that gap creates. None of these are determined by a control's technology, vendor, or how advanced it sounds - the same technology can serve different purposes in different scenarios, and the correct classification always follows what the control is actually there to accomplish here. Selecting which control to design or deploy is itself a risk-driven decision, not a preference for what is newest or most familiar: control objectives should trace to the actual risk being addressed and the level of risk the enterprise has said it is willing to accept - the same risk-driven-prioritization reasoning already established for treatment decisions.",
+    "cism_perspective": "CISM stems in this area often name a specific technology or measure and ask what its purpose is, or what category it belongs to - the correct answer reasons from what the control accomplishes in the stated scenario, not from the technology's name or reputation. A stem may also offer a technically impressive, newer, or checklist-driven option as if it were automatically the right choice; the correct answer instead asks what specific risk is being addressed, at a level consistent with the enterprise's risk appetite - the same reasoning already used for prioritizing risk-treatment decisions. A stem may also describe a required control that cannot be applied as specified; the correct answer assesses the resulting risk and identifies a compensating control, rather than skipping the requirement or halting progress.",
+    "recognition_clues": [
+      "The stem asks for a control's purpose, category, or classification, and offers a technology name or label as if it settled the question - that's a classify-by-label trap; reason from what the control is actually there to accomplish here instead.",
+      "The stem offers a newer, more expensive, checklist-driven, or more sophisticated-sounding option as if it were automatically the right choice - that's a technology-impressiveness or checklist-volume trap; ask what specific risk this option addresses.",
+      "The stem describes a required control that cannot be applied as specified, and asks what to do - that's a compensating-control signal: assess the resulting risk and identify an alternative safeguard, rather than skip the requirement or block progress entirely."
+    ],
+    "scenario": "Meridian is now selecting controls for a newly classified, highly sensitive engineering-drawings repository at the Aldergate plant. A vendor pitches an advanced, heavily-marketed monitoring platform, and Aldergate's engineering director favors it simply because it is the most sophisticated option demonstrated. Meridian's information security manager instead starts from the actual risk the repository's classification identifies - unauthorized access to proprietary designs - and the specific requirement Meridian's policy already establishes for repositories at that classification level, then asks what a candidate control is actually intended to accomplish against that risk, rather than how advanced it sounds. When the plant's legacy file server turns out to be technically incapable of enforcing the access control Meridian's standard requires, the manager first assesses the resulting risk and identifies a compensating safeguard, rather than either ignoring the gap or halting the integration entirely.",
+    "traps": [
+      "Classifying or selecting a control by its technology, vendor, or label instead of the outcome it is actually intended to produce in this scenario.",
+      "Choosing a control because it is newer, more expensive, or more technically impressive, rather than because it addresses the actual risk at a level consistent with the enterprise's risk appetite.",
+      "Treating an inability to apply a required control as a reason to skip the requirement entirely, or to halt progress, rather than assessing the risk and identifying a compensating control.",
+      "Assuming compensating controls are a free substitute chosen for convenience, rather than a risk-assessed alternative used only when the required control genuinely cannot be applied."
+    ],
+    "memory_rules": [
+      "A control's classification follows its purpose in this scenario, not its technology, label, or sophistication.",
+      "Control design and selection is a risk-driven decision - it traces to the actual risk and the enterprise's risk appetite, not to what is newest, most familiar, or most impressive."
+    ],
+    "retrieval_refs": ["question.d3.0011"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "DOMAIN 3 U3/U4 AUTHORING BATCH CANDIDATE (D3-U4, Control Design & Selection) — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md and the Architect's D3-U3/U4 authoring directive. Prerequisites are lesson.d3.policy-governance (D3-U3, listed first so Recall resolves to its family) and lesson.d3.asset-classification (D3-U2) - both branches of the approved dependency shape converge here, per the explicit D3-U1 -> {{D3-U3, D3-U2}} -> D3-U4 structure. This is a dependency graph, not a lifecycle. Not yet human-reviewed or promoted."
   }
 ]

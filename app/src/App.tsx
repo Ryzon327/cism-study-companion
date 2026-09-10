@@ -96,7 +96,9 @@ const REVIEW_LESSON_ITEMS: PrototypeStateItem[] = [
   { id: "lesson.d2.risk-monitoring-reporting", label: "D2-U9 — Risk Monitoring, Reassessment & Reporting" },
   { id: "lesson.d2.risk-management-embedding-synthesis", label: "D2-U10 — Embedding Risk Management & Domain 2 Synthesis" },
   { id: "lesson.d3.program-foundations", label: "D3-U1 — Program Foundations (Strategy to Program)" },
-  { id: "lesson.d3.asset-classification", label: "D3-U2 — Asset Identification & Classification" }
+  { id: "lesson.d3.asset-classification", label: "D3-U2 — Asset Identification & Classification" },
+  { id: "lesson.d3.policy-governance", label: "D3-U3 — Program-Level Policy Governance" },
+  { id: "lesson.d3.control-design-selection", label: "D3-U4 — Control Design & Selection" }
 ];
 
 const SESSION_SCREENS = new Set([
