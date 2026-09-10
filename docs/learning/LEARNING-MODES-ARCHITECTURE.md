@@ -527,6 +527,18 @@ Gate where noted.
   this" question, since it is contextual rather than a top-level
   destination the learner chooses among.)
 
+**[CLOSED — Phase 10B-1 through 10B-5]**: all five batches above are
+complete; see each phase's own `PHASE-10B{1,2,3,4,5}-GATE-RECORD.md`. One
+process note for the historical record: the per-batch "Founder Human
+Experience Gate required before closeout" language above predates this
+project's Evidence-First UAT model (adopted starting with 10B-2). In
+practice, each of 10B-1 through 10B-4 substituted a rendered-evidence
+Architect/ChatGPT review for a direct Founder session, and Founder UAT was
+explicitly waived each time on that basis — not skipped, and not silently
+reinterpreted; each phase's own gate record documents the waiver decision
+that applied to it. 10B-5 (this integration closeout) followed the same
+model.
+
 ## Risks / architectural concerns
 
 1. **Repair-content coverage gap (8 of 10 actually-used repair targets had

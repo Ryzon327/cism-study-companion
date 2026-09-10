@@ -19,19 +19,24 @@ import { prototypeContentSource } from "./data/prototypeContentSource";
 import { productionContentSource, setTodaysLessonIdForReview, getTodaysLessonIdForReview } from "./content/productionContentSource";
 import { feedbackCorrect, feedbackIncorrect } from "./data/fixtures";
 
-// The learner's real navigation: three destinations, matching the intended
-// final application. "Daily Study" enters the live, controlled Recall →
-// Learn → Apply → Feedback → Completion experience; "Explore" enters the
-// Phase 10B-2 Explore experience (choose a domain, then a concept, review
-// it, optionally attempt one tied scenario). Deliberately separate from
-// the Visual Prototype Gate states below, which exist for QA only.
+// The learner's real navigation: four destinations, matching the approved
+// MVP learning-mode layer (Phase 10B-1 through 10B-4). "Daily Study" enters
+// the live, controlled Recall → Learn → Apply → Feedback → Completion →
+// optional Reinforcement experience; "Explore" enters the Phase 10B-2
+// concept-driven experience; "Practice" enters the Phase 10B-3 bounded
+// deliberate-testing experience. Optional Reinforcement is deliberately
+// NOT a fifth item here — it is contextual, reachable only from Daily
+// Study's own Completion screen (see DailyStudySession.tsx), never a
+// destination a learner navigates to directly. All four are deliberately
+// separate from the Visual Prototype Gate states below, which exist for
+// QA only.
 //
-// Renamed from "Explore & Practice" (Phase 10B-2): Practice remains
-// unimplemented this phase, and this destination no longer opens the
-// Phase 5B Practice Exam prototype fixture at all — keeping "& Practice"
-// in the label would misdescribe what pressing it actually does. The
-// Practice Exam prototype screen itself is untouched and still reachable
-// via the QA switcher below.
+// "Explore" was renamed from "Explore & Practice" in Phase 10B-2, before
+// Practice was real, because the destination no longer opened the Phase
+// 5B Practice Exam prototype fixture at all. Practice itself became real
+// in Phase 10B-3 as its own destination below — the Phase 5B Practice Exam
+// prototype screen remains untouched and still reachable only via the QA
+// switcher, never as the real learner-facing Practice flow.
 const PRODUCT_NAV_ITEMS: ProductNavItem[] = [
   { id: "home", label: "Home" },
   { id: "daily-study", label: "Daily Study" },
