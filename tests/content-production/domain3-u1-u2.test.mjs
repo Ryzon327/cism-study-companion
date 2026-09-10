@@ -266,14 +266,14 @@ test("D3-U1/U2's own families still have exactly 3 active variants each", () => 
   assert.equal(questionsByFamily("family.d3.asset-classification").length, 3);
 });
 
-test("no Domain 3 unit beyond U1/U2 exists yet (batch boundary)", () => {
-  const d3Lessons = data.lessons.filter((l) => l.domain === "domain.d3").map((l) => l.id);
-  assert.deepEqual(
-    d3Lessons.sort(),
-    ["lesson.d3.asset-classification", "lesson.d3.program-foundations"],
-    "only D3-U1 and D3-U2 may exist in this batch - D3-U3 through D3-U10 are not yet authored"
-  );
-});
+// Originally "no Domain 3 unit beyond U1/U2 exists yet" — that boundary is
+// superseded now that D3-U3/U4 have legitimately been authored (see
+// domain3-u3-u4.test.mjs, which owns the current batch-boundary
+// assertion), exactly as domain2-u1-u2.test.mjs's own "no Domain 2 unit
+// beyond U1/U2" guard was superseded once Phase 9B-2 legitimately added
+// D2-U3/U4. This file's own U1/U2 entities remain asserted unchanged by
+// the "D3-U1/U2's own families still have exactly 3 active variants each"
+// test above.
 
 test("NEXT is not used anywhere in this Domain 3 batch (source-evidenced as essentially absent for Domain 3, per DOMAIN-3-CURRICULUM-ARCHITECTURE.md)", () => {
   const d3Questions = [...questionsByFamily("family.d3.program-foundations"), ...questionsByFamily("family.d3.asset-classification")];

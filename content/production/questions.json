@@ -3124,5 +3124,329 @@
     "version": 1,
     "source": "source.learner-supplied.domain-3-question-bank",
     "note": "PHASE D3-U2 CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3A2 sub-area (classification by criticality/sensitivity, not cost; the information owner — not the custodian — determines classification; an incomplete asset catalog as the GREATEST challenge to risk-prioritization). Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0008",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.policy-governance"],
+    "patterns": ["pattern.p14"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.policy-governance",
+    "variation_tags": ["business-setting:acquisition-integration", "distractor-temptation:title-and-formatting-as-authority", "wording-structure:contrasted-document-pair"],
+    "prompt": "While reviewing Aldergate Fabrication's inherited documentation, Meridian's information security manager finds a polished, professionally formatted document titled \"Information Security Policy\" that repeatedly uses phrases like \"departments should consider\" and \"employees are encouraged to.\" A separate, plainly formatted one-page memo titled \"Access Request Notes\" states that \"all access requests must be approved in writing by the department manager before provisioning.\" Which document is the BEST evidence of Meridian's actual binding requirement for access approval?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The one-page memo - its \"must be approved\" language creates a mandatory requirement, regardless of the document's title, length, or level of formatting.",
+        "correct": true,
+        "rationale": "Governance effect follows an artifact's own binding or recommendatory language, not its title or presentation. The memo's \"must be approved\" wording creates an actual obligation; the polished policy document's \"should consider\" wording does not."
+      },
+      {
+        "key": "b",
+        "text": "The \"Information Security Policy\" document - its official title and formal presentation indicate it carries the program's real authority.",
+        "correct": false,
+        "rationale": "This substitutes the document's title and formatting for its actual content. An officially titled, well-formatted document that only says departments \"should consider\" something is still recommendatory, not binding.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Both documents equally - within a security program, every piece of inherited documentation should be treated as mandatory until it is formally reviewed and superseded.",
+        "correct": false,
+        "rationale": "Treating all inherited documentation as uniformly mandatory ignores what each document's own language actually says. The two documents have different governance effects that can be determined directly from their wording, not merely from the fact that both were inherited.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "Neither document - a binding access-approval requirement must be established in a newly issued, Meridian-branded policy before it can be enforced.",
+        "correct": false,
+        "rationale": "This defers a determination that can already be made: the memo's own \"must be approved\" language already creates a binding requirement now, regardless of which organization's letterhead it carries.",
+        "repair_target": "repair.decision-error"
+      }
+    ],
+    "explanation": "An artifact's governance effect - binding or discretionary - follows its own mandatory or recommendatory language, not its title, formatting, length, or issuing letterhead. A plain, informally titled document can be the real binding requirement; a polished, officially titled one can be purely recommendatory.",
+    "recognition_clue": "A stem contrasting a polished, officially titled document against a plain or informally named one, and asking which actually creates a binding requirement, is testing whether governance effect is read from title/formatting or from the artifact's own language.",
+    "memory_rule": "An artifact's governance effect follows its own binding or recommendatory language, not its title, tone, or formatting.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.vocabulary", "evidence.business-context"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "PHASE D3-U3 CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3A4 sub-area (a statement using mandatory 'must' language belongs in a policy regardless of title/formatting; guidelines are discretionary recommendations while policies/standards/procedures cannot be; procedures are formally documented primarily so execution is repeatable/consistent, not primarily for audit or metrics). Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0009",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.policy-governance"],
+    "patterns": ["pattern.p14"],
+    "qualifier": "qualifier.most",
+    "roles_mentioned": ["role.security-manager"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.policy-governance",
+    "variation_tags": ["business-setting:professional-services-firm", "distractor-temptation:secondary-benefit-as-primary-reason", "wording-structure:inconsistent-informal-practice"],
+    "prompt": "A professional services firm's IT staff have been performing client-data-wipe steps from memory, with each technician handling the process slightly differently. The CISO decides these steps must be formally written up as a documented procedure. What is the MOST important reason for doing so?",
+    "options": [
+      {
+        "key": "a",
+        "text": "So the process is performed consistently and repeatably by everyone who executes it, rather than depending on which technician is doing it.",
+        "correct": true,
+        "rationale": "A procedure's value is that it makes a required process repeatable and consistent across whoever carries it out. Without formal documentation, execution varies person to person, which is exactly the problem described here."
+      },
+      {
+        "key": "b",
+        "text": "So the firm can demonstrate compliance to a specific regulator during its next audit.",
+        "correct": false,
+        "rationale": "Audit demonstration is a secondary benefit of documentation, not the primary reason a binding process needs to be written down - the firm should not be documenting its procedures merely to satisfy an audit.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "So the documentation can be used to build management metrics on how often the process is performed.",
+        "correct": false,
+        "rationale": "Supporting future metrics is a possible secondary use of documentation, but it is not why an inconsistently-performed, binding process needs to be formally written down in the first place.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "So the process aligns with the firm's overall business objectives.",
+        "correct": false,
+        "rationale": "Business alignment is a true, general concern for the firm, but it is not what formally documenting this specific, inconsistently-performed procedure actually addresses - consistency of execution is the direct problem being solved.",
+        "repair_target": "repair.business-context-error"
+      }
+    ],
+    "explanation": "A binding procedure is formally documented primarily so that its execution stays consistent and repeatable across everyone who performs it - not primarily to satisfy an audit, support metrics, or demonstrate business alignment, each of which is at most a secondary benefit.",
+    "recognition_clue": "A stem describing an inconsistently-performed process and asking why it should be formally documented is testing whether the answer connects documentation to consistent, repeatable execution rather than a secondary benefit like audit or metrics.",
+    "memory_rule": "Guidelines recommend; policies, standards, and procedures bind - and a procedure is documented so its execution stays consistent and repeatable, not merely to satisfy an audit.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "PHASE D3-U3 CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3A4 sub-area (a statement using mandatory 'must' language belongs in a policy regardless of title/formatting; guidelines are discretionary recommendations while policies/standards/procedures cannot be; procedures are formally documented primarily so execution is repeatable/consistent, not primarily for audit or metrics). Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0010",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.policy-governance"],
+    "patterns": ["pattern.p14"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager", "role.business-process-owner"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.policy-governance",
+    "variation_tags": ["business-setting:retail-vendor-program", "distractor-temptation:detail-and-tone-as-authority", "wording-structure:contrasted-document-pair"],
+    "prompt": "A retail chain's third-party risk team issues two documents to its vendors: a detailed \"Vendor Security Recommendations\" document that repeatedly states vendors \"should implement multi-factor authentication\" and \"should segment payment systems,\" and a separately issued \"Data Handling Standard\" that states \"all vendors must encrypt cardholder data in transit.\" A new compliance analyst assumes the Recommendations document is the vendors' real obligation because of its detailed, serious tone. What is the BEST correction to offer?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The Data Handling Standard is the actual binding requirement, because its \"must encrypt\" language creates a mandatory obligation; the Recommendations document's repeated \"should\" language keeps it discretionary regardless of its detail or tone.",
+        "correct": true,
+        "rationale": "Binding effect follows an artifact's own mandatory language, not how detailed or seriously it reads. The Standard's \"must\" language obligates vendors; the Recommendations document's \"should\" language, however extensive, remains recommendatory."
+      },
+      {
+        "key": "b",
+        "text": "The Recommendations document is binding because of how much detail and specificity it provides about expected vendor behavior.",
+        "correct": false,
+        "rationale": "Level of detail describes how thorough a document is, not whether it creates a binding obligation. A detailed document can still be entirely discretionary if its own language never requires compliance.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Both documents are binding, since the retail chain issued both as part of the same vendor security program.",
+        "correct": false,
+        "rationale": "Being issued by the same program does not make every document within it equally binding - the two documents here use different language, and their governance effect follows that language, not their common origin.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "Neither document matters until the vendor's own legal team reviews and signs off on it.",
+        "correct": false,
+        "rationale": "This defers a determination the compliance analyst can already make. The Standard's \"must encrypt\" language already creates an obligation now, independent of a separate legal review step.",
+        "repair_target": "repair.decision-error"
+      }
+    ],
+    "explanation": "A firmly-worded or highly detailed document is not automatically binding - discretionary language (\"should,\" \"may consider\") keeps an artifact recommendatory no matter how seriously or extensively it reads, while mandatory language (\"must,\" \"is required to\") binds even in a shorter or plainer document.",
+    "recognition_clue": "A stem contrasting a detailed, seriously-worded document against a shorter one, where the detailed document actually uses discretionary language and the shorter one uses mandatory language, is testing whether detail/tone is mistaken for binding effect.",
+    "memory_rule": "An artifact's governance effect follows its own binding or recommendatory language, not its title, tone, or formatting.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.vocabulary", "evidence.business-context"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "PHASE D3-U3 CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3A4 sub-area (a statement using mandatory 'must' language belongs in a policy regardless of title/formatting; guidelines are discretionary recommendations while policies/standards/procedures cannot be; procedures are formally documented primarily so execution is repeatable/consistent, not primarily for audit or metrics). Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0011",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.control-design-selection"],
+    "patterns": ["pattern.p06"],
+    "qualifier": "qualifier.primary",
+    "roles_mentioned": ["role.security-manager"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.control-design-selection",
+    "variation_tags": ["business-setting:acquisition-integration", "distractor-temptation:classify-by-label", "asset-or-process-context:post-incident-response"],
+    "prompt": "Following an incident in which a former Aldergate contractor's still-active account was used to access the newly classified engineering-drawings repository, Meridian's information security manager implements a documented process to restore the repository to its last verified-clean state and revoke any credentials used during the incident. What is the PRIMARY purpose of this new control?",
+    "options": [
+      {
+        "key": "a",
+        "text": "To reduce and recover from the impact of the compromise that already occurred.",
+        "correct": true,
+        "rationale": "Restoring the repository to a verified-clean state and revoking the credentials used in the incident are recovery actions - the control's purpose is to reduce and recover from an impact that has already happened, which is what makes it corrective."
+      },
+      {
+        "key": "b",
+        "text": "To prevent the former contractor's account from ever being used to access the repository again.",
+        "correct": false,
+        "rationale": "Revoking the specific credentials used is one part of the corrective response, not an independent preventive control designed to stop future events - the control described here is a response to an incident that already occurred, not a forward-looking barrier.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "To detect similar compromises the next time they occur.",
+        "correct": false,
+        "rationale": "Detection identifies that a compromise has happened; this control does not monitor for or identify incidents - it restores the repository and revokes credentials after the incident was already identified some other way.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "To ensure compliance with Meridian's access-management policy.",
+        "correct": false,
+        "rationale": "Compliance is ensured by controls like access restrictions, not by a restoration/revocation process performed after a compromise - this response's purpose is recovering from the impact, not enforcing a policy requirement going forward.",
+        "repair_target": "repair.vocabulary-error"
+      }
+    ],
+    "explanation": "A control's classification follows what it is actually intended to accomplish in this scenario. Restoring a repository and revoking compromised credentials after an incident reduces and recovers from impact that already occurred - the defining purpose of a corrective control - not preventing, detecting, or directly enforcing compliance going forward.",
+    "recognition_clue": "A stem describing a restoration/revocation process performed after an incident has already occurred, and asking for its purpose, is testing whether corrective (impact reduction/recovery) is distinguished from preventive, detective, or compliance framing.",
+    "memory_rule": "A control's classification follows its purpose in this scenario, not its technology, label, or sophistication.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "PHASE D3-U4 CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3B1 sub-area (a corrective control's purpose is to reduce/recover from impact, not to prevent or detect; preventive-control objectives should be developed PRIMARILY from risk aligned with enterprise risk appetite, not industry-checklist volume, monitoring-tool threat levels, or SLA uptime targets; when a required control cannot be applied, first assess risk and identify a compensating control rather than skip the requirement or halt progress). Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0012",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.control-design-selection"],
+    "patterns": ["pattern.p08"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager", "role.board-senior-management"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.control-design-selection",
+    "variation_tags": ["business-setting:logistics-company", "distractor-temptation:checklist-and-tooling-driven-selection", "decision-consequence:control-funding-priority"],
+    "prompt": "A logistics company's IT director wants to decide which of several newly available security controls to fund for its warehouse-management system, and proposes prioritizing whichever controls appear most frequently on a recent industry-standards checklist, regardless of the system's own risk profile. What is the BEST basis for deciding which controls to prioritize?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The level of risk the warehouse-management system actually presents, evaluated against the company's own risk appetite - not how often a control appears on a general industry checklist.",
+        "correct": true,
+        "rationale": "Control design and selection is a risk-driven decision. Objectives should trace to the actual risk this specific system presents and the level of risk the enterprise is willing to accept, not to how frequently a control appears on a general checklist unrelated to this system's own profile."
+      },
+      {
+        "key": "b",
+        "text": "The industry-standards checklist itself, since adopting widely-recognized controls demonstrates due diligence regardless of this system's specific risk profile.",
+        "correct": false,
+        "rationale": "Checklist frequency describes how common a control is across industry, not whether it addresses this specific system's actual risk - due-diligence appearance is not the same as a risk-driven selection.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "c",
+        "text": "Whichever controls the monitoring tools already installed on the network report the highest threat activity for.",
+        "correct": false,
+        "rationale": "Monitored threat activity is one input among several, not a comprehensive basis for selecting controls - it does not by itself establish the system's overall risk or what level of protection its risk appetite calls for.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "Whichever controls best support the uptime targets already committed to in the system's service level agreement.",
+        "correct": false,
+        "rationale": "Meeting an SLA's uptime targets is only one of several considerations relevant to control design, not the basis for prioritizing security controls - it does not connect to the system's actual risk.",
+        "repair_target": "repair.business-context-error"
+      }
+    ],
+    "explanation": "Control design and selection should trace to the actual risk a specific system presents and the enterprise's own risk appetite - not to a general industry checklist's frequency, a monitoring tool's reported activity, or an unrelated SLA target, each of which substitutes a proxy for the real risk-driven decision.",
+    "recognition_clue": "A stem offering a general industry checklist, monitoring-tool output, or an SLA target as the basis for prioritizing controls - instead of this system's own risk profile and the enterprise's risk appetite - is testing the same risk-driven-prioritization reasoning already established for treatment decisions.",
+    "memory_rule": "Control design and selection is a risk-driven decision - it traces to the actual risk and the enterprise's risk appetite, not to what is newest, most familiar, or most impressive.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "PHASE D3-U4 CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3B1 sub-area (a corrective control's purpose is to reduce/recover from impact, not to prevent or detect; preventive-control objectives should be developed PRIMARILY from risk aligned with enterprise risk appetite, not industry-checklist volume, monitoring-tool threat levels, or SLA uptime targets; when a required control cannot be applied, first assess risk and identify a compensating control rather than skip the requirement or halt progress). Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0013",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.control-design-selection"],
+    "patterns": ["pattern.p06"],
+    "qualifier": "qualifier.first",
+    "roles_mentioned": ["role.security-manager"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.control-design-selection",
+    "variation_tags": ["business-setting:financial-services-firm", "distractor-temptation:skip-or-halt-instead-of-compensate", "asset-or-process-context:legacy-system-gap"],
+    "prompt": "A financial services firm's identity-management standard requires all systems handling customer financial data to enforce automatic session timeout after 10 minutes of inactivity. A recently acquired subsidiary's legacy transaction-processing system cannot technically support automatic timeout without a costly, multi-month re-platforming effort. What should the security manager do FIRST?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Assess the risk created by the system's inability to meet the standard, and identify a compensating control that manages that risk in the meantime.",
+        "correct": true,
+        "rationale": "When a required control genuinely cannot be applied as specified, the correct first step is to assess the resulting risk and identify a compensating control - an alternative safeguard chosen based on that risk assessment, not a default skip or halt."
+      },
+      {
+        "key": "b",
+        "text": "Grant the subsidiary's system a permanent exception from the identity-management standard, since re-platforming is not immediately feasible.",
+        "correct": false,
+        "rationale": "A permanent, unconditional exception skips the requirement entirely rather than managing the risk it creates - a compensating control, assessed against the actual risk, addresses the gap without simply waiving the standard indefinitely.",
+        "repair_target": "repair.decision-error"
+      },
+      {
+        "key": "c",
+        "text": "Halt all use of the legacy system until the re-platforming effort is complete.",
+        "correct": false,
+        "rationale": "Halting the system blocks a real business need without first exploring whether the risk can be managed another way - a compensating control may adequately address the gap without stopping the business process entirely.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "d",
+        "text": "Approve the costly re-platforming project immediately, since the standard's requirement must be met by the original technical method described.",
+        "correct": false,
+        "rationale": "This assumes only the literal technical method described satisfies the standard's intent, when a risk-assessed compensating control is a legitimate alternative - the immediate, costly project is not necessarily the first or only appropriate response.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "When a required control cannot be applied as specified, the first step is to assess the risk that gap creates and identify a compensating control - not to grant an unconditional permanent exception, halt the business process entirely, or assume only the original technical method can satisfy the requirement.",
+    "recognition_clue": "A stem describing a system that cannot technically meet a mandatory control requirement, and asking what to do FIRST, is testing whether compensating-control reasoning (assess risk, then identify an alternative safeguard) is chosen over skipping the requirement or halting the business.",
+    "memory_rule": "Control design and selection is a risk-driven decision - it traces to the actual risk and the enterprise's risk appetite, not to what is newest, most familiar, or most impressive.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "PHASE D3-U4 CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3B1 sub-area (a corrective control's purpose is to reduce/recover from impact, not to prevent or detect; preventive-control objectives should be developed PRIMARILY from risk aligned with enterprise risk appetite, not industry-checklist volume, monitoring-tool threat levels, or SLA uptime targets; when a required control cannot be applied, first assess risk and identify a compensating control rather than skip the requirement or halt progress). Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
   }
 ]
