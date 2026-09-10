@@ -313,21 +313,14 @@ test("no concept-id collisions: all six Domain 3 concepts authored so far are di
   for (const id of d3ConceptIds) assert.ok(!otherIds.includes(id), `${id} must not collide with a Domain 1/2/Foundation concept id`);
 });
 
-test("batch boundary: no Domain 3 unit beyond U1-U6 exists yet", () => {
-  const d3Lessons = data.lessons.filter((l) => l.domain === "domain.d3").map((l) => l.id);
-  assert.deepEqual(
-    d3Lessons.sort(),
-    [
-      "lesson.d3.asset-classification",
-      "lesson.d3.control-design-selection",
-      "lesson.d3.control-implementation-integration",
-      "lesson.d3.control-testing-evaluation",
-      "lesson.d3.policy-governance",
-      "lesson.d3.program-foundations"
-    ].sort(),
-    "only D3-U1 through D3-U6 may exist in this batch - D3-U7+ is not yet authored"
-  );
-});
+// Originally "no Domain 3 unit beyond U1-U6 exists yet" — that boundary is
+// superseded now that D3-U7/U8 have legitimately been authored (see
+// domain3-u7-u8.test.mjs, which owns the current batch-boundary
+// assertion), mirroring the exact precedent already established when the
+// U1/U2 boundary was narrowed after U3/U4, and again when the U1-U4
+// boundary was narrowed after U5/U6 (see the equivalent comments in
+// domain3-u1-u2.test.mjs and domain3-u3-u4.test.mjs). This file's own
+// U5/U6 entities remain asserted unchanged by the tests above.
 
 test("BUG-001/002/003 remain untouched: sanity check that prior Domain 1/2/D3-U1-U4 preserved recall targets are still present", () => {
   assert.ok(conceptsById.has("concept.d1.data-ownership"));

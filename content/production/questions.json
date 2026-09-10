@@ -3773,4 +3773,329 @@
     "source": "source.learner-supplied.domain-3-question-bank",
     "note": "PHASE D3-U6 CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3B3 sub-area (risk controls are sufficient only when residual risk is at or below the enterprise's risk acceptance level, not simply because controls exist; achieving the control's own objective is the most important benefit when reviewing risk-treatment options; a virus-detection tool's effectiveness depends on current definition files, not merely on whether it is installed) and the existing CANONICAL Pattern P07 (Implementation ≠ Effectiveness), Domain 3's single most load-bearing pattern per DOMAIN-3-BLUEPRINT.md. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
   }
+,
+  {
+    "id": "question.d3.0020",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.awareness-training-effectiveness"],
+    "patterns": ["pattern.p07"],
+    "qualifier": "qualifier.first",
+    "roles_mentioned": ["role.security-manager", "role.board-senior-management"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.awareness-training",
+    "variation_tags": ["business-setting:acquisition-integration", "distractor-temptation:policy-or-technical-substitute", "decision-consequence:leadership-support-first"],
+    "prompt": "Meridian ran a phishing simulation across Aldergate's finance team - the same team now operating the dual-approval vendor-payment control established in D3-U5/U6. More than seventy percent of the finance team clicked a simulated email requesting an urgent change to a vendor's bank-account details. What should Meridian's information security manager do FIRST to revise the awareness and training program?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Obtain senior leadership's full support for revising the program, since a redesigned program is far more likely to succeed once leadership commitment secures the resources and priority behind it.",
+        "correct": true,
+        "rationale": "A program redesign needs leadership commitment behind it before its content can be rebuilt and take hold; without that support, even well-targeted new content is unlikely to receive the resources or priority it needs to succeed."
+      },
+      {
+        "key": "b",
+        "text": "Immediately require every Aldergate employee to retake the existing general annual awareness module a second time this year.",
+        "correct": false,
+        "rationale": "Repeating the same generic, one-size-fits-all module a second time does not address the finance team's specific payment-approval risk exposure, and the click rate already shows that content was not working the first time.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "c",
+        "text": "Update the security awareness policy to explicitly require phishing-specific training going forward.",
+        "correct": false,
+        "rationale": "A policy update is a reasonable eventual step, but it is not the first one - it should follow, not precede, the program actually being reevaluated and rebuilt.",
+        "repair_target": "repair.decision-error"
+      },
+      {
+        "key": "d",
+        "text": "Configure stricter email filtering to block similar messages before they reach employee inboxes.",
+        "correct": false,
+        "rationale": "A technical filter may reduce exposure to some messages, but it does not address the finance team's demonstrated gap in recognizing this specific risk when a message does reach them.",
+        "repair_target": "repair.technical-vs-management-error"
+      }
+    ],
+    "explanation": "A training program that has just failed needs leadership commitment behind its redesign before new content can be built and take hold. Repeating the same generic module, writing new policy language, or reaching for a technical filter all skip past that first step - and none of them address the specific, role-relevant gap the simulation just revealed.",
+    "recognition_clue": "A stem describing a training program that has clearly failed and asking what to do first is testing whether the fix starts with securing leadership support for a real redesign, not a policy update or a technical fix that bypasses the human behavior involved.",
+    "memory_rule": "Sending training is an activity. Changing the behavior that produces risk is the outcome.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "DOMAIN 3 U7/U8 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3B4 sub-area (completion/participation/acknowledgment facts are repeatedly rejected as evidence of effectiveness in favor of behavior signals such as increased incident reporting; role-specific/customized content is repeatedly identified as the MOST effective method; obtaining senior leadership's full support is the source-identified FIRST step after a failed awareness program) and the existing CANONICAL Pattern P07 (Implementation ≠ Effectiveness), reused here for training delivery vs. behavior change rather than the control-testing focus of D3-U6. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0021",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.awareness-training-effectiveness"],
+    "patterns": ["pattern.p07"],
+    "qualifier": "qualifier.most",
+    "roles_mentioned": ["role.security-manager", "role.board-senior-management"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.awareness-training",
+    "variation_tags": ["business-setting:healthcare-clinical-operations", "distractor-temptation:completion-rate-as-effectiveness", "decision-consequence:role-relevant-content-and-behavior-evidence"],
+    "prompt": "A hospital delivers the same general online security-awareness module to all staff, and a 98% completion rate is reported to the board each quarter as evidence the awareness program is effective. Nursing staff continue to leave clinical workstations logged in and unattended between patients, exposing patient records. Which of the following would be the MOST effective way to address the situation?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Redesign the training with role-specific content for clinical staff addressing workstation security during patient care, and track whether unattended, logged-in workstations actually decrease afterward.",
+        "correct": true,
+        "rationale": "Content that speaks to the specific behavior driving the exposure, evaluated by whether that exact behavior changes, is what closes the gap between the program existing and the program actually reducing risk to patient records."
+      },
+      {
+        "key": "b",
+        "text": "Continue reporting the 98% completion rate to the board each quarter as the program's key indicator of effectiveness.",
+        "correct": false,
+        "rationale": "A completion rate shows the module was finished, not that the workstation-locking behavior it was meant to produce has actually changed - the unattended workstations continuing to occur is the real evidence.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Require nursing staff to sign a new acknowledgment confirming they have read the existing workstation-lock policy.",
+        "correct": false,
+        "rationale": "An acknowledgment signature documents that a policy was read, not that the behavior it describes is actually being practiced at the bedside.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "d",
+        "text": "Deploy automatic workstation session-timeout software across all clinical devices in the affected units, and consider the underlying nursing-staff awareness gap fully and permanently resolved without any further behavioral review.",
+        "correct": false,
+        "rationale": "A technical timeout control can reduce exposure on its own merits, but treating its deployment as having resolved the awareness gap skips confirming whether clinical staff's actual behavior around patient records has changed.",
+        "repair_target": "repair.technical-vs-management-error"
+      }
+    ],
+    "explanation": "A completion rate and a signed acknowledgment are both activity facts, not evidence that the specific behavior causing the exposure has changed. The most effective response targets that behavior directly with role-relevant content and then measures the behavior itself, rather than reporting participation or treating a technical control's deployment as if it already answered the awareness question.",
+    "recognition_clue": "A stem that reports a high completion rate as proof of effectiveness while the underlying risky behavior continues unchanged is testing whether the learner still reaches for behavior evidence rather than the participation fact.",
+    "memory_rule": "Awareness and training have to be earned continuously - what worked last year does not certify this year's behavior.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "DOMAIN 3 U7/U8 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3B4 sub-area (completion/participation/acknowledgment facts are repeatedly rejected as evidence of effectiveness in favor of behavior signals such as increased incident reporting; role-specific/customized content is repeatedly identified as the MOST effective method; obtaining senior leadership's full support is the source-identified FIRST step after a failed awareness program) and the existing CANONICAL Pattern P07 (Implementation ≠ Effectiveness), reused here for training delivery vs. behavior change rather than the control-testing focus of D3-U6. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0022",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.awareness-training-effectiveness"],
+    "patterns": ["pattern.p07"],
+    "qualifier": "qualifier.most",
+    "roles_mentioned": ["role.security-manager", "role.business-process-owner"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.awareness-training",
+    "variation_tags": ["business-setting:logistics-warehouse-operations", "distractor-temptation:generic-content-for-specific-role", "decision-consequence:role-specific-skill-building"],
+    "prompt": "A logistics company promotes several warehouse floor leads into new supervisor roles responsible for approving contractor access badges at the loading dock. The company enrolls the new supervisors in the same general online security-awareness module used for corporate office staff. Which of the following is the MOST effective way to prepare these supervisors for their new security-relevant responsibilities?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Provide the supervisors with role-specific training on verifying contractor identity and recognizing tailgating and social-engineering attempts at the loading dock, in addition to the general awareness content.",
+        "correct": true,
+        "rationale": "The supervisors' new responsibility creates a specific risk exposure that the general module was never built to address; content built around that exact responsibility gives them the judgment their new role actually requires."
+      },
+      {
+        "key": "b",
+        "text": "Extend the completion deadline for the existing general online module so the supervisors have more time to finish it.",
+        "correct": false,
+        "rationale": "More time to complete the same generic content does not make that content relevant to the specific access-approval judgment the new role requires.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "c",
+        "text": "Have the supervisors sign an acknowledgment that they understand their new access-approval responsibilities.",
+        "correct": false,
+        "rationale": "An acknowledgment documents an expectation; it does not teach the supervisors how to actually recognize a tailgating or social-engineering attempt at the dock.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "Require the supervisors to complete the general awareness module twice this year instead of once.",
+        "correct": false,
+        "rationale": "Repeating content built for a different audience does not make it relevant to the specific judgment the supervisors' new role now requires.",
+        "repair_target": "repair.business-context-error"
+      }
+    ],
+    "explanation": "A new role with a new, specific risk exposure needs content built for that exposure - repeating, extending, or merely acknowledging generic content built for a different audience does not build the judgment the role actually requires.",
+    "recognition_clue": "A stem describing employees moved into a new role with a new security-relevant responsibility, still receiving the same generic content as everyone else, is testing whether the learner recognizes the need for role-specific content rather than more of the same.",
+    "memory_rule": "Sending training is an activity. Changing the behavior that produces risk is the outcome.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "DOMAIN 3 U7/U8 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3B4 sub-area (completion/participation/acknowledgment facts are repeatedly rejected as evidence of effectiveness in favor of behavior signals such as increased incident reporting; role-specific/customized content is repeatedly identified as the MOST effective method; obtaining senior leadership's full support is the source-identified FIRST step after a failed awareness program) and the existing CANONICAL Pattern P07 (Implementation ≠ Effectiveness), reused here for training delivery vs. behavior change rather than the control-testing focus of D3-U6. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0023",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.external-services-accountability"],
+    "patterns": ["pattern.p02"],
+    "qualifier": "qualifier.next",
+    "roles_mentioned": ["role.security-manager", "role.business-process-owner"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.external-services",
+    "variation_tags": ["business-setting:acquisition-integration", "distractor-temptation:contract-as-accountability-transfer", "decision-consequence:vendor-monitoring-established-next"],
+    "prompt": "Meridian has just signed a contract with a new external vendor to manage Aldergate's day-to-day IT support during the integration. What should Meridian's information security manager ensure happens NEXT?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Establish ongoing, independent monitoring of the vendor's security practice, so that compliance gaps or security events can be identified as they occur.",
+        "correct": true,
+        "rationale": "Once a contract is signed, ongoing monitoring is what actually confirms the vendor is meeting its security obligations over time - a signed contract by itself does not verify anything."
+      },
+      {
+        "key": "b",
+        "text": "Finalize the service level agreement's uptime and support-response targets with the vendor.",
+        "correct": false,
+        "rationale": "Operational service targets are a business/operations follow-up, not the security-specific action Meridian's information security manager needs to ensure happens next.",
+        "repair_target": "repair.decision-error"
+      },
+      {
+        "key": "c",
+        "text": "Have the vendor sign a nondisclosure agreement covering Aldergate's data.",
+        "correct": false,
+        "rationale": "A nondisclosure agreement is normally arranged before contract discussions proceed, not after the contract has already been signed.",
+        "repair_target": "repair.sequence-error"
+      },
+      {
+        "key": "d",
+        "text": "Conclude that Meridian's information security obligations for this function are now satisfied, since the contract legally requires the vendor to maintain adequate security.",
+        "correct": false,
+        "rationale": "The contract requiring a security posture is not the same as Meridian's accountability for the outcome being satisfied - Meridian remains accountable for Aldergate's IT support security regardless of what the contract requires of the vendor.",
+        "repair_target": "repair.business-context-error"
+      }
+    ],
+    "explanation": "A signed contract establishes a requirement; it does not by itself verify or guarantee anything. The next real step is ongoing, independent monitoring of the vendor's actual practice - because Meridian, not the vendor, remains accountable if something goes wrong with the systems the vendor now supports.",
+    "recognition_clue": "A stem describing a vendor contract that has just been signed and asking what happens next is testing whether the learner reaches for ongoing verification rather than treating the signed contract as the finish line.",
+    "memory_rule": "Responsibility for performing a service can move outside the organization; accountability for the business outcome does not.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "DOMAIN 3 U7/U8 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3B5 sub-area (ownership/responsibility for data protection remains with the outsourcing enterprise; periodic independent audit/review is repeatedly identified as the MOST effective compliance mechanism, ahead of contracts, certifications, or provider claims; vendor monitoring is the source-identified NEXT step once a vendor contract is signed; confirming the agreement still reflects current business requirements is the source-identified FIRST step when a long-standing vendor disappoints senior management) and the existing CANONICAL Pattern P02 (Authority Follows Accountability), reused here rather than inventing a new pattern - accountability for the outcome stays internal even when performance of the work does not. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0024",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.external-services-accountability"],
+    "patterns": ["pattern.p02"],
+    "qualifier": "qualifier.first",
+    "roles_mentioned": ["role.security-manager", "role.board-senior-management"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.external-services",
+    "variation_tags": ["business-setting:higher-education-data-hosting", "distractor-temptation:vendor-assessment-before-requirements-check", "decision-consequence:requirements-currency-first"],
+    "prompt": "A university has outsourced hosting of its student-records system to the same external provider for five years, under a service agreement that has been renewed each year without significant change. After a near-miss security incident, university leadership expresses concern about the provider's security level. What should the university's information security manager do FIRST?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Review whether the security requirements in the existing service agreement still reflect the university's current business and regulatory requirements.",
+        "correct": true,
+        "rationale": "Because the agreement has gone essentially unchanged for five years, it is entirely possible the provider is delivering exactly what was purchased - and leadership's concern reflects the agreement no longer matching the university's current needs, not necessarily a provider failure."
+      },
+      {
+        "key": "b",
+        "text": "Conduct a formal assessment of the provider's capability to determine whether a replacement provider is needed.",
+        "correct": false,
+        "rationale": "Assessing whether a new provider is needed is only actionable once the university is certain the current agreement's own terms still reflect its actual business requirements.",
+        "repair_target": "repair.sequence-error"
+      },
+      {
+        "key": "c",
+        "text": "Review recent security metrics to determine whether the provider is meeting the terms of the existing service agreement.",
+        "correct": false,
+        "rationale": "Confirming performance against the agreement's existing terms only matters once the university has confirmed those terms are the right ones for its current requirements.",
+        "repair_target": "repair.sequence-error"
+      },
+      {
+        "key": "d",
+        "text": "Automate the provider's incident-reporting process to ensure timely reporting and monitoring going forward.",
+        "correct": false,
+        "rationale": "Automating a reporting mechanism does not resolve whether the underlying agreement is adequate - it only changes how already-required information is delivered.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "A long-unchanged agreement is a signal to check the agreement itself before judging the provider against it - the provider may be meeting stale requirements exactly as written, which is a different problem than the provider failing to perform.",
+    "recognition_clue": "A stem describing a long-standing, largely unchanged vendor agreement and a recent concern about vendor security is testing whether the learner checks the agreement's currency before assessing the provider's performance or capability.",
+    "memory_rule": "A contract states the requirement. Independent verification is what confirms it is actually being met.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "DOMAIN 3 U7/U8 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3B5 sub-area (ownership/responsibility for data protection remains with the outsourcing enterprise; periodic independent audit/review is repeatedly identified as the MOST effective compliance mechanism, ahead of contracts, certifications, or provider claims; vendor monitoring is the source-identified NEXT step once a vendor contract is signed; confirming the agreement still reflects current business requirements is the source-identified FIRST step when a long-standing vendor disappoints senior management) and the existing CANONICAL Pattern P02 (Authority Follows Accountability), reused here rather than inventing a new pattern - accountability for the outcome stays internal even when performance of the work does not. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0025",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.external-services-accountability"],
+    "patterns": ["pattern.p02"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager", "role.business-process-owner", "role.data-owner"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.external-services",
+    "variation_tags": ["business-setting:retail-payroll-outsourcing", "distractor-temptation:certification-as-sufficient-assurance", "decision-consequence:independent-oversight-vs-provider-claim"],
+    "prompt": "A retail chain outsources its employee payroll processing to an external provider. The provider's marketing materials state it is certified against a well-known security standard, and the retail chain's human resources director cites this certification as sufficient assurance that employee payroll data is protected. What is the BEST advice the retail chain's information security manager can give?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The certification is useful context, but the retail chain remains accountable for the data's protection and should establish its own contractual security requirements and ongoing right to audit the provider's actual practice.",
+        "correct": true,
+        "rationale": "Ownership and responsibility for protecting the data remain with the retail chain regardless of a provider's certification; the certification is context, not a substitute for the retail chain's own contractual requirements and ongoing verification."
+      },
+      {
+        "key": "b",
+        "text": "Accept the certification as sufficient assurance, since an independent standards body has already evaluated the provider.",
+        "correct": false,
+        "rationale": "A certification reflects an evaluation at a point in time against a general standard - it does not substitute for the retail chain's own assurance that its specific requirements are being met on an ongoing basis.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "c",
+        "text": "Require the human resources director to obtain written sign-off from the provider acknowledging responsibility for any data breach.",
+        "correct": false,
+        "rationale": "An assumption-of-liability clause can limit financial impact after a breach, but it does not reduce the likelihood of one and does not substitute for verifying the provider's actual security practice beforehand.",
+        "repair_target": "repair.decision-error"
+      },
+      {
+        "key": "d",
+        "text": "Ask the provider for a copy of its most recent internal security policy for the retail chain's records.",
+        "correct": false,
+        "rationale": "Collecting a copy of the provider's policy document does not verify that the provider is actually following it in practice.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "A provider's certification, a liability sign-off, or a copy of its policy are all forms of assurance offered by the provider - none of them replace the retail chain's own accountability for the data or its own ongoing verification that requirements are actually being met.",
+    "recognition_clue": "A stem offering a provider's certification, claim, or document as if it settles the enterprise's own security obligation is testing whether the learner still holds the enterprise accountable and reaches for its own independent verification.",
+    "memory_rule": "Responsibility for performing a service can move outside the organization; accountability for the business outcome does not.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "DOMAIN 3 U7/U8 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3B5 sub-area (ownership/responsibility for data protection remains with the outsourcing enterprise; periodic independent audit/review is repeatedly identified as the MOST effective compliance mechanism, ahead of contracts, certifications, or provider claims; vendor monitoring is the source-identified NEXT step once a vendor contract is signed; confirming the agreement still reflects current business requirements is the source-identified FIRST step when a long-standing vendor disappoints senior management) and the existing CANONICAL Pattern P02 (Authority Follows Accountability), reused here rather than inventing a new pattern - accountability for the outcome stays internal even when performance of the work does not. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  }
 ]
