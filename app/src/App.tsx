@@ -98,7 +98,9 @@ const REVIEW_LESSON_ITEMS: PrototypeStateItem[] = [
   { id: "lesson.d3.program-foundations", label: "D3-U1 — Program Foundations (Strategy to Program)" },
   { id: "lesson.d3.asset-classification", label: "D3-U2 — Asset Identification & Classification" },
   { id: "lesson.d3.policy-governance", label: "D3-U3 — Program-Level Policy Governance" },
-  { id: "lesson.d3.control-design-selection", label: "D3-U4 — Control Design & Selection" }
+  { id: "lesson.d3.control-design-selection", label: "D3-U4 — Control Design & Selection" },
+  { id: "lesson.d3.control-implementation-integration", label: "D3-U5 — Control Implementation & Integration" },
+  { id: "lesson.d3.control-testing-evaluation", label: "D3-U6 — Control Testing & Evaluation" }
 ];
 
 const SESSION_SCREENS = new Set([

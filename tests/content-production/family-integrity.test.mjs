@@ -124,7 +124,9 @@ test("every family has exactly its expected active variant count (Phase 6C + Pha
     "family.d3.program-foundations": 3,
     "family.d3.asset-classification": 3,
     "family.d3.policy-governance": 3,
-    "family.d3.control-design-selection": 3
+    "family.d3.control-design-selection": 3,
+    "family.d3.control-implementation-integration": 3,
+    "family.d3.control-testing-evaluation": 3
   };
   const bad = [];
   for (const [familyId, count] of Object.entries(expected)) {
