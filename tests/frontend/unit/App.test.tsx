@@ -22,7 +22,7 @@ describe("App integration", () => {
     expect(screen.getByRole("button", { name: /Start Today's Study/ })).toBeTruthy();
   });
 
-  it("real product navigation (Home, Daily Study, Explore & Practice) has exactly three destinations", () => {
+  it("real product navigation (Home, Daily Study, Explore) has exactly three destinations", () => {
     // Two "Main" nav landmarks exist in markup — the desktop ProductNav and
     // the mobile BottomTabBar — mutually exclusive via CSS media query at
     // real viewports (jsdom applies no layout, so both are present here);
@@ -33,7 +33,7 @@ describe("App integration", () => {
     const nav = within(topbar).getByRole("navigation", { name: "Main" });
     expect(within(nav).getAllByRole("button")).toHaveLength(3);
     expect(within(nav).getByRole("button", { name: "Daily Study" })).toBeTruthy();
-    expect(within(nav).getByRole("button", { name: "Explore & Practice" })).toBeTruthy();
+    expect(within(nav).getByRole("button", { name: "Explore" })).toBeTruthy();
   });
 
   it("navigates between all eight prototype-gate states via the QA switcher, not product navigation", () => {

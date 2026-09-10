@@ -11,6 +11,7 @@ import { FeedbackScreen } from "./screens/FeedbackScreen";
 import { CompletionScreen } from "./screens/CompletionScreen";
 import { PracticeExamScreen } from "./screens/PracticeExamScreen";
 import { ReviewCenterScreen } from "./screens/ReviewCenterScreen";
+import { ExploreScreen } from "./screens/ExploreScreen";
 import { DailyStudySession } from "./session/DailyStudySession";
 import type { DailyStudyContentSource } from "./session/contentSource";
 import { prototypeContentSource } from "./data/prototypeContentSource";
@@ -19,19 +20,27 @@ import { feedbackCorrect, feedbackIncorrect } from "./data/fixtures";
 
 // The learner's real navigation: three destinations, matching the intended
 // final application. "Daily Study" enters the live, controlled Recall →
-// Learn → Apply → Feedback → Completion experience; "Explore & Practice"
-// enters Practice Exam. Deliberately separate from the Visual Prototype
-// Gate states below, which exist for QA only.
+// Learn → Apply → Feedback → Completion experience; "Explore" enters the
+// Phase 10B-2 Explore experience (choose a domain, then a concept, review
+// it, optionally attempt one tied scenario). Deliberately separate from
+// the Visual Prototype Gate states below, which exist for QA only.
+//
+// Renamed from "Explore & Practice" (Phase 10B-2): Practice remains
+// unimplemented this phase, and this destination no longer opens the
+// Phase 5B Practice Exam prototype fixture at all — keeping "& Practice"
+// in the label would misdescribe what pressing it actually does. The
+// Practice Exam prototype screen itself is untouched and still reachable
+// via the QA switcher below.
 const PRODUCT_NAV_ITEMS: ProductNavItem[] = [
   { id: "home", label: "Home" },
   { id: "daily-study", label: "Daily Study" },
-  { id: "explore", label: "Explore & Practice" }
+  { id: "explore", label: "Explore" }
 ];
 
 const PRODUCT_ENTRY_SCREEN: Record<string, string> = {
   home: "home",
   "daily-study": "daily-study-session",
-  explore: "practice-exam"
+  explore: "explore"
 };
 
 // Phase 5B is a visual prototype: no routing library, per the Phase 5A
@@ -106,7 +115,7 @@ const SESSION_LABELS: Record<string, string> = {
 
 function sectionForScreen(id: string): string {
   if (id === "home") return "home";
-  if (id === "practice-exam" || id === "review-center") return "explore";
+  if (id === "practice-exam" || id === "review-center" || id === "explore") return "explore";
   return "daily-study";
 }
 
@@ -134,6 +143,8 @@ function renderScreen(
       return <PracticeExamScreen onOpenReview={() => onNavigate("review-center")} />;
     case "review-center":
       return <ReviewCenterScreen onReturnToExam={() => onNavigate("practice-exam")} />;
+    case "explore":
+      return <ExploreScreen onExit={() => onNavigate("home")} />;
     default:
       return <HomeScreen onNavigate={onNavigate} contentSource={contentSource} />;
   }

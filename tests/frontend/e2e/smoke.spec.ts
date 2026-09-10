@@ -43,7 +43,7 @@ test.describe("prototype loads and navigates", () => {
     await expect(nav.getByRole("button")).toHaveCount(3);
     await expect(nav.getByRole("button", { name: "Home" })).toBeVisible();
     await expect(nav.getByRole("button", { name: "Daily Study" })).toBeVisible();
-    await expect(nav.getByRole("button", { name: "Explore & Practice" })).toBeVisible();
+    await expect(nav.getByRole("button", { name: "Explore" })).toBeVisible();
     // "Feedback — Correct" etc. must never appear as primary navigation.
     await expect(nav.getByRole("button", { name: /Feedback/ })).toHaveCount(0);
   });

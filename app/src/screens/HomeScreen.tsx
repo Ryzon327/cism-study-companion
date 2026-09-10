@@ -46,14 +46,14 @@ export function HomeScreen({ onNavigate, contentSource }: HomeScreenProps): JSX.
 
       <section class="home-secondary" aria-labelledby="home-secondary-title">
         <div>
-          <h2 id="home-secondary-title" class="home-secondary-title">Explore &amp; Practice</h2>
+          <h2 id="home-secondary-title" class="home-secondary-title">Explore</h2>
           <p class="home-secondary-text">
-            Optional additional practice, whenever you want it — browse by domain or start a timed
-            practice exam.
+            Want to revisit something specific? Choose a domain and a concept for a concise review,
+            whenever you want it.
           </p>
         </div>
-        <button type="button" class="home-secondary-link" onClick={() => onNavigate("practice-exam")}>
-          Browse Explore &amp; Practice &rarr;
+        <button type="button" class="home-secondary-link" onClick={() => onNavigate("explore")}>
+          Open Explore &rarr;
         </button>
       </section>
     </div>
