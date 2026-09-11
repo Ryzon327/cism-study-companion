@@ -47,15 +47,18 @@ describe("Explore — domain discovery is generic (no D1/D2 hardcoding)", () => 
     }
   });
 
-  it("now includes Domain 3 (D3-U1/U2 authored) but not yet Domain 4 — proves the boundary is data-driven, not a hardcoded allowlist", () => {
-    // Originally asserted neither D3 nor D4 was present. D3-U1/U2 have since
-    // been authored (see docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md
-    // and tests/content-production/domain3-u1-u2.test.mjs) with zero changes
-    // to explore.ts itself — Domain 3 simply appeared here automatically,
-    // which is the actual proof this boundary is data-driven.
+  it("now includes Domain 3 and Domain 4 (both authored) — proves the boundary is data-driven, not a hardcoded allowlist", () => {
+    // Originally asserted neither D3 nor D4 was present, then that D3 was
+    // present but not yet D4. D3-U1/U2 and D4-U1/U2 have since both been
+    // authored (see docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md,
+    // docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, and
+    // tests/content-production/domain3-u1-u2.test.mjs /
+    // domain4-u1-u2.test.mjs) with zero changes to explore.ts itself —
+    // each domain simply appeared here automatically once authored, which
+    // is the actual proof this boundary is data-driven.
     const domains = listExploreDomains();
     expect(domains.some((d) => d.id === "domain.d3")).toBe(true);
-    expect(domains.some((d) => d.id === "domain.d4")).toBe(false);
+    expect(domains.some((d) => d.id === "domain.d4")).toBe(true);
   });
 });
 

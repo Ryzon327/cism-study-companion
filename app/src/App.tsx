@@ -104,7 +104,9 @@ const REVIEW_LESSON_ITEMS: PrototypeStateItem[] = [
   { id: "lesson.d3.awareness-training", label: "D3-U7 — Security Awareness & Training" },
   { id: "lesson.d3.external-services", label: "D3-U8 — Managing External Services" },
   { id: "lesson.d3.program-metrics-reporting", label: "D3-U9 — Program Metrics & Reporting" },
-  { id: "lesson.d3.program-synthesis", label: "D3-U10 — Program Synthesis (Capstone)" }
+  { id: "lesson.d3.program-synthesis", label: "D3-U10 — Program Synthesis (Capstone)" },
+  { id: "lesson.d4.program-foundations-readiness", label: "D4-U1 — Program Foundations & Readiness" },
+  { id: "lesson.d4.business-impact-analysis-prioritization", label: "D4-U2 — Business Impact Analysis & Prioritization" }
 ];
 
 const SESSION_SCREENS = new Set([
