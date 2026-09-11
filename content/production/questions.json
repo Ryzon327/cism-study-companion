@@ -5719,5 +5719,329 @@
     "version": 1,
     "source": "source.learner-supplied.domain-4-question-bank",
     "note": "DOMAIN 4 U7/U8 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4B5 sub-area (a team correctly reports a system restored to half throughput as having met the SDO, not the RTO: 'the SDO is the agreed-on level of service required to resume acceptable operations,' distinguished directly from RTO/RPO/MTO in the same source item) and the existing CANONICAL Pattern P01, already approved for Domain 4. Original scenario, transferred to a national telecommunications provider, closely modeled on the source's own reasoning-from-facts scenario but not a reproduction of its exact wording. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0026",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.post-incident-review"],
+    "patterns": ["pattern.p15", "pattern.p02"],
+    "qualifier": "qualifier.primary",
+    "roles_mentioned": ["role.security-manager", "role.board-senior-management", "role.incident-response-team"],
+    "primary_role": null,
+    "lifecycle": "lifecycle.incident",
+    "stage": "stage.incident.post-incident-review-improve",
+    "decision_type": "decision.incident",
+    "family": "family.d4.post-incident-review",
+    "variation_tags": ["business-setting:hospitality-executive-review-of-corrective-action", "distractor-temptation:fault-finding-or-symbolic-review", "decision-consequence:confirm-corrective-action-implemented"],
+    "prompt": "Harborview's post-incident review identifies the overnight monitoring gap as the root cause that allowed the compromise to go undetected for hours, and recommends implementing real-time, 24/7 alerting on privileged-account activity. Once the recommendation is written up, Harborview's executive team schedules a formal review of the incident. What is the PRIMARY reason for that executive review?",
+    "options": [
+      {
+        "key": "a",
+        "text": "To confirm that the recommended corrective action - real-time monitoring - has actually been implemented, not merely recommended in the report.",
+        "correct": true,
+        "rationale": "Senior management's review of an incident exists primarily to confirm that adequate corrective actions were actually put in place - a recommendation on paper is not the same as a completed improvement."
+      },
+      {
+        "key": "b",
+        "text": "To evaluate how well the security team performed while responding to the incident.",
+        "correct": false,
+        "rationale": "Management does not review an incident to evaluate or fault the response team's own performance - that turns the review into fault-finding rather than confirming improvement.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "c",
+        "text": "To demonstrate to the board that management takes information security seriously.",
+        "correct": false,
+        "rationale": "The review is not conducted merely to demonstrate management commitment - its purpose is verifying that a specific, concrete corrective action was actually implemented.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "To determine which employee should be held responsible for the account compromise.",
+        "correct": false,
+        "rationale": "Assigning individual responsibility for the compromise is blame-finding, not the review's purpose - the review exists to confirm the process itself has been improved.",
+        "repair_target": "repair.business-context-error"
+      }
+    ],
+    "explanation": "Senior management's review of a completed incident exists primarily to confirm that adequate corrective actions were actually implemented - not to evaluate the response team's performance, demonstrate commitment, or assign individual blame. A recommendation written up in a report is not yet a completed improvement.",
+    "recognition_clue": "A stem describing an executive or senior-management review of a completed incident, with fault-finding or symbolic options offered as distractors, is testing whether the learner recognizes the review's purpose is confirming corrective action, not finding fault.",
+    "memory_rule": "Senior management reviews an incident to confirm corrective actions were implemented, not to find fault.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U9/U10 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4B6 (Post-incident Review Practices) sub-area ('the PRIMARY reason for senior management review of information security incidents' is to 'ensure adequate corrective actions were implemented,' explicitly rejecting 'evaluate the incident response process for deficiencies' and 'evaluate the ability of the security team' as fault-finding, and 'demonstrate management commitment' as an insufficient purpose) and the existing CANONICAL Pattern P15 (Closing the Loop) and P02 (Authority Follows Accountability), both already approved for Domain 4. Continues Harborview Hotels directly from D4-U7/U8's fully recovered incident. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0027",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.post-incident-review"],
+    "patterns": ["pattern.p15", "pattern.p02"],
+    "qualifier": "qualifier.next",
+    "roles_mentioned": ["role.incident-response-team"],
+    "primary_role": null,
+    "lifecycle": "lifecycle.incident",
+    "stage": "stage.incident.post-incident-review-improve",
+    "decision_type": "decision.incident",
+    "family": "family.d4.post-incident-review",
+    "variation_tags": ["business-setting:university-unresolved-root-cause", "distractor-temptation:premature-closure-or-blame", "decision-consequence:complete-root-cause-analysis"],
+    "prompt": "A regional university's incident response team eradicated a compromised account and restored affected systems, but was never able to conclusively determine how the account was originally compromised. What should the post-incident review do regarding this open question NEXT?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Complete the root-cause analysis, since understanding how the compromise occurred is necessary to prevent it from recurring.",
+        "correct": true,
+        "rationale": "Root-cause analysis is normally first examined during eradication, but when it is not fully resolved there, post-incident review is where that understanding should be completed - not skipped."
+      },
+      {
+        "key": "b",
+        "text": "Treat the incident as closed, since eradication and recovery are both already complete.",
+        "correct": false,
+        "rationale": "An incident is not genuinely closed, from a management-learning standpoint, until the root cause is understood and corrective action is confirmed - eradication and recovery alone don't establish that.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Begin a fresh vulnerability assessment instead, since eradication is already finished.",
+        "correct": false,
+        "rationale": "A vulnerability assessment identifies existing weaknesses generally - it does not determine how this specific compromise actually occurred, which is what a root-cause analysis is for.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "Assign responsibility for the unresolved compromise to the IT operations team.",
+        "correct": false,
+        "rationale": "Assigning responsibility before the cause is even understood is blame ahead of understanding - the review's purpose is completing the analysis, not finding someone to hold accountable for it.",
+        "repair_target": "repair.business-context-error"
+      }
+    ],
+    "explanation": "Root-cause analysis is normally first examined during eradication; when it is not fully resolved by that point, post-incident review is the appropriate place to complete it - not to treat the incident as closed, substitute a different technique, or assign blame before the cause is understood.",
+    "recognition_clue": "A stem describing eradication and recovery as complete but the root cause never fully determined is testing whether the learner recognizes post-incident review as where that unfinished analysis should be completed, not skipped or reassigned to blame.",
+    "memory_rule": "An incident isn't closed, from a management-learning standpoint, until what happened becomes confirmed corrective action.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.decision", "evidence.sequence"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U9/U10 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4B6 sub-area ('a root cause analysis for a new incident is FIRST performed during' eradication, and 'if the root-cause analysis performed in the [eradication] phase was not successful, a second root-cause analysis can be performed in the post-incident assessment') and the existing CANONICAL Pattern P15 and P02, both already approved for Domain 4. Original scenario, transferred to a regional university, not a reproduction of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0028",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.post-incident-review"],
+    "patterns": ["pattern.p15", "pattern.p02"],
+    "qualifier": "qualifier.primary",
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": "lifecycle.incident",
+    "stage": "stage.incident.post-incident-review-improve",
+    "decision_type": "decision.incident",
+    "family": "family.d4.post-incident-review",
+    "variation_tags": ["business-setting:financial-services-review-goal", "distractor-temptation:documentation-blame-or-legal-evidence-as-goal", "decision-consequence:process-improvement-is-the-goal"],
+    "prompt": "A national financial services firm's post-incident review team is deciding what the review should actually produce. What should be the PRIMARY goal of the review?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Derive specific ways to improve the incident response process going forward.",
+        "correct": true,
+        "rationale": "The primary goal of a post-incident review is deriving concrete ways the incident response process can be improved - everything else the review might touch is secondary to that."
+      },
+      {
+        "key": "b",
+        "text": "Produce a detailed report documenting every step taken during the incident.",
+        "correct": false,
+        "rationale": "The incident should already have been documented during the response itself - the review relies on that documentation to learn from it, rather than existing to produce it.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Identify which staff members failed to follow procedure so appropriate action can be taken.",
+        "correct": false,
+        "rationale": "The review should not focus on finding and addressing individuals who did not take appropriate action - that is fault-finding, not the review's purpose.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "d",
+        "text": "Gather additional evidence in case legal action becomes necessary.",
+        "correct": false,
+        "rationale": "Evidence relevant to potential legal action should already have been secured during the earlier investigation - gathering it is not the post-incident review's own goal.",
+        "repair_target": "repair.sequence-error"
+      }
+    ],
+    "explanation": "The primary goal of a post-incident review is deriving concrete ways to improve the incident response process - not producing documentation (which should already exist from the response itself), finding fault with individuals, or gathering legal evidence (which belongs to the earlier investigation).",
+    "recognition_clue": "A stem asking for the PRIMARY or MOST important goal of a post-incident review, with documentation, blame, or evidence-gathering offered as distractors, is testing whether the learner identifies process improvement as the actual goal.",
+    "memory_rule": "Recovery restores operations - post-incident review improves the organization.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U9/U10 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4B6 sub-area ('the PRIMARY goal of a post-incident review is to... derive ways to improve the response process,' explicitly rejecting gathering legal evidence, identifying individuals who failed to act, and preparing a report as the primary goal in the same source item) and the existing CANONICAL Pattern P15 and P02, both already approved for Domain 4. Original scenario, transferred to a national financial services firm, not a reproduction of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0029",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.incident-management-synthesis", "concept.d4.incident-classification-severity", "concept.d4.escalation-communications", "concept.d4.post-incident-review"],
+    "patterns": ["pattern.p04", "pattern.p02", "pattern.p15"],
+    "qualifier": "qualifier.most",
+    "roles_mentioned": ["role.security-manager"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.incident",
+    "family": "family.d4.incident-management-synthesis",
+    "variation_tags": ["business-setting:hospitality-monitoring-worked-communication-didnt", "distractor-temptation:single-lens-answer-ignoring-the-other-open-problem", "decision-consequence:correct-communication-while-confirming-non-incident"],
+    "prompt": "Eight months after the reservation-server incident, another Harborview property reports a fresh wave of failed logins on a privileged account overnight. The real-time monitoring implemented after the post-incident review (see D4-U9) catches it immediately and pages the on-call security analyst before dawn. Early triage shows the account was not actually compromised - a legitimate employee had mistyped their password repeatedly after a system update. Separately, the property's general manager, still worried after last year's incident, has already told a local reporter that Harborview is \"handling another attempted breach.\" What should the security manager treat as MOST important right now?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Correcting the general manager's unauthorized comment through Harborview's single authorized spokesperson, while confirming - based on the triage findings - that this specific event does not meet the bar for treating it as a confirmed incident.",
+        "correct": true,
+        "rationale": "The monitoring worked exactly as intended, and triage already shows this event is not a confirmed incident - what remains genuinely open is the unauthorized media comment, which needs correcting through the single authorized spokesperson regardless of how the login activity resolves."
+      },
+      {
+        "key": "b",
+        "text": "Escalating immediately to corporate leadership as a confirmed repeat security incident, matching the severity of last year's event.",
+        "correct": false,
+        "rationale": "Triage has already shown the account was not actually compromised - treating an unconfirmed, likely-false-positive event as a confirmed incident of equal severity ignores what the facts actually establish.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Letting the general manager continue speaking with the reporter, since they already have an established relationship with that outlet.",
+        "correct": false,
+        "rationale": "An existing media relationship doesn't authorize the general manager to speak on Harborview's behalf about a security matter - that authority belongs to the single designated spokesperson.",
+        "repair_target": "repair.authority-error"
+      },
+      {
+        "key": "d",
+        "text": "Documenting in detail that the new monitoring control successfully triggered exactly as designed, then treating the entire overnight matter as fully closed and resolved on that basis alone, since the control itself clearly worked as intended this time.",
+        "correct": false,
+        "rationale": "The monitoring control working correctly is genuinely good news, but it doesn't resolve the separate, still-open problem of the general manager's unauthorized comment to the media.",
+        "repair_target": "repair.business-context-error"
+      }
+    ],
+    "explanation": "This situation raises more than one concern at once: whether the login activity is a genuine incident, and whether the general manager's unauthorized media comment needs correcting. Triage already answers the first question - the monitoring worked and the account was not compromised - so what remains genuinely open, and MOST important right now, is routing the media response through the single authorized spokesperson.",
+    "recognition_clue": "A stem describing more than one thing happening at once - a technical event already resolving one way, and a separate authority or communication problem still open - is testing whether the learner identifies what genuinely still needs action, not just the most technically interesting thread.",
+    "memory_rule": "A corrective action working as intended doesn't mean every other concern in the same situation is resolved.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.authority"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U9/U10 AUTHORING BATCH CANDIDATE (D4-U10, Incident Management Synthesis / Capstone) — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md and the Architect's D4-U9/U10 authoring directive. Integrates event-vs-incident confirmation reasoning (D4-U3, source-grounded 4A5), authorized-spokesperson media-communication authority (D4-U4, source-grounded 4B4), and post-incident corrective-action effectiveness/closing-the-loop (D4-U9, source-grounded 4B6) inside one new, later Harborview management situation - not a repeat of any prior scene. Reuses the existing CANONICAL Patterns P04 (No Lifecycle Jumping), P02 (Authority Follows Accountability), and P15 (Closing the Loop), all already approved for Domain 4. No new pattern invented. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0030",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.incident-management-synthesis", "concept.d4.business-impact-analysis-prioritization", "concept.d4.incident-containment", "concept.d4.escalation-communications"],
+    "patterns": ["pattern.p01", "pattern.p02"],
+    "qualifier": null,
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.incident",
+    "family": "family.d4.incident-management-synthesis",
+    "variation_tags": ["business-setting:hospital-non-critical-server-overbroad-response", "distractor-temptation:overbroad-shutdown-or-unauthorized-notification", "decision-consequence:proportionate-containment-plus-authorized-notification"],
+    "prompt": "A mid-size hospital system's IT team detects unusual activity on a non-critical research-data server, confirmed to hold no patient-care or billing data. A department head wants the entire hospital network taken offline \"to be safe.\" Separately, a junior communications staffer wants to publicly notify patients immediately \"in case something is wrong.\" What should the security manager do?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Contain the activity at the scope it actually affects - the research-data server, not the entire network - and direct that no public notification occurs until management, following the organization's own communication plan, determines what is actually confirmed and required.",
+        "correct": true,
+        "rationale": "Containment should match the incident's actual, confirmed impact rather than the broadest possible action, and external notification is a management decision under the organization's own communication plan - not a call the communications staff can make unilaterally, especially before the facts are confirmed."
+      },
+      {
+        "key": "b",
+        "text": "Take the entire hospital network offline as requested, since patient safety is always the highest priority.",
+        "correct": false,
+        "rationale": "Patient-care systems are confirmed unaffected here - an indiscriminate, network-wide shutdown disrupts operations that were never actually at risk, without a demonstrated security benefit.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "c",
+        "text": "Authorize the communications staffer to notify patients immediately, since transparency reduces reputational risk.",
+        "correct": false,
+        "rationale": "Notifying patients is a business/legal decision belonging to management under the organization's communication plan, not a call a communications staffer can make unilaterally - especially before the facts are confirmed.",
+        "repair_target": "repair.authority-error"
+      },
+      {
+        "key": "d",
+        "text": "Delay containment until forensic evidence has been fully imaged from the research-data server.",
+        "correct": false,
+        "rationale": "Containment should not wait for formal evidence imaging to complete - evidence must be protected during containment, not used as a reason to delay a proportionate containment action.",
+        "repair_target": "repair.sequence-error"
+      }
+    ],
+    "explanation": "The correct response integrates two Domain 4 reasoning targets at once: containment scoped to actual, confirmed business impact rather than indiscriminate caution, and external notification routed through management's own authority and communication plan rather than decided unilaterally by whichever staff member raises it.",
+    "recognition_clue": "A stem offering both an overbroad technical response and an unauthorized external-communication shortcut is testing whether the learner can integrate proportionate containment with correct notification authority at the same time.",
+    "memory_rule": "Contain at the scope the incident actually affects - not the broadest possible shutdown - and route external communication through management's own authority.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.authority"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U9/U10 AUTHORING BATCH CANDIDATE (D4-U10, Incident Management Synthesis / Capstone) — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md and the Architect's D4-U9/U10 authoring directive. Integrates business-impact-driven proportionate containment (D4-U2/D4-U5, source-grounded 4A2/4B3) with external-notification authority (D4-U4, source-grounded 4B4) inside one transfer scenario. Reuses the existing CANONICAL Patterns P01 (Business Alignment) and P02 (Authority Follows Accountability), both already approved for Domain 4. No new pattern invented. Original scenario, transferred to a mid-size hospital system, not a reproduction of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0031",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.incident-management-synthesis", "concept.d4.eradication-recovery", "concept.d4.ir-bcp-drp-boundary", "concept.d4.post-incident-review"],
+    "patterns": ["pattern.p04", "pattern.p15"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager", "role.board-senior-management"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.incident",
+    "family": "family.d4.incident-management-synthesis",
+    "variation_tags": ["business-setting:airline-rto-met-continuity-worked-review-pending", "distractor-temptation:premature-closure-or-overcorrected-escalation", "decision-consequence:verify-recovery-and-complete-review-before-closure"],
+    "prompt": "A regional airline's disaster recovery team restores its booking system after eradicating a compromised account, meeting the stated recovery time objective. Meanwhile, gate agents at several airports continue checking in passengers manually, since the booking system's outage triggered the airline's business continuity plan. Corporate leadership wants to declare the entire event closed now that the system is back online. What is the BEST recommendation for the security manager to make?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Confirm the booking system is genuinely restored end to end - not just within the recovery time objective - and complete a post-incident review to identify what allowed the compromise, before declaring the incident closed.",
+        "correct": true,
+        "rationale": "Meeting a recovery time objective doesn't by itself prove recovery is complete, and an incident isn't genuinely closed, from a management-learning standpoint, until the root cause is understood and corrective action is confirmed - both still need to happen here."
+      },
+      {
+        "key": "b",
+        "text": "Declare the incident closed, since the recovery time objective was met and gate agents can now use the booking system again.",
+        "correct": false,
+        "rationale": "Meeting the recovery time objective is not the same as recovery being complete, and it doesn't address whether the root cause was ever understood or corrective action confirmed.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Treat the matter as fully resolved because the manual check-in process kept the airline operating throughout the outage.",
+        "correct": false,
+        "rationale": "Business continuity working as intended is a genuine success, but it is a different concern from whether the underlying incident has actually been investigated and closed out.",
+        "repair_target": "repair.vocabulary-error"
+      },
+      {
+        "key": "d",
+        "text": "Escalate to the board immediately as an unresolved crisis, since the incident is not technically closed yet.",
+        "correct": false,
+        "rationale": "Recovery and business continuity both worked as intended here - what remains is completing the post-incident review, not escalating this as an ongoing crisis.",
+        "repair_target": "repair.sequence-error"
+      }
+    ],
+    "explanation": "This scenario integrates two Domain 4 reasoning targets: recovery is not verified simply because a recovery time objective was met, and business continuity working successfully is a separate concern from whether the incident's root cause has actually been understood and closed out through post-incident review.",
+    "recognition_clue": "A stem where a recovery metric has been met and a continuity plan has worked, but leadership wants to declare the matter closed anyway, is testing whether the learner recognizes that neither fact alone proves the incident is genuinely finished.",
+    "memory_rule": "An incident isn't closed, from a management-learning standpoint, until what happened becomes confirmed corrective action.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U9/U10 AUTHORING BATCH CANDIDATE (D4-U10, Incident Management Synthesis / Capstone) — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md and the Architect's D4-U9/U10 authoring directive. Integrates RTO-versus-full-recovery-verification (D4-U7, source-grounded 4B5), business-continuity-success-versus-incident-closure (D4-U8, source-grounded 4A3/4A4), and the need to complete post-incident review before declaring closure (D4-U9, source-grounded 4B6) inside one transfer scenario. Reuses the existing CANONICAL Patterns P04 (No Lifecycle Jumping) and P15 (Closing the Loop), both already approved for Domain 4. No new pattern invented. Original scenario, transferred to a regional airline, not a reproduction of any specific source question. Not yet human-reviewed or promoted."
   }
 ]

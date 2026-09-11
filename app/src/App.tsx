@@ -112,7 +112,9 @@ const REVIEW_LESSON_ITEMS: PrototypeStateItem[] = [
   { id: "lesson.d4.incident-containment", label: "D4-U5 — Containment" },
   { id: "lesson.d4.evidence-investigation", label: "D4-U6 — Evidence Handling / Investigation" },
   { id: "lesson.d4.eradication-recovery", label: "D4-U7 — Eradication / Recovery" },
-  { id: "lesson.d4.ir-bcp-drp-boundary", label: "D4-U8 — IR / BCP / DRP Boundary" }
+  { id: "lesson.d4.ir-bcp-drp-boundary", label: "D4-U8 — IR / BCP / DRP Boundary" },
+  { id: "lesson.d4.post-incident-review", label: "D4-U9 — Post-Incident Review" },
+  { id: "lesson.d4.incident-management-synthesis", label: "D4-U10 — Incident Management Synthesis (Capstone)" }
 ];
 
 const SESSION_SCREENS = new Set([

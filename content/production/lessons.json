@@ -1211,5 +1211,82 @@
     "version": 1,
     "source": "source.learner-supplied.domain-4-question-bank",
     "note": "DOMAIN 4 U7/U8 AUTHORING BATCH CANDIDATE (D4-U8, IR / BCP / DRP Boundary) — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md and the Architect's D4-U7/U8 authoring directive. Prerequisite is lesson.d4.eradication-recovery (D4-U7) only. DEPENDENCY DECISION: mirrors D4-U6's own precedent - confirmed via the same direct inspection of app/src/content/resolve.ts's recallPoolFor (fully transitive recall pool, not distance-weighted), a second direct prerequisite edge back to an earlier unit would be functionally inert for recall purposes; Domain 4 remains a strictly linear chain with no branching requiring reconvergence. Deliberately cross-cutting (lifecycle: null, stage_target: null) - business continuity invocation is one of the CANONICAL incident lifecycle's own documented cross-cutting supporting activities, not bound to one stage. Continues Harborview Hotels directly from D4-U7's recovery-in-progress incident. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d4.post-incident-review",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.post-incident-review"],
+    "patterns": ["pattern.p15", "pattern.p02"],
+    "prerequisites": ["lesson.d4.ir-bcp-drp-boundary"],
+    "objective": "Recognize that recovery restores operations but post-incident review improves the organization - that the review's purpose is deriving concrete process improvement and confirming corrective actions were actually implemented, never identifying someone to blame - and that root-cause analysis, first begun during eradication, is completed here if it was not fully resolved earlier.",
+    "context": "With the affected property's systems fully recovered and Harborview's business continuity and disaster recovery plans having worked as intended (D4-U7, D4-U8), the incident is not finished from a management-learning standpoint. Harborview's post-incident review looks back at the overnight spike in failed login attempts that first surfaced the incident (D4-U3) and asks why it took until the next business day to notice: failed-login alerts on privileged accounts were only reviewed during normal business hours, not monitored in real time overnight. That gap - not the compromised account itself - is the root cause the review identifies, and it recommends implementing real-time, around-the-clock alerting on privileged-account activity. A corrective action like this has an honest, specific benefit: it should improve how quickly Harborview identifies a similar event in the future, not shorten how long an active incident takes to resolve once detected. Recovery brought Harborview's systems back online; only the review, and following through on what it recommends, actually makes Harborview better prepared for next time.",
+    "cism_perspective": "CISM stems in this area often ask why senior management reviews a completed incident, offering fault-finding options (evaluating the response team, demonstrating commitment, assigning blame) as tempting distractors - the correct answer is confirming that recommended corrective actions were actually implemented, not just written up. Other stems describe an incident where the root cause was never fully determined during eradication and ask what the post-incident review should do about it - completing that analysis, not treating the incident as closed or reassigning the open question to blame, is correct. A third pattern asks for the PRIMARY goal of a post-incident review itself, rejecting documentation, legal-evidence-gathering, and blame in favor of deriving process improvement.",
+    "recognition_clues": [
+      "The stem describes senior management reviewing a completed incident and offers evaluating the response team's performance, or identifying who is responsible, as an option - management review exists to confirm corrective actions were implemented, not to find fault.",
+      "The stem describes eradication as complete but the root cause never fully determined, then asks what the post-incident review should do - complete the root-cause analysis, rather than treating the incident as closed or assigning blame for the unresolved question.",
+      "The stem asks for the PRIMARY or MOST important goal of a post-incident review - the answer is deriving ways to improve the process, not documentation, evidence-gathering, or budget/tooling byproducts."
+    ],
+    "scenario": "Harborview's post-incident review identifies the overnight monitoring gap as the root cause and recommends implementing real-time, around-the-clock alerting on privileged-account activity. Once the recommendation is written up, Harborview's executive team schedules a formal review of the incident. The security manager confirms this review exists to verify the real-time monitoring has actually been implemented - not to evaluate how the security team performed, and not to determine who should be held responsible for the account compromise.",
+    "traps": [
+      "Treating senior management's review of an incident as an evaluation of the response team's performance, or a search for someone to blame, rather than confirmation that corrective actions were actually implemented.",
+      "Treating an incident as closed once eradication and recovery are complete, without completing a root-cause analysis that was never fully resolved.",
+      "Treating the post-incident review's goal as producing a report, gathering additional legal evidence, or building a budget case, rather than deriving concrete process improvements.",
+      "Overclaiming a corrective action's benefit - for example, expecting a newly monitored process to shorten future incidents, when its honest, specific benefit is improving identification."
+    ],
+    "memory_rules": [
+      "Recovery restores operations - post-incident review improves the organization.",
+      "Senior management reviews an incident to confirm corrective actions were implemented, not to find fault.",
+      "An incident isn't closed, from a management-learning standpoint, until what happened becomes confirmed corrective action."
+    ],
+    "retrieval_refs": ["question.d4.0026"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U9/U10 AUTHORING BATCH CANDIDATE (D4-U9, Post-Incident Review) — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md and the Architect's D4-U9/U10 authoring directive. Prerequisite is lesson.d4.ir-bcp-drp-boundary (D4-U8) only, continuing the Domain 4 chain and the full cumulative cross-domain recall pool. Genuinely bound to stage.incident.post-incident-review-improve of the existing CANONICAL lifecycle.incident - the domain's own final stage - no new lifecycle or stage introduced. Continues Harborview Hotels directly from D4-U7/U8's fully recovered incident; does not introduce a new incident merely to teach this unit, per the binding instruction. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d4.incident-management-synthesis",
+    "domain": "domain.d4",
+    "concepts": [
+      "concept.d4.incident-management-synthesis",
+      "concept.d4.business-impact-analysis-prioritization",
+      "concept.d4.incident-classification-severity",
+      "concept.d4.escalation-communications",
+      "concept.d4.incident-containment",
+      "concept.d4.eradication-recovery",
+      "concept.d4.ir-bcp-drp-boundary",
+      "concept.d4.post-incident-review"
+    ],
+    "patterns": ["pattern.p04", "pattern.p02", "pattern.p15", "pattern.p01"],
+    "prerequisites": ["lesson.d4.post-incident-review"],
+    "objective": "Recognize incident management as one coordinated management capability - readiness and business impact, confirmation and classification, escalation and communication, containment, evidence, eradication and recovery, continuity where needed, and post-incident improvement - by connecting two or more previously taught Domain 4 reasoning targets inside a single live business scenario, rather than answering from only one prior unit's lens.",
+    "context": "Harborview's incident is now fully closed out: the compromise was confirmed and classified (D4-U3), escalated through the right authority (D4-U4), contained at the scope it actually affected (D4-U5), investigated with its evidence preserved (D4-U6), eradicated and recovered with end-to-end verification (D4-U7), supported in parallel by business continuity and disaster recovery (D4-U8), and reviewed to convert what happened into a confirmed corrective action (D4-U9). None of these pieces stands alone in a real management situation - a scenario can raise a business-impact question, an authority question, and a closing-the-loop question all at once, and a real situation rarely arrives labeled with which one is actually in play right now.",
+    "cism_perspective": "CISM capstone-style stems in this domain describe a scenario touching multiple prior reasoning targets at once and ask what the security manager's most important next action is. A tempting wrong answer answers from only one prior unit's lens - treating a resolved sub-question as if it were the only thing that still matters, or reaching for the technically satisfying answer instead of the one the current facts actually call for. The correct answer identifies every concern the scenario's facts genuinely raise and addresses what is actually still open, not what has already been settled.",
+    "recognition_clues": [
+      "The stem describes more than one thing happening at once (a technical event, a communication already made, a plan already invoked) - identify which of these facts is actually still unresolved and requires action now, not which one is most technically interesting.",
+      "The stem offers an option that only re-confirms something the scenario already establishes is fine (a corrective action that already worked, a recovery objective already met) - that option is a distraction from what the scenario's remaining facts actually require.",
+      "The stem transfers the integrated reasoning to a new organization and setting - the underlying pattern (confirm before act, scope to actual impact, route through authorized channels, verify before declaring done) still applies; the business details differ, the reasoning does not."
+    ],
+    "scenario": "Eight months later, another Harborview property reports a fresh wave of failed logins on a privileged account overnight - but this time, the real-time monitoring implemented after the post-incident review (D4-U9) catches it immediately and pages the on-call security analyst before dawn. Early triage shows the account was not actually compromised - a legitimate employee had mistyped their password repeatedly after a system update. Meanwhile, worried after the prior year's incident, the property's general manager has already told a local reporter that Harborview is 'handling another attempted breach' before anyone confirmed what actually happened. The security manager must decide what matters most right now: the monitoring worked exactly as intended, but the unauthorized comment to the media is a live, uncorrected problem.",
+    "traps": [
+      "Escalating the login activity as a confirmed repeat security incident before triage has established whether it actually is one.",
+      "Allowing the general manager's unauthorized media comment to stand uncorrected because the underlying login activity turns out not to be a genuine compromise.",
+      "Treating the matter as fully closed because the new monitoring control worked as intended, while ignoring the still-open communication problem it didn't prevent.",
+      "Answering from only one prior unit's lens - for example, focusing only on whether the login activity is a real incident while missing that the communication misstep needs correcting regardless of that answer."
+    ],
+    "memory_rules": [
+      "A real situation rarely arrives labeled with which piece of incident management is actually in play - read the facts, not the labels.",
+      "A corrective action working as intended doesn't mean every other concern in the same situation is resolved.",
+      "Incident management is a coordinated management capability, not a checklist of isolated actions performed once and filed away."
+    ],
+    "retrieval_refs": ["question.d4.0029"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U9/U10 AUTHORING BATCH CANDIDATE (D4-U10, Incident Management Synthesis / Capstone) — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md §10/§20 and the Architect's D4-U9/U10 authoring directive, mirroring lesson.d3.program-synthesis's own precedent. Prerequisite is lesson.d4.post-incident-review (D4-U9) only; because D4-U1 through D4-U9 form one single, unbroken, fully linear prerequisite chain (each unit's own prerequisite is exactly its immediate predecessor, confirmed unit by unit across this domain's four authoring batches), this single edge transitively covers every Domain 4 concept taught across all nine prior units, exactly mirroring how D3-U10's single prerequisite edge on D3-U9 transitively covered all of Domain 3. Deliberately cross-cutting (lifecycle: null, stage_target: null), per the general Domain Synthesis/Capstone principle - the capstone scenario is read against the domain's own CANONICAL lifecycle as a narrative backbone, never reduced to a stage-labeling exercise. The capstone scenario is a genuinely new, later management situation (not a repeat of any prior Harborview scene) that depends on the learner's accumulated understanding across D4-U3, D4-U4, and D4-U9 at once, per the binding instruction not to introduce ten mini-recaps or one question per unit. Not yet human-reviewed or promoted."
   }
 ]
