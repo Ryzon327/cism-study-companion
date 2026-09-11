@@ -4098,4 +4098,329 @@
     "source": "source.learner-supplied.domain-3-question-bank",
     "note": "DOMAIN 3 U7/U8 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3B5 sub-area (ownership/responsibility for data protection remains with the outsourcing enterprise; periodic independent audit/review is repeatedly identified as the MOST effective compliance mechanism, ahead of contracts, certifications, or provider claims; vendor monitoring is the source-identified NEXT step once a vendor contract is signed; confirming the agreement still reflects current business requirements is the source-identified FIRST step when a long-standing vendor disappoints senior management) and the existing CANONICAL Pattern P02 (Authority Follows Accountability), reused here rather than inventing a new pattern - accountability for the outcome stays internal even when performance of the work does not. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
   }
+,
+  {
+    "id": "question.d3.0026",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.program-metrics-reporting"],
+    "patterns": ["pattern.p07"],
+    "qualifier": "qualifier.most",
+    "roles_mentioned": ["role.security-manager", "role.security-steering-committee"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.program-metrics-reporting",
+    "variation_tags": ["business-setting:acquisition-integration", "distractor-temptation:activity-metric-as-effectiveness", "decision-consequence:trend-tied-to-objectives"],
+    "prompt": "Meridian's steering committee asks for the program's first full-cycle quarterly report. The information security manager has ready access to the number of controls deployed this quarter, the percentage of staff who completed this quarter's awareness training, and the number of patches applied broken down by severity level. Which of the following would be MOST useful to include in the report?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The trend, over each of the last four quarters, in the percentage of the program's own control objectives being met.",
+        "correct": true,
+        "rationale": "A trend tied to the program's own objectives shows whether the program is actually achieving what it was designed to achieve; a single quarter's activity count does not."
+      },
+      {
+        "key": "b",
+        "text": "The number of controls deployed this quarter.",
+        "correct": false,
+        "rationale": "The number of controls deployed is an activity count; it says nothing about whether those controls are achieving their objective.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "The percentage of staff who completed this quarter's awareness training.",
+        "correct": false,
+        "rationale": "Completion is a training-delivery activity metric; it does not show whether the program's control objectives are being met this quarter.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "d",
+        "text": "The number of patches applied this quarter, broken down by severity level.",
+        "correct": false,
+        "rationale": "A severity breakdown of patch counts still describes activity performed, not whether the program's own objectives are being achieved, and carries no trend over time.",
+        "repair_target": "repair.decision-error"
+      }
+    ],
+    "explanation": "A metric is useful when it connects to the program's own objectives and shows a trend over time, not when it is merely easy to count. Controls deployed, training completion, and patches applied are all activity or output figures - none of them establish whether the program is producing the outcome it was actually selected to produce.",
+    "recognition_clue": "A stem offering several easy-to-count activity/output figures as if they were interchangeable report content is testing whether the trend tied to the program's own objectives is recognized as the actually useful measure.",
+    "memory_rule": "Measuring activity is easy. Measuring whether the program is achieving its objective is what management actually needs.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "DOMAIN 3 U9/U10 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3A5/3B6 sub-areas (metrics should connect to the program's own objectives, not be chosen merely because they are easy to count; a trend carries strategic value where an isolated activity/output figure does not; the single most significant attribute of a good metric is that it is meaningful to its recipient; KPIs 'provide a comparison between expected and achieved performance and best provide feedback... on overall effectiveness,' distinct from KRIs (early warning of materializing risk, not overall effectiveness), KCIs (control performance only), and OKRs (goal-setting, not performance insight)) and the existing CANONICAL Patterns P07 (Implementation != Effectiveness, reapplied to metric selection) and P11 (Audience-Appropriate Communication, Domain 3's first use, reused from Domain 2's concept.d2.risk-monitoring-reporting). Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0027",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.program-metrics-reporting"],
+    "patterns": ["pattern.p07"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.board-senior-management", "role.security-manager"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.program-metrics-reporting",
+    "variation_tags": ["business-setting:healthcare-board-reporting", "distractor-temptation:kri-or-report-type-confused-with-kpi", "decision-consequence:measurement-type-matches-need"],
+    "prompt": "A hospital's board asks its information security manager for a single indicator that BEST tells them whether the security program overall is achieving what it was designed to achieve. The manager has a recent gap-analysis report, an incident-statistics summary, a set of key risk indicators tracking emerging threats, and a key performance indicator comparing the program's expected versus achieved control performance. Which should the manager report?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The key performance indicator comparing expected versus achieved control performance across the program.",
+        "correct": true,
+        "rationale": "A KPI measures how well a process or program is performing against its own goal, and is the measurement type built to answer exactly the question the board is asking."
+      },
+      {
+        "key": "b",
+        "text": "The gap-analysis report.",
+        "correct": false,
+        "rationale": "A gap analysis highlights differences from an external best-practice framework; it does not show whether the program itself is achieving its own performance goal.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "The incident-statistics summary.",
+        "correct": false,
+        "rationale": "Incident statistics describe what has happened, not whether the program overall is achieving its intended performance.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "The set of key risk indicators tracking emerging threats across the enterprise's various business units and locations.",
+        "correct": false,
+        "rationale": "A KRI signals rising risk exposure in specific areas of concern; it is not built to show the program's overall performance against its own goal - that is what a KPI answers.",
+        "repair_target": "repair.vocabulary-error"
+      }
+    ],
+    "explanation": "Four commonly required measurement types answer different questions: a KPI shows overall performance against a goal, a KRI signals rising risk in specific areas, a KCI shows whether a specific control is operating as designed, and an OKR frames a goal rather than measuring current performance. The board's question - is the program overall achieving what it was designed to achieve - is a KPI question.",
+    "recognition_clue": "A stem asking which single indicator BEST shows overall program effectiveness, among a mix of report types and measurement types, is testing whether a KPI is recognized as the measurement type built for that specific question.",
+    "memory_rule": "The right metric depends on the decision and the audience it needs to inform.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "DOMAIN 3 U9/U10 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3A5/3B6 sub-areas (metrics should connect to the program's own objectives, not be chosen merely because they are easy to count; a trend carries strategic value where an isolated activity/output figure does not; the single most significant attribute of a good metric is that it is meaningful to its recipient; KPIs 'provide a comparison between expected and achieved performance and best provide feedback... on overall effectiveness,' distinct from KRIs (early warning of materializing risk, not overall effectiveness), KCIs (control performance only), and OKRs (goal-setting, not performance insight)) and the existing CANONICAL Patterns P07 (Implementation != Effectiveness, reapplied to metric selection) and P11 (Audience-Appropriate Communication, Domain 3's first use, reused from Domain 2's concept.d2.risk-monitoring-reporting). Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0028",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.program-metrics-reporting"],
+    "patterns": ["pattern.p11"],
+    "qualifier": "qualifier.most",
+    "roles_mentioned": ["role.security-manager", "role.custodian-it-operations", "role.board-senior-management"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.program-metrics-reporting",
+    "variation_tags": ["business-setting:financial-services-audience-matching", "distractor-temptation:wrong-audience-or-isolated-number", "decision-consequence:audience-appropriate-routing"],
+    "prompt": "A regional bank's IT operations team wants to know whether its email antivirus control is actually catching threats; the bank's board wants to know whether the security program overall is managing risk within acceptable limits. The security manager has one report showing the number of infected emails quarantined versus infected emails that got through this month, and another report showing the trend, over the last four quarters, in the percentage of the program's control objectives being met. Which of the following BEST routes this information?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Send the quarantine figures to IT operations, since they can act directly on that specific control's performance; send the control-objective trend to the board, since that is the decision-relevant view of overall program performance.",
+        "correct": true,
+        "rationale": "Each audience receives the measure it can actually act on - the operational detail to the team that operates the control, and the objective-linked trend to the audience that needs the overall picture."
+      },
+      {
+        "key": "b",
+        "text": "Send the quarantine figures to the board, since it is the most complete technical data available; send the control-objective trend to IT operations.",
+        "correct": false,
+        "rationale": "This reverses the audiences: the board needs decision-relevant overall performance, not a single control's raw operational figures, while IT operations needs the operational detail, not a strategic trend.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "c",
+        "text": "Send both reports to both audiences, since more information is always useful for informed decisions.",
+        "correct": false,
+        "rationale": "A report is only as good as the decision it lets its specific audience make; sending everything to everyone does not make either report more relevant to either recipient.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "Send the number of infected emails quarantined this month to the board, since it directly shows the control is working.",
+        "correct": false,
+        "rationale": "An isolated monthly count, without a trend or a tie to the program's own objectives, does not give the board the overall picture it needs, and this specific measure is better suited to the operational team that can act on it.",
+        "repair_target": "repair.decision-error"
+      }
+    ],
+    "explanation": "A report is only as good as the decision it enables its specific recipient to make. The operational team needs the operational detail it can act on directly; the board needs the objective-linked trend that shows overall program performance - swapping them, combining them indiscriminately, or sending an isolated figure to the strategic audience all fail the audience-appropriate-communication test.",
+    "recognition_clue": "A stem offering an operational figure and a strategic trend, and asking which audience should receive which, is testing whether information is matched to what each specific recipient needs to decide or act on.",
+    "memory_rule": "The right metric depends on the decision and the audience it needs to inform.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "DOMAIN 3 U9/U10 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 3 source material's 3A5/3B6 sub-areas (metrics should connect to the program's own objectives, not be chosen merely because they are easy to count; a trend carries strategic value where an isolated activity/output figure does not; the single most significant attribute of a good metric is that it is meaningful to its recipient; KPIs 'provide a comparison between expected and achieved performance and best provide feedback... on overall effectiveness,' distinct from KRIs (early warning of materializing risk, not overall effectiveness), KCIs (control performance only), and OKRs (goal-setting, not performance insight)) and the existing CANONICAL Patterns P07 (Implementation != Effectiveness, reapplied to metric selection) and P11 (Audience-Appropriate Communication, Domain 3's first use, reused from Domain 2's concept.d2.risk-monitoring-reporting). Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0032",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.program-synthesis", "concept.d3.control-implementation-integration", "concept.d3.control-testing-evaluation", "concept.d3.program-metrics-reporting"],
+    "patterns": ["pattern.p07"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager", "role.security-steering-committee"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.program-synthesis",
+    "variation_tags": ["business-setting:acquisition-integration", "distractor-temptation:compliance-percentage-as-effectiveness", "decision-consequence:integrated-investigation-and-reporting"],
+    "prompt": "Meridian's steering committee reviews this quarter's dashboard for the Aldergate dual-approval payment control - the control embedded into the finance team's own workflow and first tested for effectiveness in earlier quarters. The dashboard shows 100% of payments logged with two recorded approvals. Meanwhile, the finance team's own near-miss log - approvals granted within seconds of each other - has not improved since last quarter. What should the information security manager report and recommend?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Report the near-miss trend, not the 100% compliance figure, and recommend investigating whether the second approval is still failing to reflect genuine independent review.",
+        "correct": true,
+        "rationale": "Full activity - every payment logged with two approvals - does not prove the control is effective; the near-miss trend is the actual evidence of whether independent review is happening, and it is what should be reported and investigated."
+      },
+      {
+        "key": "b",
+        "text": "Report the 100% compliance figure to the steering committee as evidence the control is now fully effective.",
+        "correct": false,
+        "rationale": "100% of payments showing two approvals is an activity/compliance figure, not evidence of effectiveness - it is the same activity-versus-effectiveness question this control's original test already raised, and the unimproved near-miss trend shows it has not been resolved.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "c",
+        "text": "Recommend re-integrating the control into the finance team's day-to-day workflow, since a compliance figure this high suggests the control may have quietly drifted back out of the actual process.",
+        "correct": false,
+        "rationale": "The dashboard shows the control is still fully integrated into the workflow - every payment is being logged through it. The problem this quarter's facts raise is effectiveness, not integration, which was already resolved when the control was first embedded.",
+        "repair_target": "repair.vocabulary-error"
+      },
+      {
+        "key": "d",
+        "text": "Report the trend in training completion for the finance team, since awareness training is the standard response to a payment-approval concern.",
+        "correct": false,
+        "rationale": "Nothing in the scenario points to a training gap - the facts raise an effectiveness question about an already-integrated control, not a people/awareness question.",
+        "repair_target": "repair.decision-error"
+      }
+    ],
+    "explanation": "This scenario connects three prior reasoning targets: the control is confirmed integrated (the workflow data shows it), the effectiveness question from its original test is still open (the near-miss trend hasn't moved), and the metric that should be reported is the one tied to that open question, not the activity figure that looks like good news. Answering from only one of these three lenses - integration alone, effectiveness alone, or reporting alone - misses what the combined facts actually require.",
+    "recognition_clue": "A stem showing a high compliance/activity figure alongside an unimproved outcome trend for the same control is testing whether the outcome trend, not the compliance figure, is recognized as what should be reported and investigated.",
+    "memory_rule": "A real management situation rarely arrives labeled with which topic it belongs to - read every fact before deciding which reasoning applies.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision", "evidence.technical-vs-management"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "DOMAIN 3 U9/U10 AUTHORING BATCH CANDIDATE (D3-U10, Program Synthesis / Capstone) — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md Section 10 and the Architect's D3-U9/U10 authoring directive, mirroring the precedent set by family.d2.risk-management-synthesis (D2-U10). This variant is an integrated-practice question combining two or more previously taught D3-U1-U9 reasoning targets in one live business scenario, per docs/learning/LIFECYCLE-MODEL.md's approved, non-canonical Domain 3 conceptual relationship - never a manufactured stage-by-stage lifecycle, never tested as a stage-location question. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0033",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.program-synthesis", "concept.d3.external-services-accountability", "concept.d3.asset-classification", "concept.d3.program-metrics-reporting"],
+    "patterns": ["pattern.p02"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.board-senior-management", "role.security-manager", "role.data-owner"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.program-synthesis",
+    "variation_tags": ["business-setting:healthcare-vendor-incident", "distractor-temptation:vendor-sole-accountability", "decision-consequence:integrated-root-cause-reporting"],
+    "prompt": "A hospital's outsourced medical-device-network vendor fails to apply a known security patch, and an attacker exploits the gap on a subnet of devices that were only partially classified when the hospital onboarded them eighteen months ago - their full criticality was never finished being assessed. The hospital's board asks who is accountable and what should be reported. What is the BEST response?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The hospital remains accountable for the outcome regardless of the vendor's failure; the report to the board should cover both the vendor's patching failure and the incomplete device classification as contributing causes, along with what independent oversight will change going forward.",
+        "correct": true,
+        "rationale": "Accountability for the outcome stays with the hospital even though the vendor performed the work; reporting only the vendor's failure would miss the classification gap that made the exposure worse and that the hospital itself is responsible for closing."
+      },
+      {
+        "key": "b",
+        "text": "The vendor is accountable, since it was contractually responsible for patching; the report should focus on the vendor's corrective action plan.",
+        "correct": false,
+        "rationale": "Outsourcing the patching work does not outsource the hospital's accountability for the outcome - the vendor's corrective plan alone does not address the classification gap that is the hospital's own responsibility.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "c",
+        "text": "The hospital is accountable, and the report should focus solely on completing the device classification, since that is what the hospital directly controls.",
+        "correct": false,
+        "rationale": "Completing the classification is necessary but not sufficient - the report also needs to address the vendor's patching failure and the independent oversight needed to prevent a recurrence.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "Accountability should be determined by whichever party's insurance policy covers the incident, and the report should focus on the financial recovery process.",
+        "correct": false,
+        "rationale": "Accountability for a security outcome is a management/governance question, not an insurance-coverage question, and a report focused only on financial recovery would miss the underlying causes that need to be fixed.",
+        "repair_target": "repair.decision-error"
+      }
+    ],
+    "explanation": "This scenario connects two prior reasoning targets: accountability for the outcome stays internal even though the vendor performed the work, and the incomplete classification is a separate, genuine contributing cause the hospital itself must close. A report or accountability answer that addresses only one of these two facts is incomplete.",
+    "recognition_clue": "A stem combining a vendor's performance failure with an incomplete classification detail for the same affected assets is testing whether both facts are connected in the accountability answer and the report, not just the more obvious vendor failure.",
+    "memory_rule": "Responsibility for performing a service can move outside the organization; accountability for the business outcome does not.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision", "evidence.authority"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "DOMAIN 3 U9/U10 AUTHORING BATCH CANDIDATE (D3-U10, Program Synthesis / Capstone) — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md Section 10 and the Architect's D3-U9/U10 authoring directive, mirroring the precedent set by family.d2.risk-management-synthesis (D2-U10). This variant is an integrated-practice question combining two or more previously taught D3-U1-U9 reasoning targets in one live business scenario, per docs/learning/LIFECYCLE-MODEL.md's approved, non-canonical Domain 3 conceptual relationship - never a manufactured stage-by-stage lifecycle, never tested as a stage-location question. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d3.0034",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.program-synthesis", "concept.d3.awareness-training-effectiveness", "concept.d3.program-metrics-reporting"],
+    "patterns": ["pattern.p11"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager", "role.security-steering-committee", "role.board-senior-management"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.program-control",
+    "family": "family.d3.program-synthesis",
+    "variation_tags": ["business-setting:higher-education-awareness-metrics", "distractor-temptation:completion-rate-to-wrong-audience", "decision-consequence:trend-and-audience-together"],
+    "prompt": "A university's information security office reports 95% completion of this year's phishing-awareness training directly to the full board, noting in passing that phishing-simulation click rates have not improved. The board, unsure what action is being requested, takes no action. What should the security manager have done differently?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Report the click-rate trend - not the completion percentage - to the security steering committee with a specific recommendation for role-specific retraining, reserving a board update for the resulting decision the committee's response requires.",
+        "correct": true,
+        "rationale": "The completion percentage is a training-delivery activity metric, not evidence the training worked; the click-rate trend is the actual effectiveness evidence, and it belongs with the audience that can act on redesigning the training, not as an unexplained note to a board with no specific decision to make."
+      },
+      {
+        "key": "b",
+        "text": "Continue reporting the 95% completion rate to the board each year, since a high completion rate demonstrates the program is functioning as intended.",
+        "correct": false,
+        "rationale": "A high completion rate shows the training was delivered, not that it changed behavior - the unchanged click rate is the evidence that actually matters.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Report the click-rate trend to the board directly, with full technical detail on how the phishing simulation was constructed.",
+        "correct": false,
+        "rationale": "The board needs the decision-relevant trend and what it means for the program, not the technical construction of the simulation; that operational detail belongs with the team that will redesign the training.",
+        "repair_target": "repair.technical-vs-management-error"
+      },
+      {
+        "key": "d",
+        "text": "Escalate the unchanged click rate as a security incident requiring the incident response team.",
+        "correct": false,
+        "rationale": "An unchanged awareness metric is a training-effectiveness finding, not a security incident - conflating the two misapplies incident-management reasoning to a program-metrics finding.",
+        "repair_target": "repair.vocabulary-error"
+      }
+    ],
+    "explanation": "This scenario connects two prior reasoning targets: a completion rate is an activity metric, not evidence of effectiveness, and a report is only as good as the decision it enables its actual recipient to make. The board received an activity figure it could not act on; the steering committee - the audience that can decide on retraining - never received the effectiveness evidence it needed.",
+    "recognition_clue": "A stem describing a report that leaves its recipient unsure what action to take is testing whether both the metric type (activity vs. effectiveness) and the audience (who can actually act) are recognized as the problem.",
+    "memory_rule": "The right metric depends on the decision and the audience it needs to inform.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision", "evidence.technical-vs-management"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "DOMAIN 3 U9/U10 AUTHORING BATCH CANDIDATE (D3-U10, Program Synthesis / Capstone) — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md Section 10 and the Architect's D3-U9/U10 authoring directive, mirroring the precedent set by family.d2.risk-management-synthesis (D2-U10). This variant is an integrated-practice question combining two or more previously taught D3-U1-U9 reasoning targets in one live business scenario, per docs/learning/LIFECYCLE-MODEL.md's approved, non-canonical Domain 3 conceptual relationship - never a manufactured stage-by-stage lifecycle, never tested as a stage-location question. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  }
 ]
