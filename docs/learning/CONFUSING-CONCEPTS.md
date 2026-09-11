@@ -172,6 +172,18 @@ restored during alternate processing. MTO (maximum tolerable outage) is the
 absolute outer limit before the business impact becomes unacceptable, and is
 generally the longest of the time-based measures. **[CANDIDATE]**
 
+### Incident Response vs. Business Continuity vs. Disaster Recovery
+Incident response manages the security incident itself, aiming to control
+its impact within acceptable levels. Business continuity keeps critical
+business operations functioning if the incident's impact grows large enough
+to threaten them. Disaster recovery restores the specific technology or
+services that were interrupted. Business continuity and disaster recovery
+are invoked only once an incident's impact escalates far enough to require
+them — not automatically, for every incident incident response is able to
+resolve on its own. Source-confirmed for Domain 4 (see
+[`DOMAIN-4-U1-U2-GATE-RECORD.md`](DOMAIN-4-U1-U2-GATE-RECORD.md)) rather than
+assumed. **[CANDIDATE]**
+
 ## Qualifier pair
 
 ### MOST vs. BEST

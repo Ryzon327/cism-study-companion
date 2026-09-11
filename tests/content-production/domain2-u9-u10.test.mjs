@@ -363,24 +363,15 @@ test("No prerequisite cycle exists among D2-U9/D2-U10 and their ancestors", () =
 });
 
 // Originally "No Domain 3 (or later) entity or leakage exists anywhere in
-// production content" — that boundary is superseded now that Domain 3 has
-// legitimately begun (D3-U1/U2, per docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md
-// and tests/content-production/domain3-u1-u2.test.mjs), exactly as
-// domain2-u1-u2.test.mjs's own "no Domain 2 unit beyond U1/U2" guard was
-// superseded once Phase 9B-2 legitimately added D2-U3/U4. The current
-// batch boundary (no Domain 4 yet, and no Domain 3 unit beyond U1/U2) is
-// asserted here and in domain3-u1-u2.test.mjs respectively.
-test("No Domain 4 (or later) entity or leakage exists anywhere in production content", () => {
-  const laterDomainIds = [...data.concepts, ...data.lessons, ...data.families, ...data.questions]
-    .map((e) => e.id)
-    .filter((id) => /\.d[4-9]\./.test(id) || /^domain\.d[4-9]$/.test(id));
-  assert.equal(laterDomainIds.length, 0, `no Domain 4+ entity may exist yet: ${laterDomainIds.join(", ")}`);
-
-  const questionDomains = new Set(data.questions.map((q) => q.domain));
-  for (const d of questionDomains) {
-    assert.ok(["domain.foundation", "domain.d1", "domain.d2", "domain.d3"].includes(d), `unexpected question domain present: ${d}`);
-  }
-});
+// production content", then narrowed to "No Domain 4 (or later)..." once
+// Domain 3 legitimately began (D3-U1/U2). That boundary is superseded
+// again now that Domain 4 has legitimately begun (D4-U1/U2, per
+// docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md and the new
+// tests/content-production/domain4-u1-u2.test.mjs, which owns the current
+// "no Domain 5, and no Domain 4 unit beyond U1/U2" boundary), exactly
+// mirroring the precedent already established at every prior domain/batch
+// transition in this project. This file's own Domain 2 entities remain
+// asserted unchanged by the tests above.
 
 test("Domain 2 production question count is exactly 30 after U1-U10 (3 variants x 10 families)", () => {
   const d2Questions = data.questions.filter((q) => q.domain === "domain.d2");

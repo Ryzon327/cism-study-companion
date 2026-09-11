@@ -940,5 +940,72 @@
     "version": 1,
     "source": "source.learner-supplied.domain-3-question-bank",
     "note": "DOMAIN 3 U9/U10 AUTHORING BATCH CANDIDATE (D3-U10, Program Synthesis / Capstone) — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md §10 and the Architect's D3-U9/U10 authoring directive, mirroring the precedent set by lesson.d2.risk-management-embedding-synthesis (D2-U10). Prerequisite is lesson.d3.program-metrics-reporting (D3-U9) only - D3-U1 through D3-U9 form one single, fully connected prerequisite graph (D3-U4's own two prerequisites, D3-U2 and D3-U3, already merge both of its branches back into one chain by D3-U5), so this single edge transitively covers all eight prior D3 families, confirmed programmatically via the same ancestorFamilies traversal the test suite uses, satisfying taught-before-tested for every concept this capstone's variants integrate without requiring additional prerequisite edges. The context/scenario narrative above uses docs/learning/LIFECYCLE-MODEL.md's approved, non-canonical Domain 3 conceptual relationship ('strategy -> program -> controls -> measurement/improvement') as its connective thread - never the more granular, unapproved nine-step narrative a working draft might suggest, and never tested as a stage-location question. No lifecycle/stage metadata is introduced. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d4.program-foundations-readiness",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.incident-management-readiness"],
+    "patterns": ["pattern.p06", "pattern.p02"],
+    "prerequisites": ["lesson.d3.program-synthesis"],
+    "objective": "Recognize that effective incident management begins before an incident occurs - with leadership commitment, defined authority and roles, a documented severity/categorization scheme, and tested readiness - rather than starting when someone first detects a potential incident, and distinguish the incident response plan's own purpose (controlling impact, preserving business resiliency) from incident prevention and from business continuity/disaster recovery planning.",
+    "context": "Harborview Hotels is preparing for its peak season: rising occupancy, a surge in digital reservations, and growing reliance on its central booking and payment systems across every property. Leadership wants real confidence that a major security incident could be managed without improvising roles, authority, or communications under pressure - not just a plan document sitting in a folder. Readiness means the organization has already decided, before anything happens, who has the authority to make key decisions, what each role is responsible for, and how incidents will be categorized so response time, reporting, and staffing can be calibrated to actual severity. A plan's true purpose is controlling a disruptive event's impact and preserving the business's ability to keep operating - not preventing every incident (nothing can promise that), and not the same job as the separate business continuity and disaster recovery plans that exist alongside it.",
+    "cism_perspective": "CISM stems in this area often describe an organization about to build or launch an incident management capability and ask what should happen first, or they describe a plan that exists only on paper and ask whether that alone means the organization is ready. The correct answer secures leadership commitment and defines authority/categorization before anything else, and resists treating a drafted document as proof of readiness by itself.",
+    "recognition_clues": [
+      "The stem describes an organization about to launch or build an incident management program and asks what should happen first - that's a signal to look for leadership commitment/support, not a technical or procedural detail.",
+      "The stem states a plan has been written and approved and asks whether the organization is now ready - that's a plan-existence-as-readiness trap; genuine readiness requires tested roles, authority, and response speed, not just a document.",
+      "The stem asks when a key decision (such as who notifies external parties, or who has authority to declare an incident) should be determined - the answer is during plan development, not after an incident is already underway."
+    ],
+    "scenario": "Harborview Hotels' newly appointed information security manager is asked by the executive team to confirm the hotel chain is ready to handle a major security incident before peak season begins. A written incident response plan already exists from years ago, but no one has ever tested it, and it was never clear which executive has the authority to declare a serious incident or decide when to notify affected guests. The security manager recognizes that having a plan document is not the same as being ready, and starts by securing the executive team's explicit commitment to rebuild the program properly - clarifying authority, roles, and a real severity scheme - rather than assuming the old document is sufficient.",
+    "traps": [
+      "Treating a drafted, approved plan document as proof the organization is ready, without confirming roles, authority, or response speed have ever been tested.",
+      "Jumping to technical procedures or tools before leadership commitment and program-level decisions (authority, categorization) are in place.",
+      "Waiting until an incident is underway to decide who has authority to declare it or notify affected parties.",
+      "Treating the incident response plan as if its purpose were to prevent incidents from happening, rather than controlling their impact once they occur."
+    ],
+    "memory_rules": [
+      "Effective incident management starts before the incident - with preparation, clear authority, defined roles, and tested readiness.",
+      "A plan that has never been tested is a draft, not a demonstrated capability."
+    ],
+    "retrieval_refs": ["question.d4.0007"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U1/U2 AUTHORING BATCH CANDIDATE (D4-U1, Program Foundations & Readiness) — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md and the Architect's D4-U1/U2 authoring directive. This is Domain 4's entry point. Prerequisite is lesson.d3.program-synthesis (Domain 3's own capstone) only, continuing the exact same cross-domain cumulative-chain pattern every prior domain's own entry unit has used (D3-U1 itself prerequisited on lesson.d2.risk-management-embedding-synthesis, Domain 2's capstone) - the full Foundation + Domain 1 + Domain 2 + Domain 3 recall pool remains reachable from here with no additional prerequisite edge required. Harborview Hotels is introduced here as Domain 4's stable reference organization, per the Architect's approval, and is used only as an anchor for comprehension - the other two variants transfer to different organizations, per the binding reference-for-comprehension-plus-varied-scenarios-for-transfer rule. Genuinely bound to stage.incident.prepare of the existing CANONICAL lifecycle.incident (schema/registry/lifecycle-stages.json) - no new lifecycle or stage was introduced. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d4.business-impact-analysis-prioritization",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.business-impact-analysis-prioritization"],
+    "patterns": ["pattern.p01"],
+    "prerequisites": ["lesson.d4.program-foundations-readiness"],
+    "objective": "Recognize that a business impact analysis, not technical sophistication or cost, is what should determine recovery priority - identifying which business functions matter most by the impact their disruption creates, gathering that input from the business units that depend on each function, and connecting that impact analysis to the recovery objectives business continuity planning is then built on.",
+    "context": "Harborview Hotels runs many systems across its properties: a central reservations and booking engine, payment processing, property-management systems that manage room status and staff operations, a guest loyalty database, and a newly launched mobile keyless-entry app the IT team is proud to have deployed. When leadership asks what should be restored first if multiple systems are disrupted at once, the newest and most technically impressive system is not automatically the answer. A business impact analysis identifies which functions are actually critical by assessing the impact their disruption creates - lost revenue, inability to check guests in, inability to process payments - gathered from the business units that depend on each function, not from IT or security alone. Its results (what's critical, how quickly it must come back - recovery time objective, or RTO - and how much data loss is tolerable - recovery point objective, or RPO) are what business continuity planning then builds its strategies around - the business impact analysis comes first. Incident response, business continuity, and disaster recovery remain three different plans: incident response manages the security incident itself; business continuity keeps critical operations running if the incident's impact grows large enough to threaten them; disaster recovery restores the specific technology that was interrupted - the latter two are invoked only when an incident's impact escalates far enough to require them, not for every incident incident response is able to resolve on its own.",
+    "cism_perspective": "CISM stems in this area often offer a technically impressive, newly deployed, or expensive system as if it deserves top recovery priority, and ask what should actually determine priority instead; the correct answer reasons from business impact, not technical or financial characteristics of the system itself. A stem may also ask who should provide BIA input, or how a BIA relates to business continuity planning - the correct answer routes to the business units/process owners and treats the BIA as the input that comes before continuity planning, not the reverse.",
+    "recognition_clues": [
+      "The stem offers a system's technical sophistication, novelty, or cost as the reason it should be prioritized for recovery - that's a signal the actual basis should be business impact instead.",
+      "The stem asks who should provide input into determining criticality - the answer is the business units/process owners who depend on the function, not IT or security alone.",
+      "The stem describes an incident already being handled by the response team and asks about invoking business continuity or disaster recovery - the answer connects those separate plans to whether the incident's impact has actually escalated far enough to require them, not to the incident response effort itself."
+    ],
+    "scenario": "Harborview Hotels' IT team highlights its new mobile keyless-entry app as the most advanced system in the portfolio and assumes it should be the first priority if several systems go down at once. When the security manager conducts a business impact analysis with input from each property's front-desk and revenue-management teams, it becomes clear that the reservations and payment systems - not the keyless-entry app - create by far the greatest impact if disrupted, since no rooms can be booked or guests billed without them. The keyless-entry app, while impressive, turns out to have a much lower business impact: properties can fall back to physical keys without losing revenue.",
+    "traps": [
+      "Assuming the newest, most technically advanced, or most expensive system automatically deserves the highest recovery priority.",
+      "Gathering BIA input only from IT or security staff, without the business units that actually depend on each function.",
+      "Treating business continuity or disaster recovery as automatically invoked by every incident, rather than as separate plans triggered only once impact escalates far enough to require them.",
+      "Performing a business impact analysis once and treating it as permanently valid, rather than revisiting it as the business changes."
+    ],
+    "memory_rules": [
+      "Business impact analysis gives management the business-impact and criticality information needed to prioritize response, continuity, and recovery decisions.",
+      "The most technically impressive system is not automatically the most business-critical one.",
+      "Incident response, business continuity, and disaster recovery are three different plans, answering three different questions - one doesn't automatically trigger another."
+    ],
+    "retrieval_refs": ["question.d4.0004"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U1/U2 AUTHORING BATCH CANDIDATE (D4-U2, Business Impact Analysis & Prioritization) — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md and the Architect's D4-U1/U2 authoring directive. Prerequisite is lesson.d4.program-foundations-readiness (D4-U1) only, continuing the Domain 4 chain, which itself continues the full cumulative Foundation + Domain 1 + Domain 2 + Domain 3 recall pool. This family/lesson is deliberately cross-cutting (lifecycle: null, stage_target: null) rather than bound to a single incident-lifecycle stage, per the Architect's explicit approval - a business impact analysis informs classification, response, and recovery decisions throughout the lifecycle rather than belonging to one stage of it. Not yet human-reviewed or promoted."
   }
 ]

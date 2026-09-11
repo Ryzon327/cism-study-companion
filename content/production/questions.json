@@ -4423,4 +4423,329 @@
     "source": "source.learner-supplied.domain-3-question-bank",
     "note": "DOMAIN 3 U9/U10 AUTHORING BATCH CANDIDATE (D3-U10, Program Synthesis / Capstone) — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md Section 10 and the Architect's D3-U9/U10 authoring directive, mirroring the precedent set by family.d2.risk-management-synthesis (D2-U10). This variant is an integrated-practice question combining two or more previously taught D3-U1-U9 reasoning targets in one live business scenario, per docs/learning/LIFECYCLE-MODEL.md's approved, non-canonical Domain 3 conceptual relationship - never a manufactured stage-by-stage lifecycle, never tested as a stage-location question. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
   }
+,
+  {
+    "id": "question.d4.0007",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.incident-management-readiness"],
+    "patterns": ["pattern.p02"],
+    "qualifier": "qualifier.first",
+    "roles_mentioned": ["role.security-manager", "role.board-senior-management"],
+    "primary_role": null,
+    "lifecycle": "lifecycle.incident",
+    "stage": "stage.incident.prepare",
+    "decision_type": "decision.program-control",
+    "family": "family.d4.program-foundations-readiness",
+    "variation_tags": ["business-setting:hospitality-peak-season-launch", "distractor-temptation:plan-document-as-readiness", "decision-consequence:leadership-commitment-first"],
+    "prompt": "Harborview Hotels' newly appointed information security manager is asked to build the hotel chain's first formal incident management program before peak season begins. What should the manager do FIRST?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Secure the executive team's explicit commitment to the program, before drafting detailed technical procedures or staffing plans.",
+        "correct": true,
+        "rationale": "Getting leadership's genuine commitment is consistently the hardest, and most necessary, first step - without it, later decisions about categorization, staffing, and procedures have no real backing."
+      },
+      {
+        "key": "b",
+        "text": "Conclude that Harborview already has an approved incident response plan document on file, so the program is ready.",
+        "correct": false,
+        "rationale": "An approved document is a starting point, not proof of readiness - roles, authority, and response speed still need to be established and tested.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Begin drafting detailed technical response procedures for the IT team.",
+        "correct": false,
+        "rationale": "Technical procedures matter, but they follow from program-level decisions like categorization and authority - drafting them first skips the foundation they depend on.",
+        "repair_target": "repair.technical-vs-management-error"
+      },
+      {
+        "key": "d",
+        "text": "Immediately assign an on-call rotation for the security team.",
+        "correct": false,
+        "rationale": "Staffing decisions depend on the categorization scheme and program scope that haven't been defined yet - assigning a rotation this early gets the order backward.",
+        "repair_target": "repair.sequence-error"
+      }
+    ],
+    "explanation": "Launching an incident management program depends on leadership's genuine commitment before anything else - without it, later decisions about roles, categorization, and procedures lack the backing they need. An existing plan document, a staffing decision, or technical procedures are not substitutes for that first, foundational step.",
+    "recognition_clue": "A stem describing an organization about to build or launch an incident management program, asking what should happen first, is testing whether leadership commitment is recognized as the necessary foundation - not a document, staffing decision, or technical procedure.",
+    "memory_rule": "Effective incident management starts before the incident - with preparation, clear authority, defined roles, and tested readiness.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U1/U2 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4A1 (Incident Response Plan) sub-area (senior leadership buy-in is directly identified as the necessary first step and most significant challenge in developing an incident management plan; the first step in developing an incident response plan specifically is establishing a categorization scheme, since response-time targets, reporting thresholds, and staffing needs all derive from it; responsibility for notifying external parties should be determined during plan development, not after detection or senior-management 'approval' - a role the source explicitly states senior management does not perform) and the existing CANONICAL Patterns P06 (Purpose vs. Activity) and P02 (Authority Follows Accountability), both already approved for Domain 4. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0002",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.incident-management-readiness"],
+    "patterns": ["pattern.p06"],
+    "qualifier": "qualifier.first",
+    "roles_mentioned": ["role.security-manager"],
+    "primary_role": null,
+    "lifecycle": "lifecycle.incident",
+    "stage": "stage.incident.prepare",
+    "decision_type": "decision.program-control",
+    "family": "family.d4.program-foundations-readiness",
+    "variation_tags": ["business-setting:airline-plan-development", "distractor-temptation:downstream-decision-before-foundation", "decision-consequence:categorization-scheme-first"],
+    "prompt": "A regional airline's information security manager is drafting the airline's first incident response plan. Before setting response-time targets, defining reporting thresholds, or determining staffing needs, what should the manager establish FIRST?",
+    "options": [
+      {
+        "key": "a",
+        "text": "A categorization scheme that groups incidents by their likely severity and impact.",
+        "correct": true,
+        "rationale": "Response-time targets, reporting thresholds, and staffing needs all depend on how incidents are categorized by severity - defining that scheme has to come first."
+      },
+      {
+        "key": "b",
+        "text": "A single fixed response-time target that applies to every incident regardless of type.",
+        "correct": false,
+        "rationale": "A single response-time target can't be set meaningfully until incidents are categorized by severity - different severities warrant different response times.",
+        "repair_target": "repair.sequence-error"
+      },
+      {
+        "key": "c",
+        "text": "A reporting threshold defining when incidents must be escalated to senior management.",
+        "correct": false,
+        "rationale": "Reporting thresholds depend on the severity categories they reference - the categories have to exist first.",
+        "repair_target": "repair.sequence-error"
+      },
+      {
+        "key": "d",
+        "text": "A staffing plan sized to handle the airline's expected incident volume.",
+        "correct": false,
+        "rationale": "Staffing needs depend on the categorization scheme and the response times/procedures it drives - sizing staff before that exists is premature.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "Response-time targets, reporting thresholds, and staffing needs are all downstream of how incidents are categorized by severity and impact - defining that categorization scheme is what the plan's other elements are built on.",
+    "recognition_clue": "A stem listing several plan elements (response time, reporting, staffing) and asking which comes first is testing whether the categorization scheme - the thing the others depend on - is recognized as the actual foundation.",
+    "memory_rule": "Effective incident management starts before the incident - with preparation, clear authority, defined roles, and tested readiness.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U1/U2 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4A1 (Incident Response Plan) sub-area (senior leadership buy-in is directly identified as the necessary first step and most significant challenge in developing an incident management plan; the first step in developing an incident response plan specifically is establishing a categorization scheme, since response-time targets, reporting thresholds, and staffing needs all derive from it; responsibility for notifying external parties should be determined during plan development, not after detection or senior-management 'approval' - a role the source explicitly states senior management does not perform) and the existing CANONICAL Patterns P06 (Purpose vs. Activity) and P02 (Authority Follows Accountability), both already approved for Domain 4. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0003",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.incident-management-readiness"],
+    "patterns": ["pattern.p02"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager", "role.legal-compliance", "role.board-senior-management"],
+    "primary_role": null,
+    "lifecycle": "lifecycle.incident",
+    "stage": "stage.incident.prepare",
+    "decision_type": "decision.program-control",
+    "family": "family.d4.program-foundations-readiness",
+    "variation_tags": ["business-setting:insurance-breach-notification-authority", "distractor-temptation:authority-decided-during-incident", "decision-consequence:authority-defined-in-plan-development"],
+    "prompt": "A regional insurer is developing its data breach response plan. When is the BEST time to determine who is responsible for notifying affected customers and regulators if a breach occurs?",
+    "options": [
+      {
+        "key": "a",
+        "text": "During development of the incident response plan, before any breach occurs.",
+        "correct": true,
+        "rationale": "Responsibility for notification should be established when the plan itself is developed, so the team already knows its roles before an incident occurs."
+      },
+      {
+        "key": "b",
+        "text": "After the incident has been detected and confirmed.",
+        "correct": false,
+        "rationale": "Determining responsibility after confirmation invites confusion during an active incident - the decision should already be made by then.",
+        "repair_target": "repair.sequence-error"
+      },
+      {
+        "key": "c",
+        "text": "After senior management formally approves that an incident has occurred.",
+        "correct": false,
+        "rationale": "Senior management does not approve incidents into existence - the incident response team confirms them, and notification responsibility should already be settled well before this point.",
+        "repair_target": "repair.authority-error"
+      },
+      {
+        "key": "d",
+        "text": "Whenever the applicable laws and regulations require notification to occur.",
+        "correct": false,
+        "rationale": "Legal and regulatory requirements shape what the plan must include, but they don't determine who within the organization carries out that notification - that assignment still needs to be made during plan development.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "Notification responsibility is a role/authority decision, and like every other role/authority decision in this unit, it belongs in plan development - before any breach occurs - not improvised once an incident is underway, confirmed, or formally acknowledged.",
+    "recognition_clue": "A stem asking when a specific role/authority decision should be made is testing whether plan development - not the moment of detection, confirmation, or approval - is recognized as the right time.",
+    "memory_rule": "Effective incident management starts before the incident - with preparation, clear authority, defined roles, and tested readiness.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision", "evidence.authority"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U1/U2 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4A1 (Incident Response Plan) sub-area (senior leadership buy-in is directly identified as the necessary first step and most significant challenge in developing an incident management plan; the first step in developing an incident response plan specifically is establishing a categorization scheme, since response-time targets, reporting thresholds, and staffing needs all derive from it; responsibility for notifying external parties should be determined during plan development, not after detection or senior-management 'approval' - a role the source explicitly states senior management does not perform) and the existing CANONICAL Patterns P06 (Purpose vs. Activity) and P02 (Authority Follows Accountability), both already approved for Domain 4. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0004",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.business-impact-analysis-prioritization"],
+    "patterns": ["pattern.p01"],
+    "qualifier": "qualifier.most",
+    "roles_mentioned": ["role.security-manager", "role.business-process-owner", "role.custodian-it-operations"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.recovery",
+    "family": "family.d4.business-impact-analysis-prioritization",
+    "variation_tags": ["business-setting:hospitality-peak-season-launch", "distractor-temptation:technical-sophistication-as-priority", "decision-consequence:impact-based-recovery-priority"],
+    "prompt": "Harborview Hotels' IT team highlights its newly launched mobile keyless-entry app as the most advanced system in the portfolio and assumes it should be the first priority for recovery if multiple systems are disrupted at once. When conducting a business impact analysis to set recovery priorities, what should MOST determine which system is actually restored first?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The magnitude of business impact each system's disruption would create, such as lost revenue or the inability to book rooms or process payments.",
+        "correct": true,
+        "rationale": "A business impact analysis prioritizes recovery by the business impact of disruption, not by how technically advanced a system is - reservations and payment processing create far greater impact if lost than a keyless-entry convenience feature."
+      },
+      {
+        "key": "b",
+        "text": "How recently the system was deployed.",
+        "correct": false,
+        "rationale": "A new application doesn't automatically deserve higher recovery priority - priority still depends on the business impact of losing it, not when it was launched.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "How much technical effort would be required to restore the system.",
+        "correct": false,
+        "rationale": "Ease of restoration is a technical/operational consideration, not the basis a business impact analysis uses to set priority - business impact is.",
+        "repair_target": "repair.decision-error"
+      },
+      {
+        "key": "d",
+        "text": "The cost to rebuild the system from scratch if it were lost entirely.",
+        "correct": false,
+        "rationale": "Replacement or rebuild cost is not the basis for valuing a system in a business impact analysis - the cost to the business of losing the function while it's unavailable is.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "A business impact analysis sets recovery priority by the business impact of disruption - lost revenue, inability to operate - not by a system's technical sophistication, age, ease of restoration, or rebuild cost. Harborview's reservations and payment systems create far more business impact if lost than a convenience feature like keyless entry.",
+    "recognition_clue": "A stem offering a system's technical sophistication, novelty, ease of restoration, or cost as the reason it deserves top recovery priority is testing whether business impact is recognized as the actual basis instead.",
+    "memory_rule": "The most technically impressive system is not automatically the most business-critical one.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U1/U2 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4A2 (Business Impact Analysis) sub-area (a BIA is the best tool for determining priority of restoration, not cost or technical characteristics; primary BIA stakeholders are business-unit representatives, not IT alone; a new application does not automatically deserve top recovery priority; the BIA is performed first and feeds business continuity planning) and the existing CANONICAL Pattern P01 (Business Alignment), already approved for Domain 4. The IR-vs-BCP distinction is source-confirmed directly: a business continuity plan 'would be triggered during the execution of the incident response plan in case it developed into a disaster' (source, verbatim). Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0005",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.business-impact-analysis-prioritization"],
+    "patterns": ["pattern.p01"],
+    "qualifier": "qualifier.primarily",
+    "roles_mentioned": ["role.business-process-owner", "role.custodian-it-operations", "role.security-manager"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.recovery",
+    "family": "family.d4.business-impact-analysis-prioritization",
+    "variation_tags": ["business-setting:water-utility-bia-stakeholders", "distractor-temptation:it-only-input", "decision-consequence:business-unit-input-required"],
+    "prompt": "A regional water utility is conducting its first business impact analysis. Which of the following should PRIMARILY provide input into determining the criticality of each business process?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Representatives from the business units and departments that actually operate each process.",
+        "correct": true,
+        "rationale": "The people who depend on and operate a given process understand its true dependencies, resource needs, and consequences of disruption better than any single central function can."
+      },
+      {
+        "key": "b",
+        "text": "IT personnel responsible for infrastructure, technology resources, and overall system management.",
+        "correct": false,
+        "rationale": "IT input matters for technology-related dependencies, but relying on it alone overlooks critical business functions and impacts beyond IT systems.",
+        "repair_target": "repair.role-error"
+      },
+      {
+        "key": "c",
+        "text": "Senior management and executives.",
+        "correct": false,
+        "rationale": "Executive input provides strategic direction, but without operational detail from the business units themselves, a business impact analysis misses the specifics needed to identify true dependencies and impacts.",
+        "repair_target": "repair.role-error"
+      },
+      {
+        "key": "d",
+        "text": "The risk management team and internal audit.",
+        "correct": false,
+        "rationale": "Risk management and audit provide useful context, but they are not the primary source for the operational detail a business impact analysis depends on - the business units that actually run each process are.",
+        "repair_target": "repair.role-error"
+      }
+    ],
+    "explanation": "A business impact analysis depends on operational detail that only the business units running each process genuinely have - IT, executives, risk, and audit all contribute useful context, but none of them substitute for input from the people who actually depend on the process day to day.",
+    "recognition_clue": "A stem asking who should primarily provide business-impact-analysis input, offering IT, executives, or risk/audit as tempting single-source answers, is testing whether the business units/process owners are recognized as the primary source instead.",
+    "memory_rule": "Business impact analysis gives management the business-impact and criticality information needed to prioritize response, continuity, and recovery decisions.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.role"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U1/U2 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4A2 (Business Impact Analysis) sub-area (a BIA is the best tool for determining priority of restoration, not cost or technical characteristics; primary BIA stakeholders are business-unit representatives, not IT alone; a new application does not automatically deserve top recovery priority; the BIA is performed first and feeds business continuity planning) and the existing CANONICAL Pattern P01 (Business Alignment), already approved for Domain 4. The IR-vs-BCP distinction is source-confirmed directly: a business continuity plan 'would be triggered during the execution of the incident response plan in case it developed into a disaster' (source, verbatim). Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0006",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.business-impact-analysis-prioritization"],
+    "patterns": ["pattern.p01"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager", "role.incident-response-team", "role.board-senior-management"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.recovery",
+    "family": "family.d4.business-impact-analysis-prioritization",
+    "variation_tags": ["business-setting:manufacturer-ir-vs-bcp", "distractor-temptation:bcp-as-automatic-response", "decision-consequence:escalation-based-plan-boundary"],
+    "prompt": "A mid-size manufacturer's incident response team is actively containing a ransomware incident that disrupted its order-management system. Senior management asks whether the business continuity plan should now be invoked. What is the BEST way to describe the relationship between the incident response already underway and the business continuity plan being discussed?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The business continuity plan is a separate plan that should be invoked only if the incident's impact grows large enough that critical operations can't continue while incident response proceeds - not automatically triggered by the incident response effort itself.",
+        "correct": true,
+        "rationale": "Incident response and business continuity are different plans answering different questions - the incident response team's containment work doesn't automatically mean business continuity needs to be invoked; that depends on whether impact has actually escalated far enough to threaten critical operations."
+      },
+      {
+        "key": "b",
+        "text": "The business continuity plan should be invoked immediately, since any ransomware incident serious enough to require containment also requires business continuity.",
+        "correct": false,
+        "rationale": "Containment being underway doesn't by itself mean critical operations are threatened - business continuity is invoked based on the incident's actual impact, not merely because incident response is active.",
+        "repair_target": "repair.decision-error"
+      },
+      {
+        "key": "c",
+        "text": "The business continuity plan and the incident response plan are the same plan under two different names, so invoking one means the other is already in effect.",
+        "correct": false,
+        "rationale": "Incident response and business continuity are genuinely different plans - one manages the security incident itself, the other keeps critical operations running if impact escalates far enough - not interchangeable names for the same plan.",
+        "repair_target": "repair.vocabulary-error"
+      },
+      {
+        "key": "d",
+        "text": "The business continuity plan should wait until the disaster recovery plan has finished restoring the order-management system.",
+        "correct": false,
+        "rationale": "This reverses the actual relationship - business continuity is about keeping critical operations functioning during disruption, not something that waits on disaster recovery to finish restoring a system first.",
+        "repair_target": "repair.sequence-error"
+      }
+    ],
+    "explanation": "Incident response, business continuity, and disaster recovery are three distinct plans. Incident response manages the security incident itself; business continuity keeps critical operations running if the incident's impact escalates far enough to threaten them; disaster recovery restores the specific technology that was interrupted. Being in active incident response doesn't automatically mean business continuity needs to be invoked.",
+    "recognition_clue": "A stem describing an incident response effort already underway and asking whether/how business continuity relates to it is testing whether the two are recognized as separate plans connected by escalation, not the same plan or an automatic trigger.",
+    "memory_rule": "Incident response, business continuity, and disaster recovery are three different plans, answering three different questions - one doesn't automatically trigger another.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision", "evidence.vocabulary"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U1/U2 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4A2 (Business Impact Analysis) sub-area (a BIA is the best tool for determining priority of restoration, not cost or technical characteristics; primary BIA stakeholders are business-unit representatives, not IT alone; a new application does not automatically deserve top recovery priority; the BIA is performed first and feeds business continuity planning) and the existing CANONICAL Pattern P01 (Business Alignment), already approved for Domain 4. The IR-vs-BCP distinction is source-confirmed directly: a business continuity plan 'would be triggered during the execution of the incident response plan in case it developed into a disaster' (source, verbatim). Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  }
 ]
