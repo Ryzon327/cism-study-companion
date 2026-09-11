@@ -874,5 +874,71 @@
     "version": 1,
     "source": "source.learner-supplied.domain-3-question-bank",
     "note": "DOMAIN 3 U7/U8 AUTHORING BATCH CANDIDATE (D3-U8, Managing External Services) — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md and the Architect's D3-U7/U8 authoring directive. Prerequisite is lesson.d3.awareness-training (D3-U7) only, continuing the Domain 3 chain, which itself continues the full cumulative Foundation + Domain 1 + Domain 2 recall pool - including concept.d1.authority-accountability and concept.d1.data-ownership, reachable automatically through this chain with no new prerequisite edge required, exactly as concept.d2.residual-risk-acceptability was already shown reachable for D3-U6. This is dependency structure (D3-U7 -> D3-U8), never a lifecycle - no lifecycle/stage metadata is introduced. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d3.program-metrics-reporting",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.program-metrics-reporting"],
+    "patterns": ["pattern.p07", "pattern.p11"],
+    "prerequisites": ["lesson.d3.external-services"],
+    "objective": "Select and report program metrics that connect to the program's own objectives and to the specific decision the recipient audience needs to make, distinguishing activity/output measures from effectiveness measures, preferring trend/context over an isolated number, and matching the measurement type (KPI/KRI/KCI/OKR) to the reporting need - continuing the implementation-vs-effectiveness reasoning already established in D3-U6/U7 and the audience-appropriate-communication reasoning already established for Domain 2's risk reporting.",
+    "context": "Meridian has implemented, integrated, tested, trained for, and extended its program through external providers (D3-U5 through D3-U8). Leadership now wants evidence the program is actually working. Many numbers are available - controls deployed, training completion, patches applied - and all of them are easy to produce, but not all of them tell leadership something they can act on. A metric is useful when it connects to the program's own objectives and is reported as a trend over time, not a one-off number; a report is only as good as the decision it lets its specific audience make - the board generally needs decision-relevant business/risk information, not the raw operational detail an operational team would instead use to act on the same facts. Four commonly required measurement types are not interchangeable: a key performance indicator (KPI) measures how well a process is performing against its own goal; a key risk indicator (KRI) signals rising risk exposure before it becomes a loss event; a key control indicator (KCI) measures whether a specific control is operating as designed; an objective and key result (OKR) frames a goal and the measurable results that would show progress toward it, generally at a more strategic/planning level than the other three.",
+    "cism_perspective": "CISM stems in this area often offer an easy-to-count activity/output number, an isolated or highly technical figure, or the wrong measurement type for the stated audience/decision, and ask which is actually useful; the correct answer connects the measure to the program's own objectives, prefers a trend/context over an isolated figure, and matches the measurement type to the decision the specific recipient needs to make.",
+    "recognition_clues": [
+      "The stem offers a count of controls, patches, or completed activities as evidence the program is working - that's an activity/output-as-effectiveness trap; the fix ties the metric back to the program's own objectives.",
+      "The stem offers an isolated number (a single quarter's figure, a raw count) instead of a trend across time - that's a signal the trend, not the snapshot, is what actually shows direction and progress.",
+      "The stem asks which measurement type (KPI/KRI/KCI/OKR) fits a stated need, or which audience should receive a given report - match the type/report to what that specific recipient needs to decide, not to which option sounds the most complete or technical."
+    ],
+    "scenario": "Meridian's steering committee asks the information security manager for the program's first full-cycle report. The manager has ready access to the number of controls deployed this quarter, the percentage of staff who completed this quarter's awareness training, and the number of patches applied - all easy to produce. Recognizing that the committee needs to know whether the program is achieving what it set out to do, the manager instead reports the trend, across the last four quarters, in the percentage of the program's own control objectives being met, alongside the specific risk areas still trending in the wrong direction - giving the committee something it can actually act on.",
+    "traps": [
+      "Treating an activity/output count (controls deployed, training completion, patches applied) as evidence the program is effective.",
+      "Reporting an isolated number instead of a trend that shows direction and progress over time.",
+      "Offering the wrong measurement type for the stated need - a KRI when overall effectiveness is being asked about, a KCI when the whole program's risk posture is being asked about, an OKR when current performance is being asked about.",
+      "Sending the most detailed or technically complete report to an audience regardless of what that audience actually needs to decide."
+    ],
+    "memory_rules": [
+      "Measuring activity is easy. Measuring whether the program is achieving its objective is what management actually needs.",
+      "The right metric depends on the decision and the audience it needs to inform."
+    ],
+    "retrieval_refs": ["question.d3.0026"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "DOMAIN 3 U9/U10 AUTHORING BATCH CANDIDATE (D3-U9, Program Metrics & Reporting) — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md and the Architect's D3-U9/U10 authoring directive. Prerequisite is lesson.d3.external-services (D3-U8) only, continuing the single, unbroken Domain 3 chain established since D3-U1 - every D3-U1 through D3-U8 concept remains reachable through this chain, including concept.d3.control-testing-evaluation (D3-U6), whose evaluation results this unit's metrics/reports now measure and communicate. This is dependency structure (D3-U8 -> D3-U9), never a lifecycle - no lifecycle/stage metadata is introduced. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d3.program-synthesis",
+    "domain": "domain.d3",
+    "concepts": ["concept.d3.program-synthesis"],
+    "patterns": ["pattern.p07", "pattern.p02", "pattern.p11"],
+    "prerequisites": ["lesson.d3.program-metrics-reporting"],
+    "objective": "Recognize an information security program as one coordinated management capability - not a policy document, control catalog, technology stack, training course, vendor contract, or metrics dashboard - by connecting two or more previously taught Domain 3 reasoning targets inside a single live business scenario, rather than answering from only one prior unit's lens.",
+    "context": "Meridian's program has now completed its first full cycle: it classified what needed protecting, established what was mandatorily required, selected and integrated controls, tested whether they actually worked, extended the same expectations to people and to external providers, and measured and reported the results. Per the domain's own approved conceptual relationship - strategy leads to a program, which produces controls, which are measured and improved - none of these pieces stands alone in a real management situation. A control can be genuinely integrated into daily operations yet still fail its own effectiveness test; a vendor's failure can trace back to an asset that was never fully classified; a training program with high completion can still leave the real outcome metric pointing the wrong way. Seeing the whole program as one connected effort - and recognizing which piece, or combination of pieces, a real situation is actually testing - is what this unit asks the learner to do.",
+    "cism_perspective": "CISM stems at this level rarely name which topic they are testing; they describe a business situation with more than one thing going on and ask what the security manager should do or report. The correct answer accounts for every fact the scenario actually raises - it does not stop at the first prior unit's answer once a later fact changes what is actually being asked. A wrong answer typically applies only one lens (only accountability, or only effectiveness) to a scenario that requires connecting it to at least one other.",
+    "recognition_clues": [
+      "The stem gives a status update on more than one prior program element (a control's integration and its test results; a vendor relationship and a classification detail; training completion and an incident trend) - that's a signal to connect them, not answer from only one.",
+      "The stem's opening fact looks resolved by a single prior unit's rule, but a later fact in the same stem changes what should actually be done or reported - the answer must account for both facts, not just the first.",
+      "The stem asks what to report or investigate at the program level - the answer should draw on whichever combination of classification, control, integration, effectiveness, people, vendor, and reporting reasoning the specific facts actually raise."
+    ],
+    "scenario": "Meridian's steering committee reviews the Aldergate dual-approval payment control one more time. This quarter's activity dashboard shows every payment logged with two recorded approvals - full apparent compliance - but the trend report shows near-miss investigations have not decreased. The information security manager recognizes this is the same effectiveness question raised back when the control was first tested: full activity does not itself prove the second approval is genuinely independent. The manager reports the trend, not the compliance percentage, and recommends investigating whether approvals are still happening within seconds of each other - connecting the control's original integration, its effectiveness test, and this quarter's metric into one answer, rather than treating the compliance percentage alone as good news.",
+    "traps": [
+      "Answering from only one prior unit's reasoning (accountability, or effectiveness, or classification) when the scenario's facts require connecting it to at least one other.",
+      "Treating a program artifact (a policy, a control catalog entry, a training record, a vendor contract, a metrics dashboard) as if it were the program itself.",
+      "Stopping at an activity/compliance figure that looks resolved, without checking whether a later fact in the same scenario changes the actual answer.",
+      "Reporting or deciding at only the technical/operational level, or only the strategic level, when the scenario requires connecting both."
+    ],
+    "memory_rules": [
+      "A security program is not any one of its artifacts - it is the coordinated effort that connects them to a measured, business-aligned outcome.",
+      "A real management situation rarely arrives labeled with which topic it belongs to - read every fact before deciding which reasoning applies."
+    ],
+    "retrieval_refs": ["question.d3.0032"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-3-question-bank",
+    "note": "DOMAIN 3 U9/U10 AUTHORING BATCH CANDIDATE (D3-U10, Program Synthesis / Capstone) — authored by Claude Code per the approved docs/learning/DOMAIN-3-CURRICULUM-ARCHITECTURE.md §10 and the Architect's D3-U9/U10 authoring directive, mirroring the precedent set by lesson.d2.risk-management-embedding-synthesis (D2-U10). Prerequisite is lesson.d3.program-metrics-reporting (D3-U9) only - D3-U1 through D3-U9 form one single, fully connected prerequisite graph (D3-U4's own two prerequisites, D3-U2 and D3-U3, already merge both of its branches back into one chain by D3-U5), so this single edge transitively covers all eight prior D3 families, confirmed programmatically via the same ancestorFamilies traversal the test suite uses, satisfying taught-before-tested for every concept this capstone's variants integrate without requiring additional prerequisite edges. The context/scenario narrative above uses docs/learning/LIFECYCLE-MODEL.md's approved, non-canonical Domain 3 conceptual relationship ('strategy -> program -> controls -> measurement/improvement') as its connective thread - never the more granular, unapproved nine-step narrative a working draft might suggest, and never tested as a stage-location question. No lifecycle/stage metadata is introduced. Not yet human-reviewed or promoted."
   }
 ]
