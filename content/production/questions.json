@@ -5071,5 +5071,329 @@
     "version": 1,
     "source": "source.learner-supplied.domain-4-question-bank",
     "note": "DOMAIN 4 U3/U4 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4B4 sub-area (communication regarding security events with legal implications is explicitly a business decision belonging to management, not the information security manager contacting external authorities directly) and the existing CANONICAL Pattern P11 (applicable_domains extended to include domain.d4 this batch) and P02 (Authority Follows Accountability), both approved for Domain 4. Original scenario, transferred to a regional telecommunications provider, not a reproduction of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0014",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.incident-containment"],
+    "patterns": ["pattern.p01", "pattern.p04"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.incident-response-team"],
+    "primary_role": null,
+    "lifecycle": "lifecycle.incident",
+    "stage": "stage.incident.contain",
+    "decision_type": "decision.incident",
+    "family": "family.d4.incident-containment",
+    "variation_tags": ["business-setting:hospitality-chain-wide-shutdown-request", "distractor-temptation:overbroad-shutdown-vs-premature-root-cause-vs-evidence-destroying-restore", "decision-consequence:scope-proportionate-isolation"],
+    "prompt": "Harborview Hotels has classified and escalated the compromised-account incident at one property (see D4-U3/D4-U4). The property's general manager wants the entire reservations system shut down chain-wide to be safe. The incident response team has confirmed the compromise is limited to this property's own reservation server. What is the BEST containment approach?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Isolate the affected property's reservation server from the network, leaving the reservations system at Harborview's other properties running normally.",
+        "correct": true,
+        "rationale": "Containment should limit further harm at the scope the incident actually affects - isolating the specific affected component protects the organization without disrupting business operations that were never at risk."
+      },
+      {
+        "key": "b",
+        "text": "Shut down the reservations system chain-wide, as the general manager requested, to be certain nothing else is affected.",
+        "correct": false,
+        "rationale": "A chain-wide shutdown disrupts every property's ability to take reservations even though only one property's server was actually affected - containment should match the incident's actual scope, not the most cautious-sounding option.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "c",
+        "text": "Wait until the incident response team has determined the root cause before taking any containment action.",
+        "correct": false,
+        "rationale": "Containment is the priority once an incident is confirmed - waiting for root-cause analysis, which is part of eradication, delays limiting the harm that is happening right now.",
+        "repair_target": "repair.sequence-error"
+      },
+      {
+        "key": "d",
+        "text": "Immediately restore the affected server from the most recent backup so reservations can resume as quickly as possible.",
+        "correct": false,
+        "rationale": "Restoring from backup before the affected server has been properly contained and evidence preserved risks reintroducing whatever caused the compromise, and can destroy evidence needed to understand what happened.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "Containment should limit further harm at the scope the incident actually affects - not the broadest possible shutdown, not a delay for root-cause analysis (which belongs to eradication), and not an immediate restore that risks reinfection and destroys evidence.",
+    "recognition_clue": "A stem offering a broad, indiscriminate shutdown alongside a narrower, scope-appropriate isolation option is testing whether containment is matched to the incident's actual impact, not the most cautious-sounding action.",
+    "memory_rule": "Contain at the scope the incident actually affects - not the broadest possible shutdown.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision", "evidence.sequence"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U5/U6 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4B3 (Incident Containment Methods) sub-area (isolating the affected network segment/system, not an indiscriminate broad shutdown, is repeatedly preferred; root-cause analysis is explicitly identified as part of eradication, which follows containment; restoring from backup before containment risks reinfection and destroys evidence) and the existing CANONICAL Pattern P01 (Business Alignment) and P04 (No Lifecycle Jumping), both already approved for Domain 4. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0015",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.incident-containment"],
+    "patterns": ["pattern.p01", "pattern.p04"],
+    "qualifier": "qualifier.first",
+    "roles_mentioned": ["role.incident-response-team"],
+    "primary_role": null,
+    "lifecycle": "lifecycle.incident",
+    "stage": "stage.incident.contain",
+    "decision_type": "decision.incident",
+    "family": "family.d4.incident-containment",
+    "variation_tags": ["business-setting:manufacturing-ransomware-workstations", "distractor-temptation:premature-restore-vs-notify-vs-full-log-review", "decision-consequence:contain-before-recovery-or-full-analysis"],
+    "prompt": "A regional manufacturing company confirms that ransomware has encrypted files on several production-line control workstations. What should the incident response team do FIRST?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Remove the affected workstations from the network to stop the ransomware from spreading further.",
+        "correct": true,
+        "rationale": "Once an incident is confirmed, containment - limiting further spread - is the immediate priority, ahead of restoration, notification, or further log review."
+      },
+      {
+        "key": "b",
+        "text": "Restore the affected workstations from the most recent backup so production can resume.",
+        "correct": false,
+        "rationale": "Restoring before containing risks reinfecting the restored systems if the backup itself was already compromised, and can destroy evidence needed to understand how the ransomware spread.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Notify the affected workstations' system owners before taking any technical action.",
+        "correct": false,
+        "rationale": "Notification matters, but spending time notifying owners first allows the ransomware to keep spreading to additional systems while nothing is contained.",
+        "repair_target": "repair.sequence-error"
+      },
+      {
+        "key": "d",
+        "text": "Review event logs across the network to identify every system that may be infected before acting.",
+        "correct": false,
+        "rationale": "A full log review takes time the business can't afford while ransomware continues spreading uncontained - containing the systems already identified comes first.",
+        "repair_target": "repair.business-context-error"
+      }
+    ],
+    "explanation": "Once ransomware is confirmed, the immediate priority is containment - removing the affected systems from the network to stop further spread - ahead of restoration (which risks reinfection and destroys evidence), notification, or a comprehensive log review.",
+    "recognition_clue": "A stem describing active, spreading malware and asking what should happen FIRST is testing whether containment is recognized as the immediate priority, ahead of recovery, notification, or a full investigation.",
+    "memory_rule": "Containment limits harm; it doesn't mean the threat is gone, systems are restored, or the incident is over.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision", "evidence.sequence"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U5/U6 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4B3 sub-area (ransomware scenario: removing affected systems from the network is identified as the FIRST step/containment phase after confirmation; restoring from backup first risks reinfection and 'would destroy evidence needed to investigate the incident'; reviewing logs before containing allows continued uncontained spread) and the existing CANONICAL Pattern P01 and P04, both already approved for Domain 4. Original scenario, transferred to a regional manufacturing company, not a reproduction of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0016",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.incident-containment"],
+    "patterns": ["pattern.p01", "pattern.p04"],
+    "qualifier": "qualifier.first",
+    "roles_mentioned": ["role.incident-response-team"],
+    "primary_role": null,
+    "lifecycle": "lifecycle.incident",
+    "stage": "stage.incident.contain",
+    "decision_type": "decision.incident",
+    "family": "family.d4.incident-containment",
+    "variation_tags": ["business-setting:logistics-active-data-exfiltration", "distractor-temptation:evidence-destroying-power-off-vs-premature-root-cause-vs-waiting-for-owner", "decision-consequence:block-traffic-not-power-off"],
+    "prompt": "A national logistics company's security team detects an active data exfiltration in progress - a compromised server is actively sending data to an external destination. What should the team do FIRST?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Block outbound traffic from the compromised server to the external destination.",
+        "correct": true,
+        "rationale": "The immediate priority is stopping the ongoing loss of data - blocking the outbound connection limits the harm right now without requiring the system to be powered off."
+      },
+      {
+        "key": "b",
+        "text": "Power off the compromised server to stop the exfiltration immediately.",
+        "correct": false,
+        "rationale": "Powering off the server causes a state change that can destroy volatile evidence, such as active connections and memory contents, needed to understand how the exfiltration occurred - without being the only way to stop it.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Determine the root cause of how the server was compromised before taking any action.",
+        "correct": false,
+        "rationale": "Determining the root cause is part of eradication, which follows containment - waiting for it first allows the exfiltration to continue.",
+        "repair_target": "repair.sequence-error"
+      },
+      {
+        "key": "d",
+        "text": "Inform the server's system owner and wait for their direction before acting.",
+        "correct": false,
+        "rationale": "The incident response team has the responsibility to take immediate containment action against active harm; the system owner should be informed, but that does not need to precede stopping the ongoing exfiltration.",
+        "repair_target": "repair.authority-error"
+      }
+    ],
+    "explanation": "Against active, ongoing data exfiltration, the immediate priority is stopping the loss of data - blocking the outbound connection - rather than powering off the system (which destroys volatile evidence), waiting to determine root cause (which follows containment), or waiting for the system owner's direction before acting.",
+    "recognition_clue": "A stem describing active data exfiltration and offering an immediate power-off alongside a more targeted blocking action is testing whether the learner recognizes that a full power-off can destroy the volatile evidence a targeted block does not.",
+    "memory_rule": "A fast technical fix that destroys evidence isn't actually faster once that evidence is needed later.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision", "evidence.sequence"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U5/U6 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4B3 sub-area (active exfiltration scenario, source verbatim: 'the priority... would be to limit the damage by blocking outgoing traffic to the attacker's servers'; turning the system off 'will result in a state change, which may result in the loss of forensic evidence'; determining the cause 'would not be the first action to take'; informing the system owner 'is not the first thing... should focus on') and the existing CANONICAL Pattern P01 and P04, both already approved for Domain 4. Original scenario, transferred to a national logistics company, not a reproduction of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0017",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.evidence-investigation"],
+    "patterns": ["pattern.p02", "pattern.p04"],
+    "qualifier": "qualifier.first",
+    "roles_mentioned": ["role.security-manager", "role.incident-response-team"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.incident",
+    "family": "family.d4.evidence-investigation",
+    "variation_tags": ["business-setting:hospitality-restoration-pressure", "distractor-temptation:rebuild-original-before-preserving-evidence", "decision-consequence:preserve-copy-before-restore"],
+    "prompt": "Harborview's IT team, eager to restore reservations service at the affected property, wants to wipe and reimage the isolated server's original hard drive immediately. What should the security manager direct FIRST?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Create a verified copy of the original hard drive and preserve the original untouched before any rebuild proceeds.",
+        "correct": true,
+        "rationale": "Rebuilding from the original destroys evidence the organization may later need for legal, regulatory, or disciplinary purposes - preserving a verified copy keeps that evidence intact while restoration proceeds from the copy."
+      },
+      {
+        "key": "b",
+        "text": "Proceed with wiping and reimaging the original hard drive immediately, since restoring service is the priority now that the server is contained.",
+        "correct": false,
+        "rationale": "Containment limits harm, but it doesn't mean evidence no longer matters - wiping the original before it's preserved destroys exactly what a later investigation might need.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "Perform the forensic analysis directly on the original hard drive to save time before restoring service.",
+        "correct": false,
+        "rationale": "Working from the original risks contaminating the only original evidence - forensic analysis should be performed on a verified copy instead.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "Delay any restoration until law enforcement has completed its own investigation of the server.",
+        "correct": false,
+        "rationale": "Whether and when law enforcement is involved is a decision senior management makes based on the circumstances - assuming law enforcement must finish first, or must be involved at all, is not something the security manager should presume unilaterally.",
+        "repair_target": "repair.authority-error"
+      }
+    ],
+    "explanation": "Evidence has to be preserved before a system is rebuilt or restored, not after - a verified copy of the original media keeps the evidence intact for any later legal, regulatory, or disciplinary need, while restoration proceeds from that copy rather than the original.",
+    "recognition_clue": "A stem describing pressure to restore, rebuild, or reimage a system quickly, offered before evidence has been preserved, is testing whether the learner recognizes evidence preservation as the necessary first step.",
+    "memory_rule": "Investigate from a copy, not the original.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U5/U6 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4B2 (Incident Investigation and Evaluation) sub-area (forensic analysis 'must be performed only on a copy of the original media so that the evidence is uncontaminated'; a write blocker is used 'to maintain the integrity of the original storage media'; rebuilding a compromised system risks losing evidence needed to understand how the incident occurred) and the existing CANONICAL Pattern P04 (No Lifecycle Jumping) and P02 (Authority Follows Accountability), both already approved for Domain 4. Continues Harborview Hotels directly from D4-U5's contained incident. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0018",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.evidence-investigation"],
+    "patterns": ["pattern.p02", "pattern.p04"],
+    "qualifier": "qualifier.primary",
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.incident",
+    "family": "family.d4.evidence-investigation",
+    "variation_tags": ["business-setting:healthcare-chain-of-custody-purpose", "distractor-temptation:custody-confused-with-asset-tracking-or-attribution", "decision-consequence:admissibility-is-the-primary-reason"],
+    "prompt": "A regional healthcare provider's incident response team has preserved evidence from a compromised server that may support later legal action. What is the PRIMARY reason to maintain a documented chain of custody for that evidence?",
+    "options": [
+      {
+        "key": "a",
+        "text": "To keep the evidence admissible and credible by tracing who had control of it throughout the investigation.",
+        "correct": true,
+        "rationale": "Chain of custody exists to preserve the integrity of evidence so it remains valid and admissible for legal or regulatory proceedings - that is its primary purpose."
+      },
+      {
+        "key": "b",
+        "text": "To keep the enterprise's asset inventory updated with the affected system's current custodian.",
+        "correct": false,
+        "rationale": "Chain of custody is not related to asset inventory or ownership tracking - it documents control of evidence, not asset custodianship.",
+        "repair_target": "repair.vocabulary-error"
+      },
+      {
+        "key": "c",
+        "text": "To identify which individual compromised the system.",
+        "correct": false,
+        "rationale": "Identifying who compromised the system is a possible outcome of forensic analysis, not the reason chain of custody itself is maintained.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "To ensure the evidence is stored exclusively on read-only media.",
+        "correct": false,
+        "rationale": "Read-only storage can help prevent tampering, but chain of custody itself is the documented record of control - not a specific storage requirement.",
+        "repair_target": "repair.vocabulary-error"
+      }
+    ],
+    "explanation": "Chain of custody is a documented, unbroken record of who controlled a piece of evidence and when. Its primary purpose is to keep that evidence admissible and credible for legal, regulatory, or disciplinary proceedings - not to track asset ownership, identify an attacker, or dictate a specific storage medium.",
+    "recognition_clue": "A stem asking why chain of custody matters, or what its primary purpose is, is testing whether the learner ties it to evidence admissibility/credibility rather than an unrelated concern.",
+    "memory_rule": "A broken chain of custody is a bigger risk than physical damage to the evidence - it undermines whether the evidence can be trusted at all.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.vocabulary", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U5/U6 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4B2 sub-area, directly source-confirmed verbatim ('the PRIMARY reason to ensure chain of custody is... the forensic evidence is valid and admissible in a court of law'; 'chain of custody is not related to the asset custodian or to updating the asset inventory'; a broken chain of custody was identified as the MOST significant concern in a mishandled-evidence scenario, ahead of physical damage to the drives themselves) and the existing CANONICAL Pattern P02 and P04, both already approved for Domain 4. Original scenario, transferred to a regional healthcare provider, not a reproduction of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0019",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.evidence-investigation"],
+    "patterns": ["pattern.p02", "pattern.p04"],
+    "qualifier": "qualifier.most",
+    "roles_mentioned": ["role.incident-response-team", "role.board-senior-management"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.incident",
+    "family": "family.d4.evidence-investigation",
+    "variation_tags": ["business-setting:retail-criminal-charges-restoration-pressure", "distractor-temptation:restoration-speed-always-first-or-team-decides-law-enforcement", "decision-consequence:evidence-preservation-outranks-speed-when-charges-possible"],
+    "prompt": "A national retail chain confirms that a compromised point-of-sale system may support criminal charges against an identified suspect. Store operations is pressing to restore the system immediately to resume sales. What should be the incident response team's MOST important priority?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Preventing contamination of the evidence, since preserving it can outweigh the pressure to restore service quickly when criminal charges may follow.",
+        "correct": true,
+        "rationale": "When an incident may lead to criminal charges, preserving uncontaminated evidence takes on added importance - restoring service too quickly, before evidence is preserved, can destroy what a later prosecution would need."
+      },
+      {
+        "key": "b",
+        "text": "Restoring the system immediately, since limiting business disruption always comes first.",
+        "correct": false,
+        "rationale": "Business disruption matters, but it does not always come first - when criminal charges may follow, contaminating the evidence needed to support that case is a cost that outweighs a faster restoration.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "c",
+        "text": "Waiting for law enforcement to arrive on-site before taking any action to preserve evidence.",
+        "correct": false,
+        "rationale": "Evidence preservation doesn't wait for law enforcement to arrive - the response team can and should preserve evidence themselves in the meantime.",
+        "repair_target": "repair.sequence-error"
+      },
+      {
+        "key": "d",
+        "text": "Letting the incident response team decide independently whether to notify law enforcement, since they identified the incident.",
+        "correct": false,
+        "rationale": "Deciding whether to notify law enforcement is senior management's decision, not the incident response team's to make on its own, even though the team identified the incident.",
+        "repair_target": "repair.authority-error"
+      }
+    ],
+    "explanation": "When an incident may lead to criminal charges, preventing contamination of evidence takes on added weight - it can outweigh the pressure to restore service quickly, since a faster restoration that destroys evidence undermines the very case the organization may need to support. This is a scoped refinement of containment-first sequencing, not a rule that evidence always outranks every other priority.",
+    "recognition_clue": "A stem describing restoration pressure against a backdrop of possible criminal charges is testing whether the learner recognizes evidence preservation as taking on elevated priority in that specific context, and correctly places law-enforcement-notification authority with senior management.",
+    "memory_rule": "Restoring too quickly can destroy the evidence a later decision needs - in situations that may lead to criminal charges, preserving evidence can outweigh the pressure to restore fast.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision", "evidence.authority"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U5/U6 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4B1/4B2 sub-areas, directly source-confirmed verbatim ('preventing contamination of evidence takes priority over containment in situations where criminal charges may be filed'; 'in many enterprises, the decision to notify law enforcement is made by senior management') and the existing CANONICAL Pattern P02 and P04, both already approved for Domain 4. This variant's evidence-outranks-speed reasoning is deliberately scoped to the criminal-charges context the source itself uses, not generalized into an absolute rule - see concept.d4.evidence-investigation's note for the full source-nuance discussion. Original scenario, transferred to a national retail chain, not a reproduction of any specific source question. Not yet human-reviewed or promoted."
   }
 ]
