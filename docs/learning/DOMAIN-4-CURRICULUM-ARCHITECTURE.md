@@ -976,6 +976,31 @@ the original table cells are left unedited, no lifecycle/schema redesign
 occurred, and the CANONICAL lifecycle registry (`LIFECYCLE-MODEL.md`) was
 not altered.
 
+**D4-U9 effectiveness-metric assumption: not confirmed, Architect-noted
+(2026-09-11).** This document's working tables (§10, §14) both include a
+"response-time reduction (not incident-count reduction) is the best
+effectiveness metric" claim for D4-U9, attributed at §18 to 4A6.
+Comprehensive reading of 4B6 (Post-incident Review Practices, all 18
+question blocks — D4-U9's own primary source area) performed during
+D4-U9's actual authoring found no support for this specific claim, and
+the §18 attribution to 4A6 was not independently re-verified during that
+reading. This document's earlier assumption is therefore recorded as
+**not confirmed during comprehensive D4-U9 source review** — not
+disproven, not replaced with an alternative metric, and not a claim that
+response time is a poor or useless measure, only that this document's
+specific assertion of it as *the best* effectiveness metric was not
+established. The source-supported underlying principle is preserved:
+effectiveness should be evaluated against the actual objective/outcome
+being assessed (Pattern P07, Implementation ≠ Effectiveness, reused
+directly in D4-U9), not against a specific named metric asserted without
+direct confirmation. Domain 4's actual production content does not teach
+or test the response-time claim — see
+[`DOMAIN-4-U9-U10-GATE-RECORD.md`](DOMAIN-4-U9-U10-GATE-RECORD.md)'s own
+"Metrics disposition" section. The original table cells above are left
+unedited as the record of the architecture phase's own working
+assumption; no lifecycle/schema/production change resulted from this
+note.
+
 ## Cross-references
 
 [Domain 4 Blueprint](DOMAIN-4-BLUEPRINT.md) · [Lifecycle Model](LIFECYCLE-MODEL.md) ·

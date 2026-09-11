@@ -138,7 +138,9 @@ test("every family has exactly its expected active variant count (Phase 6C + Pha
     "family.d4.incident-containment": 3,
     "family.d4.evidence-investigation": 3,
     "family.d4.eradication-recovery": 3,
-    "family.d4.ir-bcp-drp-boundary": 3
+    "family.d4.ir-bcp-drp-boundary": 3,
+    "family.d4.post-incident-review": 3,
+    "family.d4.incident-management-synthesis": 3
   };
   const bad = [];
   for (const [familyId, count] of Object.entries(expected)) {
