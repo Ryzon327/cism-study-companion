@@ -1007,5 +1007,73 @@
     "version": 1,
     "source": "source.learner-supplied.domain-4-question-bank",
     "note": "DOMAIN 4 U1/U2 AUTHORING BATCH CANDIDATE (D4-U2, Business Impact Analysis & Prioritization) — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md and the Architect's D4-U1/U2 authoring directive. Prerequisite is lesson.d4.program-foundations-readiness (D4-U1) only, continuing the Domain 4 chain, which itself continues the full cumulative Foundation + Domain 1 + Domain 2 + Domain 3 recall pool. This family/lesson is deliberately cross-cutting (lifecycle: null, stage_target: null) rather than bound to a single incident-lifecycle stage, per the Architect's explicit approval - a business impact analysis informs classification, response, and recovery decisions throughout the lifecycle rather than belonging to one stage of it. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d4.incident-classification-severity",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.incident-classification-severity"],
+    "patterns": ["pattern.p04", "pattern.p01"],
+    "prerequisites": ["lesson.d4.business-impact-analysis-prioritization"],
+    "objective": "Recognize that an event must first be confirmed before it is treated as an incident, and that severity and category must be assigned against a predefined, business-context-tailored classification scheme based on business impact - not on technical sophistication, assumption, or whoever reacts most urgently.",
+    "context": "Harborview Hotels has since established an incident management program (D4-U1) and learned to prioritize recovery by business impact rather than technical novelty (D4-U2). The next discipline is classification: when something suspicious is reported, the organization's first job is not to respond - it is to find out what has actually happened. An unconfirmed report is an event, not yet an incident, and acting on assumption before confirmation risks either overreacting to something minor or underreacting to something serious. Once confirmed, an incident is classified against a predefined categorization scheme - the same kind of scheme D4-U1 established the organization must decide on in advance - so that response resources, authority, and escalation are applied consistently. Severity follows business impact: financial, legal/regulatory, operational, and reputational consequences, and which specific assets or processes are affected - not how technically complex or dramatic the event looks. A highly sophisticated attempt against a low-value system can be less severe than a simple compromise that exposes sensitive guest data.",
+    "cism_perspective": "CISM stems in this area often describe an incomplete or still-developing report and ask what should happen first, offering premature action (shutting something down, escalating to executives, dismissing it) as tempting wrong answers before the facts are actually confirmed. Other stems contrast a technically impressive or complex event against a simpler one with real data or financial exposure, and ask which is more severe - the correct answer reasons from business impact, not technical drama. A third pattern asks what makes a classification scheme effective - the correct answer ties it to the organization's own business context and stakeholder input, not generic categories or IR-team-alone judgment.",
+    "recognition_clues": [
+      "The stem describes a suspicious report that is still incomplete or unconfirmed and offers an urgent action as an option - that's a signal to first confirm what is actually known before acting.",
+      "The stem contrasts a technically sophisticated or complex event against a simpler one and asks which is more severe - the answer follows business impact (data exposed, money lost, regulatory exposure), not technical complexity.",
+      "The stem asks what makes a classification/categorization scheme effective - the answer is a framework tailored to the organization's own business context with stakeholder input, not a generic industry template or a scheme owned solely by the technical response team."
+    ],
+    "scenario": "A Harborview property reports an overnight spike in failed login attempts on staff accounts for the reservations system. The general manager wants to shut the system down chain-wide immediately; the front-desk supervisor assumes it's just a glitch from an overnight software update and wants to ignore it. Before doing either, the information security manager confirms what is actually known: the failed logins are concentrated on privileged accounts, one account has in fact been compromised, but guest payment data was not accessed. Only once that is confirmed does the ISM classify the incident against Harborview's established severity scheme and determine the appropriate response and escalation path - rather than acting on either stakeholder's initial assumption.",
+    "traps": [
+      "Acting immediately on an incomplete or unconfirmed report - either overreacting (chain-wide shutdown) or dismissing it (assuming it's routine) before confirming what actually happened.",
+      "Treating a technically sophisticated or complex-sounding event as automatically more severe than a simpler event that actually exposes sensitive data or causes real business impact.",
+      "Letting the loudest or most senior stakeholder's initial assumption substitute for an actual classification against a predefined scheme.",
+      "Adopting a generic, industry-standard classification scheme wholesale, or leaving classification solely to the technical response team, instead of tailoring it to the organization's own business context with stakeholder input."
+    ],
+    "memory_rules": [
+      "An event is not an incident until it's confirmed - don't act on assumption.",
+      "Severity follows business impact, not technical drama.",
+      "A classification scheme works because it fits the organization's own business context, not because it came from a generic template."
+    ],
+    "retrieval_refs": ["question.d4.0008"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U3/U4 AUTHORING BATCH CANDIDATE (D4-U3, Incident Classification / Severity) — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md and the Architect's D4-U3/U4 authoring directive. Prerequisite is lesson.d4.business-impact-analysis-prioritization (D4-U2) only, continuing the Domain 4 chain and the full cumulative cross-domain recall pool. Genuinely bound to stage.incident.identify-confirm of the existing CANONICAL lifecycle.incident - no new lifecycle or stage introduced. Continues Harborview Hotels as the reference organization per the Architect's directive. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d4.escalation-communications",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.escalation-communications"],
+    "patterns": ["pattern.p11", "pattern.p02"],
+    "prerequisites": ["lesson.d4.incident-classification-severity"],
+    "objective": "Recognize that once an incident is classified, escalation and communication must route decision-relevant, audience-appropriate information through an authorized path - business impact and corrective action to senior management, one pre-authorized spokesperson to media - and that deciding whether/how to notify external parties is a management decision, not one the ISM, the response team, or an involved third party can make alone.",
+    "context": "Harborview Hotels' ISM has now classified the compromised-account incident at the property (D4-U3). Classification alone doesn't resolve anything further - the right information still has to reach the right people, through an authorized path, at the right time. Corporate executives need the business impact and what's being done about it, not a raw technical log of the failed logins. The media, if they call, should hear only a specifically prepared statement from one identified spokesperson - not an offhand comment from whoever happens to answer the phone. And if the incident turns out to have legal or regulatory implications - for example, if guest data exposure is later confirmed - deciding whether and how to notify regulators or guests is a business decision that belongs to management, following Harborview's own communication plan, not a call the ISM, the incident response team, or an involved technology vendor can make unilaterally. A vendor performing work related to the incident does not inherit Harborview's own accountability for that decision.",
+    "cism_perspective": "CISM stems in this area often ask what should be reported to senior management or the CIO after a classified incident, offering a raw technical summary as a tempting but wrong answer. Others describe a media contact reaching an employee directly and ask how that should be handled - the correct answer routes all media contact through one authorized, pre-approved spokesperson. A third pattern asks who decides whether to notify an external party (a regulator, a customer) after a confirmed incident with legal implications - the correct answer is management, following the incident communication plan, never the ISM, the response team, or a third-party vendor acting on its own authority.",
+    "recognition_clues": [
+      "The stem asks what should be reported to senior management/executives after an incident - the answer is business impact and corrective action, not a raw technical log, a comparison to other organizations, or an unrelated business case.",
+      "The stem describes a reporter or outside party contacting an employee directly for comment - the answer routes all such contact through one authorized, pre-prepared spokesperson, not an improvised or refuse-everything response.",
+      "The stem asks who decides whether/how to notify regulators, customers, or the press after a confirmed incident with legal implications - the answer is management, following the organization's communication plan, not the ISM, the response team, or a third-party vendor deciding alone."
+    ],
+    "scenario": "Corporate leadership, legal/compliance, the PR team, and Harborview's property-management-system vendor all want information about the classified incident. The ISM reports business impact and corrective actions to corporate leadership - not the raw log of failed logins. When a local reporter calls the property directly and reaches an on-duty support contractor, the contractor declines to comment and redirects the reporter to Harborview's single authorized spokesperson. And when legal/compliance raises the possibility that guest data exposure may eventually require regulator or guest notification, the ISM confirms that decision belongs to Harborview's management, under its own communication plan - not to the ISM, the response team, or the PMS vendor, even though the vendor's system was involved.",
+    "traps": [
+      "Reporting a raw technical log or level of technical detail to senior management/executives instead of business impact and corrective action.",
+      "Letting an employee, contractor, or anyone other than the single authorized spokesperson respond to media inquiries.",
+      "Assuming the incident response team's or the ISM's own technical judgment is enough to decide whether to notify regulators or customers.",
+      "Assuming that because a third-party vendor's system was involved, the vendor can make or is responsible for Harborview's own external-notification decision."
+    ],
+    "memory_rules": [
+      "Executives need business impact and corrective action, not a raw technical log.",
+      "Media hears from one authorized spokesperson, or not at all.",
+      "External notification is a management decision, following the communication plan - a third party's involvement never transfers that accountability away."
+    ],
+    "retrieval_refs": ["question.d4.0011"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U3/U4 AUTHORING BATCH CANDIDATE (D4-U4, Escalation & Communications) — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md and the Architect's D4-U3/U4 authoring directive. Prerequisite is lesson.d4.incident-classification-severity (D4-U3) only, continuing the Domain 4 chain and the full cumulative cross-domain recall pool. Deliberately cross-cutting (lifecycle: null, stage_target: null) per the Architect's explicit approval - escalation and communication recur throughout the incident lifecycle rather than belonging to one stage, and this family is not forced into a single stage merely because it follows classification in sequence. Continues Harborview Hotels directly from D4-U3's classified incident. Not yet human-reviewed or promoted."
   }
 ]

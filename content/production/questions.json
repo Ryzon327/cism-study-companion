@@ -4747,5 +4747,329 @@
     "version": 1,
     "source": "source.learner-supplied.domain-4-question-bank",
     "note": "DOMAIN 4 U1/U2 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4A2 (Business Impact Analysis) sub-area (a BIA is the best tool for determining priority of restoration, not cost or technical characteristics; primary BIA stakeholders are business-unit representatives, not IT alone; a new application does not automatically deserve top recovery priority; the BIA is performed first and feeds business continuity planning) and the existing CANONICAL Pattern P01 (Business Alignment), already approved for Domain 4. The IR-vs-BCP distinction is source-confirmed directly: a business continuity plan 'would be triggered during the execution of the incident response plan in case it developed into a disaster' (source, verbatim). Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0008",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.incident-classification-severity"],
+    "patterns": ["pattern.p04", "pattern.p01"],
+    "qualifier": "qualifier.first",
+    "roles_mentioned": ["role.security-manager"],
+    "primary_role": null,
+    "lifecycle": "lifecycle.incident",
+    "stage": "stage.incident.identify-confirm",
+    "decision_type": "decision.incident",
+    "family": "family.d4.incident-classification-severity",
+    "variation_tags": ["business-setting:hospitality-failed-login-spike", "distractor-temptation:act-before-confirming", "decision-consequence:confirm-before-classify"],
+    "prompt": "A Harborview Hotels property reports an overnight spike in failed login attempts on staff accounts for the reservations system. The general manager wants to shut the reservations system down chain-wide immediately; the front-desk supervisor assumes it is just a glitch from a recent software update and wants to take no action. The information security manager has not yet confirmed what actually happened. What should the security manager do FIRST?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Determine what is actually known - which accounts were affected, whether any account was compromised, and whether guest payment data was accessed - before classifying the event or choosing a response.",
+        "correct": true,
+        "rationale": "An unconfirmed event isn't yet a classified incident; the response, escalation, and authority path all depend on first confirming the facts, not on either stakeholder's initial assumption."
+      },
+      {
+        "key": "b",
+        "text": "Shut down the reservations system across the entire hotel chain, as the general manager has requested.",
+        "correct": false,
+        "rationale": "Shutting down a chain-wide system is a significant business decision with its own cost and impact - making it before confirming what actually happened, and before classifying the incident's real severity, jumps ahead of the work that decision depends on.",
+        "repair_target": "repair.sequence-error"
+      },
+      {
+        "key": "c",
+        "text": "Take no action, accepting the front-desk supervisor's assumption that it is a routine software glitch.",
+        "correct": false,
+        "rationale": "Dismissing the report on assumption is just as risky as overreacting to it - if one of the failed-login accounts is genuinely compromised, that fact is only discoverable by checking, not by assuming it away.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "d",
+        "text": "Escalate the report to corporate executives immediately so they can decide how to respond.",
+        "correct": false,
+        "rationale": "Escalating before anything is confirmed gives executives nothing concrete to decide on; classification and escalation both depend on first knowing what actually happened.",
+        "repair_target": "repair.lifecycle-error"
+      }
+    ],
+    "explanation": "Before anything else, the organization must confirm what has actually happened - an unconfirmed report is an event, not yet a classified incident. Only after confirming the facts can the incident be classified and the right response, authority, and escalation path applied. Acting on either stakeholder's assumption, in either direction, skips that necessary first step.",
+    "recognition_clue": "A stem describing an incomplete or still-developing report, with stakeholders already assuming different severities, and asking what should happen FIRST, is testing whether confirmation precedes classification and action.",
+    "memory_rule": "An event is not an incident until it's confirmed - don't act on assumption.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U3/U4 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4A5 (Incident Classification/Categorization) sub-area (classification follows the nature/intent of the confirmed act; the detection-and-analysis phase is where a category is assigned based on impact) and the existing CANONICAL Pattern P04 (No Lifecycle Jumping) and P01 (Business Alignment), both already approved for Domain 4. Original scenario, not a reproduction or paraphrase of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0009",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.incident-classification-severity"],
+    "patterns": ["pattern.p04", "pattern.p01"],
+    "qualifier": "qualifier.most",
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": "lifecycle.incident",
+    "stage": "stage.incident.identify-confirm",
+    "decision_type": "decision.incident",
+    "family": "family.d4.incident-classification-severity",
+    "variation_tags": ["business-setting:grocery-chain-test-server-vs-pos", "distractor-temptation:technical-sophistication-as-severity", "decision-consequence:impact-based-ranking"],
+    "prompt": "A regional grocery chain's security team discovers two separate events in the same week: a highly sophisticated exploit attempt against an unused test server holding no customer or production data, and a simpler compromise of a single cashier terminal that briefly exposed customers' payment card numbers. Which event is MOST severe from a business-impact perspective?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The cashier-terminal compromise, because it exposed actual payment card data regardless of how simple the attack itself was.",
+        "correct": true,
+        "rationale": "Severity follows business impact - the financial, legal/regulatory, and reputational exposure created by real payment card data loss - not how sophisticated or complex the attacking technique was."
+      },
+      {
+        "key": "b",
+        "text": "The test-server exploit, because it required far greater technical skill to carry out successfully.",
+        "correct": false,
+        "rationale": "Technical sophistication describes the attacker's method, not the business consequence - a highly skilled attempt against a system holding no customer or production data creates little real impact.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "c",
+        "text": "Both events are equally severe, since each represents a successful compromise of a company system.",
+        "correct": false,
+        "rationale": "Treating every successful compromise as equally severe ignores the very different business impact each one actually causes - exposed payment card data is not equivalent to a probe of an empty test system.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "d",
+        "text": "The test-server exploit, because it will require significantly more time, effort, and specialized investigation resources to fully understand what actually happened.",
+        "correct": false,
+        "rationale": "How much investigation an event requires is an operational cost, not a measure of the business impact the event itself caused.",
+        "repair_target": "repair.business-context-error"
+      }
+    ],
+    "explanation": "Severity is assessed by business impact - the financial, legal/regulatory, operational, and reputational consequences, and which specific assets were affected - not by how technically complex, skillful, or effort-intensive the underlying event was. A simple compromise that exposes real payment card data is more severe than a sophisticated attempt that exposes nothing of value.",
+    "recognition_clue": "A stem contrasting a technically impressive/complex event against a simpler one, and asking which is MORE severe, is testing whether severity is assessed by business impact rather than technical drama.",
+    "memory_rule": "Severity follows business impact, not technical drama.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U3/U4 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4A5 sub-area (a highly sophisticated attack against a low-value system can be less severe than a simple compromise exposing sensitive data; severity is assessed by financial/legal/regulatory/operational/reputational impact, not technical drama) and the existing CANONICAL Pattern P04 and P01, both already approved for Domain 4. Original scenario, transferred to a regional grocery chain, not a reproduction of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0010",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.incident-classification-severity"],
+    "patterns": ["pattern.p04", "pattern.p01"],
+    "qualifier": "qualifier.most",
+    "roles_mentioned": ["role.incident-response-team"],
+    "primary_role": null,
+    "lifecycle": "lifecycle.incident",
+    "stage": "stage.incident.identify-confirm",
+    "decision_type": "decision.incident",
+    "family": "family.d4.incident-classification-severity",
+    "variation_tags": ["business-setting:courier-company-classification-scheme", "distractor-temptation:generic-scheme-or-outsourced-authority", "decision-consequence:business-context-tailored-framework"],
+    "prompt": "A regional courier company wants to establish a scheme for classifying and categorizing security incidents so that response resources, authority, and escalation are applied consistently. Which approach is MOST effective?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Build a classification framework tailored to the courier company's own business context, developed with input from the stakeholders who understand that context.",
+        "correct": true,
+        "rationale": "An effective scheme reflects the organization's own operations, assets, and risk profile, built with the people who understand that context - not a scheme pulled wholesale from somewhere else."
+      },
+      {
+        "key": "b",
+        "text": "Adopt a widely used industry-standard categorization scheme exactly as published, without modification.",
+        "correct": false,
+        "rationale": "A generic industry scheme was not built around this courier company's specific operations and assets - using it unmodified risks misclassifying what actually matters most to this business.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "c",
+        "text": "Assign responsibility for defining the scheme entirely to the technical incident response team.",
+        "correct": false,
+        "rationale": "The technical response team can inform the scheme, but business impact - financial, legal, operational, and reputational consequence - is what the scheme must reflect, and that requires input beyond the technical team alone.",
+        "repair_target": "repair.role-error"
+      },
+      {
+        "key": "d",
+        "text": "Outsource development of the classification scheme entirely to a third-party security consultancy.",
+        "correct": false,
+        "rationale": "A third party does not carry the business context or accountability that make a classification scheme fit the organization - that understanding has to come from within, even if a consultant assists.",
+        "repair_target": "repair.authority-error"
+      }
+    ],
+    "explanation": "The most effective classification scheme is tailored to the organization's own business context and built with input from the people who understand that context - not adopted wholesale from generic industry categories, assigned to the technical response team alone, or outsourced to a third party.",
+    "recognition_clue": "A stem asking what makes a classification/categorization scheme effective is testing whether the answer ties the scheme to the organization's own business context and stakeholder input.",
+    "memory_rule": "A classification scheme works because it fits the organization's own business context, not because it came from a generic template.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U3/U4 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4A5 sub-area (the MOST effective way to ensure proper classification is a framework tailored to the organization's own business context, built with stakeholder input - not generic industry categories, not the incident response team alone, and not outsourced to a third party) and the existing CANONICAL Pattern P04 and P01, both already approved for Domain 4. Original scenario, transferred to a regional courier company, not a reproduction of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0011",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.escalation-communications"],
+    "patterns": ["pattern.p11", "pattern.p02"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager", "role.board-senior-management"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.incident",
+    "family": "family.d4.escalation-communications",
+    "variation_tags": ["business-setting:hospitality-corporate-leadership-update", "distractor-temptation:raw-technical-detail-to-executives", "decision-consequence:audience-appropriate-reporting"],
+    "prompt": "Harborview Hotels' information security manager has confirmed and classified the compromised-account incident at one property (see D4-U3). Corporate leadership now asks for an update. What is the BEST information for the security manager to report?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The business impact of the incident and the corrective actions currently being taken.",
+        "correct": true,
+        "rationale": "Senior management needs information that supports its own decisions - business impact and what is being done about it - not a technical blow-by-blow."
+      },
+      {
+        "key": "b",
+        "text": "A detailed, chronological log of every failed login attempt and system alert generated overnight.",
+        "correct": false,
+        "rationale": "A raw technical log does not tell leadership what it actually needs to decide - it answers a different audience's question than the one leadership is asking.",
+        "repair_target": "repair.technical-vs-management-error"
+      },
+      {
+        "key": "c",
+        "text": "A comparison of how other hotel chains have handled similar incidents in the past.",
+        "correct": false,
+        "rationale": "Industry comparisons do not describe what happened at Harborview or what impact it is having - they are irrelevant to the decision leadership needs to make right now.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "d",
+        "text": "A business case for purchasing new access-control technology to prevent similar incidents in the future.",
+        "correct": false,
+        "rationale": "A future purchase decision is premature before leadership even has the current incident's impact and response - that conversation comes later, not as the incident update itself.",
+        "repair_target": "repair.sequence-error"
+      }
+    ],
+    "explanation": "Senior management and executives need the business impact of an incident and the corrective actions being taken - information that supports their own decisions - not raw technical detail, unrelated comparisons, or a premature pitch for new controls.",
+    "recognition_clue": "A stem asking what should be reported to senior management/executives after a classified incident is testing whether the answer matches business impact and corrective action to that audience's actual decision, not technical detail.",
+    "memory_rule": "Executives need business impact and corrective action, not a raw technical log.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U3/U4 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4B4 (Incident Response Communications) sub-area (the most important item to report to the CIO/senior management after a significant breach is the impact and corrective actions taken, not a technical log, industry comparison, or business case for new controls - each explicitly rejected in-source) and the existing CANONICAL Pattern P11 (Audience-Appropriate Communication, applicable_domains extended to include domain.d4 this batch - see schema/registry/patterns.json and docs/learning/DOMAIN-4-U3-U4-GATE-RECORD.md) and P02 (Authority Follows Accountability), both approved for Domain 4. Continues Harborview Hotels directly from D4-U3. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0012",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.escalation-communications"],
+    "patterns": ["pattern.p11", "pattern.p02"],
+    "qualifier": null,
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.incident",
+    "family": "family.d4.escalation-communications",
+    "variation_tags": ["business-setting:pharmacy-chain-unauthorized-media-contact", "distractor-temptation:well-intentioned-unauthorized-comment", "decision-consequence:single-spokesperson-routing"],
+    "prompt": "A reporter contacts an on-duty technical support contractor at a mid-size pharmacy chain directly, asking for comment about a security incident that was just confirmed at one of its pharmacies. The contractor has no role in media relations. What should the contractor do?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Decline to comment and direct the reporter to the organization's single authorized spokesperson.",
+        "correct": true,
+        "rationale": "Media contact should always go through one identified, pre-authorized spokesperson delivering a specifically prepared message - not whichever employee happens to be reached first."
+      },
+      {
+        "key": "b",
+        "text": "Give the reporter a brief, factual statement about what is currently known.",
+        "correct": false,
+        "rationale": "Even a brief, well-intentioned comment from someone without that authority can conflict with the organization's prepared message or disclose something premature - media contact is not the contractor's call to make.",
+        "repair_target": "repair.authority-error"
+      },
+      {
+        "key": "c",
+        "text": "Refuse to comment and tell the reporter the organization will say nothing until the incident is fully resolved.",
+        "correct": false,
+        "rationale": "Refusing all comment indefinitely is not the same as routing the inquiry correctly - the organization may still need to issue a prepared statement well before full resolution.",
+        "repair_target": "repair.business-context-error"
+      },
+      {
+        "key": "d",
+        "text": "Refer the reporter directly to law enforcement for comment.",
+        "correct": false,
+        "rationale": "Law enforcement is not the organization's spokesperson and has no role in communicating the pharmacy chain's own message - this simply redirects the problem rather than routing it correctly.",
+        "repair_target": "repair.role-error"
+      }
+    ],
+    "explanation": "All media contact about an incident should be routed through one authorized, pre-prepared spokesperson - not handled, refused wholesale, or redirected elsewhere by whichever employee happens to be reached, since only the designated spokesperson delivers the organization's specifically prepared message.",
+    "recognition_clue": "A stem describing a reporter or outside party reaching an employee directly for comment is testing whether all such contact is routed to one authorized spokesperson, not answered, refused wholesale, or redirected elsewhere.",
+    "memory_rule": "Media hears from one authorized spokesperson, or not at all.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.role"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U3/U4 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4B4 sub-area (the most important consideration for media interaction is a specifically drafted message from one authorized spokesperson - not refusing all comment, not referring media to authorities, and not an unplanned comment from an unauthorized employee) and the existing CANONICAL Pattern P11 (applicable_domains extended to include domain.d4 this batch) and P02, both approved for Domain 4. Original scenario, transferred to a mid-size pharmacy chain, not a reproduction of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0013",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.escalation-communications"],
+    "patterns": ["pattern.p11", "pattern.p02"],
+    "qualifier": null,
+    "roles_mentioned": ["role.security-manager", "role.incident-response-team", "role.board-senior-management"],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.incident",
+    "family": "family.d4.escalation-communications",
+    "variation_tags": ["business-setting:telecom-regulatory-notification-authority", "distractor-temptation:technical-role-or-third-party-decides", "decision-consequence:management-owns-external-notification"],
+    "prompt": "A regional telecommunications provider confirms a security incident that may involve exposure of customer data, raising possible regulatory notification obligations. Who should decide whether and how to notify regulators and affected customers?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Management, following the organization's established incident communication plan.",
+        "correct": true,
+        "rationale": "Deciding whether and how to notify external parties with legal/regulatory implications is a business decision that belongs to management, made through the organization's own communication plan - not improvised by a technical role in the moment."
+      },
+      {
+        "key": "b",
+        "text": "The information security manager, since they identified and confirmed the incident.",
+        "correct": false,
+        "rationale": "Identifying and confirming an incident is a different responsibility than deciding how to handle its legal and regulatory consequences - that decision belongs to management, not to whoever confirmed the facts.",
+        "repair_target": "repair.authority-error"
+      },
+      {
+        "key": "c",
+        "text": "The incident response team, since they are actively managing the incident.",
+        "correct": false,
+        "rationale": "The response team's accountability is executing the active response, not deciding external notification obligations that carry legal and regulatory consequences for the organization.",
+        "repair_target": "repair.authority-error"
+      },
+      {
+        "key": "d",
+        "text": "The third-party managed-service provider whose systems were involved, since it is closest to the technical details of what happened.",
+        "correct": false,
+        "rationale": "A third party's involvement in the technical details does not transfer the organization's own accountability for deciding external notification - that decision, and its consequences, remain the organization's to make.",
+        "repair_target": "repair.business-context-error"
+      }
+    ],
+    "explanation": "Deciding whether and how to notify regulators, customers, or other external parties after an incident with legal implications is a business decision that belongs to management, made through the organization's own communication plan - not a call the information security manager, the incident response team, or an involved third party can make on the organization's behalf.",
+    "recognition_clue": "A stem asking who decides whether/how to notify regulators or customers after a confirmed incident with legal implications is testing whether that authority is correctly placed with management, not a technical role or an involved third party.",
+    "memory_rule": "External notification is a management decision, following the communication plan - a third party's involvement never transfers that accountability away.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.role"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U3/U4 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4B4 sub-area (communication regarding security events with legal implications is explicitly a business decision belonging to management, not the information security manager contacting external authorities directly) and the existing CANONICAL Pattern P11 (applicable_domains extended to include domain.d4 this batch) and P02 (Authority Follows Accountability), both approved for Domain 4. Original scenario, transferred to a regional telecommunications provider, not a reproduction of any specific source question. Not yet human-reviewed or promoted."
   }
 ]
