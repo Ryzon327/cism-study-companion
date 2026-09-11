@@ -5395,5 +5395,329 @@
     "version": 1,
     "source": "source.learner-supplied.domain-4-question-bank",
     "note": "DOMAIN 4 U5/U6 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4B1/4B2 sub-areas, directly source-confirmed verbatim ('preventing contamination of evidence takes priority over containment in situations where criminal charges may be filed'; 'in many enterprises, the decision to notify law enforcement is made by senior management') and the existing CANONICAL Pattern P02 and P04, both already approved for Domain 4. This variant's evidence-outranks-speed reasoning is deliberately scoped to the criminal-charges context the source itself uses, not generalized into an absolute rule - see concept.d4.evidence-investigation's note for the full source-nuance discussion. Original scenario, transferred to a national retail chain, not a reproduction of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0020",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.eradication-recovery"],
+    "patterns": ["pattern.p04", "pattern.p05"],
+    "qualifier": "qualifier.best",
+    "roles_mentioned": ["role.security-manager", "role.incident-response-team"],
+    "primary_role": null,
+    "lifecycle": "lifecycle.incident",
+    "stage": null,
+    "decision_type": "decision.incident",
+    "family": "family.d4.eradication-recovery",
+    "variation_tags": ["business-setting:hospitality-rebuild-vs-backup", "distractor-temptation:speed-over-clean-rebuild", "decision-consequence:privileged-access-rebuild-from-original-media"],
+    "prompt": "With the original hard drive preserved (see D4-U6), Harborview's IT team wants to restore reservations service quickly by reinstalling the system from last week's backup. The security manager instead directs the team to rebuild the server from the original, clean installation media. What is the BEST reason for this decision?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The compromised account had privileged access, and a backup taken after the compromise could carry the same exposure forward - rebuilding from known-clean original media is what actually confirms the cause is gone.",
+        "correct": true,
+        "rationale": "When a compromise involves privileged access, a backup taken afterward cannot be trusted to be clean - only a rebuild from known-clean original media reliably confirms the cause has actually been removed."
+      },
+      {
+        "key": "b",
+        "text": "Restoring from backup takes longer than rebuilding from original media, so rebuilding gets reservations service back online faster.",
+        "correct": false,
+        "rationale": "Rebuilding from original media is not chosen for speed - it is generally the slower option - but for the assurance that the cause has genuinely been removed, which a possibly-compromised backup cannot provide.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "The affected account has already been isolated, so rebuilding from either source is equally safe at this point.",
+        "correct": false,
+        "rationale": "Isolating the account was containment, not eradication - it stopped further spread but did not remove the cause, so the backup itself can still carry the same exposure forward.",
+        "repair_target": "repair.vocabulary-error"
+      },
+      {
+        "key": "d",
+        "text": "Law enforcement must approve the rebuild method before the team proceeds.",
+        "correct": false,
+        "rationale": "Rebuilding from clean media is a technical eradication decision, not one that requires law-enforcement approval - no source-supported rule makes external approval a precondition here.",
+        "repair_target": "repair.authority-error"
+      }
+    ],
+    "explanation": "When a compromise involves privileged or administrative access, a backup taken after the compromise cannot be trusted to be clean - it can carry the same exposure forward. Rebuilding from known-clean, original installation media is what actually confirms the cause has been removed, which is what eradication requires.",
+    "recognition_clue": "A stem describing a privileged-account compromise and offering a recent backup as the fast restoration option is testing whether the learner recognizes that backup could carry the same exposure forward - rebuilding from known-clean original media is the reliable answer.",
+    "memory_rule": "After a privileged-access compromise, rebuild from clean original media - a backup taken afterward can't be fully trusted.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U7/U8 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4B5 (Incident Eradication and Recovery) sub-area (when a superuser/privileged account is compromised, 'rebuilding the system from the original installation medium is the only way to ensure all security vulnerabilities and potential stealth malicious programs have been destroyed' - explicitly not a verified backup, since 'the verified backup may have been compromised by the super-user at a different time') and the existing CANONICAL Pattern P04 (No Lifecycle Jumping) and P05 (No Lifecycle Reversal), both already approved for Domain 4. Continues Harborview Hotels directly from D4-U6's preserved evidence. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0021",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.eradication-recovery"],
+    "patterns": ["pattern.p04", "pattern.p05"],
+    "qualifier": "qualifier.most",
+    "roles_mentioned": ["role.security-manager"],
+    "primary_role": null,
+    "lifecycle": "lifecycle.incident",
+    "stage": null,
+    "decision_type": "decision.incident",
+    "family": "family.d4.eradication-recovery",
+    "variation_tags": ["business-setting:airline-rto-met-not-verified", "distractor-temptation:rto-mistaken-for-full-recovery", "decision-consequence:verify-end-to-end-before-declaring-recovery"],
+    "prompt": "A regional airline's IT team restores its booking system within the recovery time objective and reports the incident resolved. Passengers, however, still cannot complete payment for new bookings. What is the MOST accurate conclusion for the security manager to reach?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Recovery is not actually complete - meeting the recovery time objective does not guarantee the business function has been fully, verifiably restored.",
+        "correct": true,
+        "rationale": "A recovery time objective is a target, sometimes a minimum acceptable operating level - it does not by itself prove recovery is complete. Only verifying the business's own processes are genuinely working end to end, including payment, confirms that."
+      },
+      {
+        "key": "b",
+        "text": "The incident is resolved, since the recovery time objective was the stated target and it was met.",
+        "correct": false,
+        "rationale": "Meeting a stated recovery time objective is not the same as recovery being complete - the booking system is back online, but the payment function it depends on is not yet working.",
+        "repair_target": "repair.knowledge-gap"
+      },
+      {
+        "key": "c",
+        "text": "The team should begin the post-incident review now that recovery is finished.",
+        "correct": false,
+        "rationale": "Recovery is not actually finished while a core business function still isn't working - moving to post-incident review skips ahead of the verification recovery still requires.",
+        "repair_target": "repair.sequence-error"
+      },
+      {
+        "key": "d",
+        "text": "This is now an eradication problem, since the payment issue suggests the original cause was never fully removed.",
+        "correct": false,
+        "rationale": "An unverified business function points to an incomplete recovery, not necessarily a failure of eradication - the two are distinct concerns, and nothing in the scenario suggests the original cause is still present.",
+        "repair_target": "repair.vocabulary-error"
+      }
+    ],
+    "explanation": "A recovery time objective is a target, not proof of full recovery - it can represent a minimum acceptable operating level well short of normal operations. Only verifying that the organization's own business processes are genuinely working end to end confirms recovery is actually complete.",
+    "recognition_clue": "A stem stating a recovery time objective has been met, while a business function is still visibly not working, is testing whether the learner treats RTO as a target rather than proof of complete recovery.",
+    "memory_rule": "Meeting the recovery time objective isn't the same as recovery being complete - verify the business itself is actually working again.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.decision"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U7/U8 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4B5 sub-area ('RTO is an objective, and full restoration may or may not coincide with the RTO... RTO can be the minimum acceptable operational level, far short of normal operations'; 'until end-to-end transaction flow is established, recovery is not complete... whether the RTO has been met is less important than achieving full recovery') and the existing CANONICAL Pattern P04 and P05, both already approved for Domain 4. Original scenario, transferred to a regional airline, not a reproduction of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0022",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.eradication-recovery"],
+    "patterns": ["pattern.p04", "pattern.p05"],
+    "qualifier": "qualifier.next",
+    "roles_mentioned": ["role.incident-response-team"],
+    "primary_role": null,
+    "lifecycle": "lifecycle.incident",
+    "stage": null,
+    "decision_type": "decision.incident",
+    "family": "family.d4.eradication-recovery",
+    "variation_tags": ["business-setting:manufacturing-eradication-complete-not-reconnected", "distractor-temptation:redo-completed-stage-or-declare-closure-early", "decision-consequence:proceed-to-recovery-not-repeat-or-close"],
+    "prompt": "A national manufacturing company's incident response team reports: \"The malicious account has been isolated, and we've confirmed the malware has been completely removed from all affected systems. Production systems have not yet been reconnected.\" What should happen NEXT?",
+    "options": [
+      {
+        "key": "a",
+        "text": "Begin restoring and reconnecting production systems, verifying normal operation as recovery proceeds.",
+        "correct": true,
+        "rationale": "Containment and eradication have both already been confirmed complete - the next step is recovery: restoring and verifying the affected systems, not repeating a step already finished or declaring the incident over before it is."
+      },
+      {
+        "key": "b",
+        "text": "Continue containment efforts, since the incident isn't fully resolved yet.",
+        "correct": false,
+        "rationale": "Containment has already been completed - the scenario states the malicious account was isolated. Continuing containment retreats to a stage that has already passed rather than addressing what comes next.",
+        "repair_target": "repair.sequence-error"
+      },
+      {
+        "key": "c",
+        "text": "Begin eradication procedures to remove the malware from the affected systems.",
+        "correct": false,
+        "rationale": "The malware has already been confirmed completely removed - eradication is complete. Repeating it retreats to a stage that has already passed rather than moving to recovery.",
+        "repair_target": "repair.sequence-error"
+      },
+      {
+        "key": "d",
+        "text": "Declare the incident closed immediately, since the malicious account has been isolated and the malware removed.",
+        "correct": false,
+        "rationale": "Recovery - restoring and verifying the production systems - has not yet happened. Declaring the incident closed before systems are reconnected and verified skips ahead of what containment and eradication being complete actually requires next.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "The correct response always matches what the scenario has already established. Containment and eradication are both confirmed complete here, so the next step is recovery - restoring and verifying the affected systems - not repeating a completed stage and not declaring the incident closed before recovery has actually happened.",
+    "recognition_clue": "A stem stating that containment and eradication are both already complete, and asking what happens NEXT, is testing whether the learner correctly identifies recovery rather than retreating to an already-finished stage or jumping to closure.",
+    "memory_rule": "Stopping the damage isn't removing the cause, and removing the cause isn't safely restoring the business - each is a separate, necessary step.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.sequence"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U7/U8 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4B5 sub-area (eradication 'requires determining and eliminating the root cause,' explicitly distinguished from containment and from recovery, which is 'accomplished after eradication and during recovery phase') and the existing CANONICAL Pattern P04 (No Lifecycle Jumping) and P05 (No Lifecycle Reversal), both already approved for Domain 4 - this question is the first full-strength reuse of P05 in Domain 4 production content. Original scenario, transferred to a national manufacturing company, not a reproduction of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0023",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.ir-bcp-drp-boundary"],
+    "patterns": ["pattern.p01"],
+    "qualifier": null,
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.incident",
+    "family": "family.d4.ir-bcp-drp-boundary",
+    "variation_tags": ["business-setting:hospitality-manual-check-in-workaround", "distractor-temptation:it-only-bcp-reduction", "decision-consequence:bcp-governs-business-process-not-technology"],
+    "prompt": "While Harborview's reservation server is being rebuilt (see D4-U7), the property's general manager reports that front-desk staff are checking guests in manually using a paper-based process, since the reservation system remains unavailable. The regional operations director asks which plan governs this manual check-in process. What is the correct answer?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The business continuity plan - it keeps the critical guest check-in process running while the underlying technology is still being restored, distinct from the disaster recovery plan restoring the server itself.",
+        "correct": true,
+        "rationale": "Business continuity keeps critical business processes running when normal operations are disrupted - the manual check-in workaround is exactly that, and it is a distinct concern from the technical work of restoring the interrupted system."
+      },
+      {
+        "key": "b",
+        "text": "The incident response plan, since the security incident is still active.",
+        "correct": false,
+        "rationale": "Incident response manages the security incident itself - it does not govern a business-process workaround for keeping guest check-in running while the incident is being handled.",
+        "repair_target": "repair.vocabulary-error"
+      },
+      {
+        "key": "c",
+        "text": "The disaster recovery plan, since it covers all recovery-related activity during an incident.",
+        "correct": false,
+        "rationale": "Disaster recovery restores specific interrupted technology, systems, or data - it does not govern a manual business-process workaround, which is a business continuity concern instead.",
+        "repair_target": "repair.vocabulary-error"
+      },
+      {
+        "key": "d",
+        "text": "No formal plan governs this - the front-desk staff improvised a reasonable workaround.",
+        "correct": false,
+        "rationale": "A business continuity plan exists precisely to have a defined process ready for exactly this situation - treating it as an improvised, unplanned response misses that this is what business continuity planning is for.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "Business continuity keeps critical business processes running - the actual work of the organization, not just its technology - when normal operations are disrupted. The manual check-in workaround is business continuity in action, distinct from disaster recovery's job of restoring the interrupted server itself.",
+    "recognition_clue": "A stem describing a manual or workaround process keeping a business function running while its usual system is down is testing whether the learner recognizes that as business continuity, not a sign that no plan applies, and distinct from the technology restoration itself.",
+    "memory_rule": "Business continuity keeps the business's own processes running - it isn't just another name for restoring IT.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.vocabulary"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U7/U8 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4A3/4A4 sub-areas ('MOST closely associated with a business continuity program' is 'developing recovery time objectives for critical functions,' explicitly rejecting technical-recovery-plan/network-redundancy/equipment-configuration options as all 'associated with infrastructure disaster recovery' instead; 'the disaster recovery plan (DRP) focuses on restoring IT systems and data. This is not necessarily covered when testing the business continuity plan (BCP)') and the existing CANONICAL Pattern P01 (Business Alignment), already approved for Domain 4. Continues Harborview Hotels directly from D4-U7's recovery-in-progress incident. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0024",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.ir-bcp-drp-boundary"],
+    "patterns": ["pattern.p01"],
+    "qualifier": "qualifier.primary",
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.incident",
+    "family": "family.d4.ir-bcp-drp-boundary",
+    "variation_tags": ["business-setting:healthcare-rpo-backup-frequency", "distractor-temptation:rto-mistaken-for-data-loss-driver", "decision-consequence:rpo-drives-backup-frequency"],
+    "prompt": "A mid-size hospital system's disaster recovery team is designing its backup strategy for the patient records database. Leadership states that losing more than 15 minutes of recently entered data would be unacceptable, but the system can remain offline for up to 4 hours without material harm. Which recovery objective is the PRIMARY driver of how frequently the database must be backed up?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The recovery point objective (RPO) - the maximum tolerable data loss, not the allowable downtime, is what determines backup frequency.",
+        "correct": true,
+        "rationale": "Backup frequency exists to limit how much data could be lost, which is exactly what the recovery point objective defines - the stated 15-minute data-loss tolerance directly sets how often backups must run."
+      },
+      {
+        "key": "b",
+        "text": "The recovery time objective (RTO) - it describes the allowable downtime, which directly drives how often the database must be backed up.",
+        "correct": false,
+        "rationale": "RTO describes allowable downtime, not tolerable data loss - it does not drive backup frequency, which depends on how much data the organization can afford to lose, not how long it can be offline.",
+        "repair_target": "repair.vocabulary-error"
+      },
+      {
+        "key": "c",
+        "text": "The maximum tolerable outage (MTO) - it describes the outer limit before impact becomes unacceptable, which drives how often backups must run.",
+        "correct": false,
+        "rationale": "MTO describes the absolute outer limit the organization can operate in alternate mode - it is a time-based ceiling, not the data-loss tolerance that determines backup frequency.",
+        "repair_target": "repair.vocabulary-error"
+      },
+      {
+        "key": "d",
+        "text": "The service delivery objective (SDO) - it describes the level of service during alternate operation, which drives how often backups must run.",
+        "correct": false,
+        "rationale": "SDO describes the level of service maintained during alternate operation, not tolerable data loss - it does not determine how frequently the database must be backed up.",
+        "repair_target": "repair.vocabulary-error"
+      }
+    ],
+    "explanation": "The recovery point objective is the maximum tolerable data loss, measured in time - it is what directly determines backup frequency, not the recovery time objective (allowable downtime), the maximum tolerable outage (the outer time limit), or the service delivery objective (the alternate-mode service level).",
+    "recognition_clue": "A stem stating a specific tolerable-data-loss figure alongside a separate tolerable-downtime figure, and asking what drives backup frequency, is testing whether the learner correctly matches data loss to RPO rather than confusing it with RTO, MTO, or SDO.",
+    "memory_rule": "RTO is downtime, RPO is data loss, SDO is the service level during alternate operation - three separate business-defined commitments, not interchangeable.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.vocabulary"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U7/U8 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4A4 sub-area (RPO is 'the maximum loss of data acceptable by the business... will directly determine the basic elements of the backup strategy,' explicitly NOT RTO, which 'will not have any impact on the backup strategy') and the existing CANONICAL Pattern P01, already approved for Domain 4. Original scenario, transferred to a mid-size hospital system, not a reproduction of any specific source question. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "question.d4.0025",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.ir-bcp-drp-boundary"],
+    "patterns": ["pattern.p01"],
+    "qualifier": "qualifier.most",
+    "roles_mentioned": [],
+    "primary_role": null,
+    "lifecycle": null,
+    "stage": null,
+    "decision_type": "decision.incident",
+    "family": "family.d4.ir-bcp-drp-boundary",
+    "variation_tags": ["business-setting:telecom-warm-site-half-capacity", "distractor-temptation:rto-mistaken-for-service-level", "decision-consequence:partial-capacity-meets-sdo-not-rto"],
+    "prompt": "A national telecommunications provider's disaster recovery team restores its customer-service call center at a warm site, but it can currently handle only half its normal call volume. The team reports this as a successful recovery milestone. Which recovery objective MOST accurately describes what has actually been met?",
+    "options": [
+      {
+        "key": "a",
+        "text": "The service delivery objective (SDO) - the agreed level of service during alternate operation, not a specific time target or data-loss limit.",
+        "correct": true,
+        "rationale": "The service delivery objective is the level of service to be reached during alternate processing until normal operation is restored - a warm site operating at half capacity is describing exactly that, not a time target or a data-loss limit."
+      },
+      {
+        "key": "b",
+        "text": "The recovery time objective (RTO), since the call center is back online within the target window.",
+        "correct": false,
+        "rationale": "RTO describes how long a function can be down, not the level of service once it is back - operating at half capacity describes a service level, which RTO does not measure.",
+        "repair_target": "repair.vocabulary-error"
+      },
+      {
+        "key": "c",
+        "text": "The recovery point objective (RPO), since no customer data appears to have been lost.",
+        "correct": false,
+        "rationale": "RPO describes tolerable data loss, which is unrelated to call-handling capacity - nothing in the scenario concerns data loss at all.",
+        "repair_target": "repair.vocabulary-error"
+      },
+      {
+        "key": "d",
+        "text": "Full recovery has been achieved, since the call center is operational again.",
+        "correct": false,
+        "rationale": "Operating at half capacity is a defined interim service level, not full or normal recovery - the call center is functioning, but not yet at its normal operating level.",
+        "repair_target": "repair.knowledge-gap"
+      }
+    ],
+    "explanation": "The service delivery objective is the level of service maintained during alternate operation until normal conditions are restored. A warm site running at half capacity is describing that service level directly - it is not a time target (RTO), a data-loss limit (RPO), or proof that full, normal recovery has been reached.",
+    "recognition_clue": "A stem describing a system restored to a specific, partial capacity level - not a time elapsed or data lost - is testing whether the learner correctly matches that fact to SDO rather than RTO or RPO.",
+    "memory_rule": "RTO is downtime, RPO is data loss, SDO is the service level during alternate operation - three separate business-defined commitments, not interchangeable.",
+    "evidence_dimensions": ["evidence.knowledge", "evidence.business-context", "evidence.vocabulary"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U7/U8 AUTHORING BATCH CANDIDATE — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md, grounded in the supplied Domain 4 source material's 4B5 sub-area (a team correctly reports a system restored to half throughput as having met the SDO, not the RTO: 'the SDO is the agreed-on level of service required to resume acceptable operations,' distinguished directly from RTO/RPO/MTO in the same source item) and the existing CANONICAL Pattern P01, already approved for Domain 4. Original scenario, transferred to a national telecommunications provider, closely modeled on the source's own reasoning-from-facts scenario but not a reproduction of its exact wording. Not yet human-reviewed or promoted."
   }
 ]

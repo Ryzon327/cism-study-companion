@@ -1143,5 +1143,73 @@
     "version": 1,
     "source": "source.learner-supplied.domain-4-question-bank",
     "note": "DOMAIN 4 U5/U6 AUTHORING BATCH CANDIDATE (D4-U6, Evidence Handling / Investigation) — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md and the Architect's D4-U5/U6 authoring directive. Prerequisite is lesson.d4.incident-containment (D4-U5) only. DEPENDENCY DECISION (the Architect's explicitly unlocked item): confirmed via direct inspection of app/src/content/resolve.ts's recallPoolFor - the recall pool a lesson draws from is the full transitive closure of every reachable prerequisite lesson's retrieval_refs/families, not a distance-weighted or nearest-only set, so a single edge to D4-U5 already makes D4-U1 through D4-U5 fully recall-eligible; a second direct prerequisite edge to D4-U3/D4-U4 would be functionally inert for recall purposes (Domain 4 has no branching tree requiring reconvergence, unlike e.g. lesson.d2.residual-risk-acceptability's genuine two-branch merge). The single-parent linear chain is therefore preserved as both correct and sufficient - see docs/learning/DOMAIN-4-U5-U6-GATE-RECORD.md for the full analysis. Deliberately cross-cutting (lifecycle: null, stage_target: null) per direct source analysis - evidence/investigation reasoning spans containment through eradication/recovery decisions rather than binding to one stage. Continues Harborview Hotels directly from D4-U5's contained incident. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d4.eradication-recovery",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.eradication-recovery"],
+    "patterns": ["pattern.p04", "pattern.p05"],
+    "prerequisites": ["lesson.d4.evidence-investigation"],
+    "objective": "Recognize that eradication (removing the actual cause) and recovery (restoring and verifying normal business operation) are two distinct, sequential steps after containment - that a compromise involving privileged access calls for rebuilding from known-clean original media rather than a possibly-tainted backup, and that meeting a stated recovery time objective does not by itself prove recovery is actually complete.",
+    "context": "With the compromised server's evidence preserved (D4-U6), Harborview's incident response team can finally move from containment into eradication and recovery. Stopping the spread of harm (containment) is not the same as removing what caused it (eradication), and removing the cause is not the same as safely restoring the business (recovery) - each is a distinct, necessary step, and none can substitute for the others. Because the compromised account had privileged access on the reservation server, restoring from a recent backup is not a safe shortcut: a backup taken after the compromise could carry the same exposure forward. Rebuilding from known-clean, original installation media is what actually confirms the cause is gone. Once eradicated, recovery still is not finished the moment the server reconnects or hits its recovery time objective (RTO) - an RTO is a target, sometimes a deliberately modest one, and only verifying that the business's own processes are genuinely working end to end confirms recovery is actually complete.",
+    "cism_perspective": "CISM stems in this area often describe a system whose cause has just been removed, or whose recovery time objective has just been met, and ask what should happen next - a tempting wrong answer treats either moment as if the incident were already resolved. Other stems describe containment or eradication as already complete and offer an option that re-does that same step, testing whether the learner recognizes a completed step doesn't need repeating. A third pattern offers restoring from a recent backup as the fast option after a privileged-access compromise - the correct answer recognizes that backup as potentially compromised too.",
+    "recognition_clues": [
+      "The stem describes a privileged-account compromise and offers restoring from a recent backup as the fast option - a backup taken after the compromise can carry the same exposure forward; rebuilding from known-clean original media is the reliable answer.",
+      "The stem states a recovery time objective has been met and asks what that means - RTO is a target, not proof of full recovery; only verified, end-to-end business function confirms recovery is complete.",
+      "The stem states containment and/or eradication are already complete and offers an option that repeats one of them - a completed step doesn't need repeating; look for what comes next instead."
+    ],
+    "scenario": "Harborview's incident response team, eager to get the affected property's reservation server back online, considers reinstalling from last week's nightly backup. The security manager instead directs the team to rebuild the server from the original, clean installation media, since the compromised account had privileged access and the backup itself could carry the same exposure forward. Once the rebuilt server is patched and reconfigured, corporate leadership wants to declare the incident resolved the moment reservations start flowing again - but the security manager insists on verifying that bookings, payment processing, and the property's other guest-facing functions are all genuinely working end to end before calling recovery complete, since hitting the target recovery time alone doesn't prove that.",
+    "traps": [
+      "Restoring or rebuilding from a recent backup after a privileged-access compromise, when that backup could carry the same exposure forward.",
+      "Treating a met recovery time objective as proof that recovery is complete, without verifying the business's own processes actually work end to end.",
+      "Re-doing containment or eradication once the scenario has already established they are complete.",
+      "Declaring the incident closed the moment the system is reconnected, before eradication or verified recovery has actually finished."
+    ],
+    "memory_rules": [
+      "Stopping the damage isn't removing the cause, and removing the cause isn't safely restoring the business - each is a separate, necessary step.",
+      "After a privileged-access compromise, rebuild from clean original media - a backup taken afterward can't be fully trusted.",
+      "Meeting the recovery time objective isn't the same as recovery being complete - verify the business itself is actually working again."
+    ],
+    "retrieval_refs": ["question.d4.0020"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U7/U8 AUTHORING BATCH CANDIDATE (D4-U7, Eradication / Recovery) — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md and the Architect's D4-U7/U8 authoring directive. Prerequisite is lesson.d4.evidence-investigation (D4-U6) only, continuing the Domain 4 chain and the full cumulative cross-domain recall pool. Deliberately does not set a single lifecycle stage (lifecycle: 'lifecycle.incident', stage_target: null) - see family.d4.eradication-recovery's own note and docs/learning/DOMAIN-4-U7-U8-GATE-RECORD.md for the full source-grounded reasoning behind this deviation from the architecture document's original single-stage assumption. Continues Harborview Hotels directly from D4-U6's preserved evidence. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d4.ir-bcp-drp-boundary",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.ir-bcp-drp-boundary"],
+    "patterns": ["pattern.p01"],
+    "prerequisites": ["lesson.d4.eradication-recovery"],
+    "objective": "Recognize that incident response, business continuity, and disaster recovery are three coordinated but distinct disciplines that can operate at the same time on the same incident depending on what is actually disrupted, and that recovery objectives (RTO, RPO, SDO) describe different dimensions of a business-defined restoration commitment that must be matched to a described scenario by reasoning from the facts.",
+    "context": "While Harborview's reservation server is being rebuilt and recovered (D4-U7), a second, parallel need surfaces: the property's front desk cannot wait for the server, so staff are checking guests in manually using a paper-based process while the technology is restored. This is not a sign that no plan applies - it is business continuity working as intended, keeping the critical guest check-in process running while disaster recovery handles the technology underneath it. Incident response, business continuity, and disaster recovery are three different disciplines that can all be active on the same incident at once: incident response manages the security incident itself; business continuity keeps critical business processes running; disaster recovery restores the specific interrupted technology. None of the three is a smaller version of another, and activating one doesn't automatically mean every other plan activates too - what is actually disrupted determines what is needed. The recovery objectives set for Harborview's systems describe different things and are easy to confuse: how long a function can be down (recovery time objective, RTO), how much data loss is tolerable (recovery point objective, RPO), and what level of service must be maintained during alternate operation (service delivery objective, SDO) are three separate, business-defined commitments, not interchangeable labels for 'how well recovery is going.'",
+    "cism_perspective": "CISM stems in this area often describe a workaround or a partially-restored state and ask which plan or which recovery objective it demonstrates - a tempting wrong answer collapses business continuity into an IT-only concept, or swaps one recovery objective's defining fact (downtime, data loss, service level) for another's. Other stems describe two or three plans as if they were sequential or mutually exclusive; the correct answer recognizes they can be coordinated and concurrent, driven by what the facts actually show is disrupted.",
+    "recognition_clues": [
+      "The stem describes a manual or workaround process keeping a business function running while its usual system is down - that's business continuity, not a sign that no plan applies, and it's a distinct concern from the technology restoration itself (disaster recovery).",
+      "The stem states an amount of tolerable data loss - that's RPO; an amount of tolerable downtime - that's RTO; a level of service maintained during alternate operation - that's SDO. Match the specific fact to the specific term.",
+      "The stem implies that activating one plan (incident response, business continuity, disaster recovery) must mean another is also activated, or that one is simply a subset of another - check what is actually disrupted instead of assuming a fixed relationship."
+    ],
+    "scenario": "Harborview's regional operations director asks which plan governs the front desk's paper-based check-in process while the reservation server is being rebuilt. The security manager explains that this is business continuity - keeping the actual guest check-in process running - distinct from the disaster recovery work restoring the server itself. Separately, when Harborview's disaster recovery team designs its backup strategy for guest and payment data, leadership's stated tolerance for data loss - not the allowable downtime - is what actually drives how often backups must run.",
+    "traps": [
+      "Treating business continuity as if it only means restoring IT systems, rather than keeping business processes running.",
+      "Assuming activating one plan (incident response, business continuity, disaster recovery) automatically means the others activate too, rather than checking what is actually disrupted.",
+      "Confusing recovery point objective (data loss tolerance) with recovery time objective (downtime tolerance) when designing a backup strategy.",
+      "Treating a partially-restored service level as if it were full recovery, rather than recognizing it as meeting a defined service delivery objective."
+    ],
+    "memory_rules": [
+      "Business continuity keeps the business's own processes running - it isn't just another name for restoring IT.",
+      "Incident response, business continuity, and disaster recovery are coordinated, not automatic - what's actually disrupted determines what's needed.",
+      "RTO is downtime, RPO is data loss, SDO is the service level during alternate operation - three separate business-defined commitments, not interchangeable."
+    ],
+    "retrieval_refs": ["question.d4.0023"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U7/U8 AUTHORING BATCH CANDIDATE (D4-U8, IR / BCP / DRP Boundary) — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md and the Architect's D4-U7/U8 authoring directive. Prerequisite is lesson.d4.eradication-recovery (D4-U7) only. DEPENDENCY DECISION: mirrors D4-U6's own precedent - confirmed via the same direct inspection of app/src/content/resolve.ts's recallPoolFor (fully transitive recall pool, not distance-weighted), a second direct prerequisite edge back to an earlier unit would be functionally inert for recall purposes; Domain 4 remains a strictly linear chain with no branching requiring reconvergence. Deliberately cross-cutting (lifecycle: null, stage_target: null) - business continuity invocation is one of the CANONICAL incident lifecycle's own documented cross-cutting supporting activities, not bound to one stage. Continues Harborview Hotels directly from D4-U7's recovery-in-progress incident. Not yet human-reviewed or promoted."
   }
 ]
