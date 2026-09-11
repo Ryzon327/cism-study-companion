@@ -1075,5 +1075,73 @@
     "version": 1,
     "source": "source.learner-supplied.domain-4-question-bank",
     "note": "DOMAIN 4 U3/U4 AUTHORING BATCH CANDIDATE (D4-U4, Escalation & Communications) — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md and the Architect's D4-U3/U4 authoring directive. Prerequisite is lesson.d4.incident-classification-severity (D4-U3) only, continuing the Domain 4 chain and the full cumulative cross-domain recall pool. Deliberately cross-cutting (lifecycle: null, stage_target: null) per the Architect's explicit approval - escalation and communication recur throughout the incident lifecycle rather than belonging to one stage, and this family is not forced into a single stage merely because it follows classification in sequence. Continues Harborview Hotels directly from D4-U3's classified incident. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d4.incident-containment",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.incident-containment"],
+    "patterns": ["pattern.p01", "pattern.p04"],
+    "prerequisites": ["lesson.d4.escalation-communications"],
+    "objective": "Recognize that containment limits further harm and spread while the incident is still active - not the same as removing the root cause (eradication), restoring normal operations (recovery), or declaring the incident resolved - and that the right containment scope follows the incident's actual business impact rather than an instinct to shut down as much as possible, weighing the evidence the organization will need against the urgency to act.",
+    "context": "Harborview Hotels has classified (D4-U3) and escalated (D4-U4) the compromised-account incident at one property. Classification and communication alone don't stop the incident from continuing - containment does. Containment means limiting further harm and spread while the incident response team still works the incident, not finishing it: a contained incident still needs its root cause found and removed (eradication) and normal operations restored (recovery) before it is actually over. The right scope for containment follows the incident's actual impact, not the instinct to shut down as much as possible - isolating the specific affected system or network segment usually limits harm just as effectively as a broad shutdown, without disrupting parts of the business that were never at risk. Because a hasty technical action - powering off a system, restoring it from backup, or otherwise changing its state - can destroy the evidence needed to understand what happened, effective containment weighs that evidence and investigation need alongside the urgency to act, rather than treating speed as the only consideration.",
+    "cism_perspective": "CISM stems in this area often describe an active, spreading incident and ask for the FIRST or BEST containment action, offering an indiscriminate shutdown as a tempting-but-overbroad option, or a fast technical fix (reboot, restore, power off) that would destroy evidence as another tempting option. The correct answer takes proportionate, scope-appropriate action that limits harm now without exceeding what the incident actually requires, and without a hasty action that would compromise the evidence the organization needs later.",
+    "recognition_clues": [
+      "The stem describes an active or spreading incident and offers a broad, indiscriminate shutdown alongside a more narrowly scoped isolation option - the narrower, proportionate option is usually correct.",
+      "The stem offers 'wait for root cause' or 'determine what happened first' as an option before containing an active incident - containment comes first; root-cause analysis is part of eradication, which follows.",
+      "The stem offers an immediate technical fix (reboot, restore from backup, power off) as an option - check whether it would destroy volatile evidence or risk reintroducing the problem before the incident is actually contained."
+    ],
+    "scenario": "At the affected Harborview property, the compromised account has been classified and corporate leadership has been informed. Now the incident response team must decide how to contain it. The property's general manager, still anxious from the earlier classification conversation, wants the entire chain-wide reservations system shut down 'to be safe.' The incident response team has confirmed the compromise is limited to this property's own reservation server. The information security manager instead directs the team to isolate the affected server from the network, leaving every other property's reservations system running normally - limiting the harm at the scope the incident actually affects, rather than disrupting business Harborview never needed to disrupt.",
+    "traps": [
+      "Choosing a broad, indiscriminate shutdown over a narrower action that would contain the incident just as effectively, at unnecessary cost to the rest of the business.",
+      "Waiting to contain the incident until its root cause is fully understood, when root-cause analysis is part of eradication and follows containment, not precedes it.",
+      "Taking an immediate technical action (rebooting, restoring from backup, or powering off the affected system) that destroys volatile evidence or risks reintroducing the same compromise.",
+      "Treating a contained incident as a resolved one - containment limits harm; it does not mean the threat is gone, systems are restored, or the incident is finished."
+    ],
+    "memory_rules": [
+      "Containment limits harm; it doesn't mean the threat is gone, systems are restored, or the incident is over.",
+      "Contain at the scope the incident actually affects - not the broadest possible shutdown.",
+      "A fast technical fix that destroys evidence isn't actually faster once that evidence is needed later."
+    ],
+    "retrieval_refs": ["question.d4.0014"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U5/U6 AUTHORING BATCH CANDIDATE (D4-U5, Containment) — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md and the Architect's D4-U5/U6 authoring directive. Prerequisite is lesson.d4.escalation-communications (D4-U4) only, continuing the Domain 4 chain and the full cumulative cross-domain recall pool. Genuinely bound to stage.incident.contain of the existing CANONICAL lifecycle.incident - no new lifecycle or stage introduced. Continues Harborview Hotels directly from D4-U4's escalated incident. Not yet human-reviewed or promoted."
+  },
+  {
+    "id": "lesson.d4.evidence-investigation",
+    "domain": "domain.d4",
+    "concepts": ["concept.d4.evidence-investigation"],
+    "patterns": ["pattern.p02", "pattern.p04"],
+    "prerequisites": ["lesson.d4.incident-containment"],
+    "objective": "Recognize that a reliable understanding of an incident depends on disciplined evidence handling - a documented, unbroken chain of custody, working from copies rather than originals, and bringing in forensic expertise when it's genuinely needed - and that restoring systems too quickly, before evidence is preserved, can destroy exactly what the organization needs for legal, regulatory, disciplinary, or management decisions; and that deciding whether to involve law enforcement remains senior management's decision, never the investigator's or response team's to make alone.",
+    "context": "Harborview Hotels has contained the compromised-account incident at one property (D4-U3) by isolating the affected reservation server (D4-U5). Containment stops the spreading harm, but it doesn't answer what actually happened, or preserve what the organization may need later. Investigation depends on evidence handled with discipline: a documented, unbroken chain of custody - who had control of the evidence, and when - is what keeps that evidence credible and admissible for legal, regulatory, disciplinary, or management decisions; a broken chain of custody, not physical damage, is the bigger risk, because it undermines whether the evidence can be trusted at all. Forensic analysis works from a verified copy or image of the affected system, never the original, so the original stays untouched and uncontaminated. The security manager coordinates this work and safeguards its integrity - recognizing when a qualified forensic specialist is genuinely needed, rather than expecting the incident response team to perform forensic analysis itself. Restoring service too quickly, before evidence is preserved, can destroy exactly what a later investigation needs - and in situations where an incident may lead to criminal charges, preventing contamination of evidence can outweigh the pressure to restore service quickly. Whether to involve law enforcement remains senior management's decision, not the investigator's or the response team's to make unilaterally - and if an outside forensic specialist performs the work, that does not transfer Harborview's own accountability for how the investigation is handled.",
+    "cism_perspective": "CISM stems in this area often describe pressure to restore a system quickly and offer that restoration as an option before evidence has been preserved - the correct answer preserves evidence first. Other stems ask directly why chain of custody matters, or what the MOST important aspect of a forensic investigation is - the correct answer ties both to evidence admissibility/credibility, not to unrelated concerns like asset tracking or attribution. A stem may also ask who decides whether to involve law enforcement - the correct answer is senior management, not the investigator or the incident response team.",
+    "recognition_clues": [
+      "The stem describes pressure to restore, rebuild, or reimage a system quickly and offers that as an option before evidence has been preserved - the correct answer preserves evidence (a copy/image, chain of custody) first.",
+      "The stem asks why chain of custody matters, or what is MOST important about a forensic investigation - the answer ties to evidence admissibility/credibility, not to asset ownership, attribution, or an unrelated storage detail.",
+      "The stem asks who decides whether to involve law enforcement, or otherwise implies an investigator/response-team member could make that call alone - the answer is senior management, following the same authority-follows-accountability reasoning already taught in D4-U4."
+    ],
+    "scenario": "Harborview's IT team, eager to get the affected property's reservation service running again, wants to wipe and reimage the isolated server's original hard drive right away. Before allowing that, the security manager directs the team to first create a verified copy of the original drive and preserve the original untouched, in case the incident later requires legal, regulatory, or disciplinary follow-up - only then does rebuilding proceed, from the copy, with the original preserved.",
+    "traps": [
+      "Restoring, rebuilding, or reimaging a system before evidence has been preserved, destroying exactly what a later investigation might need.",
+      "Performing forensic analysis directly on the original media rather than a verified copy, risking contamination of the only original evidence.",
+      "Confusing the purpose of chain of custody with an unrelated concern - asset ownership tracking, identifying who compromised the system, or a specific storage medium - rather than evidence admissibility and credibility.",
+      "Letting the investigator or incident response team decide unilaterally whether to involve law enforcement, when that decision belongs to senior management."
+    ],
+    "memory_rules": [
+      "A broken chain of custody is a bigger risk than physical damage to the evidence - it undermines whether the evidence can be trusted at all.",
+      "Investigate from a copy, not the original.",
+      "Restoring too quickly can destroy the evidence a later decision needs - in situations that may lead to criminal charges, preserving evidence can outweigh the pressure to restore fast."
+    ],
+    "retrieval_refs": ["question.d4.0017"],
+    "content_status": "CANDIDATE",
+    "verification_status": "unverified",
+    "active": true,
+    "version": 1,
+    "source": "source.learner-supplied.domain-4-question-bank",
+    "note": "DOMAIN 4 U5/U6 AUTHORING BATCH CANDIDATE (D4-U6, Evidence Handling / Investigation) — authored by Claude Code per the approved docs/learning/DOMAIN-4-CURRICULUM-ARCHITECTURE.md and the Architect's D4-U5/U6 authoring directive. Prerequisite is lesson.d4.incident-containment (D4-U5) only. DEPENDENCY DECISION (the Architect's explicitly unlocked item): confirmed via direct inspection of app/src/content/resolve.ts's recallPoolFor - the recall pool a lesson draws from is the full transitive closure of every reachable prerequisite lesson's retrieval_refs/families, not a distance-weighted or nearest-only set, so a single edge to D4-U5 already makes D4-U1 through D4-U5 fully recall-eligible; a second direct prerequisite edge to D4-U3/D4-U4 would be functionally inert for recall purposes (Domain 4 has no branching tree requiring reconvergence, unlike e.g. lesson.d2.residual-risk-acceptability's genuine two-branch merge). The single-parent linear chain is therefore preserved as both correct and sufficient - see docs/learning/DOMAIN-4-U5-U6-GATE-RECORD.md for the full analysis. Deliberately cross-cutting (lifecycle: null, stage_target: null) per direct source analysis - evidence/investigation reasoning spans containment through eradication/recovery decisions rather than binding to one stage. Continues Harborview Hotels directly from D4-U5's contained incident. Not yet human-reviewed or promoted."
   }
 ]

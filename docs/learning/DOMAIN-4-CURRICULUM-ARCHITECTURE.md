@@ -926,6 +926,34 @@ First review → correction if necessary → closeout → merge. **Not started
 in this phase** — this is a proposed sequence for Architect/Founder
 review, not an authorization to begin.
 
+## Post-authoring corrections
+
+**D4-U5 governing pattern: P05 → P04 (Architect-approved, 2026-09-11).**
+This document's working tables (§10's unit-sequence table, §14's family-
+architecture table, and the §11-adjacent dependency-diagram commentary)
+guessed **Pattern P05 (No Lifecycle Reversal)** as D4-U5's (Containment)
+governing pattern, in the "Major CISM reasoning distinction" and "(P05
+governing pattern)" cells referencing `family.d4.containment`. Direct
+source analysis performed during D4-U5's actual authoring (see
+[`DOMAIN-4-U5-U6-GATE-RECORD.md`](DOMAIN-4-U5-U6-GATE-RECORD.md)'s
+"Pattern/registry disposition" section) found this guess did not match
+the source's own dominant reasoning shape: across all 17 4B3 source
+questions, the tempting wrong answer consistently jumps *ahead* to a
+later-stage action (eradication, law-enforcement notification, formal
+evidence imaging, damage assessment) before containment is complete —
+this is **Pattern P04 (No Lifecycle Jumping)**'s own recognition shape
+("stem describes an early-stage situation and an option proposes a
+later-stage action"), not P05's (retreating to an already-passed stage
+once the stem has moved past it). D4-U5 was authored and Architect-
+approved using P04, per the gate record. This note corrects this
+document's own working guess for the historical record; the original
+table cells above are left unedited as the record of the architecture
+phase's own provisional reasoning, per the Architect's instruction that
+this correction remain narrow rather than a broad rewrite. Pattern P05
+itself (meaning, recognition clues, memory rule, CANONICAL status) was
+not altered — only this document's own prior, provisional assignment of
+which pattern governs D4-U5 is corrected.
+
 ## Cross-references
 
 [Domain 4 Blueprint](DOMAIN-4-BLUEPRINT.md) · [Lifecycle Model](LIFECYCLE-MODEL.md) ·
