@@ -106,7 +106,9 @@ const REVIEW_LESSON_ITEMS: PrototypeStateItem[] = [
   { id: "lesson.d3.program-metrics-reporting", label: "D3-U9 — Program Metrics & Reporting" },
   { id: "lesson.d3.program-synthesis", label: "D3-U10 — Program Synthesis (Capstone)" },
   { id: "lesson.d4.program-foundations-readiness", label: "D4-U1 — Program Foundations & Readiness" },
-  { id: "lesson.d4.business-impact-analysis-prioritization", label: "D4-U2 — Business Impact Analysis & Prioritization" }
+  { id: "lesson.d4.business-impact-analysis-prioritization", label: "D4-U2 — Business Impact Analysis & Prioritization" },
+  { id: "lesson.d4.incident-classification-severity", label: "D4-U3 — Incident Classification / Severity" },
+  { id: "lesson.d4.escalation-communications", label: "D4-U4 — Escalation & Communications" }
 ];
 
 const SESSION_SCREENS = new Set([

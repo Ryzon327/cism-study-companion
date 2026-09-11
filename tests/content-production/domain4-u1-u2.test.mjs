@@ -319,21 +319,28 @@ test("Domain 4 so far (U1-U2): all new entities are CANDIDATE, unverified, and n
   assert.equal(bad.length, 0, `no Domain 4 U1/U2 entity may reference Domain 5: ${bad.join(", ")}`);
 });
 
-test("no concept-id collisions: the two Domain 4 concepts authored so far are distinct from each other and from every Domain 1/2/3 concept", () => {
-  const d4ConceptIds = data.concepts.filter((c) => c.id.startsWith("concept.d4.")).map((c) => c.id);
-  assert.equal(new Set(d4ConceptIds).size, d4ConceptIds.length, "Domain 4 concept ids must be unique");
-  assert.equal(d4ConceptIds.length, 2, `expected exactly 2 Domain 4 concepts (U1-U2), found ${d4ConceptIds.length}`);
-  const otherIds = data.concepts.filter((c) => !c.id.startsWith("concept.d4.")).map((c) => c.id);
-  for (const id of d4ConceptIds) assert.ok(!otherIds.includes(id), `${id} must not collide with a Domain 1/2/3/Foundation concept id`);
+test("no concept-id collisions: the two Domain 4 U1/U2 concepts are distinct from each other and from every Domain 1/2/3 concept", () => {
+  // Originally asserted exactly 2 Domain 4 concepts existed at all (a
+  // batch-boundary assertion). D4-U3/U4 have since been authored (see
+  // tests/content-production/domain4-u3-u4.test.mjs), adding two more
+  // Domain 4 concepts, so this test is narrowed to check only the two
+  // concepts this batch (U1/U2) is actually responsible for.
+  const u1u2ConceptIds = ["concept.d4.incident-management-readiness", "concept.d4.business-impact-analysis-prioritization"];
+  for (const id of u1u2ConceptIds) assert.ok(conceptsById.has(id), `${id} must exist`);
+  const otherIds = data.concepts.filter((c) => !u1u2ConceptIds.includes(c.id)).map((c) => c.id);
+  for (const id of u1u2ConceptIds) assert.ok(!otherIds.includes(id), `${id} must not collide with any other concept id`);
 });
 
-test("batch boundary: no Domain 4 unit beyond U1-U2 exists yet, and no Domain 5 exists", () => {
+test("batch boundary: D4-U1/U2 lessons exist, and no Domain 5 exists", () => {
+  // Originally asserted D4-U1/U2 were the ONLY Domain 4 lessons in
+  // existence. D4-U3/U4 have since been authored and approved (see
+  // tests/content-production/domain4-u3-u4.test.mjs), so this test is
+  // narrowed to confirm U1/U2 still exist rather than that nothing beyond
+  // them does; the Domain 5 boundary remains a true batch-boundary check.
   const d4Lessons = data.lessons.filter((l) => l.domain === "domain.d4").map((l) => l.id);
-  assert.deepEqual(
-    d4Lessons.sort(),
-    ["lesson.d4.business-impact-analysis-prioritization", "lesson.d4.program-foundations-readiness"].sort(),
-    "only D4-U1 and D4-U2 may exist in this batch - D4-U3+ is not yet authored"
-  );
+  for (const id of ["lesson.d4.program-foundations-readiness", "lesson.d4.business-impact-analysis-prioritization"]) {
+    assert.ok(d4Lessons.includes(id), `${id} must still exist`);
+  }
   const laterDomainIds = [...data.concepts, ...data.lessons, ...data.families, ...data.questions]
     .map((e) => e.id)
     .filter((id) => /\.d[5-9]\./.test(id) || /^domain\.d[5-9]$/.test(id));
