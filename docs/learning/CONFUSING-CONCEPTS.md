@@ -164,13 +164,22 @@ operation. A question describing an event still spreading is a containment
 question; a question describing "the cause has been removed, now what"
 is a recovery question. See [Pattern P04/P05](PATTERN-LIBRARY.md#p04--no-lifecycle-jumping). **[CANDIDATE]**
 
-### RTO vs. RPO vs. SDO vs. MTO
+### RTO vs. RPO vs. SDO vs. MTO vs. AIW
 RTO (recovery time objective) is how long a process can be down. RPO
 (recovery point objective) is how much data loss (measured in time) is
 tolerable. SDO (service delivery objective) is the level of service to be
 restored during alternate processing. MTO (maximum tolerable outage) is the
 absolute outer limit before the business impact becomes unacceptable, and is
-generally the longest of the time-based measures. **[CANDIDATE]**
+generally the longest of the time-based measures. AIW (allowable interruption
+window) is the maximum period a system can be unavailable before the
+enterprise's business objectives are compromised — it sits between RTO and
+MTO (RTO must be shorter than the AIW; MTO normally exceeds it) and is what
+drives the choice of alternate-site strategy (mirrored/hot/warm/cold).
+**[CANDIDATE]** — AIW added during Domain 4 D4-U7/U8 authoring, source-
+confirmed rather than assumed (see
+[`DOMAIN-4-U7-U8-GATE-RECORD.md`](DOMAIN-4-U7-U8-GATE-RECORD.md)); this
+extension was anticipated by the Domain 4 curriculum architecture's own
+working notes, not a casual addition.
 
 ### Incident Response vs. Business Continuity vs. Disaster Recovery
 Incident response manages the security incident itself, aiming to control

@@ -954,6 +954,28 @@ itself (meaning, recognition clues, memory rule, CANONICAL status) was
 not altered — only this document's own prior, provisional assignment of
 which pattern governs D4-U5 is corrected.
 
+**D4-U7 lifecycle/stage mapping: `stage_target: null`, Architect-approved
+(2026-09-11).** This document's working tables (§10, §14) proposed binding
+D4-U7 (Eradication & Recovery) to "the domain's Eradicate + Recover
+lifecycle stages" and separately flagged, at §14's family-architecture
+table, that "a single family may need to represent both, or split into
+two — an authoring-time decision." During actual authoring, direct source
+analysis of 4B5 confirmed the family's own invariant reasoning genuinely
+spans both adjacent CANONICAL stages (`stage.incident.eradicate`,
+`stage.incident.recover`) as one continuous teaching point, not a
+single-stage activity. Because `stage_target` accepts only one value per
+family, `family.d4.eradication-recovery` uses `lifecycle:
+"lifecycle.incident"`, `stage_target: null` rather than mechanically
+picking one of the two stages and misrepresenting the other half of what
+the family teaches. Architect-approved per
+[`DOMAIN-4-U7-U8-GATE-RECORD.md`](DOMAIN-4-U7-U8-GATE-RECORD.md). This is
+the authoring-time decision this document's own §14 already anticipated
+would need to be made, not a correction of an asserted-wrong guess (unlike
+the D4-U5/P04 note above) — recorded here for the historical record only;
+the original table cells are left unedited, no lifecycle/schema redesign
+occurred, and the CANONICAL lifecycle registry (`LIFECYCLE-MODEL.md`) was
+not altered.
+
 ## Cross-references
 
 [Domain 4 Blueprint](DOMAIN-4-BLUEPRINT.md) · [Lifecycle Model](LIFECYCLE-MODEL.md) ·

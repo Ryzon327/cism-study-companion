@@ -110,7 +110,9 @@ const REVIEW_LESSON_ITEMS: PrototypeStateItem[] = [
   { id: "lesson.d4.incident-classification-severity", label: "D4-U3 — Incident Classification / Severity" },
   { id: "lesson.d4.escalation-communications", label: "D4-U4 — Escalation & Communications" },
   { id: "lesson.d4.incident-containment", label: "D4-U5 — Containment" },
-  { id: "lesson.d4.evidence-investigation", label: "D4-U6 — Evidence Handling / Investigation" }
+  { id: "lesson.d4.evidence-investigation", label: "D4-U6 — Evidence Handling / Investigation" },
+  { id: "lesson.d4.eradication-recovery", label: "D4-U7 — Eradication / Recovery" },
+  { id: "lesson.d4.ir-bcp-drp-boundary", label: "D4-U8 — IR / BCP / DRP Boundary" }
 ];
 
 const SESSION_SCREENS = new Set([
