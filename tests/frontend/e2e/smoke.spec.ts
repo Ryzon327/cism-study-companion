@@ -37,14 +37,15 @@ test.describe("prototype loads and navigates", () => {
     await expect(page.getByRole("heading", { name: "Review what matters before you submit." })).toBeVisible();
   });
 
-  test("product navigation has exactly the four real destinations, distinct from the QA switcher", async ({ page }) => {
+  test("product navigation has exactly the five real destinations, distinct from the QA switcher", async ({ page }) => {
     await page.goto("/");
     const nav = page.getByRole("navigation", { name: "Main" });
-    await expect(nav.getByRole("button")).toHaveCount(4);
+    await expect(nav.getByRole("button")).toHaveCount(5);
     await expect(nav.getByRole("button", { name: "Home" })).toBeVisible();
     await expect(nav.getByRole("button", { name: "Daily Study" })).toBeVisible();
     await expect(nav.getByRole("button", { name: "Explore" })).toBeVisible();
     await expect(nav.getByRole("button", { name: "Practice", exact: true })).toBeVisible();
+    await expect(nav.getByRole("button", { name: "Insights" })).toBeVisible();
     // "Feedback — Correct" etc. must never appear as primary navigation.
     await expect(nav.getByRole("button", { name: /Feedback/ })).toHaveCount(0);
   });

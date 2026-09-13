@@ -191,6 +191,8 @@ export function ExploreScreen({ onExit, initialConceptId }: ExploreScreenProps):
       meta={scenario.meta}
       buildFeedback={productionContentSource.buildFeedback}
       getRepairCheck={productionContentSource.getRepairCheck}
+      learningMode="explore"
+      sourceContext="production"
       onComplete={() => setPhase("concept")}
     />
   );

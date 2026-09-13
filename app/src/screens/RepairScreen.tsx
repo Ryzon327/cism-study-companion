@@ -10,7 +10,12 @@ import "./RepairScreen.css";
 interface RepairScreenProps {
   repairCheck: RepairCheckFixture;
   mistakeContext?: string;
-  onContinue: () => void;
+  // LI-1: reports which option the learner actually selected, so a caller
+  // can compare it against `repairCheck.options[].correct` and record the
+  // result — this screen only renders the comparison (see the immediate
+  // correct/wrong styling below); it doesn't own the correctness
+  // determination itself.
+  onContinue: (selectedKey: AnswerOptionFixture["key"]) => void;
 }
 
 /**
@@ -53,7 +58,7 @@ export function RepairScreen({ repairCheck, mistakeContext, onContinue }: Repair
       {submitted && <p class="repair-confirmation">{repairCheck.confirmation}</p>}
 
       <div class="repair-actions">
-        <Button disabled={!submitted} onClick={onContinue}>Continue &rarr;</Button>
+        <Button disabled={!submitted} onClick={() => selected && onContinue(selected)}>Continue &rarr;</Button>
       </div>
     </div>
   );

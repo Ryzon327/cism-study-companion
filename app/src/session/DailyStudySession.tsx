@@ -5,10 +5,11 @@ import { DailyStudyLearnScreen } from "../screens/DailyStudyLearnScreen";
 import { CompletionScreen } from "../screens/CompletionScreen";
 import { ReinforcementCompleteScreen } from "../screens/ReinforcementCompleteScreen";
 import { QuestionAttemptFlow } from "./QuestionAttemptFlow";
-import type { QuestionFixture } from "../types/content";
+import type { AnswerOptionFixture, QuestionFixture } from "../types/content";
 import type { DailyStudyContentSource } from "./contentSource";
 import { reinforcementEligibleCount, buildReinforcementSession, type ReinforcementContext } from "../content/reinforcement";
 import { conceptForQuestion } from "../content/practice";
+import { recordQuestionAttempt, type SourceContext } from "../learning-history";
 
 type Phase = "recall" | "learn" | "attempt" | "completion" | "reinforcement" | "reinforcement-complete";
 
@@ -22,6 +23,13 @@ interface DailyStudySessionProps {
   // context with a real concept to hand off, so this is simply unused in
   // that mode.
   onExploreConcept?: (conceptId?: string) => void;
+  // LI-1: which concrete content source is actually behind `contentSource`
+  // — App.tsx's own contentSourceMode toggle. DailyStudySession never
+  // otherwise knows this (it's injected as an opaque interface), but
+  // Learning Intelligence must tag every recorded event so
+  // prototype/QA-sourced attempts never contaminate real evidence (see
+  // docs/architecture/LEARNING-INTELLIGENCE-V1.md §25).
+  sourceContext: SourceContext;
 }
 
 interface ApplyQuestionState {
@@ -74,7 +82,7 @@ interface MissedConcept {
  * All state is local useState, reset fresh on every mount — no
  * persistence.
  */
-export function DailyStudySession({ contentSource, onDone, onExploreConcept }: DailyStudySessionProps): JSX.Element | null {
+export function DailyStudySession({ contentSource, onDone, onExploreConcept, sourceContext }: DailyStudySessionProps): JSX.Element | null {
   const [phase, setPhase] = useState<Phase>("recall");
   const [recallCheck] = useState(() => contentSource.getRecall());
   const [applyState, setApplyState] = useState<ApplyQuestionState | null>(null);
@@ -85,7 +93,26 @@ export function DailyStudySession({ contentSource, onDone, onExploreConcept }: D
 
   switch (phase) {
     case "recall":
-      return <RecallScreen recallCheck={recallCheck} onContinue={() => setPhase("learn")} />;
+      return (
+        <RecallScreen
+          recallCheck={recallCheck}
+          onContinue={(selectedKey: AnswerOptionFixture["key"], correct: boolean) => {
+            const correctOption = recallCheck.options.find((o) => o.correct);
+            recordQuestionAttempt({
+              learningMode: "daily-study",
+              sourceContext,
+              attemptKind: "recall",
+              questionId: recallCheck.questionId ?? null,
+              selectedOptionKey: selectedKey,
+              correctOptionKey: correctOption?.key ?? selectedKey,
+              correct,
+              confidence: null, // LI-1: no new confidence UI added to Recall (architecture §8 of the review)
+              repairTargetId: null // Recall has no Repair step
+            });
+            setPhase("learn");
+          }}
+        />
+      );
 
     case "learn":
       return (
@@ -106,6 +133,8 @@ export function DailyStudySession({ contentSource, onDone, onExploreConcept }: D
           meta={applyState.meta}
           buildFeedback={contentSource.buildFeedback}
           getRepairCheck={contentSource.getRepairCheck}
+          learningMode="daily-study"
+          sourceContext={sourceContext}
           onComplete={(correct) => {
             // Session-only evidence from exactly this attempt/recall — see
             // reinforcement.ts's own doc comment on why this is never a
@@ -154,6 +183,8 @@ export function DailyStudySession({ contentSource, onDone, onExploreConcept }: D
           meta={`Quick reinforcement · Question ${reinforcementIndex + 1} of ${reinforcementQuestions.length}`}
           buildFeedback={contentSource.buildFeedback}
           getRepairCheck={contentSource.getRepairCheck}
+          learningMode="reinforcement"
+          sourceContext={sourceContext}
           onComplete={(correct) => {
             if (!correct) {
               const concept = conceptForQuestion(current.id);

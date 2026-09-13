@@ -9,7 +9,11 @@ import "./RecallScreen.css";
 
 interface RecallScreenProps {
   recallCheck: RecallCheckFixture;
-  onContinue: () => void;
+  // LI-1: reports the learner's selection and whether it was correct, so a
+  // caller (DailyStudySession) can record the resolved Recall attempt —
+  // this screen already computes `selectedOption?.correct` for its own
+  // "Actually: …" copy below; it's simply reported upward too.
+  onContinue: (selectedKey: AnswerOptionFixture["key"], correct: boolean) => void;
 }
 
 /**
@@ -58,7 +62,9 @@ export function RecallScreen({ recallCheck, onContinue }: RecallScreenProps): JS
       )}
 
       <div class="recall-actions">
-        <Button disabled={!submitted} onClick={onContinue}>Continue to today's lesson &rarr;</Button>
+        <Button disabled={!submitted} onClick={() => selected && onContinue(selected, selectedOption?.correct ?? false)}>
+          Continue to today's lesson &rarr;
+        </Button>
       </div>
     </div>
   );

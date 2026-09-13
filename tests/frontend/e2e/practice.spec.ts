@@ -29,7 +29,7 @@ test("Practice's landing (scope/count), in-session progress, and summary have no
 test("Practice product navigation reaches a real, distinct destination (not the old prototype)", async ({ page }) => {
   await page.goto("/");
   const nav = page.getByRole("navigation", { name: "Main" });
-  await expect(nav.getByRole("button")).toHaveCount(4);
+  await expect(nav.getByRole("button")).toHaveCount(5);
   await nav.getByRole("button", { name: "Practice", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Choose what to practice" })).toBeVisible();
   // The old Phase 5B "Practice Exam" mockup must never appear as the real destination.

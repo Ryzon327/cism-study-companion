@@ -71,6 +71,18 @@
   font-weight: 600;
 }
 
+/* ---- LI-4: targeted practice landing (entered from an Insights action) ---- */
+.practice-target-label {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-h3);
+  color: var(--text-primary);
+}
+
+.practice-target-count {
+  color: var(--text-secondary);
+  font-size: var(--font-size-meta);
+}
+
 .practice-summary-line {
   font-size: var(--font-size-body-reading);
   color: var(--text-secondary);

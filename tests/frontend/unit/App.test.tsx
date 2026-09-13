@@ -2,6 +2,21 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, within } from "@testing-library/preact";
 import { App } from "../../../app/src/App";
 
+// Product-environment follow-up (docs/architecture/PRODUCT-ENVIRONMENT-FOLLOW-UP.md):
+// every test in this file exercises the QA/prototype switcher and its
+// default prototype-fixture content — both are now explicitly opt-in,
+// never <App />'s default. This file's own subject IS that QA-enabled
+// experience, so it opts in explicitly here rather than depending on a
+// default that no longer exists; see app-environment.test.tsx for the
+// ordinary (no opt-in) behavior this file deliberately does not cover.
+beforeEach(() => {
+  vi.stubEnv("VITE_ENABLE_QA_FIXTURES", "true");
+});
+
+afterEach(() => {
+  vi.unstubAllEnvs();
+});
+
 function openPrototypeSwitcher() {
   const trigger = document.querySelector(".prototype-switcher-trigger");
   if (!trigger) throw new Error("prototype-switcher-trigger not found");
@@ -22,7 +37,7 @@ describe("App integration", () => {
     expect(screen.getByRole("button", { name: /Start Today's Study/ })).toBeTruthy();
   });
 
-  it("real product navigation (Home, Daily Study, Explore, Practice) has exactly four destinations", () => {
+  it("real product navigation (Home, Daily Study, Explore, Practice, Insights) has exactly five destinations", () => {
     // Two "Main" nav landmarks exist in markup — the desktop ProductNav and
     // the mobile BottomTabBar — mutually exclusive via CSS media query at
     // real viewports (jsdom applies no layout, so both are present here);
@@ -31,10 +46,11 @@ describe("App integration", () => {
     const { container } = render(<App />);
     const topbar = container.querySelector(".topbar") as HTMLElement;
     const nav = within(topbar).getByRole("navigation", { name: "Main" });
-    expect(within(nav).getAllByRole("button")).toHaveLength(4);
+    expect(within(nav).getAllByRole("button")).toHaveLength(5);
     expect(within(nav).getByRole("button", { name: "Daily Study" })).toBeTruthy();
     expect(within(nav).getByRole("button", { name: "Explore" })).toBeTruthy();
     expect(within(nav).getByRole("button", { name: "Practice" })).toBeTruthy();
+    expect(within(nav).getByRole("button", { name: "Insights" })).toBeTruthy();
   });
 
   it("navigates between all eight prototype-gate states via the QA switcher, not product navigation", () => {

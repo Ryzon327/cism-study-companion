@@ -25,13 +25,16 @@ export default defineConfig({
   // per-test actual/expected/diff PNGs Playwright already writes to
   // test-results/ on any failure need no extra reporter config.
   reporter: process.env.CI ? [["list"], ["html", { open: "never" }]] : [["list"]],
-  globalSetup: "./tests/frontend/global-setup.ts",
+  globalSetup: "./tests/frontend/global-setup.visual.ts",
   use: {
     baseURL: TEST_BASE_URL
   },
   projects: [{ name: "chromium-visual", use: { ...devices["Desktop Chrome"] } }],
   webServer: {
-    command: `VITE_PORT=${TEST_PORT} npm run dev`,
+    // QA fixtures explicitly enabled — every screen in this suite is
+    // reached via the Prototype/QA switcher (product-environment
+    // follow-up: see docs/architecture/PRODUCT-ENVIRONMENT-FOLLOW-UP.md).
+    command: `VITE_PORT=${TEST_PORT} VITE_ENABLE_QA_FIXTURES=true npm run dev`,
     url: TEST_BASE_URL,
     reuseExistingServer: !process.env.CI,
     timeout: 30_000

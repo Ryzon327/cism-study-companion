@@ -13,11 +13,14 @@ import { PracticeExamScreen } from "./screens/PracticeExamScreen";
 import { ReviewCenterScreen } from "./screens/ReviewCenterScreen";
 import { ExploreScreen } from "./screens/ExploreScreen";
 import { PracticeScreen } from "./screens/PracticeScreen";
+import { InsightsScreen } from "./screens/InsightsScreen";
 import { DailyStudySession } from "./session/DailyStudySession";
 import type { DailyStudyContentSource } from "./session/contentSource";
 import { prototypeContentSource } from "./data/prototypeContentSource";
 import { productionContentSource, setTodaysLessonIdForReview, getTodaysLessonIdForReview } from "./content/productionContentSource";
 import { feedbackCorrect, feedbackIncorrect } from "./data/fixtures";
+import { qaFixturesEnabled } from "./config/qaMode";
+import type { PracticeHandoffRequest, StudyHandoff } from "./study-handoff/types";
 
 // The learner's real navigation: four destinations, matching the approved
 // MVP learning-mode layer (Phase 10B-1 through 10B-4). "Daily Study" enters
@@ -37,18 +40,27 @@ import { feedbackCorrect, feedbackIncorrect } from "./data/fixtures";
 // in Phase 10B-3 as its own destination below — the Phase 5B Practice Exam
 // prototype screen remains untouched and still reachable only via the QA
 // switcher, never as the real learner-facing Practice flow.
+//
+// LI-3: "Insights" is the fifth and, for now, final real destination —
+// Learning Intelligence's learner-facing surface. It reads Learning
+// History/derived insights but never duplicates a learning-mode engine;
+// study data controls (export/reset) live inside it rather than a
+// separate Settings destination (see docs/architecture/
+// LI-3-IMPLEMENTATION-RECORD.md).
 const PRODUCT_NAV_ITEMS: ProductNavItem[] = [
   { id: "home", label: "Home" },
   { id: "daily-study", label: "Daily Study" },
   { id: "explore", label: "Explore" },
-  { id: "practice", label: "Practice" }
+  { id: "practice", label: "Practice" },
+  { id: "insights", label: "Insights" }
 ];
 
 const PRODUCT_ENTRY_SCREEN: Record<string, string> = {
   home: "home",
   "daily-study": "daily-study-session",
   explore: "explore",
-  practice: "practice"
+  practice: "practice",
+  insights: "insights"
 };
 
 // Phase 5B is a visual prototype: no routing library, per the Phase 5A
@@ -154,6 +166,7 @@ function sectionForScreen(id: string): string {
   if (id === "home") return "home";
   if (id === "practice-exam" || id === "review-center" || id === "explore") return "explore";
   if (id === "practice") return "practice";
+  if (id === "insights") return "insights";
   return "daily-study";
 }
 
@@ -162,7 +175,10 @@ function renderScreen(
   onNavigate: (id: string) => void,
   contentSource: DailyStudyContentSource,
   exploreInitialConceptId: string | undefined,
-  onExploreConceptHandoff: (conceptId?: string) => void
+  onExploreConceptHandoff: (conceptId?: string) => void,
+  contentSourceMode: ContentSourceMode,
+  practiceHandoff: PracticeHandoffRequest | undefined,
+  onActivateStudyHandoff: (handoff: StudyHandoff, label: string) => void
 ): JSX.Element {
   switch (id) {
     case "home":
@@ -173,6 +189,7 @@ function renderScreen(
           contentSource={contentSource}
           onDone={() => onNavigate("home")}
           onExploreConcept={(conceptId) => onExploreConceptHandoff(conceptId)}
+          sourceContext={contentSourceMode}
         />
       );
     case "daily-study-learn":
@@ -196,34 +213,67 @@ function renderScreen(
         <PracticeScreen
           onExit={() => onNavigate("home")}
           onExploreConcept={(conceptId) => onExploreConceptHandoff(conceptId)}
+          initialHandoff={practiceHandoff}
         />
       );
+    case "insights":
+      return <InsightsScreen onActivateHandoff={onActivateStudyHandoff} />;
     default:
       return <HomeScreen onNavigate={onNavigate} contentSource={contentSource} />;
   }
 }
 
 export function App(): JSX.Element {
+  // Product-environment follow-up: ordinary startup (no explicit opt-in)
+  // must default to real production content with no QA tooling rendered —
+  // see docs/architecture/PRODUCT-ENVIRONMENT-FOLLOW-UP.md. Read once per
+  // mount (not reactively) since a real page load either has the env flag
+  // set or doesn't, for its whole lifetime.
+  const [qaEnabled] = useState(qaFixturesEnabled);
   const [activeId, setActiveId] = useState("home");
-  const [contentSourceMode, setContentSourceMode] = useState<ContentSourceMode>("prototype");
+  const [contentSourceMode, setContentSourceMode] = useState<ContentSourceMode>(qaEnabled ? "prototype" : "production");
   const [reviewLessonId, setReviewLessonId] = useState(getTodaysLessonIdForReview());
   // Phase 10B-3: set only by Practice's summary "Explore" handoff, never by
   // normal product navigation — handleSelectProduct below always clears it,
   // so clicking the real "Explore" nav item never inherits a stale concept
   // from an earlier Practice session.
   const [exploreInitialConceptId, setExploreInitialConceptId] = useState<string | undefined>(undefined);
+  // LI-4: set only by an Insights "Practice this..." action — transient
+  // navigation/session state, never persisted (see
+  // docs/architecture/LI-4-IMPLEMENTATION-RECORD.md). handleSelectProduct
+  // below always clears it, exactly mirroring exploreInitialConceptId, so
+  // opening Practice from primary navigation is never accidentally sticky
+  // with a prior recommendation's target.
+  const [practiceHandoff, setPracticeHandoff] = useState<PracticeHandoffRequest | undefined>(undefined);
 
   const mode = SESSION_SCREENS.has(activeId) ? "session" : "full";
   const contentSource = contentSourceMode === "production" ? productionContentSource : prototypeContentSource;
 
   function handleSelectProduct(sectionId: string) {
     setExploreInitialConceptId(undefined);
+    setPracticeHandoff(undefined);
     setActiveId(PRODUCT_ENTRY_SCREEN[sectionId] ?? "home");
   }
 
   function handleExploreConceptHandoff(conceptId?: string) {
     setExploreInitialConceptId(conceptId);
     setActiveId("explore");
+  }
+
+  // LI-4: the one place a recommendation's resolved handoff becomes a real
+  // screen transition — Insights itself stays ignorant of App-level
+  // routing (see InsightsScreen's onActivateHandoff prop). "review" reuses
+  // the exact existing Explore concept-handoff mechanism two other modes
+  // already call; "practice" hands a stable target descriptor (never a
+  // duplicated question list) into PracticeScreen, which resolves it
+  // against current content itself.
+  function handleActivateStudyHandoff(handoff: StudyHandoff, label: string) {
+    if (handoff.kind === "review") {
+      handleExploreConceptHandoff(handoff.conceptId);
+      return;
+    }
+    setPracticeHandoff({ scope: handoff.scope, label });
+    setActiveId("practice");
   }
 
   function handleSelectReviewLesson(lessonId: string) {
@@ -239,6 +289,7 @@ export function App(): JSX.Element {
         activeProductId={sectionForScreen(activeId)}
         onSelectProduct={handleSelectProduct}
         sessionLabel={SESSION_LABELS[activeId]}
+        showQaTools={qaEnabled}
         prototypeItems={PROTOTYPE_ITEMS}
         activePrototypeId={activeId}
         onSelectPrototype={setActiveId}
@@ -248,7 +299,16 @@ export function App(): JSX.Element {
         activeReviewLessonId={reviewLessonId}
         onSelectReviewLesson={handleSelectReviewLesson}
       >
-        {renderScreen(activeId, setActiveId, contentSource, exploreInitialConceptId, handleExploreConceptHandoff)}
+        {renderScreen(
+          activeId,
+          setActiveId,
+          contentSource,
+          exploreInitialConceptId,
+          handleExploreConceptHandoff,
+          contentSourceMode,
+          practiceHandoff,
+          handleActivateStudyHandoff
+        )}
       </AppShell>
     </ThemeProvider>
   );

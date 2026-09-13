@@ -57,6 +57,8 @@ describe("QuestionAttemptFlow — shared question/answer/feedback/repair primiti
         question={syntheticQuestion}
         buildFeedback={buildFeedback}
         getRepairCheck={() => syntheticRepairCheck}
+        learningMode="daily-study"
+        sourceContext="prototype"
         onComplete={() => {}}
       />
     );
@@ -76,6 +78,8 @@ describe("QuestionAttemptFlow — shared question/answer/feedback/repair primiti
         question={syntheticQuestion}
         buildFeedback={buildSyntheticFeedback}
         getRepairCheck={() => syntheticRepairCheck}
+        learningMode="daily-study"
+        sourceContext="prototype"
         onComplete={() => {}}
       />
     );
@@ -95,6 +99,8 @@ describe("QuestionAttemptFlow — shared question/answer/feedback/repair primiti
           expect(feedback.repairTargetId).toBe("repair.synthetic-target");
           return syntheticRepairCheck;
         }}
+        learningMode="daily-study"
+        sourceContext="prototype"
         onComplete={() => {}}
       />
     );
@@ -115,6 +121,8 @@ describe("QuestionAttemptFlow — shared question/answer/feedback/repair primiti
         question={syntheticQuestion}
         buildFeedback={buildSyntheticFeedback}
         getRepairCheck={() => syntheticRepairCheck}
+        learningMode="daily-study"
+        sourceContext="prototype"
         onComplete={onComplete}
       />
     );
@@ -138,6 +146,8 @@ describe("QuestionAttemptFlow — shared question/answer/feedback/repair primiti
         question={syntheticQuestion}
         buildFeedback={buildSyntheticFeedback}
         getRepairCheck={getRepairCheck}
+        learningMode="daily-study"
+        sourceContext="prototype"
         onComplete={onComplete}
       />
     );
@@ -158,6 +168,8 @@ describe("QuestionAttemptFlow — shared question/answer/feedback/repair primiti
         question={syntheticQuestion}
         buildFeedback={buildSyntheticFeedback}
         getRepairCheck={() => syntheticRepairCheck}
+        learningMode="daily-study"
+        sourceContext="prototype"
         onComplete={() => {}}
       />
     );
