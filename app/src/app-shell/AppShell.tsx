@@ -11,6 +11,12 @@ interface AppShellProps {
   activeProductId: string;
   onSelectProduct: (id: string) => void;
   sessionLabel?: string;
+  // Product-environment follow-up: the QA/prototype panel (content-source
+  // toggle + visual prototype gate states + review-lesson picker) is
+  // intentional tooling, never ordinary learner or default-developer UI —
+  // see docs/architecture/PRODUCT-ENVIRONMENT-FOLLOW-UP.md. Callers must
+  // say explicitly whether to render it; there is no implicit default here.
+  showQaTools: boolean;
   prototypeItems: PrototypeStateItem[];
   activePrototypeId: string;
   onSelectPrototype: (id: string) => void;
@@ -28,6 +34,7 @@ export function AppShell({
   activeProductId,
   onSelectProduct,
   sessionLabel,
+  showQaTools,
   prototypeItems,
   activePrototypeId,
   onSelectPrototype,
@@ -55,16 +62,18 @@ export function AppShell({
       {mode === "full" && (
         <BottomTabBar items={productNavItems} activeId={activeProductId} onSelect={onSelectProduct} />
       )}
-      <PrototypeSwitcher
-        items={prototypeItems}
-        activeId={activePrototypeId}
-        onSelect={onSelectPrototype}
-        contentSourceMode={contentSourceMode}
-        onSelectContentSourceMode={onSelectContentSourceMode}
-        reviewLessons={reviewLessons}
-        activeReviewLessonId={activeReviewLessonId}
-        onSelectReviewLesson={onSelectReviewLesson}
-      />
+      {showQaTools && (
+        <PrototypeSwitcher
+          items={prototypeItems}
+          activeId={activePrototypeId}
+          onSelect={onSelectPrototype}
+          contentSourceMode={contentSourceMode}
+          onSelectContentSourceMode={onSelectContentSourceMode}
+          reviewLessons={reviewLessons}
+          activeReviewLessonId={activeReviewLessonId}
+          onSelectReviewLesson={onSelectReviewLesson}
+        />
+      )}
     </div>
   );
 }

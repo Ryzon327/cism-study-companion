@@ -2,6 +2,21 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, within } from "@testing-library/preact";
 import { App } from "../../../app/src/App";
 
+// Product-environment follow-up (docs/architecture/PRODUCT-ENVIRONMENT-FOLLOW-UP.md):
+// every test in this file exercises the QA/prototype switcher and its
+// default prototype-fixture content — both are now explicitly opt-in,
+// never <App />'s default. This file's own subject IS that QA-enabled
+// experience, so it opts in explicitly here rather than depending on a
+// default that no longer exists; see app-environment.test.tsx for the
+// ordinary (no opt-in) behavior this file deliberately does not cover.
+beforeEach(() => {
+  vi.stubEnv("VITE_ENABLE_QA_FIXTURES", "true");
+});
+
+afterEach(() => {
+  vi.unstubAllEnvs();
+});
+
 function openPrototypeSwitcher() {
   const trigger = document.querySelector(".prototype-switcher-trigger");
   if (!trigger) throw new Error("prototype-switcher-trigger not found");

@@ -18,6 +18,7 @@ import type { DailyStudyContentSource } from "./session/contentSource";
 import { prototypeContentSource } from "./data/prototypeContentSource";
 import { productionContentSource, setTodaysLessonIdForReview, getTodaysLessonIdForReview } from "./content/productionContentSource";
 import { feedbackCorrect, feedbackIncorrect } from "./data/fixtures";
+import { qaFixturesEnabled } from "./config/qaMode";
 
 // The learner's real navigation: four destinations, matching the approved
 // MVP learning-mode layer (Phase 10B-1 through 10B-4). "Daily Study" enters
@@ -206,8 +207,14 @@ function renderScreen(
 }
 
 export function App(): JSX.Element {
+  // Product-environment follow-up: ordinary startup (no explicit opt-in)
+  // must default to real production content with no QA tooling rendered —
+  // see docs/architecture/PRODUCT-ENVIRONMENT-FOLLOW-UP.md. Read once per
+  // mount (not reactively) since a real page load either has the env flag
+  // set or doesn't, for its whole lifetime.
+  const [qaEnabled] = useState(qaFixturesEnabled);
   const [activeId, setActiveId] = useState("home");
-  const [contentSourceMode, setContentSourceMode] = useState<ContentSourceMode>("prototype");
+  const [contentSourceMode, setContentSourceMode] = useState<ContentSourceMode>(qaEnabled ? "prototype" : "production");
   const [reviewLessonId, setReviewLessonId] = useState(getTodaysLessonIdForReview());
   // Phase 10B-3: set only by Practice's summary "Explore" handoff, never by
   // normal product navigation — handleSelectProduct below always clears it,
@@ -241,6 +248,7 @@ export function App(): JSX.Element {
         activeProductId={sectionForScreen(activeId)}
         onSelectProduct={handleSelectProduct}
         sessionLabel={SESSION_LABELS[activeId]}
+        showQaTools={qaEnabled}
         prototypeItems={PROTOTYPE_ITEMS}
         activePrototypeId={activeId}
         onSelectPrototype={setActiveId}
