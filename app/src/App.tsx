@@ -13,6 +13,7 @@ import { PracticeExamScreen } from "./screens/PracticeExamScreen";
 import { ReviewCenterScreen } from "./screens/ReviewCenterScreen";
 import { ExploreScreen } from "./screens/ExploreScreen";
 import { PracticeScreen } from "./screens/PracticeScreen";
+import { InsightsScreen } from "./screens/InsightsScreen";
 import { DailyStudySession } from "./session/DailyStudySession";
 import type { DailyStudyContentSource } from "./session/contentSource";
 import { prototypeContentSource } from "./data/prototypeContentSource";
@@ -38,18 +39,27 @@ import { qaFixturesEnabled } from "./config/qaMode";
 // in Phase 10B-3 as its own destination below — the Phase 5B Practice Exam
 // prototype screen remains untouched and still reachable only via the QA
 // switcher, never as the real learner-facing Practice flow.
+//
+// LI-3: "Insights" is the fifth and, for now, final real destination —
+// Learning Intelligence's learner-facing surface. It reads Learning
+// History/derived insights but never duplicates a learning-mode engine;
+// study data controls (export/reset) live inside it rather than a
+// separate Settings destination (see docs/architecture/
+// LI-3-IMPLEMENTATION-RECORD.md).
 const PRODUCT_NAV_ITEMS: ProductNavItem[] = [
   { id: "home", label: "Home" },
   { id: "daily-study", label: "Daily Study" },
   { id: "explore", label: "Explore" },
-  { id: "practice", label: "Practice" }
+  { id: "practice", label: "Practice" },
+  { id: "insights", label: "Insights" }
 ];
 
 const PRODUCT_ENTRY_SCREEN: Record<string, string> = {
   home: "home",
   "daily-study": "daily-study-session",
   explore: "explore",
-  practice: "practice"
+  practice: "practice",
+  insights: "insights"
 };
 
 // Phase 5B is a visual prototype: no routing library, per the Phase 5A
@@ -155,6 +165,7 @@ function sectionForScreen(id: string): string {
   if (id === "home") return "home";
   if (id === "practice-exam" || id === "review-center" || id === "explore") return "explore";
   if (id === "practice") return "practice";
+  if (id === "insights") return "insights";
   return "daily-study";
 }
 
@@ -201,6 +212,8 @@ function renderScreen(
           onExploreConcept={(conceptId) => onExploreConceptHandoff(conceptId)}
         />
       );
+    case "insights":
+      return <InsightsScreen />;
     default:
       return <HomeScreen onNavigate={onNavigate} contentSource={contentSource} />;
   }

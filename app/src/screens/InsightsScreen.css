@@ -1,0 +1,252 @@
+.insights-screen {
+  max-width: var(--content-width-reading);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-6) var(--space-4);
+}
+
+.insights-eyebrow {
+  font-size: var(--font-size-eyebrow);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  color: var(--text-muted);
+}
+
+.insights-title {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-display);
+  line-height: var(--line-height-tight);
+  color: var(--text-primary);
+}
+
+.insights-status-text {
+  color: var(--text-secondary);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-reading);
+}
+
+/* ---- Empty states (no history / insufficient evidence) — reassuring, never alarming ---- */
+.insights-empty {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  border-radius: var(--radius);
+  background: var(--surface-wash);
+}
+
+.insights-empty-headline {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-h3);
+  color: var(--text-primary);
+}
+
+.insights-empty-detail {
+  color: var(--text-secondary);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-reading);
+  max-width: 34rem;
+}
+
+.insights-sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.insights-section-heading {
+  font-size: var(--font-size-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-4);
+}
+
+/* ---- Focus Next cards ---- */
+.insights-card-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.insights-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-5);
+  background: var(--surface);
+  /* State is never color-only: the text label in .insights-card-state always
+     carries the meaning; the left border is a supplementary visual cue. */
+  border-left: 3px solid var(--border-strong);
+}
+
+.insights-card-needs-review {
+  border-left-color: var(--warning);
+}
+
+.insights-card-developing {
+  border-left-color: var(--info);
+}
+
+.insights-card-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-3);
+}
+
+.insights-card-title {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-h3);
+  color: var(--text-primary);
+}
+
+.insights-card-state {
+  flex: none;
+  font-size: var(--font-size-meta);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary);
+  background: var(--tag-bg);
+  border: 1px solid var(--tag-border);
+  border-radius: var(--radius-pill);
+  padding: var(--space-1) var(--space-3);
+}
+
+.insights-card-why,
+.insights-card-evidence {
+  list-style: none;
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-reading);
+}
+
+.insights-card-why li,
+.insights-card-evidence li {
+  margin-bottom: var(--space-1);
+}
+
+.insights-card-evidence {
+  color: var(--text-muted);
+  font-size: var(--font-size-meta);
+}
+
+.insights-card-action {
+  color: var(--text-primary);
+  font-size: var(--font-size-body);
+  font-weight: 600;
+  margin-top: var(--space-3);
+}
+
+.insights-card-action-label {
+  display: block;
+  font-size: var(--font-size-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--space-1);
+}
+
+.insights-domain-summary {
+  margin-top: var(--space-4);
+  color: var(--text-muted);
+  font-size: var(--font-size-meta);
+}
+
+/* ---- How you're doing (trend) ---- */
+.insights-trend-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  color: var(--text-secondary);
+  font-size: var(--font-size-body);
+}
+
+.insights-trend-label {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ---- Stronger areas ---- */
+.insights-stronger-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.insights-stronger-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  background: var(--surface-subtle);
+}
+
+.insights-stronger-title {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.insights-stronger-note {
+  color: var(--text-muted);
+  font-size: var(--font-size-meta);
+}
+
+/* ---- Study data ---- */
+.insights-study-data {
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border);
+}
+
+.insights-study-data-text {
+  color: var(--text-secondary);
+  font-size: var(--font-size-meta);
+  line-height: var(--line-height-reading);
+  margin-bottom: var(--space-1);
+}
+
+.insights-study-data-count {
+  color: var(--text-muted);
+  font-size: var(--font-size-meta);
+  margin-top: var(--space-2);
+  margin-bottom: 0;
+}
+
+.insights-study-data-actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-top: var(--space-4);
+}
+
+@media (max-width: 639px) {
+  .insights-study-data-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.dialog-actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}

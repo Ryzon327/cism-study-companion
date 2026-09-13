@@ -26,6 +26,14 @@ const ICONS: Record<string, JSX.Element> = {
       <path d="M9 11.5 11 13.5 15.5 9" />
       <rect x="4" y="4" width="16" height="16" rx="3" />
     </svg>
+  ),
+  insights: (
+    // A compass, not a bar chart — deliberately avoids analytics/dashboard
+    // iconography per the calm Insights product philosophy.
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="m14.5 9.5-1.8 4.2-4.2 1.8 1.8-4.2 4.2-1.8Z" />
+    </svg>
   )
 };
 
