@@ -11,27 +11,45 @@ in that overlay are never overridden by the generic workflow rules below.
 
 ## Project status (current, not historical)
 
-The CISM Study Companion MVP was accepted and released
-(`docs/release/MVP-ACCEPTANCE-RECORD.md`, tag `v1.0.0-mvp`). `main` is the
-known-good, stable study branch and is protected during all post-MVP
-feature work — see `docs/engineering/PROJECT-OPERATING-OVERLAY.md` §6 for
-the stable/development worktree model.
+**CISM Study Companion v1.1.0 — Learning Intelligence** is the current
+stable release. `main` is the known-good, stable study branch, currently
+at the released v1.1.0 lineage (see
+`docs/engineering/PROJECT-OPERATING-OVERLAY.md` §12 for the exact SHA/tag
+checkpoint). Learning Intelligence v1 — LI-1 through LI-5 — is **complete,
+accepted, merged, released, and CLOSED**: see
+`docs/release/LEARNING-INTELLIGENCE-V1-ACCEPTANCE-RECORD.md` for the full
+acceptance record and `docs/architecture/LI-1-IMPLEMENTATION-RECORD.md`
+through `LI-4-IMPLEMENTATION-RECORD.md` for each phase's implementation
+detail.
 
-Learning Intelligence v1 is under active development on
-`post-mvp/learner-intelligence`, in the separate `cism-study-companion-next`
-worktree, per `docs/architecture/LEARNING-INTELLIGENCE-V1.md`. LI-1 through
-LI-4 are complete and Architect-approved; LI-5 whole-feature acceptance is
-the next authorized phase. Completed, accepted phases are **closed**:
-do not reopen an accepted phase's implementation, review, or CI gate
-without evidence of a real defect or boundary failure (see "State-aware
-gate reuse" below).
+**No product-feature phase is currently authorized or in progress.** A
+planned next capability, **Exam Readiness v1**, may be referenced in
+roadmap discussion (see the overlay's §12) but is explicitly **PLANNED /
+NOT YET AUTHORIZED FOR IMPLEMENTATION** — no design or implementation work
+on it may begin without its own approved work package, exactly like every
+prior phase required.
+
+Completed, accepted phases are **closed**: do not reopen an accepted
+phase's implementation, review, or CI gate without evidence of a real
+regression/defect, a shared architecture change that materially affects
+the accepted behavior, a security/privacy/data-integrity issue, or an
+explicitly authorized future package that intentionally revisits that
+boundary (see "State-aware gate reuse" below).
 
 The pre-rebuild engineering history remains durably recorded in
-`docs/engineering/BASELINE.md`; long-standing tracked defects live in
-`docs/regressions/REGISTRY.md`. Read both before making claims about what
-does or doesn't work in this codebase — but do not assume either document
-describes the *current* architecture. This file describes current working
-rules; those two describe history.
+`docs/engineering/BASELINE.md`, a historical, point-in-time record.
+Long-standing tracked defects live in `docs/regressions/REGISTRY.md`,
+which stays current as defects are opened, deferred, or fixed — it is not
+a historical snapshot. The MVP acceptance record
+(`docs/release/MVP-ACCEPTANCE-RECORD.md`, tag `v1.0.0-mvp`) and the
+Learning Intelligence v1 acceptance record
+(`docs/release/LEARNING-INTELLIGENCE-V1-ACCEPTANCE-RECORD.md`, tag
+`v1.1.0`) are each also historical, point-in-time records of the release
+decision made at that moment — read any of these for context, but do not
+mistake a historical record for the current release or architecture
+state. This file and `docs/engineering/PROJECT-OPERATING-OVERLAY.md`
+together hold the current operating rules and current project-state
+guidance.
 
 The product goal is constant across every phase: help the learner pass the
 ISACA CISM exam efficiently.
@@ -123,12 +141,21 @@ deliberate, individually-justified devDependency set.)
 
 ## Branching / source-control model
 
-- `main` is the known-good, stable branch and the released MVP lineage.
-  Feature/phase work happens on dedicated branches (currently
-  `post-mvp/learner-intelligence`), not directly on `main`, unless
-  explicitly authorized for a specific change.
-- Workflow: branch → implement → verify → stage → commit → push → CI on
-  the exact pushed commit → review → (eventually) PR → merge to `main`.
+- `main` is the known-good, stable branch — currently the released v1.1.0
+  (Learning Intelligence) lineage. Feature/phase work happens on a
+  dedicated branch created from the current accepted base, not directly on
+  `main`, unless explicitly authorized for a specific change.
+- `post-mvp/learner-intelligence` is a **completed, merged, historical**
+  feature branch (Learning Intelligence v1) — it is not the current active
+  branch for anything. It may remain preserved until a separate, explicit
+  cleanup decision; branch deletion is its own protected action, not
+  implied by a phase closing. **An old merged feature branch must never
+  silently become the base for unrelated future work** — always branch
+  fresh from the current accepted base (verify `origin/main`'s SHA before
+  creating a new branch), never from a prior phase's branch head.
+- Workflow: branch (from the current accepted base) → implement → verify →
+  stage → commit → push → CI on the exact pushed commit → review →
+  (eventually) PR → merge to `main`.
 - **Protected-by-default actions**, requiring explicit Founder
   authorization before every occurrence (a prior approval for one instance
   is not blanket approval for the next): `git commit`, `git push`, PR
@@ -160,6 +187,33 @@ If the implementation environment cannot produce a clean Founder-only
 commit (e.g. a hard-coded attribution trailer in the tool itself), STOP
 before committing and report — the Founder may execute a supplied exact
 commit command directly instead.
+
+**Platform-generated merge-commit exception (narrow).** A GitHub-generated
+merge commit (created when a pull request is merged through GitHub's UI or
+API) may legitimately show the Founder through a GitHub `noreply` identity
+as author and `GitHub <noreply@github.com>` as committer — this is not a
+violation of the rule above, and such a commit must never be rewritten to
+"normalize" its metadata. The exception applies **only** when all of the
+following hold: (1) the PR merge itself was explicitly Founder-authorized;
+(2) every ordinary commit that was subject to the Founder-only attribution
+rule met that rule before the merge; any earlier accepted commit that
+predates the rule may remain only if it is already covered by the
+explicit prospective-only historical exception above and was not
+rewritten merely for attribution cleanup — historical-exception
+eligibility is fixed by that already-existing prospective rule at the
+time each commit was made, never something an implementation agent may
+declare later to excuse a newly created noncompliant commit; (3) GitHub
+generated the merge commit object automatically as part of the merge
+operation, not as a manually authored commit; and (4) no AI attribution or
+session trailer is present anywhere in the merge commit's message. This
+exception
+is scoped strictly to that platform-generated merge object — it is **not**
+permission for Claude Code or any other implementation agent to author an
+*ordinary* commit under a non-Founder identity, and it never weakens the
+Founder-only rule for any commit an agent itself creates. Annotated
+release tags created directly by the project (not GitHub-generated) should
+use the Founder tagger identity where controllable, exactly like an
+ordinary commit.
 
 ### Exact-commit CI
 
