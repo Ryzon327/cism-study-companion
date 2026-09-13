@@ -15,6 +15,11 @@ import * as db from "../../../app/src/learning-history/db";
  * synthetic questionId would resolve any metadata at all (LI-1's
  * `metadataSnapshot.ts` only knows real content), and no learner-visible
  * "demo data" control exists anywhere in the product.
+ *
+ * `onActivateHandoff` is a no-op stub throughout this file — these tests
+ * are about LI-3 presentation correctness, not LI-4 handoff resolution or
+ * navigation, which have their own dedicated coverage in
+ * InsightsScreen.handoffs.test.tsx and study-handoff/.
  */
 
 // concept.d3.program-metrics-reporting — 6 real, distinct production
@@ -88,7 +93,7 @@ async function waitForWrites(): Promise<void> {
 
 describe("InsightsScreen — empty states (§38)", () => {
   it("zero events -> the no-history empty state, never a false weakness", async () => {
-    render(<InsightsScreen />);
+    render(<InsightsScreen onActivateHandoff={() => {}} />);
     await waitFor(() => expect(screen.getByText(/Your study insights will appear as you answer questions/)).toBeTruthy());
     expect(screen.queryByText(/Needs review/i)).toBeNull();
   });
@@ -97,7 +102,7 @@ describe("InsightsScreen — empty states (§38)", () => {
     seedRecall(Q[0]!, 100, false);
     seedRecall(Q[1]!, 200, false);
     await waitForWrites();
-    render(<InsightsScreen />);
+    render(<InsightsScreen onActivateHandoff={() => {}} />);
     await waitFor(() => expect(screen.getByText(/Your study insights will appear as you answer questions/)).toBeTruthy());
     expect(screen.queryByText(/Needs review/i)).toBeNull();
   });
@@ -105,7 +110,7 @@ describe("InsightsScreen — empty states (§38)", () => {
   it("one Apply miss -> the 'building your study picture' state, never a Needs Review card", async () => {
     seedApply(Q[0]!, 100, false);
     await waitForWrites();
-    render(<InsightsScreen />);
+    render(<InsightsScreen onActivateHandoff={() => {}} />);
     await waitFor(() => expect(screen.getByText(/Building your study picture/)).toBeTruthy());
     expect(screen.queryByText(/Needs review/i)).toBeNull();
   });
@@ -114,7 +119,7 @@ describe("InsightsScreen — empty states (§38)", () => {
     seedApply(Q[0]!, 100, true);
     seedApply(Q[0]!, 200, true); // same question repeated — never satisfies distinct-question breadth
     await waitForWrites();
-    render(<InsightsScreen />);
+    render(<InsightsScreen onActivateHandoff={() => {}} />);
     await waitFor(() => expect(screen.getByText(/Building your study picture/)).toBeTruthy());
   });
 });
@@ -125,7 +130,7 @@ describe("InsightsScreen — actionable states (§39)", () => {
     seedApply(Q[1]!, 200, false);
     seedApply(Q[2]!, 300, true);
     await waitForWrites();
-    render(<InsightsScreen />);
+    render(<InsightsScreen onActivateHandoff={() => {}} />);
     const heading = await screen.findByRole("heading", { name: "Focus next" });
     expect(heading).toBeTruthy();
     expect(screen.getByRole("heading", { level: 3, name: new RegExp(CONCEPT_LABEL_SUBSTRING, "i") })).toBeTruthy();
@@ -138,7 +143,7 @@ describe("InsightsScreen — actionable states (§39)", () => {
     seedApply(Q[1]!, 200, false, "sure");
     seedApply(Q[2]!, 300, true, "sure");
     await waitForWrites();
-    render(<InsightsScreen />);
+    render(<InsightsScreen onActivateHandoff={() => {}} />);
     await screen.findByRole("heading", { name: "Focus next" });
     expect(screen.getAllByText(/Sure confidence/).length).toBeGreaterThan(0);
     expect(screen.queryByText(/overconfident/i)).toBeNull();
@@ -150,7 +155,7 @@ describe("InsightsScreen — actionable states (§39)", () => {
     seedApply(Q[1]!, 200, false);
     seedApply(Q[2]!, 300, true);
     await waitForWrites();
-    render(<InsightsScreen />);
+    render(<InsightsScreen onActivateHandoff={() => {}} />);
     await screen.findByRole("heading", { name: "Focus next" });
     expect(screen.getByText(/Repair question was also missed/)).toBeTruthy();
   });
@@ -164,7 +169,7 @@ describe("InsightsScreen — actionable states (§39)", () => {
     seedApply(Q[1]!, 200, true);
     seedApply(Q[2]!, 300, true);
     await waitForWrites();
-    render(<InsightsScreen />);
+    render(<InsightsScreen onActivateHandoff={() => {}} />);
     await screen.findByRole("heading", { name: "Focus next" });
     const card = screen.getByRole("heading", { level: 3 }).closest("li")!;
     expect(within(card).getByText("Developing")).toBeTruthy();
@@ -175,7 +180,7 @@ describe("InsightsScreen — actionable states (§39)", () => {
       seedApply(Q[i % Q.length]!, 100 + i * 10, true, "sure");
     }
     await waitForWrites();
-    render(<InsightsScreen />);
+    render(<InsightsScreen onActivateHandoff={() => {}} />);
     const heading = await screen.findByRole("heading", { name: "Stronger areas" });
     expect(heading).toBeTruthy();
     expect(screen.getAllByText(/Recent evidence is stronger here/).length).toBeGreaterThan(0);
@@ -191,7 +196,7 @@ describe("InsightsScreen — actionable states (§39)", () => {
     seedApply(Q[4]!, 500, true, "sure");
     seedApply(Q[5]!, 600, true, "sure");
     await waitForWrites();
-    render(<InsightsScreen />);
+    render(<InsightsScreen onActivateHandoff={() => {}} />);
     await waitFor(() => expect(screen.queryByText(/Loading/)).toBeNull());
     expect(screen.getAllByText(/improving/i).length).toBeGreaterThan(0);
     expect(screen.queryByText(/%/)).toBeNull();
@@ -211,7 +216,7 @@ describe("InsightsScreen — actionable states (§39)", () => {
     seedApply(OTHER_Q[2]!, 2030, true);
 
     await waitForWrites();
-    render(<InsightsScreen />);
+    render(<InsightsScreen onActivateHandoff={() => {}} />);
     const cards = await screen.findAllByRole("heading", { level: 3 });
     expect(cards.length).toBeGreaterThanOrEqual(2);
     // The failed-Repair concept (risk-monitoring-reporting) must rank first.
@@ -241,7 +246,7 @@ describe("InsightsScreen — QA exclusion (§40)", () => {
     }
     await waitForWrites();
 
-    render(<InsightsScreen />);
+    render(<InsightsScreen onActivateHandoff={() => {}} />);
     const heading = await screen.findByRole("heading", { name: "Focus next" });
     const list = heading.closest("section")!;
     expect(within(list).getAllByRole("heading", { level: 3 })).toHaveLength(1); // only the one real concept, not 11
@@ -284,7 +289,7 @@ describe("InsightsScreen — unknown target fallback (§41)", () => {
       });
     }
 
-    render(<InsightsScreen />);
+    render(<InsightsScreen onActivateHandoff={() => {}} />);
     await screen.findByRole("heading", { name: "Focus next" });
     expect(screen.getByText("A previously studied topic")).toBeTruthy();
     expect(screen.queryByText(/concept\.no-longer-exists/)).toBeNull();
@@ -296,20 +301,20 @@ describe("InsightsScreen — Study Data (§42)", () => {
     seedApply(Q[0]!, 100, true);
     seedApply(Q[1]!, 200, true);
     await waitForWrites();
-    render(<InsightsScreen />);
+    render(<InsightsScreen onActivateHandoff={() => {}} />);
     expect(screen.getByText(/stored only in this browser/)).toBeTruthy();
     await screen.findByText(/2 recorded question attempts/);
     expect(screen.getByText(/not currently synced or backed up online/)).toBeTruthy();
   });
 
   it("never renders an Import control", async () => {
-    render(<InsightsScreen />);
+    render(<InsightsScreen onActivateHandoff={() => {}} />);
     await waitFor(() => expect(screen.getByText(/stored only in this browser/)).toBeTruthy());
     expect(screen.queryByRole("button", { name: /import/i })).toBeNull();
   });
 
   it("Export is disabled with zero history and enabled once history exists", async () => {
-    render(<InsightsScreen />);
+    render(<InsightsScreen onActivateHandoff={() => {}} />);
     await waitFor(() => expect(screen.getByRole("button", { name: "Export study history" })).toBeTruthy());
     expect((screen.getByRole("button", { name: "Export study history" }) as HTMLButtonElement).disabled).toBe(true);
   });
@@ -319,7 +324,7 @@ describe("InsightsScreen — Study Data (§42)", () => {
     seedApply(Q[1]!, 200, false);
     seedApply(Q[2]!, 300, true);
     await waitForWrites();
-    render(<InsightsScreen />);
+    render(<InsightsScreen onActivateHandoff={() => {}} />);
     await screen.findByRole("heading", { name: "Focus next" });
 
     fireEvent.click(screen.getByRole("button", { name: "Reset study history" }));
@@ -336,7 +341,7 @@ describe("InsightsScreen — Study Data (§42)", () => {
     seedApply(Q[1]!, 200, false);
     seedApply(Q[2]!, 300, true);
     await waitForWrites();
-    render(<InsightsScreen />);
+    render(<InsightsScreen onActivateHandoff={() => {}} />);
     await screen.findByRole("heading", { name: "Focus next" });
 
     fireEvent.click(screen.getByRole("button", { name: "Reset study history" }));
@@ -353,7 +358,7 @@ describe("InsightsScreen — Study Data (§42)", () => {
     const fetchSpy = vi.spyOn(globalThis, "fetch").mockImplementation(() => {
       throw new Error("network calls are not allowed from Export");
     });
-    render(<InsightsScreen />);
+    render(<InsightsScreen onActivateHandoff={() => {}} />);
     await waitFor(() => expect((screen.getByRole("button", { name: "Export study history" }) as HTMLButtonElement).disabled).toBe(false));
     expect(() => fireEvent.click(screen.getByRole("button", { name: "Export study history" }))).not.toThrow();
     expect(fetchSpy).not.toHaveBeenCalled();

@@ -6,9 +6,20 @@ import { listLearningEvents, resetLearningHistory, isQuestionAttemptEvent, type 
 import { deriveLearningInsights } from "../learning-intelligence";
 import { buildInsightsViewModel, type InsightsStatus, type InsightsViewModel } from "../insights/insightPresentation";
 import { buildStudyHistoryExport, downloadStudyHistoryExport } from "../insights/studyHistoryExport";
+import type { StudyHandoff } from "../study-handoff/types";
 import "./InsightsScreen.css";
 
 const EMPTY_VIEW_MODEL: InsightsViewModel = { status: "no-history", focusNext: [], strongerAreas: [], trendSummaries: [], domainSummary: null };
+
+export interface InsightsScreenProps {
+  // LI-4: the only navigation this screen performs — App.tsx owns what
+  // "review" and "practice" actually mean in terms of screen/state
+  // transitions (the same seam ExploreScreen/PracticeScreen's own handoff
+  // callbacks already use), so this component stays ignorant of App-level
+  // routing. `label` is the card's own already-resolved display label,
+  // passed through so App.tsx never has to re-derive or guess it.
+  onActivateHandoff: (handoff: StudyHandoff, label: string) => void;
+}
 
 /**
  * LI-3: the one learner-facing surface reading Learning Intelligence
@@ -19,8 +30,13 @@ const EMPTY_VIEW_MODEL: InsightsViewModel = { status: "no-history", focusNext: [
  * section queries storage independently. Screen-entry refresh only: no
  * polling, no reactive subscription (see docs/architecture/
  * LI-3-IMPLEMENTATION-RECORD.md's data-flow section).
+ *
+ * LI-4: Focus Next cards additionally render 0–2 real action buttons per
+ * `RecommendationPresentation.actions`, resolved by
+ * `study-handoff/resolveStudyHandoffs.ts` — see
+ * docs/architecture/LI-4-IMPLEMENTATION-RECORD.md.
  */
-export function InsightsScreen(): JSX.Element {
+export function InsightsScreen({ onActivateHandoff }: InsightsScreenProps): JSX.Element {
   const [status, setStatus] = useState<InsightsStatus | "loading">("loading");
   const [viewModel, setViewModel] = useState<InsightsViewModel>(EMPTY_VIEW_MODEL);
   const [productionAttemptCount, setProductionAttemptCount] = useState(0);
@@ -118,10 +134,20 @@ export function InsightsScreen(): JSX.Element {
                         ))}
                       </ul>
                     )}
-                    <p class="insights-card-action">
-                      <span class="insights-card-action-label">Next</span>
-                      {item.suggestedAction}
-                    </p>
+                    {item.actions.length > 0 && (
+                      <div class="insights-card-actions">
+                        {item.actions.map((action) => (
+                          <Button
+                            key={action.handoff.kind}
+                            variant="secondary"
+                            ariaLabel={action.ariaLabel}
+                            onClick={() => onActivateHandoff(action.handoff, item.displayLabel)}
+                          >
+                            {action.label}
+                          </Button>
+                        ))}
+                      </div>
+                    )}
                   </li>
                 ))}
               </ul>

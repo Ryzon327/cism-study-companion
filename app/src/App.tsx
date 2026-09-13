@@ -20,6 +20,7 @@ import { prototypeContentSource } from "./data/prototypeContentSource";
 import { productionContentSource, setTodaysLessonIdForReview, getTodaysLessonIdForReview } from "./content/productionContentSource";
 import { feedbackCorrect, feedbackIncorrect } from "./data/fixtures";
 import { qaFixturesEnabled } from "./config/qaMode";
+import type { PracticeHandoffRequest, StudyHandoff } from "./study-handoff/types";
 
 // The learner's real navigation: four destinations, matching the approved
 // MVP learning-mode layer (Phase 10B-1 through 10B-4). "Daily Study" enters
@@ -175,7 +176,9 @@ function renderScreen(
   contentSource: DailyStudyContentSource,
   exploreInitialConceptId: string | undefined,
   onExploreConceptHandoff: (conceptId?: string) => void,
-  contentSourceMode: ContentSourceMode
+  contentSourceMode: ContentSourceMode,
+  practiceHandoff: PracticeHandoffRequest | undefined,
+  onActivateStudyHandoff: (handoff: StudyHandoff, label: string) => void
 ): JSX.Element {
   switch (id) {
     case "home":
@@ -210,10 +213,11 @@ function renderScreen(
         <PracticeScreen
           onExit={() => onNavigate("home")}
           onExploreConcept={(conceptId) => onExploreConceptHandoff(conceptId)}
+          initialHandoff={practiceHandoff}
         />
       );
     case "insights":
-      return <InsightsScreen />;
+      return <InsightsScreen onActivateHandoff={onActivateStudyHandoff} />;
     default:
       return <HomeScreen onNavigate={onNavigate} contentSource={contentSource} />;
   }
@@ -234,18 +238,42 @@ export function App(): JSX.Element {
   // so clicking the real "Explore" nav item never inherits a stale concept
   // from an earlier Practice session.
   const [exploreInitialConceptId, setExploreInitialConceptId] = useState<string | undefined>(undefined);
+  // LI-4: set only by an Insights "Practice this..." action — transient
+  // navigation/session state, never persisted (see
+  // docs/architecture/LI-4-IMPLEMENTATION-RECORD.md). handleSelectProduct
+  // below always clears it, exactly mirroring exploreInitialConceptId, so
+  // opening Practice from primary navigation is never accidentally sticky
+  // with a prior recommendation's target.
+  const [practiceHandoff, setPracticeHandoff] = useState<PracticeHandoffRequest | undefined>(undefined);
 
   const mode = SESSION_SCREENS.has(activeId) ? "session" : "full";
   const contentSource = contentSourceMode === "production" ? productionContentSource : prototypeContentSource;
 
   function handleSelectProduct(sectionId: string) {
     setExploreInitialConceptId(undefined);
+    setPracticeHandoff(undefined);
     setActiveId(PRODUCT_ENTRY_SCREEN[sectionId] ?? "home");
   }
 
   function handleExploreConceptHandoff(conceptId?: string) {
     setExploreInitialConceptId(conceptId);
     setActiveId("explore");
+  }
+
+  // LI-4: the one place a recommendation's resolved handoff becomes a real
+  // screen transition — Insights itself stays ignorant of App-level
+  // routing (see InsightsScreen's onActivateHandoff prop). "review" reuses
+  // the exact existing Explore concept-handoff mechanism two other modes
+  // already call; "practice" hands a stable target descriptor (never a
+  // duplicated question list) into PracticeScreen, which resolves it
+  // against current content itself.
+  function handleActivateStudyHandoff(handoff: StudyHandoff, label: string) {
+    if (handoff.kind === "review") {
+      handleExploreConceptHandoff(handoff.conceptId);
+      return;
+    }
+    setPracticeHandoff({ scope: handoff.scope, label });
+    setActiveId("practice");
   }
 
   function handleSelectReviewLesson(lessonId: string) {
@@ -271,7 +299,16 @@ export function App(): JSX.Element {
         activeReviewLessonId={reviewLessonId}
         onSelectReviewLesson={handleSelectReviewLesson}
       >
-        {renderScreen(activeId, setActiveId, contentSource, exploreInitialConceptId, handleExploreConceptHandoff, contentSourceMode)}
+        {renderScreen(
+          activeId,
+          setActiveId,
+          contentSource,
+          exploreInitialConceptId,
+          handleExploreConceptHandoff,
+          contentSourceMode,
+          practiceHandoff,
+          handleActivateStudyHandoff
+        )}
       </AppShell>
     </ThemeProvider>
   );

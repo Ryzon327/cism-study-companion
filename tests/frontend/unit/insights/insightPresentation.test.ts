@@ -4,7 +4,6 @@ import {
   stateLabel,
   reasonCodeCopy,
   evidenceLines,
-  suggestedActionText,
   buildFocusNext,
   buildStrongerAreas,
   buildTrendSummaries,
@@ -170,16 +169,63 @@ describe("evidenceLines", () => {
   });
 });
 
-describe("suggestedActionText", () => {
-  it("produces plain informational text per suggested action kind", () => {
-    const candidate: RecommendationCandidate = {
-      target: identity("concept", "concept.a"),
+/**
+ * LI-4: `buildFocusNext` now resolves real handoffs (via
+ * study-handoff/resolveStudyHandoffs.ts) instead of LI-2's
+ * `suggestedActionKind` text — see docs/architecture/
+ * LI-4-IMPLEMENTATION-RECORD.md's binding routing constraint. These use
+ * real production IDs since resolution depends on actual current content.
+ */
+describe("buildFocusNext — LI-4 real action resolution", () => {
+  function candidateFor(axis: GroupIdentity["axis"], targetId: string): RecommendationCandidate {
+    return {
+      target: identity(axis, targetId),
       state: "NEEDS_REVIEW",
       reasonCodes: ["REPEATED_MISSES"],
       evidenceSummary: BASE_EVIDENCE,
       suggestedActionKind: "REVIEW_CONCEPT"
     };
-    expect(suggestedActionText(candidate, "Risk Treatment Decisions")).toBe("Review Risk Treatment Decisions");
+  }
+
+  it("a resolvable concept gets Review + Practice actions with real, target-specific labels", () => {
+    const result = makeInsightResult([], [candidateFor("concept", "concept.d3.program-metrics-reporting")]);
+    const [presentation] = buildFocusNext(result);
+    expect(presentation!.actions.map((a) => a.label)).toEqual(["Review topic", "Practice this topic"]);
+    expect(presentation!.actions.every((a) => a.ariaLabel.includes(presentation!.displayLabel))).toBe(true);
+  });
+
+  it("a qualifier gets only a Practice action, worded using its own display label", () => {
+    const result = makeInsightResult([], [candidateFor("qualifier", "qualifier.next")]);
+    const [presentation] = buildFocusNext(result);
+    expect(presentation!.actions).toHaveLength(1);
+    expect(presentation!.actions[0]!.label).toBe("Practice NEXT questions");
+    expect(presentation!.actions[0]!.handoff.kind).toBe("practice");
+  });
+
+  it("a pattern gets only a Practice action, labeled 'Practice this pattern'", () => {
+    const result = makeInsightResult([], [candidateFor("pattern", "pattern.p02")]);
+    const [presentation] = buildFocusNext(result);
+    expect(presentation!.actions.map((a) => a.label)).toEqual(["Practice this pattern"]);
+  });
+
+  it("a domain gets only a Practice action, never a Review action (LI-4 §6's forbidden 'arbitrary concept in that domain' mapping)", () => {
+    const result = makeInsightResult([], [candidateFor("domain", "domain.d2")]);
+    const [presentation] = buildFocusNext(result);
+    expect(presentation!.actions).toHaveLength(1);
+    expect(presentation!.actions[0]!.label).toBe("Practice this domain");
+  });
+
+  it("a stale/unresolvable target gets zero actions, never a broken button", () => {
+    const result = makeInsightResult([], [candidateFor("concept", "concept.no-longer-exists")]);
+    const [presentation] = buildFocusNext(result);
+    expect(presentation!.actions).toEqual([]);
+  });
+
+  it("carries axis/targetId as computational identity, never relying on the display label", () => {
+    const result = makeInsightResult([], [candidateFor("concept", "concept.d3.program-metrics-reporting")]);
+    const [presentation] = buildFocusNext(result);
+    expect(presentation!.axis).toBe("concept");
+    expect(presentation!.targetId).toBe("concept.d3.program-metrics-reporting");
   });
 });
 

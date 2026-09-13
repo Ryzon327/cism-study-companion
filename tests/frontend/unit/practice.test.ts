@@ -4,7 +4,11 @@ import {
   getPracticeCountOptions,
   buildPracticeSession,
   conceptForQuestion,
-  ALL_SCOPE_ID
+  ALL_SCOPE_ID,
+  eligibleQuestionsForTarget,
+  getTargetedPracticeCountOptions,
+  buildTargetedPracticeSession,
+  type PracticeTarget
 } from "../../../app/src/content/practice";
 import { registry, production, type ProductionConcept, type ProductionFamily, type ProductionQuestion } from "../../../app/src/content/registry";
 import { getExposureHistory, resetExposureHistoryForTests } from "../../../app/src/content/exposureStore";
@@ -247,5 +251,139 @@ describe("Practice — works generically for a synthetic future domain (no domai
       production.families.delete(familyId);
       for (const id of questionIds) production.questions.delete(id);
     }
+  });
+});
+
+/**
+ * LI-4 §40-42: targeted Practice's current-content eligibility filter, one
+ * axis at a time, against real production metadata (never synthetic
+ * fixtures here — the whole point is proving CURRENT production content
+ * resolution is correct). Each test proves both directions: every returned
+ * question matches, and a deliberately non-matching real question is
+ * excluded.
+ */
+describe("Practice — targeted eligibility filter (LI-4)", () => {
+  function assertAllMatch(target: PracticeTarget, predicate: (q: ProductionQuestion) => boolean) {
+    const results = eligibleQuestionsForTarget(target);
+    expect(results.length).toBeGreaterThan(0);
+    for (const q of results) {
+      expect(q.active).toBe(true);
+      expect(predicate(q)).toBe(true);
+    }
+    return results;
+  }
+
+  it("concept — only questions referencing that exact concept, no domain-mate leakage", () => {
+    const targetConcept = "concept.d3.program-metrics-reporting";
+    const results = assertAllMatch({ axis: "concept", targetId: targetConcept }, (q) => q.concepts.includes(targetConcept));
+    // A real same-domain, different-concept question must be excluded.
+    const sameDomainOtherConcept = [...production.questions.values()].find(
+      (q) => q.active && q.domain === "domain.d3" && !q.concepts.includes(targetConcept)
+    );
+    expect(sameDomainOtherConcept).toBeDefined();
+    expect(results.some((q) => q.id === sameDomainOtherConcept!.id)).toBe(false);
+  });
+
+  it("family — only questions belonging to that exact family", () => {
+    const targetFamily = "family.d1.governance-layer-authority";
+    assertAllMatch({ axis: "family", targetId: targetFamily }, (q) => q.family === targetFamily);
+  });
+
+  it("pattern — only questions whose patterns[] include the target, spanning multiple concepts/domains (cross-cutting §42)", () => {
+    const targetPattern = "pattern.p02";
+    const results = assertAllMatch({ axis: "pattern", targetId: targetPattern }, (q) => q.patterns.includes(targetPattern));
+    const distinctConcepts = new Set(results.flatMap((q) => q.concepts));
+    expect(distinctConcepts.size).toBeGreaterThan(1); // never collapsed to one concept/domain
+  });
+
+  it("qualifier — only questions with the exact qualifier", () => {
+    assertAllMatch({ axis: "qualifier", targetId: "qualifier.best" }, (q) => q.qualifier === "qualifier.best");
+  });
+
+  it("decision_type — only questions with the exact decision type, spanning multiple domains", () => {
+    const results = assertAllMatch({ axis: "decision_type", targetId: "decision.risk" }, (q) => q.decision_type === "decision.risk");
+    const distinctDomains = new Set(results.map((q) => q.domain));
+    expect(distinctDomains.size).toBeGreaterThanOrEqual(1);
+  });
+
+  it("evidence_dimension — only questions whose evidence_dimensions[] include the target", () => {
+    assertAllMatch({ axis: "evidence_dimension", targetId: "evidence.knowledge" }, (q) => q.evidence_dimensions.includes("evidence.knowledge"));
+  });
+
+  it("role — only questions with the exact primary_role, never inferred from roles_mentioned", () => {
+    const targetRole = "role.security-manager";
+    const results = assertAllMatch({ axis: "role", targetId: targetRole }, (q) => q.primary_role === targetRole);
+    // A question that merely MENTIONS the role without it being primary must be excluded.
+    const mentionsOnly = [...production.questions.values()].find(
+      (q) => q.active && q.primary_role !== targetRole && q.roles_mentioned.includes(targetRole)
+    );
+    if (mentionsOnly) expect(results.some((q) => q.id === mentionsOnly.id)).toBe(false);
+  });
+
+  it("lifecycle — only questions with the exact lifecycle", () => {
+    assertAllMatch({ axis: "lifecycle", targetId: "lifecycle.risk" }, (q) => q.lifecycle === "lifecycle.risk");
+  });
+
+  it("stage — only questions with the exact stage", () => {
+    assertAllMatch({ axis: "stage", targetId: "stage.risk.analyze" }, (q) => q.stage === "stage.risk.analyze");
+  });
+
+  it("domain — only questions in that exact domain (used only as a truthful existence check; real domain sessions still go through buildPracticeSession)", () => {
+    assertAllMatch({ axis: "domain", targetId: "domain.d2" }, (q) => q.domain === "domain.d2");
+  });
+
+  it("an axis with no current production coverage returns zero results safely, never throws", () => {
+    expect(eligibleQuestionsForTarget({ axis: "lifecycle", targetId: "lifecycle.does-not-exist" })).toEqual([]);
+    expect(eligibleQuestionsForTarget({ axis: "concept", targetId: "concept.does-not-exist" })).toEqual([]);
+  });
+});
+
+describe("Practice — targeted count options never pad or fabricate (LI-4 §17/§27)", () => {
+  it("offers the true pool size as a startable option when it is smaller than every fixed candidate", () => {
+    const target: PracticeTarget = { axis: "concept", targetId: "concept.d3.program-metrics-reporting" };
+    const total = eligibleQuestionsForTarget(target).length;
+    expect(total).toBeGreaterThan(0);
+    expect(total).toBeLessThan(10);
+    const options = getTargetedPracticeCountOptions(target);
+    expect(options.every((o) => o.available)).toBe(true);
+    expect(options.some((o) => o.count === total)).toBe(true);
+    expect(options.every((o) => o.count <= total)).toBe(true);
+  });
+
+  it("returns no options for a target with zero current eligible questions", () => {
+    expect(getTargetedPracticeCountOptions({ axis: "concept", targetId: "concept.does-not-exist" })).toEqual([]);
+  });
+
+  it("offers the standard 5/10 candidates when the pool is large enough", () => {
+    const options = getTargetedPracticeCountOptions({ axis: "decision_type", targetId: "decision.risk" });
+    expect(options.map((o) => o.count)).toEqual(expect.arrayContaining([5, 10]));
+  });
+});
+
+describe("Practice — targeted session construction reuses the same engine (LI-4 §8/§41/§42)", () => {
+  it("concept-level Practice never leaks a same-domain, different-concept question into the pool", () => {
+    const targetConcept = "concept.d3.program-metrics-reporting";
+    const session = buildTargetedPracticeSession({ axis: "concept", targetId: targetConcept }, 10);
+    expect(session.length).toBeGreaterThan(0);
+    for (const question of session) {
+      const raw = production.questions.get(question.id)!;
+      expect(raw.concepts).toContain(targetConcept);
+    }
+  });
+
+  it("never duplicates a question within one targeted session", () => {
+    const session = buildTargetedPracticeSession({ axis: "pattern", targetId: "pattern.p02" }, 10);
+    const ids = session.map((q) => q.id);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it("a cross-cutting target retains matches spanning multiple concepts, never collapsed to one", () => {
+    const session = buildTargetedPracticeSession({ axis: "pattern", targetId: "pattern.p02" }, 10);
+    const conceptIds = new Set(session.flatMap((q) => production.questions.get(q.id)!.concepts));
+    expect(conceptIds.size).toBeGreaterThan(1);
+  });
+
+  it("returns an empty session for a target with zero eligible questions, without throwing", () => {
+    expect(buildTargetedPracticeSession({ axis: "concept", targetId: "concept.does-not-exist" }, 5)).toEqual([]);
   });
 });

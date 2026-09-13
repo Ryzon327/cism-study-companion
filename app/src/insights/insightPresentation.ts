@@ -12,7 +12,9 @@
  * and evidence-detail sections.
  */
 import { registry, production } from "../content/registry";
-import type { EvidenceGroup, EvidenceSummary, GroupIdentity, GroupState, InsightResult, ReasonCode, RecommendationCandidate, TrendState } from "../learning-intelligence";
+import type { Axis, EvidenceSummary, GroupIdentity, GroupState, InsightResult, ReasonCode, TrendState } from "../learning-intelligence";
+import { resolveStudyHandoffs } from "../study-handoff/resolveStudyHandoffs";
+import type { StudyHandoff } from "../study-handoff/types";
 import lifecycles from "../../../schema/registry/lifecycles.json";
 import lifecycleStages from "../../../schema/registry/lifecycle-stages.json";
 
@@ -163,42 +165,79 @@ export function evidenceLines(evidence: EvidenceSummary, reasonCodes: readonly R
   return lines;
 }
 
-const ACTION_VERB_BY_KIND: Record<RecommendationCandidate["suggestedActionKind"], (label: string) => string> = {
-  REVIEW_CONCEPT: (label) => `Review ${label}`,
-  PRACTICE_CONCEPT: (label) => `Practice questions involving ${label}`,
-  PRACTICE_DOMAIN: (label) => `Practice questions in ${label}`,
-  REVIEW_PATTERN: (label) => `Review the ${label} pattern`
-};
+/**
+ * LI-4 — real, target-specific action wording. Deliberately independent of
+ * LI-2's `suggestedActionKind` (conceptual metadata only, not authoritative
+ * navigation — see docs/architecture/LI-4-IMPLEMENTATION-RECORD.md's
+ * binding routing constraint): every label here is derived from the axis
+ * that `resolveStudyHandoffs` actually resolved a real destination for,
+ * never a generic "Go"/"Open"/"Fix weakness."
+ */
+function reviewActionLabel(): string {
+  return "Review topic";
+}
 
-/** §22: informational text only — never wired to navigation. LI-4 owns real handoffs. */
-export function suggestedActionText(candidate: RecommendationCandidate, displayLabel: string): string {
-  return ACTION_VERB_BY_KIND[candidate.suggestedActionKind](displayLabel);
+function practiceActionLabel(axis: Axis, displayLabel: string): string {
+  switch (axis) {
+    case "concept":
+    case "family":
+      return "Practice this topic";
+    case "pattern":
+      return "Practice this pattern";
+    case "qualifier":
+      return `Practice ${displayLabel}`;
+    case "domain":
+      return "Practice this domain";
+    case "decision_type":
+    case "evidence_dimension":
+    case "role":
+    case "lifecycle":
+    case "stage":
+      return "Practice this reasoning focus";
+  }
+}
+
+export interface RecommendationActionPresentation {
+  handoff: StudyHandoff;
+  label: string;
+  /** Distinct accessible name per card (§37 of the LI-4 brief) — several cards may share the visible label "Practice this topic." */
+  ariaLabel: string;
 }
 
 export interface RecommendationPresentation {
   key: string;
+  axis: Axis;
+  targetId: string;
   displayLabel: string;
   isUnknownTarget: boolean;
   state: "NEEDS_REVIEW" | "DEVELOPING";
   stateLabel: string;
   whyLines: string[];
   evidenceLines: string[];
-  suggestedAction: string;
+  /** 0–2 real, currently-available handoffs — never a broken/disabled action for a stale or unresolvable target. */
+  actions: RecommendationActionPresentation[];
 }
 
-/** §9/§15: LI-2 already ranked and capped at 3 — this only formats. */
+/** §9/§15: LI-2 already ranked and capped at 3 — this only formats and resolves real handoffs (LI-4). */
 export function buildFocusNext(insights: InsightResult): RecommendationPresentation[] {
   return insights.recommendations.map((candidate) => {
     const display = resolveDisplayLabel(candidate.target);
+    const handoffs = resolveStudyHandoffs(candidate.target);
+    const actions: RecommendationActionPresentation[] = handoffs.map((handoff) => {
+      const label = handoff.kind === "review" ? reviewActionLabel() : practiceActionLabel(candidate.target.axis, display.label);
+      return { handoff, label, ariaLabel: `${label}: ${display.label}` };
+    });
     return {
       key: candidate.target.key,
+      axis: candidate.target.axis,
+      targetId: candidate.target.targetId,
       displayLabel: display.label,
       isUnknownTarget: display.isUnknownTarget,
       state: candidate.state as "NEEDS_REVIEW" | "DEVELOPING",
       stateLabel: stateLabel(candidate.state),
       whyLines: candidate.reasonCodes.map(reasonCodeCopy),
       evidenceLines: evidenceLines(candidate.evidenceSummary, candidate.reasonCodes),
-      suggestedAction: suggestedActionText(candidate, display.label)
+      actions
     };
   });
 }

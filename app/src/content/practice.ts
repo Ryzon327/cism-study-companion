@@ -16,7 +16,7 @@
  * branch exists or should ever be added; see
  * tests/frontend/unit/practice.test.ts's synthetic-future-domain coverage.
  */
-import { registry, production, requireDisplayName } from "./registry";
+import { registry, production, requireDisplayName, type ProductionQuestion } from "./registry";
 import { familyVariantsFor, resolveQuestion, requireProductionQuestion } from "./resolve";
 import { selectVariant, recordExposure as advanceHistory, type ExposureHistory } from "./selection";
 import { getExposureHistory, recordExposure } from "./exposureStore";
@@ -107,20 +107,36 @@ export function getPracticeCountOptions(scopeId: string): PracticeCountOption[] 
  * same `exposureStore.ts` singleton Daily Study and Explore already write
  * to (one shared store, not a second `practiceExposureStore`).
  */
-export function buildPracticeSession(scopeId: string, requestedCount: number): QuestionFixture[] {
-  const families = eligibleFamilies(scopeId);
-  if (families.length === 0 || requestedCount <= 0) return [];
+/**
+ * Shared round-robin session builder: buckets a pool of eligible questions
+ * (already filtered by whatever scope/target the caller resolved) by
+ * family — questions with no family bucket alone, keyed by their own id, so
+ * they're never silently dropped from the round-robin — then draws up to
+ * `requestedCount` via the same unseen-preferred/least-recently-seen
+ * `selectVariant` policy every other learning mode uses. Both domain-scoped
+ * `buildPracticeSession` and axis-targeted `buildTargetedPracticeSession`
+ * (LI-4) call this one function — there is exactly one session-construction
+ * algorithm, never two.
+ */
+function buildSessionFromPool(pool: ProductionQuestion[], requestedCount: number): QuestionFixture[] {
+  if (pool.length === 0 || requestedCount <= 0) return [];
 
-  const remainingByFamily = new Map(families.map((family) => [family.id, new Set(familyVariantsFor(family.id).map((q) => q.id))]));
+  const buckets = new Map<string, Set<string>>();
+  for (const q of pool) {
+    const bucketKey = q.family ?? `__solo__:${q.id}`;
+    if (!buckets.has(bucketKey)) buckets.set(bucketKey, new Set());
+    buckets.get(bucketKey)!.add(q.id);
+  }
+  const bucketList = [...buckets.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+
   const now = Date.now();
   let workingHistory: ExposureHistory = getExposureHistory();
   const selectedIds: string[] = [];
 
   while (selectedIds.length < requestedCount) {
     let pickedAnyThisRound = false;
-    for (const family of families) {
+    for (const [, remaining] of bucketList) {
       if (selectedIds.length >= requestedCount) break;
-      const remaining = remainingByFamily.get(family.id)!;
       if (remaining.size === 0) continue;
       const candidateId = selectVariant([...remaining], workingHistory, now);
       remaining.delete(candidateId);
@@ -128,7 +144,7 @@ export function buildPracticeSession(scopeId: string, requestedCount: number): Q
       workingHistory = advanceHistory(workingHistory, candidateId, now);
       pickedAnyThisRound = true;
     }
-    if (!pickedAnyThisRound) break; // every eligible family's variants are exhausted
+    if (!pickedAnyThisRound) break; // every bucket's variants are exhausted
   }
 
   const priorExposureSnapshot = getExposureHistory();
@@ -138,6 +154,88 @@ export function buildPracticeSession(scopeId: string, requestedCount: number): Q
     recordExposure(id);
     return resolveQuestion(raw, priorExposures);
   });
+}
+
+export function buildPracticeSession(scopeId: string, requestedCount: number): QuestionFixture[] {
+  const families = eligibleFamilies(scopeId);
+  const pool = families.flatMap((family) => familyVariantsFor(family.id));
+  return buildSessionFromPool(pool, requestedCount);
+}
+
+/**
+ * LI-4 — targeted Practice. `axis`/`targetId` mirror LI-2's `GroupIdentity`
+ * exactly (see study-handoff/resolveStudyHandoffs.ts): the eligibility test
+ * below is CURRENT production question metadata only — never a historical
+ * LearningEvent snapshot, and never inferred when a field is null/empty.
+ * `"domain"` is included for completeness/testing but real domain handoffs
+ * route through the existing `buildPracticeSession(domainId, ...)` above
+ * instead (LI-4 architecture record §14) — this function is the one new
+ * addition for every other axis, not a second domain-filter implementation.
+ */
+export type PracticeTargetAxis = "domain" | "concept" | "family" | "pattern" | "evidence_dimension" | "qualifier" | "decision_type" | "role" | "lifecycle" | "stage";
+
+export interface PracticeTarget {
+  axis: PracticeTargetAxis;
+  targetId: string;
+}
+
+function questionMatchesTarget(question: ProductionQuestion, target: PracticeTarget): boolean {
+  switch (target.axis) {
+    case "domain":
+      return question.domain === target.targetId;
+    case "concept":
+      return question.concepts.includes(target.targetId);
+    case "family":
+      return question.family === target.targetId;
+    case "pattern":
+      return question.patterns.includes(target.targetId);
+    case "evidence_dimension":
+      return question.evidence_dimensions.includes(target.targetId);
+    case "qualifier":
+      return question.qualifier === target.targetId;
+    case "decision_type":
+      return question.decision_type === target.targetId;
+    case "role":
+      return question.primary_role === target.targetId;
+    case "lifecycle":
+      return question.lifecycle === target.targetId;
+    case "stage":
+      return question.stage === target.targetId;
+  }
+}
+
+/**
+ * Every active, current production question matching `target` — the single
+ * source of truth for "what can be studied now" for any non-domain axis.
+ * Never includes prototype/QA content (this reads only `production.*`, the
+ * same registry Explore/Practice/Daily Study already use) and never
+ * includes an inactive/superseded question.
+ */
+export function eligibleQuestionsForTarget(target: PracticeTarget): ProductionQuestion[] {
+  return [...production.questions.values()].filter((question) => question.active && questionMatchesTarget(question, target));
+}
+
+const TARGETED_CANDIDATE_BASE_COUNTS = [5, 10];
+
+/**
+ * Same shape as `getPracticeCountOptions`, but bounded to what a narrow
+ * target actually has: when the eligible pool is smaller than every fixed
+ * candidate (a single concept or a sparse cross-cutting axis may only have
+ * a handful of current questions), the pool's own true size is offered as a
+ * real, startable option instead of leaving the learner with nothing
+ * available — never padded with a repeat to reach 5/10 (LI-4 architecture
+ * record §17/§27).
+ */
+export function getTargetedPracticeCountOptions(target: PracticeTarget): PracticeCountOption[] {
+  const total = eligibleQuestionsForTarget(target).length;
+  if (total <= 0) return [];
+  const candidateCounts = new Set<number>([...TARGETED_CANDIDATE_BASE_COUNTS.filter((count) => count <= total), total]);
+  return [...candidateCounts].sort((a, b) => a - b).map((count) => ({ count, available: true }));
+}
+
+/** Same round-robin session engine as `buildPracticeSession` (`buildSessionFromPool`), scoped to `target` instead of a domain. */
+export function buildTargetedPracticeSession(target: PracticeTarget, requestedCount: number): QuestionFixture[] {
+  return buildSessionFromPool(eligibleQuestionsForTarget(target), requestedCount);
 }
 
 /** The concept a resolved Practice question tests — used only after an
