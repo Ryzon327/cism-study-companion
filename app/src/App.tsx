@@ -162,7 +162,8 @@ function renderScreen(
   onNavigate: (id: string) => void,
   contentSource: DailyStudyContentSource,
   exploreInitialConceptId: string | undefined,
-  onExploreConceptHandoff: (conceptId?: string) => void
+  onExploreConceptHandoff: (conceptId?: string) => void,
+  contentSourceMode: ContentSourceMode
 ): JSX.Element {
   switch (id) {
     case "home":
@@ -173,6 +174,7 @@ function renderScreen(
           contentSource={contentSource}
           onDone={() => onNavigate("home")}
           onExploreConcept={(conceptId) => onExploreConceptHandoff(conceptId)}
+          sourceContext={contentSourceMode}
         />
       );
     case "daily-study-learn":
@@ -248,7 +250,7 @@ export function App(): JSX.Element {
         activeReviewLessonId={reviewLessonId}
         onSelectReviewLesson={handleSelectReviewLesson}
       >
-        {renderScreen(activeId, setActiveId, contentSource, exploreInitialConceptId, handleExploreConceptHandoff)}
+        {renderScreen(activeId, setActiveId, contentSource, exploreInitialConceptId, handleExploreConceptHandoff, contentSourceMode)}
       </AppShell>
     </ThemeProvider>
   );

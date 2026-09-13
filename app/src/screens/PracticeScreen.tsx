@@ -161,6 +161,8 @@ export function PracticeScreen({ onExit, onExploreConcept }: PracticeScreenProps
         meta={`Question ${currentIndex + 1} of ${sessionQuestions.length} · ${current.domainLabel}`}
         buildFeedback={productionContentSource.buildFeedback}
         getRepairCheck={productionContentSource.getRepairCheck}
+        learningMode="practice"
+        sourceContext="production"
         onComplete={handleQuestionComplete}
       />
     );

@@ -22,7 +22,7 @@ beforeEach(() => {
 });
 
 function runToCompletion(applyOptionText: string) {
-  render(<DailyStudySession contentSource={productionContentSource} onDone={() => {}} onExploreConcept={() => {}} />);
+  render(<DailyStudySession contentSource={productionContentSource} onDone={() => {}} onExploreConcept={() => {}} sourceContext="production" />);
   // Recall
   fireEvent.click(document.querySelectorAll(".recall-options .answer-option")[0]!);
   fireEvent.click(screen.getByRole("button", { name: "Continue to today's lesson →" }));
@@ -46,7 +46,7 @@ function continueThroughFeedbackAndRepairIfAny() {
 describe("Optional Reinforcement — contextual entry from Daily Study Completion", () => {
   it("2 & 3. is optional and not a required next step: 'Done' works without ever starting it", () => {
     let done = false;
-    render(<DailyStudySession contentSource={productionContentSource} onDone={() => (done = true)} onExploreConcept={() => {}} />);
+    render(<DailyStudySession contentSource={productionContentSource} onDone={() => (done = true)} onExploreConcept={() => {}} sourceContext="production" />);
     fireEvent.click(document.querySelectorAll(".recall-options .answer-option")[0]!);
     fireEvent.click(screen.getByRole("button", { name: "Continue to today's lesson →" }));
     fireEvent.click(screen.getByRole("button", { name: "Apply it →" }));
@@ -154,6 +154,7 @@ describe("Optional Reinforcement — contextual entry from Daily Study Completio
         onExploreConcept={(id) => {
           exploredConceptId = id;
         }}
+        sourceContext="production"
       />
     );
     fireEvent.click(document.querySelectorAll(".recall-options .answer-option")[0]!);
@@ -195,7 +196,7 @@ describe("Optional Reinforcement — contextual entry from Daily Study Completio
   });
 
   it("20. an invalid/missing context (Phase 5B prototype content source) fails safely — no reinforcement action offered, no crash", () => {
-    render(<DailyStudySession contentSource={prototypeContentSource} onDone={() => {}} />);
+    render(<DailyStudySession contentSource={prototypeContentSource} onDone={() => {}} sourceContext="prototype" />);
     fireEvent.click(document.querySelectorAll(".recall-options .answer-option")[0]!);
     fireEvent.click(screen.getByRole("button", { name: "Continue to today's lesson →" }));
     fireEvent.click(screen.getByRole("button", { name: "Apply it →" }));

@@ -1,9 +1,11 @@
 import type { JSX } from "preact";
-import { useState } from "preact/hooks";
+import { useRef, useState } from "preact/hooks";
 import { QuestionApplyScreen } from "../screens/QuestionApplyScreen";
 import { FeedbackScreen } from "../screens/FeedbackScreen";
 import { RepairScreen } from "../screens/RepairScreen";
 import type { AnswerOptionFixture, FeedbackFixture, QuestionFixture, RepairCheckFixture } from "../types/content";
+import type { Confidence } from "../components/ConfidenceControl/ConfidenceControl";
+import { recordQuestionAttempt, recordRepairAttempt, type LearningMode, type SourceContext } from "../learning-history";
 
 type AttemptPhase = "apply" | "feedback" | "repair";
 
@@ -19,6 +21,13 @@ export interface QuestionAttemptFlowProps {
   // over" remain valid unchanged — a callback expecting fewer parameters
   // is assignable to one expecting more.
   onComplete: (correct: boolean) => void;
+  // LI-1 (Learning Intelligence v1, persistence foundation): every caller
+  // must say which learning mode and content source it is — this is the
+  // one shared seam all four learning modes' Apply/Repair attempts pass
+  // through, so this is also the one place their evidence is recorded. See
+  // docs/architecture/LEARNING-INTELLIGENCE-V1.md §7/§24.
+  learningMode: LearningMode;
+  sourceContext: SourceContext;
 }
 
 /**
@@ -41,16 +50,30 @@ export interface QuestionAttemptFlowProps {
  * reaches it only after Repair. Callers decide what "complete" means for
  * them (Daily Study moves to Completion; a future Practice loop would
  * advance to its next question or its own summary).
+ *
+ * LI-1: records exactly one QUESTION_ATTEMPT event the moment Apply is
+ * definitively resolved (the "Check answer" click — the same moment
+ * `selectedKey` is first set), never later at Feedback/Continue, and
+ * exactly one REPAIR_ATTEMPT event (linked via `parentAttemptId`, never
+ * mutating the original attempt) when Repair is actually resolved. A
+ * correct Apply never produces a Repair event at all. Each recording site
+ * is guarded by a ref so a duplicate call (fast double-click, a re-render)
+ * can never record the same resolution twice.
  */
 export function QuestionAttemptFlow({
   question,
   meta,
   buildFeedback,
   getRepairCheck,
-  onComplete
+  onComplete,
+  learningMode,
+  sourceContext
 }: QuestionAttemptFlowProps): JSX.Element | null {
   const [phase, setPhase] = useState<AttemptPhase>("apply");
   const [selectedKey, setSelectedKey] = useState<AnswerOptionFixture["key"] | null>(null);
+  const [attemptId, setAttemptId] = useState<string | null>(null);
+  const hasRecordedApply = useRef(false);
+  const hasRecordedRepair = useRef(false);
 
   switch (phase) {
     case "apply":
@@ -58,7 +81,25 @@ export function QuestionAttemptFlow({
         <QuestionApplyScreen
           question={question}
           meta={meta}
-          onSubmit={(key: AnswerOptionFixture["key"]) => {
+          onSubmit={(key: AnswerOptionFixture["key"], confidence: Confidence) => {
+            if (hasRecordedApply.current) return;
+            hasRecordedApply.current = true;
+
+            const feedback = buildFeedback(question, key);
+            const correctOption = question.options.find((o) => o.correct);
+            const { event } = recordQuestionAttempt({
+              learningMode,
+              sourceContext,
+              attemptKind: "apply",
+              questionId: question.id,
+              selectedOptionKey: key,
+              correctOptionKey: correctOption?.key ?? key,
+              correct: feedback.correct,
+              confidence,
+              repairTargetId: feedback.correct ? null : (feedback.repairTargetId ?? null)
+            });
+
+            setAttemptId(event.attemptId);
             setSelectedKey(key);
             setPhase("feedback");
           }}
@@ -84,7 +125,21 @@ export function QuestionAttemptFlow({
         <RepairScreen
           repairCheck={repairCheck}
           mistakeContext={feedback.whySelectedWasWeaker}
-          onContinue={() => onComplete(false)}
+          onContinue={(repairSelectedKey) => {
+            if (!hasRecordedRepair.current && attemptId) {
+              hasRecordedRepair.current = true;
+              const repairCorrect = repairCheck.options.find((o) => o.key === repairSelectedKey)?.correct ?? false;
+              recordRepairAttempt({
+                learningMode,
+                sourceContext,
+                parentAttemptId: attemptId,
+                repairTargetId: feedback.repairTargetId ?? null,
+                selectedOptionKey: repairSelectedKey,
+                correct: repairCorrect
+              });
+            }
+            onComplete(false);
+          }}
         />
       );
     }
