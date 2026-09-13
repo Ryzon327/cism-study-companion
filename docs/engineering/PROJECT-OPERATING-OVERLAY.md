@@ -52,43 +52,68 @@ scores or charts.
 
 ## 5. Current product boundary
 
-- MVP released (`docs/release/MVP-ACCEPTANCE-RECORD.md`, tag
-  `v1.0.0-mvp`): Foundation + Domains 1–4 curriculum, Daily Study, Explore,
-  Practice, optional Reinforcement, and a shared Feedback/Repair pipeline.
-- Learning Intelligence v1, developed on `post-mvp/learner-intelligence`:
-  - **LI-1** — local-first, immutable Learning History (IndexedDB).
-  - **LI-2** — deterministic Insight engine (named states, reason codes,
-    trend, ranked recommendations — no opaque score).
-  - **LI-3** — the Insights learner experience (Focus Next, trend,
-    Stronger Areas, Study Data export/reset).
-  - **LI-4** — targeted study handoffs (Review → exact Explore content;
-    targeted Practice scoped to a concept/family/pattern/qualifier/
-    decision-type/evidence-dimension/role/lifecycle/stage; existing-domain
-    Practice reuse).
-  - **LI-5** — whole-feature acceptance — **pending, next authorized
-    phase**.
-- All of LI-1 through LI-4 are complete, Architect-approved, and committed
-  on the development branch — **not yet merged to `main`** (see §11).
+**Stable release: v1.1.0 — Learning Intelligence** (tag `v1.1.0`,
+`docs/release/LEARNING-INTELLIGENCE-V1-ACCEPTANCE-RECORD.md`). The stable
+current product includes:
+
+- Foundation + Domains 1–4 curriculum, Daily Study, Explore, Practice,
+  optional Reinforcement, and a shared Feedback/Repair pipeline (original
+  MVP, tag `v1.0.0-mvp`, `docs/release/MVP-ACCEPTANCE-RECORD.md`).
+- Local, persistent Learning History (IndexedDB).
+- Deterministic, explainable Learning Intelligence (named states, reason
+  codes, trend, ranked recommendations — no opaque score).
+- Insights / Focus Next, presented to the learner.
+- Targeted Review/Practice handoffs (concept/family/pattern/qualifier/
+  decision-type/evidence-dimension/role/lifecycle/stage, plus
+  existing-domain Practice reuse).
+- Study Data export/reset.
+- Production-first application behavior (QA/prototype fixtures explicitly
+  opt-in only).
+
+Phase status:
+
+- **LI-1** — CLOSED.
+- **LI-2** — CLOSED.
+- **LI-3** — CLOSED.
+- **LI-4** — CLOSED.
+- **LI-5** — CLOSED.
+
+All five are complete, Architect-approved, merged to `main` via PR #38,
+and released as v1.1.0 (see §11/§12/§13 below). **No LI-1 through LI-5
+gate — implementation review, Evidence-First review, staged-inventory
+review, targeted tests, or CI — should be repeated merely because a future
+phase begins;** see §13.
 
 ## 6. Stable vs. development model
 
-| | Stable study version | Development version |
+| | Stable study version | Development worktree |
 |---|---|---|
 | Worktree | `/Users/demetrius/Projects/cism-study-companion` | `/Users/demetrius/Projects/cism-study-companion-next` |
-| Branch | `main` | `post-mvp/learner-intelligence` |
+| Branch | `main` | *(no active feature branch — see below)* |
+| Current release | `v1.1.0` | — |
+| Current SHA | `efdfa7b3153b00d43a38c612e1d34d85e281337a` | — |
 
-`main` remains the stable, protected study version — the one the Founder
-studies from day to day — until the complete Learning Intelligence package
-is accepted at LI-5 and an explicit, separate release/merge decision is
-made. This model may be revisited once LI-5 changes the release state; any
-such change is itself a governance decision, not an incidental side effect
-of a later phase.
+`main` remains the stable, protected study version the Founder studies
+from day to day. **There is currently no active product-feature branch.**
+`post-mvp/learner-intelligence` (final head
+`4fbf24d27301ae4cc2599c52c91cebb7263126a6`) is a **completed, merged,
+historical** feature branch — it delivered Learning Intelligence v1 and is
+preserved as history, not as an active working branch; deleting it is a
+separate, later, explicitly authorized decision, not implied by this
+refresh. `cism-study-companion-next` itself remains a reusable development
+worktree for future work. **Each future meaningful work package must use
+its own dedicated branch created from the current accepted base** (verify
+`origin/main`'s SHA before branching) — an old merged feature branch must
+never silently become the base for unrelated future work.
 
 ## 7. Learning Intelligence invariants
 
-Binding rules the engine and its surfaces must never violate, carried
-forward from `docs/architecture/LEARNING-INTELLIGENCE-V1.md` and the
-LI-1..4 implementation records:
+Now that Learning Intelligence v1 is released in v1.1.0, these are **stable
+product guarantees**, not merely development-phase rules — releasing the
+feature does not loosen them. Binding rules the engine and its surfaces
+must never violate, carried forward from
+`docs/architecture/LEARNING-INTELLIGENCE-V1.md` and the LI-1..4
+implementation records:
 
 - `LearningEvent` history is immutable and append-only, stored in
   IndexedDB, local to the device/browser.
@@ -139,64 +164,84 @@ recommendation dismissal/completion state.
 ## 10. Known accepted deferred items
 
 - **BUG-001 / BUG-002 / BUG-003** (`docs/regressions/REGISTRY.md`) —
-  legacy-prototype-scoped, accepted-deferred at MVP acceptance; unaffected
-  by, and unrelated to, Learning Intelligence work.
-- **LI-5 broad-cross-cutting-scope usability observation**
-  (`docs/architecture/LI-4-IMPLEMENTATION-RECORD.md` §12/§35,
-  Architect-confirmed non-blocking at LI-4 review): some legitimate
-  cross-cutting Practice scopes are broad (e.g. `evidence.knowledge`
-  currently resolves to 87 production questions across 32 concepts and 4
-  domains). Every returned question is a legitimate current match — this
-  is not an LI-4 routing defect. LI-5 should evaluate whether a scope this
-  broad still reads as a useful "targeted" learner experience.
-- **Family/synthesis overlap-reduction observation**
-  (`docs/architecture/LI-4-IMPLEMENTATION-RECORD.md` §35,
-  Architect-confirmed non-blocking): the real multi-concept synthesis
-  families (`family.d2.risk-management-synthesis` and its Domain 3/4
-  counterparts) each share one synthesis concept across every member
-  question, so LI-2's overlap reduction will typically surface that
-  concept's own recommendation rather than the family's. The
+  still accepted deferred; legacy-prototype-scoped, unaffected by, and
+  unrelated to, Learning Intelligence.
+- **Broad cross-cutting-scope observation** (`evidence.knowledge`, ~87
+  production questions across ~32 concepts and 4 domains). **Final LI-5
+  disposition: PASS — broad but truthful/useful.** Every returned question
+  is a legitimate current match; the learner sees the real label and real
+  count, never a narrower-than-reality impression. Recorded as a future
+  UX-refinement consideration only, not a defect
+  (`docs/release/LEARNING-INTELLIGENCE-V1-ACCEPTANCE-RECORD.md`).
+- **Family/synthesis overlap-reduction observation.** **Final LI-5
+  disposition: non-blocking curriculum-structure observation.** The real
+  multi-concept synthesis families (`family.d2.risk-management-synthesis`
+  and its Domain 3/4 counterparts) each share one synthesis concept across
+  every member question, so LI-2's overlap reduction typically surfaces
+  that concept's own recommendation rather than the family's. The
   family-only-Practice resolver behavior itself is correct and directly
-  tested; this is a curriculum-authoring-shape observation, not a defect.
-- **Focus Next density observation**
-  (`docs/architecture/LI-3-IMPLEMENTATION-RECORD.md` §5, Architect-approved
-  as-is at LI-3 review): Focus Next cards intentionally carry enough
-  evidence/explanation to answer "why am I seeing this" — approved for
-  this checkpoint. Revisit only after real learner history accumulates,
-  as a future observational check, not a defect to fix now.
+  tested — this is a curriculum-authoring-shape observation, not a defect.
+- **Focus Next density observation.** **Final LI-5 disposition: MINOR,
+  accepted and deferred** (the Independent Challenger's classification,
+  accepted over this session's own initial PASS read at LI-5 review).
+  Revisit only with evidence from real learner usage, or via a
+  specifically authorized future UX package — not automatically.
 
-Do not convert any of the above into a defect and act on it unilaterally —
-each requires its own evidence and Architect/Founder decision before any
-code change.
+None of the above is pending further LI-5 evaluation — these are final
+dispositions. Do not convert any of them into an active defect and act on
+it unilaterally — each requires its own new evidence and an
+Architect/Founder decision before any code change.
 
 ## 11. Release / merge boundary
 
-Learning Intelligence v1 is **not** merged to `main` until LI-5
-whole-feature acceptance explicitly authorizes it, and merging itself is a
-separate, later, explicitly Founder/Architect-approved decision — never an
-automatic consequence of LI-5 passing.
+**Historical result (this boundary has been exercised once, successfully):**
+Learning Intelligence v1 passed LI-5 whole-feature acceptance, was merged
+to `main` via PR #38 (merge commit
+`efdfa7b3153b00d43a38c612e1d34d85e281337a`), and was published as release
+`v1.1.0`. Post-merge CI on the exact merge commit (run `34779120088`)
+passed all required jobs. See §12/§13 below and
+`docs/release/LEARNING-INTELLIGENCE-V1-ACCEPTANCE-RECORD.md` for full
+detail.
+
+**Durable future rule (unchanged by this release):** any future major
+feature package still requires, in order: accepted implementation →
+whole-feature acceptance → explicit PR authorization → exact-PR review/CI
+→ explicit merge authorization → post-merge exact-`main` verification →
+a separate release/tag authorization when applicable. Merging is never an
+automatic consequence of acceptance passing, and release/tag publication
+is never an automatic consequence of merging — each is its own protected,
+explicitly Founder-authorized step.
 
 ## 12. Current workflow state (point-in-time — update at the next phase boundary)
 
-- **Stable `main`:** `aada8c8dcd309b5cc21084844d7eb6f88e3eff7d` (`v1.0.0-mvp`).
-- **Development `post-mvp/learner-intelligence`:** `951003ab5a8f1b7feb5b8afe64fb23fe82fbf98a`.
-- **LI-4 exact-commit CI:** run `34769389590` — PASS (all 5 required jobs green).
-- **LI-4 status:** CLOSED — see §13 below.
-- **Next authorized phase:** LI-5 whole-feature acceptance.
+- **Stable `main`:** `efdfa7b3153b00d43a38c612e1d34d85e281337a`.
+- **Stable tag:** `v1.1.0`.
+- **Release:** "CISM Study Companion v1.1.0 — Learning Intelligence" (published, not draft, not prerelease).
+- **Merged PR:** #38 ("release: Learning Intelligence v1").
+- **Post-merge CI:** run `34779120088` — PASS (all 5 required jobs green, exact merge-commit SHA).
+- **Learning Intelligence v1 status:** CLOSED — see §13 below.
+- **Active feature branch:** NONE.
+- **Historical merged LI branch:** `post-mvp/learner-intelligence`, final head `4fbf24d27301ae4cc2599c52c91cebb7263126a6` — preserved, not active.
+- **Next planned product capability:** Exam Readiness v1 — **NOT YET AUTHORIZED FOR IMPLEMENTATION.** No design or implementation work may begin on it without its own approved work package.
 
 This section is a checkpoint record, not a live-updating status — it will
 go stale the moment a new commit lands, and should be refreshed at the
 next accepted phase boundary rather than trusted blindly after that point.
 
-## 13. State-aware adoption: LI-4 is CLOSED
+## 13. State-aware adoption: LEARNING INTELLIGENCE v1 IS CLOSED
 
-LI-4's implementation, Evidence-First review, staged inventory, tests, and
-CI are all accepted against the exact commit and CI run recorded in §12.
-Per `CLAUDE.md`'s state-aware gate reuse rule, do not repeat LI-4
-implementation review, Evidence-First review, staging review, targeted
-tests, or CI solely for ceremony — only if LI-4's implementation state
-actually changes (a new commit touching its files) does any of that gate
-set need to be revisited, and then only for what actually changed.
+LI-1 through LI-5 — implementation, Evidence-First/whole-feature
+acceptance review, Independent Challenger review, staged inventory, tests,
+push CI, PR review/CI, merge, and post-merge CI — are all accepted
+completed state against the exact commits and CI runs recorded in §12 and
+in `docs/release/LEARNING-INTELLIGENCE-V1-ACCEPTANCE-RECORD.md`. Per
+`CLAUDE.md`'s state-aware gate reuse rule, **do not repeat any of those
+gates merely because a future phase begins.** Reopen a specific gate only
+if: a real regression or defect is discovered in the affected behavior; a
+shared architecture change materially affects it; a security, privacy, or
+data-integrity issue is found; or an explicitly authorized future package
+intentionally and knowingly revisits that exact boundary.
 
-LI-5 is the next authorized product phase, to begin only after this
-governance package itself closes.
+No product phase is currently authorized. Exam Readiness v1 (or any other
+future capability) begins only once it receives its own approved work
+package, following the same discipline every prior LI phase went through.
