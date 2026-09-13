@@ -263,6 +263,16 @@ actual state (`post-mvp/learner-intelligence`, uncommitted, on top of
 | `node --test tests/content-production/*.test.mjs` | 477/477 pass |
 | `npm audit --audit-level=moderate` | 0 vulnerabilities |
 
+**Post-commit correction**: the 8 linux visual baselines committed at
+`eac4a91` were generated locally via a version-matched Playwright Docker
+image, which had a ~0.01% sub-pixel font-rendering diff against GitHub
+Actions' actual Ubuntu runner and failed branch CI's `visual` job on first
+push. Fixed at `41717fc` by replacing those 8 files with the images GitHub
+Actions itself rendered for the `eac4a91` commit (downloaded from that
+failed run's diagnostic artifact) — no product or test code changed.
+Branch CI is green on `41717fc` across all five jobs (frontend, legacy,
+security, content-production, visual).
+
 New LI-3 test files: `tests/frontend/unit/insights/insightPresentation.test.ts`
 and `tests/frontend/unit/insights/studyHistoryExport.test.ts` (39 tests
 combined), `tests/frontend/unit/InsightsScreen.test.tsx` (19 tests),
