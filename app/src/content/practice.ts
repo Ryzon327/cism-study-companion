@@ -18,7 +18,7 @@
  */
 import { registry, production, requireDisplayName, type ProductionQuestion } from "./registry";
 import { familyVariantsFor, resolveQuestion, requireProductionQuestion } from "./resolve";
-import { selectVariant, recordExposure as advanceHistory, type ExposureHistory } from "./selection";
+import { selectFamilyBalancedIds } from "./selection";
 import { getExposureHistory, recordExposure } from "./exposureStore";
 import { domainSortKey } from "./explore";
 import type { QuestionFixture } from "../types/content";
@@ -121,31 +121,8 @@ export function getPracticeCountOptions(scopeId: string): PracticeCountOption[] 
 function buildSessionFromPool(pool: ProductionQuestion[], requestedCount: number): QuestionFixture[] {
   if (pool.length === 0 || requestedCount <= 0) return [];
 
-  const buckets = new Map<string, Set<string>>();
-  for (const q of pool) {
-    const bucketKey = q.family ?? `__solo__:${q.id}`;
-    if (!buckets.has(bucketKey)) buckets.set(bucketKey, new Set());
-    buckets.get(bucketKey)!.add(q.id);
-  }
-  const bucketList = [...buckets.entries()].sort((a, b) => a[0].localeCompare(b[0]));
-
   const now = Date.now();
-  let workingHistory: ExposureHistory = getExposureHistory();
-  const selectedIds: string[] = [];
-
-  while (selectedIds.length < requestedCount) {
-    let pickedAnyThisRound = false;
-    for (const [, remaining] of bucketList) {
-      if (selectedIds.length >= requestedCount) break;
-      if (remaining.size === 0) continue;
-      const candidateId = selectVariant([...remaining], workingHistory, now);
-      remaining.delete(candidateId);
-      selectedIds.push(candidateId);
-      workingHistory = advanceHistory(workingHistory, candidateId, now);
-      pickedAnyThisRound = true;
-    }
-    if (!pickedAnyThisRound) break; // every bucket's variants are exhausted
-  }
+  const { selectedIds } = selectFamilyBalancedIds(pool, requestedCount, getExposureHistory(), now);
 
   const priorExposureSnapshot = getExposureHistory();
   return selectedIds.map((id) => {

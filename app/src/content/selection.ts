@@ -73,6 +73,68 @@ function deterministicPick(ids: readonly string[]): string {
   return [...ids].sort()[0] as string;
 }
 
+export interface FamilyBalancedCandidate {
+  id: string;
+  family?: string | null;
+}
+
+export interface FamilyBalancedSelectionResult {
+  selectedIds: string[];
+  history: ExposureHistory;
+}
+
+/**
+ * Pure core of the round-robin, family-balanced session builder shared by
+ * ordinary Practice (content/practice.ts's `buildSessionFromPool`) and Exam
+ * Readiness's question-set builder (exam-readiness/questionSetBuilder.ts):
+ * buckets `pool` by family (an id with no family buckets alone, keyed by
+ * its own id, so it's never silently dropped), then draws up to
+ * `requestedCount` round-robin across buckets via `selectVariant`'s
+ * unseen-preferred/least-recently-seen policy. Takes and returns an
+ * explicit `ExposureHistory` rather than touching any store — same inputs
+ * always produce the same `selectedIds`, so callers with entirely separate
+ * exposure histories (ordinary Practice's shared store vs. Exam Readiness's
+ * own, deliberately separate history) can both use this one algorithm
+ * without either ever reading or writing the other's state.
+ */
+export function selectFamilyBalancedIds(
+  pool: readonly FamilyBalancedCandidate[],
+  requestedCount: number,
+  history: ExposureHistory,
+  now: number
+): FamilyBalancedSelectionResult {
+  if (pool.length === 0 || requestedCount <= 0) {
+    return { selectedIds: [], history };
+  }
+
+  const buckets = new Map<string, Set<string>>();
+  for (const candidate of pool) {
+    const bucketKey = candidate.family ?? `__solo__:${candidate.id}`;
+    if (!buckets.has(bucketKey)) buckets.set(bucketKey, new Set());
+    buckets.get(bucketKey)!.add(candidate.id);
+  }
+  const bucketList = [...buckets.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+
+  let workingHistory = history;
+  const selectedIds: string[] = [];
+
+  while (selectedIds.length < requestedCount) {
+    let pickedAnyThisRound = false;
+    for (const [, remaining] of bucketList) {
+      if (selectedIds.length >= requestedCount) break;
+      if (remaining.size === 0) continue;
+      const candidateId = selectVariant([...remaining], workingHistory, now);
+      remaining.delete(candidateId);
+      selectedIds.push(candidateId);
+      workingHistory = recordExposure(workingHistory, candidateId, now);
+      pickedAnyThisRound = true;
+    }
+    if (!pickedAnyThisRound) break; // every bucket's variants are exhausted
+  }
+
+  return { selectedIds, history: workingHistory };
+}
+
 // ---- Confidence interaction (classification only — not wired into live
 // selection yet; see docs/data-model/REPETITION-AND-RECALL-MODEL.md's
 // explicit note on why). Confidence NEVER contributes to mastery by

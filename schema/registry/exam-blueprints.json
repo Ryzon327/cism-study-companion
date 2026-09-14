@@ -1,0 +1,36 @@
+[
+  {
+    "id": "blueprint.cism.outline-through-2026-11-02",
+    "type": "exam_blueprint",
+    "reference": "ISACA CISM exam content outline in effect through 2026-11-02",
+    "note": "Current official CISM exam blueprint, provided by the Architect as an external fact to be independently verified before this blueprint is treated as source-verified. Domain weights and total question/duration counts describe the real ISACA exam structure, not this application's own content inventory.",
+    "verification_status": "unverified",
+    "effectiveFrom": null,
+    "effectiveTo": "2026-11-03",
+    "questionCount": 150,
+    "durationMinutes": 240,
+    "domainWeights": [
+      { "domainId": "domain.d1", "weightPercent": 17 },
+      { "domainId": "domain.d2", "weightPercent": 20 },
+      { "domainId": "domain.d3", "weightPercent": 33 },
+      { "domainId": "domain.d4", "weightPercent": 30 }
+    ]
+  },
+  {
+    "id": "blueprint.cism.outline-2026-11-03",
+    "type": "exam_blueprint",
+    "reference": "ISACA CISM exam content outline in effect from 2026-11-03",
+    "note": "Next official CISM exam blueprint, provided by the Architect as an external fact to be independently verified before this blueprint is treated as source-verified. Domain weights and total question/duration counts describe the real ISACA exam structure, not this application's own content inventory.",
+    "verification_status": "unverified",
+    "effectiveFrom": "2026-11-03",
+    "effectiveTo": null,
+    "questionCount": 150,
+    "durationMinutes": 240,
+    "domainWeights": [
+      { "domainId": "domain.d1", "weightPercent": 18 },
+      { "domainId": "domain.d2", "weightPercent": 20 },
+      { "domainId": "domain.d3", "weightPercent": 33 },
+      { "domainId": "domain.d4", "weightPercent": 29 }
+    ]
+  }
+]
